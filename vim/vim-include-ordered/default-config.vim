@@ -126,3 +126,7 @@ set clipboard+=unnamedplus
 
 " Disable fold when open a new file
 set nofoldenable
+
+" Disable backup
+set nobackup
+set noswapfile
