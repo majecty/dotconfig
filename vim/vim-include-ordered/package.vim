@@ -45,5 +45,6 @@ Plug 'plasticboy/vim-markdown'
 Plug 'majutsushi/tagbar'
 Plug 'tpope/vim-obsession'
 Plug 'tomasr/molokai'
+Plug 'thaerkh/vim-workspace'
 " Initialize plugin system
 call plug#end()
