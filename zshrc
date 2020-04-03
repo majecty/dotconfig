@@ -136,3 +136,5 @@ export ZSH_ALIAS_FINDER_AUTOMATIC=true
 
 export PATH=$PATH:/snap/bin/
 export PATH=$PATH:$HOME/bin/firefox
+
+alias vim=nvim
