@@ -46,5 +46,6 @@ Plug 'majutsushi/tagbar'
 Plug 'tpope/vim-obsession'
 Plug 'tomasr/molokai'
 Plug 'thaerkh/vim-workspace'
+Plug 'editorconfig/editorconfig-vim'
 " Initialize plugin system
 call plug#end()
