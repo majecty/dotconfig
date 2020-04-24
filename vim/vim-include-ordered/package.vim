@@ -47,5 +47,6 @@ Plug 'tpope/vim-obsession'
 Plug 'tomasr/molokai'
 Plug 'thaerkh/vim-workspace'
 Plug 'editorconfig/editorconfig-vim'
-" Initialize plugin system
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" (Optional) Multi-entry selection UI.
 call plug#end()
