@@ -19,3 +19,7 @@ nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
 imap <C-L> <ESC>
+
+nnor ,cf :let @+=expand("%:p")<CR>    " Mnemonic: Copy File path
+nnor ,yf :let @"=expand("%:p")<CR>    " Mnemonic: Yank File path
+nnor ,fn :let @"=expand("%")<CR>      " Mnemonic: yank File Name
