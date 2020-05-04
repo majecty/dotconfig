@@ -8,7 +8,10 @@ export ZSH="/home/juhyung/.oh-my-zsh"
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-ZSH_THEME="robbyrussell"
+#ZSH_THEME="robbyrussell"
+ZSH_THEME="funky"
+#ZSH_THEME="lambda"
+
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -68,7 +71,7 @@ ZSH_THEME="robbyrussell"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git zsh-autosuggestions alias-finder yarn)
+plugins=(git zsh-autosuggestions alias-finder yarn gitfast)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -139,3 +142,15 @@ export PATH=$PATH:$HOME/bin/firefox
 
 alias vim=nvim
 alias tmux="TERM=xterm-256color tmux"
+
+export DENO_INSTALL="/home/juhyung/.deno"
+export PATH="$DENO_INSTALL/bin:$PATH"
+
+alias update-copyright="git diff --name-only HEAD^ | xargs -L 1 deno --allow-read --allow-write ~/bin/copyright.ts"
+alias vimdiff='nvim -d'
+
+mkcdir ()
+{
+    mkdir -p -- "$1" &&
+      cd -P -- "$1"
+}
