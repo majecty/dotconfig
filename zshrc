@@ -71,7 +71,7 @@ ZSH_THEME="funky"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git zsh-autosuggestions alias-finder yarn gitfast)
+plugins=(git zsh-autosuggestions alias-finder yarn gitfast autojump)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -109,7 +109,7 @@ export NVM_DIR="$HOME/.nvm"
 
 export PATH=$PATH:~/.yarn/bin/
 export PATH=$PATH:$HOME/.config/yarn/global
-. /usr/share/autojump/autojump.sh
+#. /usr/share/autojump/autojump.sh
 
 alias icsfmt="cargo +nightly-2019-12-19 fmt"
 alias fmt="cargo +nightly-2020-02-23 fmt"
