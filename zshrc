@@ -2,7 +2,7 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH="/home/juhyung/.oh-my-zsh"
+export ZSH=$HOME"/.oh-my-zsh"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -108,7 +108,7 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 export PATH=$PATH:~/.yarn/bin/
-export PATH=$PATH:/home/juhyung/.config/yarn/global
+export PATH=$PATH:$HOME/.config/yarn/global
 . /usr/share/autojump/autojump.sh
 
 alias icsfmt="cargo +nightly-2019-12-19 fmt"
@@ -143,7 +143,7 @@ export PATH=$PATH:$HOME/bin/firefox
 alias vim=nvim
 alias tmux="TERM=xterm-256color tmux"
 
-export DENO_INSTALL="/home/juhyung/.deno"
+export DENO_INSTALL=$HOME"/.deno"
 export PATH="$DENO_INSTALL/bin:$PATH"
 
 alias update-copyright="git diff --name-only HEAD^ | xargs -L 1 deno --allow-read --allow-write ~/bin/copyright.ts"
