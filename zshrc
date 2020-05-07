@@ -118,7 +118,7 @@ alias clippy="cargo +nightly-2020-02-23 clippy --all --all-targets"
 
 export PATH=$PATH:~/bin
 
-source /usr/share/doc/fzf/examples/key-bindings.zsh
+# source /usr/share/doc/fzf/examples/key-bindings.zsh
 
 alias c='xclip -selection clipboard'
 alias v='xclip -selection clipboard -o'
