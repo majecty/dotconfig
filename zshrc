@@ -111,10 +111,8 @@ export PATH=$PATH:~/.yarn/bin/
 export PATH=$PATH:$HOME/.config/yarn/global
 #. /usr/share/autojump/autojump.sh
 
-alias icsfmt="cargo +nightly-2019-12-19 fmt"
-alias fmt="cargo +nightly-2020-02-23 fmt"
-alias icsclippy="cargo +nightly-2019-12-19 clippy --all --all-targets"
-alias clippy="cargo +nightly-2020-02-23 clippy --all --all-targets"
+alias fmt="cargo +nightly-2020-05-05 fmt"
+alias clippy="cargo +nightly-2020-05-05 clippy --all --all-targets"
 
 export PATH=$PATH:~/bin
 
