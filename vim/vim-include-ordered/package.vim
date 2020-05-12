@@ -28,6 +28,7 @@ Plug 'fatih/vim-go', { 'tag': '*' }
 Plug 'nsf/gocode', { 'tag': 'v.20150303', 'rtp': 'vim' }
 
 " Plugin outside ~/.vim/plugged with post-update hook
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 
 " Unmanaged plugin (manually installed and updated)
@@ -37,7 +38,6 @@ Plug 'tpope/vim-fugitive'
 Plug 'leafgarland/typescript-vim'
 
 Plug 'scrooloose/nerdtree'
-Plug '~/.fzf'
 Plug 'vimwiki/vimwiki'
 Plug 'mhinz/vim-startify'
 Plug 'godlygeek/tabular'
