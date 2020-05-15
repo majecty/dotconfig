@@ -51,6 +51,7 @@ Plug 'editorconfig/editorconfig-vim'
 "    \ 'branch': 'next',
 "    \ 'do': 'bash install.sh',
 "    \ }
+Plug 'rust-lang/rust.vim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " (Optional) Multi-entry selection UI.
 call plug#end()
