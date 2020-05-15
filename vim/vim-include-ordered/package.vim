@@ -52,6 +52,7 @@ Plug 'editorconfig/editorconfig-vim'
 "    \ 'do': 'bash install.sh',
 "    \ }
 Plug 'rust-lang/rust.vim'
+Plug 'tpope/vim-dispatch'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " (Optional) Multi-entry selection UI.
 call plug#end()
