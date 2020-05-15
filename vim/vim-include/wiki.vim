@@ -5,11 +5,6 @@ let wiki.ext = '.md'
 let g:vimwiki_list = [wiki]
 let g:vimwiki_conceallevel = 0
 
-" Search text on curser in the wiki
-nnoremap <F4> :execute "VWS /" . expand("<cword>") . "/" <Bar> :lopen<CR>
-" Show pages that links to this page
-nnoremap <F5> :execute "VWB" <Bar> :lopen<CR>
-
 nmap <Leader>t :VimwikiTable<CR>
 
 function! NewTemplate()
@@ -73,6 +68,11 @@ endfun
 augroup vimwikiauto
     autocmd BufWritePre *wiki/*.md call LastModified()
     autocmd BufRead,BufNewFile *wiki/*.md call NewTemplate()
+    " Search text on curser in the wiki
+    autocmd BufRead *wiki/*.md nnoremap <buffer> <F4> :execute "VWS /" . expand("<cword>") . "/" <Bar> :lopen<CR>
+    " Show pages that links to this page
+    autocmd BufRead *wiki/*.md nnoremap <buffer> <F5> :execute "VWB" <Bar> :lopen<CR>
+
 augroup END
 
 let g:md_modify_disabled = 0
