@@ -47,10 +47,10 @@ Plug 'tpope/vim-obsession'
 Plug 'tomasr/molokai'
 Plug 'thaerkh/vim-workspace'
 Plug 'editorconfig/editorconfig-vim'
-
-Plug 'autozimu/LanguageClient-neovim', {
-    \ 'branch': 'next',
-    \ 'do': 'bash install.sh',
-    \ }
+"Plug 'autozimu/LanguageClient-neovim', {
+"    \ 'branch': 'next',
+"    \ 'do': 'bash install.sh',
+"    \ }
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " (Optional) Multi-entry selection UI.
 call plug#end()
