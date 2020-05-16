@@ -54,5 +54,6 @@ Plug 'editorconfig/editorconfig-vim'
 Plug 'rust-lang/rust.vim'
 Plug 'tpope/vim-dispatch'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'editorconfig/editorconfig-vim'
 " (Optional) Multi-entry selection UI.
 call plug#end()
