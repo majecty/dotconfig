@@ -1,5 +1,5 @@
 let wiki = {}
-let wiki.path = '/home/juhyung/vim-jekyll-wiki/_wiki/'
+let wiki.path = $HOME . '/vim-jekyll-wiki/_wiki/'
 let wiki.ext = '.md'
 
 let g:vimwiki_list = [wiki]
