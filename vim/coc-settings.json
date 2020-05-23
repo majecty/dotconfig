@@ -1,0 +1,26 @@
+{
+    "rust-analyzer.rustfmt.overrideCommand": [
+        "/home/juhyung/.rustup/toolchains/nightly-2020-05-05-x86_64-unknown-linux-gnu/bin/rustfmt"
+    ],
+    "languageserver": {
+        "clojure-lsp": {
+            "command": "bash",
+            "args": [
+                "-c",
+                "clojure-lsp"
+            ],
+            "filetypes": [
+                "clojure"
+            ],
+            "rootPatterns": [
+                "project.clj"
+            ],
+            "additionalSchemes": [
+                "jar",
+                "zipfile"
+            ],
+            "trace.server": "verbose",
+            "initializationOptions": {}
+        }
+    }
+}
