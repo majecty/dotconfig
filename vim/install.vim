@@ -1,4 +1,4 @@
-if [ -e file ]
+if [ -e ~/.vimrc ]
     then cp ~/.vimrc ~/.vimrc.backup
 fi
 
