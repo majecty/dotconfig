@@ -26,3 +26,15 @@ nnor ,fn :let @"=expand("%")<CR>      " Mnemonic: yank File Name
 nnoremap <C-n> :noh<CR>
 
 nnoremap <leader>bd :bd<CR><C-G>
+
+" copied from https://stackoverflow.com/a/51424640/2756490
+let s:fontsize = 12
+function! AdjustFontSize(amount)
+  let s:fontsize = s:fontsize+a:amount
+  :execute "GuiFont! Dejavu Sans Mono:h" . s:fontsize
+endfunction
+
+noremap <C-ScrollWheelUp> :call AdjustFontSize(1)<CR>
+noremap <C-ScrollWheelDown> :call AdjustFontSize(-1)<CR>
+inoremap <C-ScrollWheelUp> <Esc>:call AdjustFontSize(1)<CR>a
+inoremap <C-ScrollWheelDown> <Esc>:call AdjustFontSize(-1)<CR>a
