@@ -101,26 +101,12 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-export PATH=$PATH:~/.cargo/bin/
-
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
-export PATH=$PATH:~/.yarn/bin/
-export PATH=$PATH:$HOME/.config/yarn/global
 #. /usr/share/autojump/autojump.sh
-
-alias fmt="cargo +nightly-2020-05-05 fmt"
-alias clippy="cargo +nightly-2020-05-05 clippy --all --all-targets"
-
-export PATH=$PATH:~/bin
 
 # source /usr/share/doc/fzf/examples/key-bindings.zsh
 
 alias c='xclip -selection clipboard'
 alias v='xclip -selection clipboard -o'
-
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
@@ -129,20 +115,15 @@ magit () {
     emacsclient -c
 }
 
-export PATH=$PATH:~/bin/dynalist-1.0.5
 alias cac='cargo check'
 export EDITOR=nvim
 
 export ZSH_ALIAS_FINDER_AUTOMATIC=true
 
-export PATH=$PATH:/snap/bin/
-export PATH=$PATH:$HOME/bin/firefox
-
 alias vim=nvim
 alias tmux="TERM=xterm-256color tmux"
 
 export DENO_INSTALL=$HOME"/.deno"
-export PATH="$DENO_INSTALL/bin:$PATH"
 
 alias update-copyright="git diff --name-only HEAD^ | xargs -L 1 deno --allow-read --allow-write ~/bin/copyright.ts"
 alias vimdiff='nvim -d'
@@ -152,3 +133,12 @@ mkcdir ()
     mkdir -p -- "$1" &&
       cd -P -- "$1"
 }
+
+alias rust-musl-builder='docker run --rm -it -v "$(pwd)":/home/rust/src majecty/rust-musl-cross:aarch64-musl'
+alias rust-musl-build='rust-musl-builder cargo rustc -- -C link-arg=-lgcc'
+alias rust-musl-build-release='rust-musl-builder cargo rustc --release -- -C link-arg=-lgcc'
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
