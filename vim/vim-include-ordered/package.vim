@@ -58,5 +58,6 @@ Plug 'editorconfig/editorconfig-vim'
 Plug 'fholgado/minibufexpl.vim'
 Plug 'othree/html5.vim'
 Plug 'mattn/emmet-vim'
+Plug 'lambdalisue/suda.vim'
 " (Optional) Multi-entry selection UI.
 call plug#end()
