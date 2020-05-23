@@ -130,3 +130,5 @@ set nofoldenable
 " Disable backup
 set nobackup
 set noswapfile
+
+set diffopt+=vertical
