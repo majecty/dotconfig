@@ -59,5 +59,6 @@ Plug 'fholgado/minibufexpl.vim'
 Plug 'othree/html5.vim'
 Plug 'mattn/emmet-vim'
 Plug 'lambdalisue/suda.vim'
+Plug 'scrooloose/nerdcommenter'
 " (Optional) Multi-entry selection UI.
 call plug#end()
