@@ -2,6 +2,7 @@
 nnoremap <F1><F1> :Files<cr>
 let g:fzf_preview_window = 'right:60%'
 nnoremap <Leader>r :RG<cr>
+nnoremap <Leader>bb :Buffers<cr>
 
 function! RipgrepFzf(query, fullscreen)
   let command_fmt = 'rg --column --line-number --no-heading --color=always --smart-case %s || true'
