@@ -138,7 +138,3 @@ alias rust-musl-builder='docker run --rm -it -v "$(pwd)":/home/rust/src majecty/
 alias rust-musl-build='rust-musl-builder cargo rustc -- -C link-arg=-lgcc'
 alias rust-musl-build-release='rust-musl-builder cargo rustc --release -- -C link-arg=-lgcc'
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-

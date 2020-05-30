@@ -13,3 +13,6 @@ export PATH=$PATH:$HOME/bin/firefox
 export PATH="$DENO_INSTALL/bin:$PATH"
 export PATH=$PATH:$HOME/.nvm/versions/node/v13.12.0/bin
 export PATH=$PATH:$HOME/bin/go/bin
+# fnm
+export PATH=/home/juhyung/.fnm:$PATH
+eval "`fnm env --multi`"
