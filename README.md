@@ -10,3 +10,9 @@ vim이나 emacs, .zshrc등 다시 설정하기 귀찮은 설정파일들을 백�
 ln -s -r zshenv $HOME/.zshenv
 ln -s -r zshrc $HOME/.zshrc
 ```
+
+# tmux.conf
+
+```
+ln -s -r tmux.conf $HOME/.tmux.conf
+```
