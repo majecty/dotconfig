@@ -23,5 +23,6 @@
             "trace.server": "verbose",
             "initializationOptions": {}
         }
-    }
+    },
+    "coc.preferences.formatOnSaveFiletypes": ["markdown"]
 }
