@@ -44,3 +44,6 @@ vmap <c-s> <Esc><c-s>gv
 imap <c-s> <Esc><c-s>
 
 nnoremap <leader>bs :buffers<CR>
+
+nnoremap <leader>; :
+nnoremap <leader>;e<leader> :e<CR>
