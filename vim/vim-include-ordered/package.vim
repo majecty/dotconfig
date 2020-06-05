@@ -15,7 +15,6 @@ Plug 'https://github.com/junegunn/vim-github-dashboard.git'
 Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 
 " On-demand loading
-Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
 
 " Using a non-master branch
@@ -37,7 +36,6 @@ Plug '~/my-prototype-plugin'
 Plug 'tpope/vim-fugitive'
 Plug 'leafgarland/typescript-vim'
 
-Plug 'scrooloose/nerdtree'
 Plug 'vimwiki/vimwiki'
 Plug 'mhinz/vim-startify'
 Plug 'godlygeek/tabular'
@@ -61,5 +59,6 @@ Plug 'mattn/emmet-vim'
 Plug 'lambdalisue/suda.vim'
 Plug 'scrooloose/nerdcommenter'
 Plug 'shougo/echodoc'
+Plug 'tpope/vim-vinegar'
 " (Optional) Multi-entry selection UI.
 call plug#end()
