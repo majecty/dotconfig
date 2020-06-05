@@ -105,9 +105,6 @@ source $ZSH/oh-my-zsh.sh
 
 # source /usr/share/doc/fzf/examples/key-bindings.zsh
 
-alias c='xclip -selection clipboard'
-alias v='xclip -selection clipboard -o'
-
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 magit () {

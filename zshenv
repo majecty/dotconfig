@@ -22,3 +22,7 @@ export PATH=$PATH:$HOME/bin/go/bin
 # fnm
 export PATH=/home/juhyung/.fnm:$PATH
 eval "`fnm env --multi`"
+
+alias c='xclip -selection clipboard'
+alias v='xclip -selection clipboard -o'
+
