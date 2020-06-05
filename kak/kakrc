@@ -3,7 +3,7 @@ declare-option str jhconfig_kak_path "/home/juhyung/jhconfig/kak"
 source "%opt{jhconfig_kak_path}/import-ordered/plugins.kak"
 
 evaluate-commands %sh{
-    for f in $kak_opt_jhconfig_kak_path/import-unordered/*
+    for f in $kak_opt_jhconfig_kak_path/import-unordered/*.kak
     do
         printf "source \"%s\"\n" $f
     done
