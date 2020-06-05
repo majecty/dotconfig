@@ -60,5 +60,6 @@ Plug 'othree/html5.vim'
 Plug 'mattn/emmet-vim'
 Plug 'lambdalisue/suda.vim'
 Plug 'scrooloose/nerdcommenter'
+Plug 'shougo/echodoc'
 " (Optional) Multi-entry selection UI.
 call plug#end()
