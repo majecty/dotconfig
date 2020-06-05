@@ -6,3 +6,4 @@ plug "alexherbo2/prelude.kak"
 plug "ul/kak-lsp" do %{
         cargo install --locked --force --path .
 }
+plug "gustavo-hms/luar"
