@@ -25,5 +25,6 @@
         }
     },
     "coc.preferences.formatOnSaveFiletypes": ["javascript", "markdown", "rust"],
-    "suggest.echodocSupport": true
+    "suggest.echodocSupport": true,
+    "diagnostic.virtualText": true
 }
