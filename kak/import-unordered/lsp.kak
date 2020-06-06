@@ -1,5 +1,5 @@
 # eval %sh{kak-lsp --kakoune -s $kak_session}
-hook global WinSetOption filetype=(rust|javascript) %{
+hook global WinSetOption filetype=(rust|javascript|html) %{
     lsp-enable-window
 }
 
