@@ -26,3 +26,5 @@ eval "`fnm env --multi`"
 alias c='xclip -selection clipboard'
 alias v='xclip -selection clipboard -o'
 alias kakrc='kak -s kakrc ~/jhconfig/kak/kakrc'
+alias mic2speaker-on='pactl load-module module-loopback latency_msec=1'
+alias mic2speaker-off='pactl unload-module module-loopback'
