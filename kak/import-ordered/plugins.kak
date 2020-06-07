@@ -7,3 +7,4 @@ plug "ul/kak-lsp" do %{
         cargo install --locked --force --path .
 }
 plug "gustavo-hms/luar"
+plug "atomrc/kakoune-jsdoc"
