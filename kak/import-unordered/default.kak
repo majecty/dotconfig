@@ -60,4 +60,20 @@ alias global fa find-edit-all
 alias global nb rename-buffer
 alias global nc rename-client
 alias global ns rename-session
- 
+
+ define-command delete-buffers-matching -params 1 %{
+     evaluate-commands -buffer * %{
+           evaluate-commands %sh{ case "$kak_buffile" in $1) echo delete-buffer ;; esac }
+     }
+ }
+
+map global normal <backspace> ';'
+
+# Type <character><character> to leave insert mode.
+# ["jj", "kk"]
+hook global InsertChar '[jk]' %{
+  try %{
+    execute-keys -draft "hH<a-k>%val{hook_param}%val{hook_param}<ret>d"
+    execute-keys <esc>
+  }
+}
