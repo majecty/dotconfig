@@ -164,3 +164,9 @@ _fzf_complete_git() {
 _fzf_complete_git_post() {
     sed -e 's/^[^a-z0-9]*//' | awk '{print $1}'
 }
+
+if (( $+commands[tag] )); then
+  tag() { command tag "$@"; source ${TAG_ALIAS_FILE:-/tmp/tag_aliases} 2>/dev/null }
+fi
+
+export TAG_CMD_FMT_STRING="kak {{.Filename}} +{{.LineNumber}}:{{.ColumnNumber}}"
