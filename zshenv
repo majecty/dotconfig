@@ -26,6 +26,10 @@ eval `fnm env`
 
 alias c='xclip -selection clipboard'
 alias v='xclip -selection clipboard -o'
+
+alias tmuxc='tmux loadb -'
+alias tmuxv='tmux saveb -'
+
 alias kakrc='kak -s kakrc ~/jhconfig/kak/kakrc'
 alias zshrc='kak -s zshrc ~/jhconfig/zshrc'
 alias zshenv='kak -s zshenv ~/jhconfig/zshenv'
