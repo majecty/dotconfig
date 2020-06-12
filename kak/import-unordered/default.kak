@@ -26,7 +26,8 @@ hook global InsertCompletionShow .* %{ map window insert <tab> <c-n>; map window
 hook global InsertCompletionHide .* %{ unmap window insert <tab> <c-n>; unmap window insert <s-tab> <c-p> }
 
 define-command new-split "tmux-terminal-vertical kak -c %val{session}"
-alias global nss new-split
+map global normal <c-n> ': new-split<ret>'
+map global normal <c-v> ': new<ret>'
 
 set-option global autoreload yes
 set-option global grepcmd 'rg --column --with-filename'
