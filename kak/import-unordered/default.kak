@@ -26,4 +26,37 @@ hook global InsertCompletionShow .* %{ map window insert <tab> <c-n>; map window
 hook global InsertCompletionHide .* %{ unmap window insert <tab> <c-n>; unmap window insert <s-tab> <c-p> }
 
 define-command new-split "tmux-terminal-vertical kak -c %val{session}"
-alias global ns new-split
+alias global nss new-split
+
+set-option global autoreload yes
+set-option global grepcmd 'rg --column --with-filename'
+set-option global tabstop 2
+set-option global indentwidth 2
+
+define-command scratch %{
+      edit -scratch '*scratch*'
+}
+
+define-command scratch-reload %{
+      edit! -scratch '*scratch*'
+}
+
+define-command find-edit -params 1 -shell-script-candidates 'fd --type file' %{
+      edit %arg{1}
+}
+
+define-command find-edit-all -params 1 -shell-script-candidates 'fd --hidden --no-ignore --type file' %{
+      edit %arg{1}
+}
+
+alias global s scratch
+alias global s! scratch-reload
+
+alias global f find-edit
+alias global fa find-edit-all
+
+# Rename buffers, clients and sessions
+alias global nb rename-buffer
+alias global nc rename-client
+alias global ns rename-session
+ 
