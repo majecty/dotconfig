@@ -21,7 +21,8 @@ export PATH=$PATH:$HOME/.nvm/versions/node/v13.12.0/bin
 export PATH=$PATH:$HOME/bin/go/bin
 # fnm
 export PATH=/home/juhyung/.fnm:$PATH
-eval "`fnm env --multi`"
+# eval "`fnm env --multi`"
+eval `fnm env`
 
 alias c='xclip -selection clipboard'
 alias v='xclip -selection clipboard -o'
