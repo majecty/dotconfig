@@ -4,8 +4,10 @@ hook global WinSetOption filetype=(rust|javascript|html) %{
 }
 
 lsp-auto-hover-enable
+lsp-auto-signature-help-enable
 set-option global lsp_hover_anchor true
 set-option global lsp_hover_max_lines 20
+set-option global lsp_auto_highlight_references true
 
 hook global WinSetOption filetype=rust %{
   hook window -group rust-inlay-hints BufReload .* rust-analyzer-inlay-hints
@@ -16,6 +18,9 @@ hook global WinSetOption filetype=rust %{
   }
 }
 
+map global goto i '<esc>: lsp-implementation<ret>' -docstring 'implementation'
+
+map global lsp -docstring 'rename' 2 ':lsp-rename-prompt<ret>'
 # output debug logs for kak-lsp
 # nop %sh{
 #  (kak-lsp -s $kak_session -vvv ) > /tmp/lsp_"$(date +%F-%T-%N)"_kak-lsp_log 2>&1 < /dev/null &
