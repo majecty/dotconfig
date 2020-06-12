@@ -2,6 +2,8 @@ map global user -docstring 'fzf-mode' f ':fzf-mode<ret>'
 map global user -docstring 'lsp-mode' l ':enter-user-mode lsp<ret>'
 map global user -docstring 'lsp hover' h ':lsp hover<ret>'
 map global user -docstring 'format' o ':format<ret>'
+map global user -docstring 'buffer' b ': enter-user-mode buffers<ret>'
+map global user -docstring 'buffer' B ': enter-user-mode -lock buffers<ret>'
 
 declare-user-mode path-mode
 map global user -docstring 'path mode' a ':enter-user-mode path-mode<ret>'

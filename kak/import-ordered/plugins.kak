@@ -8,3 +8,4 @@ plug "ul/kak-lsp" do %{
 }
 plug "gustavo-hms/luar"
 plug "atomrc/kakoune-jsdoc"
+plug "delapouite/kakoune-buffers"
