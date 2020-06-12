@@ -1,0 +1,9 @@
+use std::ops::Deref;
+
+impl<T> Deref for DerefExample<T> {
+    type Target = T;
+
+    fn deref(&self) -> &Self::Target {
+        &self.value
+    }
+}
