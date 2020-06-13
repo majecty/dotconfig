@@ -1,0 +1,16 @@
+
+[language.rust]
+filetypes = ["rust"]
+roots = ["Cargo.toml"]
+command = "rust-analyzer"
+
+[language.javascript]
+filetypes = ["javascript"]
+roots = ["package.json"]
+command = "javascript-typescript-stdio"
+
+[language.html]
+filetypes = ["html"]
+roots = ["package.json"]
+command = "html-languageserver"
+args = ["--stdio"]
