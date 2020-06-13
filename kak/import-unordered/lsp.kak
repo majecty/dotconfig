@@ -1,13 +1,16 @@
 # eval %sh{kak-lsp --kakoune -s $kak_session}
-hook global WinSetOption filetype=(rust|javascript|html) %{
+hook global WinSetOption filetype=(rust|javascript|html|typescript) %{
     lsp-enable-window
+}
+
+hook global WinSetOption filetype=(rust|typescript) %{
+  set-option global lsp_auto_highlight_references true
 }
 
 lsp-auto-hover-enable
 lsp-auto-signature-help-enable
 set-option global lsp_hover_anchor true
 set-option global lsp_hover_max_lines 20
-set-option global lsp_auto_highlight_references true
 
 hook global WinSetOption filetype=rust %{
   hook window -group rust-inlay-hints BufReload .* rust-analyzer-inlay-hints

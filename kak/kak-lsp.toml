@@ -14,3 +14,9 @@ filetypes = ["html"]
 roots = ["package.json"]
 command = "html-languageserver"
 args = ["--stdio"]
+
+[language.typescript]
+filetypes = ["typescript"]
+roots = ["tsconfig.json"]
+command = "typescript-language-server"
+args = ["--stdio"]
