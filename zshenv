@@ -7,8 +7,8 @@ alias cc-22x-clippy='cargo +nightly-2019-10-13 clippy --all --all-targets'
 
 alias cc-master-fmt='cargo +nightly-2019-12-19 fmt'
 alias cc-master-clippy='cargo +nightly-2019-12-19 clippy --all --all-targets'
+export PATH=$HOME/.local/bin:$PATH
 export PATH=$PATH:/home/juhyung/bin
-export PATH=$PATH:$HOME/.local/bin
 export PATH=$PATH:~/.cargo/bin/
 export PATH=$PATH:~/bin
 export PATH=$PATH:~/.yarn/bin/
@@ -40,3 +40,4 @@ export FZF_DEFAULT_COMMAND='fd --type f'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export TAG_SEARCH_PROG=rg
 export PATH=$PATH:~/go/bin
+export EDITOR=kak
