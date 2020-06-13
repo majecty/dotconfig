@@ -16,3 +16,28 @@ ln -s -r zshrc $HOME/.zshrc
 ```
 ln -s -r tmux.conf $HOME/.tmux.conf
 ```
+
+# kak
+
+## kakrc 임포트하기
+
+kak 설정파일이 ~/jhconfig/kak/kakrc 를 임포트하게 만들어야 한다.
+
+```
+# 예시
+source "/home/juhyung/jhconfig/kak/kakrc"
+```
+
+## plugin 설치하기
+
+kak을 켠 뒤 :plug-install을 실행한다.
+kak-lsp의 경우 Rust 컴파일을 해야하므로 시간이 걸린다.
+
+## kak-lsp 옵션 링크하기
+
+kak-lsp.toml 파일의 심볼링 링크를 만든다.
+
+```
+ln -s kak-lsp.toml ~/.config/kak-lsp/kak-lsp.toml
+```
+
