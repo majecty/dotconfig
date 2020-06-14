@@ -77,3 +77,5 @@ hook global InsertChar '[jk]' %{
     execute-keys <esc>
   }
 }
+
+addhl global/ wrap
