@@ -33,6 +33,7 @@ alias tmuxv='tmux saveb -'
 alias kakrc='kak -s kakrc ~/jhconfig/kak/kakrc'
 alias zshrc='kak -s zshrc ~/jhconfig/zshrc'
 alias zshenv='kak -s zshenv ~/jhconfig/zshenv'
+alias tmuxconf='kak -s tmuxconf ~/jhconfig/tmux.conf'
 alias mic2speaker-on='pactl load-module module-loopback latency_msec=1'
 alias mic2speaker-off='pactl unload-module module-loopback'
 eval "$(luarocks path)"
