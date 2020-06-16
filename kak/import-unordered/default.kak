@@ -79,3 +79,5 @@ hook global InsertChar '[jk]' %{
 }
 
 addhl global/ wrap
+
+define-command grey "colorscheme greyscale"
