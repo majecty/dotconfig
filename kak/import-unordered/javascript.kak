@@ -4,7 +4,6 @@ hook global WinSetOption filetype=javascript %{
     # formatting with prettier `npm i prettier --save-dev`
     set-option window formatcmd 'prettier --parser flow'
 
-    alias window fix format2 # the patched version, renamed to `format2`.
     lint-enable
 }
 
