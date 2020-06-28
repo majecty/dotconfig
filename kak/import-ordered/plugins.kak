@@ -16,3 +16,4 @@ plug "eraserhd/kak-ansi" do %{
   make
 }
 plug "Delapouite/kakoune-colors" theme
+plug 'delapouite/kakoune-palette'
