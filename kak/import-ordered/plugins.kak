@@ -15,3 +15,4 @@ plug "WhatNodyn/kakoune-wakatime"
 plug "eraserhd/kak-ansi" do %{
   make
 }
+plug "Delapouite/kakoune-colors" theme
