@@ -94,3 +94,5 @@ define-command open-config -params 1 -shell-script-candidates 'fd --type file . 
 define-command open-kakoune-default-config -params 1 -shell-script-candidates 'fd --type file . ~/.local/share/kak/ ~/.config/kak/' %{
   edit %arg{1}
 }
+
+addhl global/ show-whitespaces
