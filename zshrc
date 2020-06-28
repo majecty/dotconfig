@@ -176,3 +176,6 @@ export PATH=$HOME/.local/bin:$PATH
 export PAGER=kak
 export MANPAGER=kak-man-pager
 alias kak-debug="kak -e open-debug"
+
+export STARSHIP_CONFIG=~/jhconfig/starship.toml
+eval $(starship init zsh)
