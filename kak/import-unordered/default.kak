@@ -82,3 +82,15 @@ addhl global/ wrap
 
 define-command grey "colorscheme greyscale"
 define-command source-this %{ source %val{buffile} }
+
+define-command open-debug %{
+	tmux-terminal-vertical kak -c %val{session} -e "buffer *debug*"
+}
+
+define-command open-config -params 1 -shell-script-candidates 'fd --type file . ~/jhconfig/kak' %{
+  edit %arg{1}
+}
+
+define-command open-kakoune-default-config -params 1 -shell-script-candidates 'fd --type file . ~/.local/share/kak/ ~/.config/kak/' %{
+  edit %arg{1}
+}
