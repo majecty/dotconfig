@@ -172,3 +172,6 @@ fi
 export TAG_CMD_FMT_STRING="kak {{.Filename}} +{{.LineNumber}}:{{.ColumnNumber}}"
 # For the kak
 export PATH=$HOME/.local/bin:$PATH
+
+export PAGER=kak
+export MANPAGER=kak-man-pager
