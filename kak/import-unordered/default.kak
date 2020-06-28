@@ -61,11 +61,11 @@ alias global nb rename-buffer
 alias global nc rename-client
 alias global ns rename-session
 
- define-command delete-buffers-matching -params 1 %{
-     evaluate-commands -buffer * %{
-           evaluate-commands %sh{ case "$kak_buffile" in $1) echo delete-buffer ;; esac }
-     }
- }
+define-command delete-buffers-matching -params 1 %{
+  evaluate-commands -buffer * %{
+    evaluate-commands %sh{ case "$kak_buffile" in $1) echo delete-buffer ;; esac }
+  }
+}
 
 map global normal <backspace> ';'
 
