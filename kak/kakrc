@@ -1,7 +1,7 @@
 declare-option str jhconfig_kak_path "/home/juhyung/jhconfig/kak"
 
 source "%opt{jhconfig_kak_path}/import-ordered/plugins.kak"
-colorscheme github
+colorscheme seagull
 
 evaluate-commands %sh{
     for f in $kak_opt_jhconfig_kak_path/import-unordered/*.kak
