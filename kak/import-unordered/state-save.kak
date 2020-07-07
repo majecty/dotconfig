@@ -1,11 +1,11 @@
 
 hook global KakBegin .* %{
-    state-save-reg-sync colon
-    state-save-reg-sync pipe
-    state-save-reg-sync slash
+    state-save-reg-load colon
+    state-save-reg-load pipe
+    state-save-reg-load slash
 }
 hook global KakEnd .* %{
-    state-save-reg-sync colon
-    state-save-reg-sync pipe
-    state-save-reg-sync slash
+    state-save-reg-save colon
+    state-save-reg-save pipe
+    state-save-reg-save slash
 }
