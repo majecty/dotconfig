@@ -113,7 +113,7 @@ magit () {
 }
 
 alias cac='cargo check'
-export EDITOR=nvim
+export EDITOR=kak
 
 export ZSH_ALIAS_FINDER_AUTOMATIC=true
 
