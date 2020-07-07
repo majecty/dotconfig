@@ -26,8 +26,7 @@ map global goto i '<esc>: lsp-implementation<ret>' -docstring 'implementation'
 map global lsp -docstring 'rename' 2 ':lsp-rename-prompt<ret>'
 
 # output debug logs for kak-lsp
-# nop %sh{
+nop %sh{
   # (kak-lsp -s $kak_session -vvv ) > /tmp/lsp_"$(date +%F-%T-%N)"_kak-lsp_log 2>&1 < /dev/null &
-  # (kak-lsp -s $kak_session -vvv ) > /tmp/lsp_kak-lsp_log 2>&1 < /dev/null &
-# }
-# lsp-auto-hover-enable
+  (RUST_BACKTRACE=full kak-lsp -s $kak_session -vvv ) > /tmp/lsp_kak-lsp_log 2>&1 < /dev/null &
+}
