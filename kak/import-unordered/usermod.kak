@@ -16,3 +16,8 @@ map global path-move-mode -docstring 'cd to file parent' p ':cd %sh{dirname $kak
 declare-user-mode path-print-mode
 map global path-print-mode -docstring 'print current dir' c ':echo %sh{pwd}<ret>'
 map global path-print-mode -docstring 'print file parent' p ':echo %sh{dirname $kak_buffile}<ret>'
+
+declare-user-mode window-mode
+map global normal -docstring 'window mode' <c-w> ':enter-user-mode window-mode<ret>'
+map global insert -docstring 'window mode' <c-w> '<esc>:enter-user-mode window-mode<ret>'
+map global window-mode -docstring 'exit' <c-q> ':quit<ret>'
