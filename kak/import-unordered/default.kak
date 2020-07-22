@@ -102,3 +102,6 @@ map -docstring 'c-q to esc' global prompt <c-q> <esc>
 
 map -docstring 'save' global normal <c-a-a> ':w<ret>'
 map -docstring 'save' global insert <c-a-a> '<esc>:w<ret>'
+
+map global insert <tab> '<a-;><gt>'
+map global insert <s-tab> '<a-;><lt>'
