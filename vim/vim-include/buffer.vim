@@ -6,3 +6,4 @@ function! CleanEmptyBuffers()
 endfunction
 
 nnoremap <leader>bde :call CleanEmptyBuffers()<CR>
+nnoremap <leader>bn :bn<CR>
