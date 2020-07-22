@@ -182,3 +182,17 @@ eval $(starship init zsh)
 
 source ~/perl5/perlbrew/etc/bashrc
 eval $(perl -I ~/perl5/lib/perl5/ -Mlocal::lib)
+
+# Environment variables
+export KAKOUNE_SESSION=kakoune
+
+# Functions
+kamux() {
+  KAKOUNE_SESSION=$(tmux display-message -p '#{session_name}') \
+  kak-wrapper "$@"
+}
+
+# Aliases
+alias kak=kak-wrapper
+#
+#
