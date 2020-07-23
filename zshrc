@@ -197,7 +197,11 @@ ka.() {
   kak-wrapper "$@"
 }
 
+kanew() {
+  KAKOUNE_SESSION=$(print-random.lua | sed --expression "s/\.//g") \
+  kak-wrapper "$@"
+}
+
 # Aliases
 alias kak=kak-wrapper
-#
-#
+
