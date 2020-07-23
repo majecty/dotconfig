@@ -45,3 +45,4 @@ export EDITOR=kak
 export PATH=$PATH:$HOME/perl5/bin
 export BAT_THEME=OneHalfLight
 export PATH=$PATH:~/jhconfig/bin
+export PATH=$PATH:~/jhconfig/lua
