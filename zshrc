@@ -192,6 +192,11 @@ kamux() {
   kak-wrapper "$@"
 }
 
+ka.() {
+  KAKOUNE_SESSION=$(pwd | sed --expression "s/\//_/g") \
+  kak-wrapper "$@"
+}
+
 # Aliases
 alias kak=kak-wrapper
 #
