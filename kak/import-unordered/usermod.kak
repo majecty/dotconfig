@@ -4,6 +4,7 @@ map global user -docstring 'lsp hover' h ':lsp hover<ret>'
 map global user -docstring 'format' o ':format<ret>'
 map global user -docstring 'buffer' b ': enter-user-mode buffers<ret>'
 map global user -docstring 'buffer' B ': enter-user-mode -lock buffers<ret>'
+map global user -docstring 'filetype' <c-f> ':enter-user-mode filetype-mode<ret>'
 
 declare-user-mode path-mode
 map global user -docstring 'path mode' a ':enter-user-mode path-mode<ret>'
@@ -21,3 +22,7 @@ declare-user-mode window-mode
 map global normal -docstring 'window mode' <c-w> ':enter-user-mode window-mode<ret>'
 map global insert -docstring 'window mode' <c-w> '<esc>:enter-user-mode window-mode<ret>'
 map global window-mode -docstring 'exit' <c-q> ':quit<ret>'
+
+declare-user-mode filetype-mode
+map global filetype-mode -docstring 'highlight shell' s ':set buffer filetype sh<ret>'
+map global filetype-mode -docstring 'highlight json' j ':set buffer filetype json<ret>'
