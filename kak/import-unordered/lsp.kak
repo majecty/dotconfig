@@ -7,7 +7,32 @@ hook global WinSetOption filetype=(rust|typescript) %{
   set-option global lsp_auto_highlight_references true
 }
 
+map -docstring 'toggle-hover' global insert <c-l> '<esc>:jh-lsp-hover-toggle<ret>i'
+map -docstring 'toggle-hover' global normal  <c-l> ':jh-lsp-hover-toggle<ret>'
+
+declare-option -docstring "toggle statue of lsp" -hidden bool jh_lsp_hover_toggle true
+# initialize to true. this is global scope
 lsp-auto-hover-enable
+
+define-command -hidden jh-lsp-hover-enable -docstring "enable lsp hover" %{
+  lsp-auto-hover-enable
+  lsp-auto-hover-insert-mode-enable
+  set-option buffer jh_lsp_hover_toggle true
+}
+define-command -hidden jh-lsp-hover-disable -docstring "disable lsp hover" %{
+  lsp-auto-hover-disable
+  lsp-auto-hover-insert-mode-disable
+  set-option buffer jh_lsp_hover_toggle false
+}
+define-command -hidden jh-lsp-hover-toggle -docstring "toggle lsp hover" %{ lua %opt{jh_lsp_hover_toggle} %{
+  local is_on = args()
+  if is_on then
+    kak.jh_lsp_hover_disable()
+  else
+    kak.jh_lsp_hover_enable()
+  end
+}}
+
 lsp-auto-signature-help-enable
 set-option global lsp_hover_anchor true
 set-option global lsp_hover_max_lines 20
