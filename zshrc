@@ -107,10 +107,8 @@ source $ZSH/oh-my-zsh.sh
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-magit () {
-    emacsclient --eval "(call-interactively #'magit-status)"
-    emacsclient -c
-}
+# coppied from https://www.reddit.com/r/emacs/comments/9b1bhs/emacsshell_protip_alias_magit/
+alias magit='emacsclient -nw -a emacs -e "(magit-status \"$(git rev-parse --show-toplevel)\")"'
 
 alias cac='cargo check'
 export EDITOR=kak
