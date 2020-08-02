@@ -60,5 +60,7 @@ Plug 'lambdalisue/suda.vim'
 Plug 'scrooloose/nerdcommenter'
 Plug 'shougo/echodoc'
 Plug 'tpope/vim-vinegar'
+Plug 'tmux-plugins/vim-tmux-focus-events'
+Plug 'roxma/vim-tmux-clipboard'
 " (Optional) Multi-entry selection UI.
 call plug#end()
