@@ -62,5 +62,6 @@ Plug 'shougo/echodoc'
 Plug 'tpope/vim-vinegar'
 Plug 'tmux-plugins/vim-tmux-focus-events'
 Plug 'roxma/vim-tmux-clipboard'
+Plug 'idanarye/vim-casetrate'
 " (Optional) Multi-entry selection UI.
 call plug#end()
