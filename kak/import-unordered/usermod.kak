@@ -24,6 +24,7 @@ declare-user-mode window-mode
 map global normal -docstring 'window mode' <c-w> ':enter-user-mode window-mode<ret>'
 map global insert -docstring 'window mode' <c-w> '<esc>:enter-user-mode window-mode<ret>'
 map global window-mode -docstring 'exit' <c-q> ':quit<ret>'
+map global window-mode -docstring 'exit' <c-Q> ':quit!<ret>'
 
 declare-user-mode filetype-mode
 map global filetype-mode -docstring 'highlight shell' s ':set buffer filetype sh<ret>'
