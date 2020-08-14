@@ -18,3 +18,6 @@ plug "eraserhd/kak-ansi" do %{
 }
 plug "Delapouite/kakoune-colors" theme
 plug 'delapouite/kakoune-palette'
+plug "dgmulf/local-kakrc" config %{
+      set-option global source_local_kakrc true
+}
