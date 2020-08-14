@@ -49,3 +49,4 @@ export BAT_THEME=OneHalfLight
 export PATH=$PATH:~/jhconfig/bin
 export PATH=$PATH:~/jhconfig/lua
 export GTK_IM_MODULE=ibus
+export GLFW_IM_MODULE=ibus
