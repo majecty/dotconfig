@@ -186,7 +186,7 @@ export KAKOUNE_SESSION=kakoune
 
 # Functions
 kamux() {
-  KAKOUNE_SESSION=$(tmux display-message -p '#{session_name}') \
+  KAKOUNE_SESSION=$(tmux display-message -p '#{session_name}' | sed --expression "s/\//_/g") \
   kak-wrapper "$@"
 }
 
