@@ -20,3 +20,9 @@ filetypes = ["typescript"]
 roots = ["tsconfig.json"]
 command = "typescript-language-server"
 args = ["--stdio"]
+
+[language.purescript]
+filetypes = ["purescript"]
+roots = ["package.json"]
+command = "purescript-language-server"
+args = ["--stdio"]
