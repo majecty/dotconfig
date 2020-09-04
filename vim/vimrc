@@ -6,7 +6,9 @@ endif
 source $HOME/.vim/vim-include-ordered/package.vim
 source $HOME/.vim/vim-include-ordered/default-config.vim
 
-colorscheme molokai
+colorscheme one
+set background=light
+"colorscheme molokai
 
 for include_file in uniq(sort(globpath(&rtp, 'vim-include/*.vim', 0, 1)))
     execute "source " . include_file
