@@ -48,3 +48,6 @@ nnoremap <leader>bs :buffers<CR>
 
 nnoremap <leader>; :
 nnoremap <leader>;e<leader> :e<CR>
+
+nnoremap <leader>vs :vs<CR>
+nnoremap <leader>sp :sp<CR>
