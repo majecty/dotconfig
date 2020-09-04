@@ -84,6 +84,8 @@ set ruler
  
 " Always display the status line, even if only one window is displayed
 set laststatus=2
+
+set statusline+=\ %F " show full file name in the stateuline with space
  
 " Instead of failing a command because of unsaved changes, instead raise a
 " dialogue asking if you wish to save changed files.
