@@ -4,6 +4,12 @@
     ],
     "npm.binPath": "yarn",
     "languageserver": {
+        "purescript": {
+            "command": "purescript-language-server",
+            "rootPatterns": ["package.json"],
+            "filetypes": ["purescript"],
+            "args": ["--stdio"]
+        },
         "clojure-lsp": {
             "command": "bash",
             "args": [
