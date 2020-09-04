@@ -53,3 +53,12 @@ export GLFW_IM_MODULE=ibus
 
 alias tasd="tmuxlayout asd"
 alias tasdf="tmuxlayout asdf"
+alias tnew="tmux new -s"
+# alias tnewdir="tmux new -s `pwd`"
+
+tnewdir()
+{
+  DIR=$(pwd)
+  BASE=$(basename $DIR)
+  tnew $BASE
+}
