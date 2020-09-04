@@ -2,7 +2,7 @@
 nnoremap <F1><F1> :Files<cr>
 nnoremap <Leader>ff :Files<cr>
 let g:fzf_preview_window = 'right:60%'
-nnoremap <Leader>r :RG<cr>
+nnoremap <Leader>rg :RG<cr>
 nnoremap <Leader>bb :Buffers<cr>
 
 function! RipgrepFzf(query, fullscreen)
