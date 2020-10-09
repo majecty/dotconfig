@@ -39,7 +39,8 @@ evaluate-commands %sh{
          face global bullet $green
          face global list $gray
 
-         face global Default $gray,$white
+         # face global Default $gray,$white
+         face global Default $gray,default
 
          face global PrimarySelection $black,$pink
          face global PrimaryCursor $black,$blue
