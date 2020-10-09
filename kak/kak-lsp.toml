@@ -16,6 +16,12 @@ roots = ["package.json"]
 command = "html-languageserver"
 args = ["--stdio"]
 
+[language.css]
+filetypes = ["css"]
+roots = ["package.json"]
+command = "css-languageserver"
+args = ["--stdio"]
+
 [language.typescript]
 filetypes = ["typescript"]
 roots = ["tsconfig.json"]
