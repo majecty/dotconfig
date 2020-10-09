@@ -57,7 +57,8 @@ evaluate-commands %sh{
          # listchars
          face global Whitespace $lightgray,$white+f
          # ~ lines at EOB
-         face global BufferPadding $lightgray,$white
+         # face global BufferPadding $lightgray,$white
+         face global BufferPadding $lightgray,default
          # must use wrap -marker hl
          face global WrapMarker Whitespace
 
