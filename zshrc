@@ -175,8 +175,8 @@ export PATH=$HOME/.local/bin:$PATH
 # export MANPAGER=kak-man-pager
 alias kak-debug="kak -e open-debug"
 
-export STARSHIP_CONFIG=~/jhconfig/starship.toml
-eval $(starship init zsh)
+# export STARSHIP_CONFIG=~/jhconfig/starship.toml
+# eval $(starship init zsh)
 
 source ~/perl5/perlbrew/etc/bashrc
 eval $(perl -I ~/perl5/lib/perl5/ -Mlocal::lib)
