@@ -37,3 +37,6 @@
 (add-hook 'rust-mode-hook #'lsp)
 (add-hook 'typescript-mode-hook #'lsp)
 
+(when (fboundp 'windmove-default-keybindings)
+  (windmove-default-keybindings))
+
