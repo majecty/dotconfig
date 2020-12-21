@@ -46,3 +46,5 @@
 
 (which-key-mode)
 (ido-mode t)
+(icomplete-mode t)
+
