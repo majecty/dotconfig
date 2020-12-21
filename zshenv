@@ -1,6 +1,6 @@
 alias cac='cargo check'
-alias fmt="cargo +nightly-2020-07-27 fmt"
-alias clippy="cargo +nightly-2020-07-27 clippy --all --all-targets"
+alias fmt="cargo +nightly-2020-10-20 fmt"
+alias clippy="cargo +stable clippy --all --all-targets"
 
 alias cc-22x-fmt='cargo +nightly-2019-10-13 fmt'
 alias cc-22x-clippy='cargo +nightly-2019-10-13 clippy --all --all-targets'
