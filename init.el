@@ -44,3 +44,4 @@
 (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
 (setq projectile-project-search-path '("~/code/" "~/code/kodebox/"))
 
+(which-key-mode)
