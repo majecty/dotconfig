@@ -27,3 +27,11 @@
 
 (global-git-commit-mode)
 (xclip-mode 1)
+(setq lsp-keymap-prefix "s-l")
+(setq read-process-output-max (* (* 1024 1024) 8)) ;; 1mb
+(setq lsp-completion-provider :capf)
+(setq gc-cons-threshold 100000000)
+(require 'lsp-mode)
+(add-hook 'rust-mode-hook #'lsp)
+(add-hook 'typescript-mode-hook #'lsp)
+
