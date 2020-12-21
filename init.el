@@ -45,3 +45,4 @@
 (setq projectile-project-search-path '("~/code/" "~/code/kodebox/"))
 
 (which-key-mode)
+(ido-mode t)
