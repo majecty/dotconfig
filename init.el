@@ -52,3 +52,4 @@
 (require 'frame-fns)
 (require 'frame-cmds)
 (require 'zoom-frm)
+(editorconfig-mode 1)
