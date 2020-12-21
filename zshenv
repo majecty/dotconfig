@@ -52,6 +52,7 @@ export PATH=$PATH:~/jhconfig/lua
 export GTK_IM_MODULE=ibus
 export GLFW_IM_MODULE=ibus
 
+alias tl="tmuxlayout"
 alias tasd="tmuxlayout asd"
 alias tasdf="tmuxlayout asdf"
 alias tnew="tmux new -s"
