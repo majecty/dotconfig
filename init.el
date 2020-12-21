@@ -16,7 +16,8 @@
  '(current-language-environment "UTF-8")
  '(custom-enabled-themes (quote (adwaita)))
  '(default-input-method "korean-hangul390")
- '(package-selected-packages (quote (xclip twittering-mode magit))))
+ '(package-selected-packages
+   '(undo-tree editorconfig treemacs-magit treemacs which-key company fzf rustic rust-mode tide lsp-ui dap-mode flycheck lsp-treemacs lsp-mode xclip twittering-mode magit)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
