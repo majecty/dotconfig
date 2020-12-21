@@ -62,5 +62,6 @@ tnewdir()
 {
   DIR=$(pwd)
   BASE=$(basename $DIR)
-  tnew $BASE
+  BASE2=$(echo $BASE | sed --expression "s/\./_/g")
+  tnew $BASE2
 }
