@@ -49,3 +49,6 @@
 (icomplete-mode t)
 
 (add-to-list 'load-path "~/jhconfig/emacs")
+(require 'frame-fns)
+(require 'frame-cmds)
+(require 'zoom-frm)
