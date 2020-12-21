@@ -48,3 +48,4 @@
 (ido-mode t)
 (icomplete-mode t)
 
+(add-to-list 'load-path "~/jhconfig/emacs")
