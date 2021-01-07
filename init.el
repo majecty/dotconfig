@@ -121,3 +121,8 @@
 (require 'frame-cmds)
 (require 'zoom-frm)
 (editorconfig-mode 1)
+
+(add-hook 'racket-mode-hook
+	  (lambda ()
+	    (define-key racket-mode-map (kbd "<f5>") 'racket-run)))
+
