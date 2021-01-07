@@ -31,6 +31,8 @@
  ;; If there is more than one, they won't work right.
  '(default ((t (:inherit nil :stipple nil :background "#EDEDED" :foreground "#2E3436" :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 120 :width normal :foundry "GOOG" :family "Noto Sans Mono CJK KR")))))
 
+(add-hook 'after-init-hook #'global-flycheck-mode)
+
 (global-git-commit-mode)
 (xclip-mode 1)
 (setq lsp-keymap-prefix "s-l")
