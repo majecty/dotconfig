@@ -140,3 +140,5 @@
 (global-set-key (kbd "C-c C-f C-g") 'fzf-git)
 (global-set-key (kbd "C-c C-f C-p") 'fzf-projectile)
 
+(add-hook 'cider-repl-mode-hook #'company-mode)
+(add-hook 'cider-mode-hook #'company-mode)
