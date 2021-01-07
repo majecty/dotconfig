@@ -33,6 +33,14 @@
 
 (add-hook 'after-init-hook #'global-flycheck-mode)
 
+(use-package flycheck-clj-kondo
+  :ensure t)
+
+(use-package clojure-mode
+  :ensure t
+  :config
+  (require 'flycheck-clj-kondo))
+
 (global-git-commit-mode)
 (xclip-mode 1)
 (setq lsp-keymap-prefix "s-l")
