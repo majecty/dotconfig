@@ -136,3 +136,7 @@
 (add-hook 'scheme-mode-hook           'enable-paredit-mode)
 (add-hook 'clojure-mode-hook          'enable-paredit-mode)
 
+(global-set-key (kbd "C-c C-f C-f") 'fzf)
+(global-set-key (kbd "C-c C-f C-g") 'fzf-git)
+(global-set-key (kbd "C-c C-f C-p") 'fzf-projectile)
+
