@@ -61,6 +61,9 @@
     (add-hook 'scheme-mode-hook #'parinfer-mode)
     (add-hook 'lisp-mode-hook #'parinfer-mode)))
 
+(use-package lsp-haskell
+  :ensure t)
+
 (global-git-commit-mode)
 (xclip-mode 1)
 (setq lsp-keymap-prefix "s-l")
