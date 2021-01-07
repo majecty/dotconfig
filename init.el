@@ -66,7 +66,8 @@
 
 (global-git-commit-mode)
 (xclip-mode 1)
-(setq lsp-keymap-prefix "s-l")
+;; (setq lsp-keymap-prefix "s-l")
+(setq lsp-keymap-prefix "C-c l")
 (setq read-process-output-max (* (* 1024 1024) 8)) ;; 1mb
 (setq lsp-completion-provider :capf)
 (setq gc-cons-threshold 100000000)
