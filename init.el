@@ -1,4 +1,9 @@
 
+(eval-when-compile
+  ;; Following line is not needed if use-package.el is in ~/.emacs.d
+;;  (add-to-list 'load-path "<path where use-package is installed>")
+  (require 'use-package))
+
 ;; Added by Package.el.  This must come before configurations of
 ;; installed packages.  Don't delete this line.  If you don't want it,
 ;; just comment it out by adding a semicolon to the start of the line.
