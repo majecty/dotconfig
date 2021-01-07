@@ -76,6 +76,8 @@
 (require 'lsp-mode)
 (add-hook 'rust-mode-hook #'lsp)
 (add-hook 'typescript-mode-hook #'lsp)
+(add-hook 'js-mode-hook #'lsp)
+(add-hook 'haskell-mode-hook #'lsp)
 
 (when (fboundp 'windmove-default-keybindings)
   (windmove-default-keybindings))
