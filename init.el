@@ -126,3 +126,4 @@
 	  (lambda ()
 	    (define-key racket-mode-map (kbd "<f5>") 'racket-run)))
 
+(setq geiser-active-implementations '(chicken))
