@@ -127,3 +127,12 @@
 	    (define-key racket-mode-map (kbd "<f5>") 'racket-run)))
 
 (setq geiser-active-implementations '(chicken))
+(autoload 'enable-paredit-mode "paredit"
+  "Turn on pseudo-structural editing of Lisp code."
+  t)
+(add-hook 'emacs-lisp-mode-hook       'enable-paredit-mode)
+(add-hook 'lisp-mode-hook             'enable-paredit-mode)
+(add-hook 'lisp-interaction-mode-hook 'enable-paredit-mode)
+(add-hook 'scheme-mode-hook           'enable-paredit-mode)
+(add-hook 'clojure-mode-hook          'enable-paredit-mode)
+
