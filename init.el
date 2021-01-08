@@ -141,3 +141,5 @@
 
 (add-hook 'cider-repl-mode-hook #'company-mode)
 (add-hook 'cider-mode-hook #'company-mode)
+
+(global-set-key (kbd "C-c C-g C-s") 'swiper-isearch-thing-at-point)
