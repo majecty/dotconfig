@@ -113,6 +113,8 @@
     (global-set-key (kbd "C-c k") 'counsel-ag)
     (global-set-key (kbd "C-x l") 'counsel-locate)
     (global-set-key (kbd "C-S-o") 'counsel-rhythmbox)
+    (global-set-key (kbd "C-c C-SPC C-SPC") 'counsel-mark-ring)
+    (global-set-key (kbd "C-c C-SPC C-b") 'counsel-bookmark)
     (define-key minibuffer-local-map (kbd "C-r") 'counsel-minibuffer-history)))
 
 (add-to-list 'load-path "~/jhconfig/emacs")
