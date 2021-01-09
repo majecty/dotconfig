@@ -22,7 +22,7 @@
  '(custom-enabled-themes '(adwaita))
  '(default-input-method "korean-hangul390")
  '(package-selected-packages
-   '(ido-completing-read+ back-button flycheck-clj-kondo lsp-haskell cider parinfer-rust-mode use-package lispy paredit geiser racket-mode undo-tree editorconfig treemacs-magit treemacs which-key company fzf rustic rust-mode tide lsp-ui dap-mode flycheck lsp-treemacs lsp-mode xclip twittering-mode magit))
+   '(discover-clj-refactor clojure-snippets clj-refactor ido-completing-read+ back-button flycheck-clj-kondo lsp-haskell cider parinfer-rust-mode use-package lispy paredit geiser racket-mode undo-tree editorconfig treemacs-magit treemacs which-key company fzf rustic rust-mode tide lsp-ui dap-mode flycheck lsp-treemacs lsp-mode xclip twittering-mode magit))
  '(xterm-mouse-mode t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -116,6 +116,30 @@
     (global-set-key (kbd "C-c C-SPC C-SPC") 'counsel-mark-ring)
     (global-set-key (kbd "C-c C-SPC C-b") 'counsel-bookmark)
     (define-key minibuffer-local-map (kbd "C-r") 'counsel-minibuffer-history)))
+
+(use-package clj-refactor
+  :ensure t
+  :config
+  (progn
+    (require 'clj-refactor)
+    (add-hook 'clojure-mode-hook
+	      (lambda ()
+		(clj-refactor-mode 1)
+		(yas-minor-mode 1)
+		(cljr-add-keybindings-with-prefix "C-c C-m")))))
+
+(use-package discover
+  :ensure t
+  :config
+  (progn
+    (require 'discover)
+    (global-discover-mode 1)))
+
+(use-package clojure-snippets
+  :ensure t)
+
+(use-package discover-clj-refactor
+  :ensure t)
 
 (add-to-list 'load-path "~/jhconfig/emacs")
 (require 'frame-fns)
