@@ -193,3 +193,6 @@
 (add-hook 'cider-mode-hook #'company-mode)
 
 (global-set-key (kbd "C-c C-g C-s") 'swiper-isearch-thing-at-point)
+
+(global-set-key (kbd "C-+") 'zoom-in)
+(global-set-key (kbd "C--") 'zoom-out)
