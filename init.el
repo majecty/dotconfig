@@ -22,7 +22,7 @@
  '(custom-enabled-themes '(adwaita))
  '(default-input-method "korean-hangul390")
  '(package-selected-packages
-   '(ivy-hydra discover-clj-refactor clojure-snippets clj-refactor ido-completing-read+ back-button flycheck-clj-kondo lsp-haskell cider parinfer-rust-mode use-package lispy paredit geiser racket-mode undo-tree editorconfig treemacs-magit treemacs which-key company fzf rustic rust-mode tide lsp-ui dap-mode flycheck lsp-treemacs lsp-mode xclip twittering-mode magit))
+   '(parinfer ivy-rich ivy-hydra discover-clj-refactor clojure-snippets clj-refactor ido-completing-read+ back-button flycheck-clj-kondo lsp-haskell cider parinfer-rust-mode use-package lispy paredit geiser racket-mode undo-tree editorconfig treemacs-magit treemacs which-key company fzf rustic rust-mode tide lsp-ui dap-mode flycheck lsp-treemacs lsp-mode xclip twittering-mode magit))
  '(xterm-mouse-mode t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -122,6 +122,13 @@
 
 (use-package ivy-hydra
   :ensure t)
+
+(use-package ivy-rich
+  :after ivy
+  :config
+  (progn
+    (ivy-rich-mode 1)
+    (setq ivy-rich-path-style 'abbrev)))
 
 (use-package clj-refactor
   :ensure t
