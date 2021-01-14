@@ -22,7 +22,7 @@
  '(custom-enabled-themes '(adwaita))
  '(default-input-method "korean-hangul390")
  '(package-selected-packages
-   '(parinfer ivy-rich ivy-hydra discover-clj-refactor clojure-snippets clj-refactor ido-completing-read+ back-button flycheck-clj-kondo lsp-haskell cider parinfer-rust-mode use-package lispy paredit geiser racket-mode undo-tree editorconfig treemacs-magit treemacs which-key company fzf rustic rust-mode tide lsp-ui dap-mode flycheck lsp-treemacs lsp-mode xclip twittering-mode magit))
+   '(ivy-posframe parinfer ivy-rich ivy-hydra discover-clj-refactor clojure-snippets clj-refactor ido-completing-read+ back-button flycheck-clj-kondo lsp-haskell cider parinfer-rust-mode use-package lispy paredit geiser racket-mode undo-tree editorconfig treemacs-magit treemacs which-key company fzf rustic rust-mode tide lsp-ui dap-mode flycheck lsp-treemacs lsp-mode xclip twittering-mode magit))
  '(xterm-mouse-mode t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -60,6 +60,17 @@
     (add-hook 'common-lisp-mode-hook #'parinfer-mode)
     (add-hook 'scheme-mode-hook #'parinfer-mode)
     (add-hook 'lisp-mode-hook #'parinfer-mode)))
+
+(use-package posframe
+  :ensure t)
+
+(use-package ivy-posframe
+  :ensure t
+  :config
+  (progn
+    (require 'ivy-posframe)
+    (setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display)))
+    (ivy-posframe-mode 1)))
 
 (use-package lsp-haskell
   :ensure t)
