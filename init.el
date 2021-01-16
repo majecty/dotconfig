@@ -74,7 +74,7 @@
   :config
   (progn
     (require 'ivy-posframe)
-    (setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display)))
+    (setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-window-bottom-left)))
     (ivy-posframe-mode 1)))
 
 (use-package lsp-haskell
