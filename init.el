@@ -200,6 +200,8 @@
     (global-set-key (kbd "C-x C-5 C-o") #'other-frame)
     (global-set-key (kbd "C-x C-5 C-9") #'other-frame)))
 
+(which-key-enable-god-mode-support)
+
 (use-package rainbow-delimiters
   :ensure t
   :config
