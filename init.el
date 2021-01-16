@@ -217,6 +217,7 @@
     (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)))
 
 (add-to-list 'load-path "~/jhconfig/emacs")
+(setq flycheck-emacs-lisp-load-path 'inherit)
 (require 'frame-fns)
 (require 'frame-cmds)
 (require 'zoom-frm)
