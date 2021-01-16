@@ -194,7 +194,11 @@
     (global-set-key (kbd "C-x C-1") #'delete-other-windows)
     (global-set-key (kbd "C-x C-2") #'split-window-below)
     (global-set-key (kbd "C-x C-3") #'split-window-right)
-    (global-set-key (kbd "C-x C-0") #'delete-window)))
+    (global-set-key (kbd "C-x C-0") #'delete-window)
+    (global-set-key (kbd "C-x C-5 C-1") #'delete-other-frames)
+    (global-set-key (kbd "C-x C-5 C-2") #'make-frame-command)
+    (global-set-key (kbd "C-x C-5 C-o") #'other-frame)
+    (global-set-key (kbd "C-x C-5 C-9") #'other-frame)))
 
 (use-package rainbow-delimiters
   :ensure t
