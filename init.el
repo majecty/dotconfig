@@ -1,3 +1,5 @@
+;;; init.el --- Emcas config file
+;;; Code:
 
 (eval-when-compile
   ;; Following line is not needed if use-package.el is in ~/.emacs.d
@@ -9,6 +11,9 @@
 ;; just comment it out by adding a semicolon to the start of the line.
 ;; You may delete these explanatory comments.
 (package-initialize)
+
+;;; Commentary:
+;;
 
 (require 'package)
 (add-to-list 'package-archives
@@ -228,3 +233,7 @@
 
 (global-set-key (kbd "C-+") 'zoom-in)
 (global-set-key (kbd "C--") 'zoom-out)
+
+(provide 'init)
+
+;;; init.el ends here
