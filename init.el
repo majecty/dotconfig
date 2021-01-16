@@ -193,6 +193,7 @@
     (define-key god-local-mode-map (kbd "i") #'god-mode-all)
     (define-key god-local-mode-map (kbd ".") #'repeat)
     (define-key god-local-mode-map (kbd "C-x C-b") #'ivy-switch-buffer)
+    (define-key flycheck-mode-map (kbd "C-c C-!") flycheck-command-map)
     (global-set-key (kbd "C-x C-1") #'delete-other-windows)
     (global-set-key (kbd "C-x C-2") #'split-window-below)
     (global-set-key (kbd "C-x C-3") #'split-window-right)
