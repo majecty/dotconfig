@@ -257,8 +257,10 @@
 (add-hook 'lisp-interaction-mode-hook 'enable-paredit-mode)
 (add-hook 'scheme-mode-hook           'enable-paredit-mode)
 (add-hook 'clojure-mode-hook          'enable-paredit-mode)
+(define-key paredit-mode-map (kbd "C-<left>") #'paredit-forward-barf-sexp)
+(define-key paredit-mode-map (kbd "C-<right>") #'paredit-forward-slurp-sexp)
 (define-key paredit-mode-map (kbd "C-S-<left>") #'paredit-backward-slurp-sexp)
-(define-key paredit-mode-map (kbd "C-S-<right>") #'paredit-forward-slurp-sexp)
+(define-key paredit-mode-map (kbd "C-S-<right>") #'paredit-backward-barf-sexp)
 
 (global-set-key (kbd "C-c C-f C-f") 'fzf)
 (global-set-key (kbd "C-c C-f C-g") 'fzf-git)
