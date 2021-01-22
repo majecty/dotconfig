@@ -80,6 +80,15 @@
 (use-package lsp-haskell
   :ensure t)
 
+(use-package format-all
+  :ensure t
+  :config
+  (progn
+    (add-hook 'markdown-mode-hook
+	      (lambda () (progn
+			   (add-hook 'before-save-hook #'format-all-buffer nil 'local)
+			   (message "Hi markdown mode"))))))
+
 (global-git-commit-mode)
 (xclip-mode 1)
 ;; (setq lsp-keymap-prefix "s-l")
