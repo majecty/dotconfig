@@ -270,6 +270,12 @@
     (global-set-key (kbd "<f5> f g") #'fzf-git)
     (global-set-key (kbd "<f5> f p") #'fzf-projectile)))
 
+(use-package treemacs
+  :ensure t
+  :config
+  (progn
+    (global-set-key (kbd "<f5> t") #'treemacs)))
+
 (add-to-list 'load-path "~/jhconfig/emacs")
 (setq flycheck-emacs-lisp-load-path 'inherit)
 (require 'frame-fns)
