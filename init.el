@@ -41,6 +41,12 @@
 
 (add-hook 'after-init-hook #'global-flycheck-mode)
 
+(use-package magit
+  :ensure t
+  :config
+  (progn
+    (global-set-key (kbd "<f5> g") #'magit-status)))
+
 (use-package flycheck-clj-kondo
   :ensure t)
 
