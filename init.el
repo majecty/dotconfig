@@ -262,6 +262,14 @@
             (eyebrowse-mode t)
             (setq eyebrowse-new-workspace t)))
 
+(use-package fzf
+  :ensure t
+  :config
+  (progn
+    (global-set-key (kbd "<f5> f f") #'fzf)
+    (global-set-key (kbd "<f5> f g") #'fzf-git)
+    (global-set-key (kbd "<f5> f p") #'fzf-projectile)))
+
 (add-to-list 'load-path "~/jhconfig/emacs")
 (setq flycheck-emacs-lisp-load-path 'inherit)
 (require 'frame-fns)
@@ -282,10 +290,6 @@
 (define-key paredit-mode-map (kbd "C-<right>") #'paredit-forward-slurp-sexp)
 (define-key paredit-mode-map (kbd "C-S-<left>") #'paredit-backward-slurp-sexp)
 (define-key paredit-mode-map (kbd "C-S-<right>") #'paredit-backward-barf-sexp)
-
-(global-set-key (kbd "C-c C-f C-f") 'fzf)
-(global-set-key (kbd "C-c C-f C-g") 'fzf-git)
-(global-set-key (kbd "C-c C-f C-p") 'fzf-projectile)
 
 (add-hook 'cider-repl-mode-hook #'company-mode)
 (add-hook 'cider-mode-hook #'company-mode)
