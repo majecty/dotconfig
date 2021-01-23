@@ -203,10 +203,11 @@
 
 (use-package god-mode
   :ensure t
+  :init
+  (setq god-mode-enable-function-key-translation nil)
   :config
   (progn
     (god-mode)
-    (setq god-mode-enable-function-key-translation nil)
     (global-set-key (kbd "<escape>") #'god-mode-all)
     (setq god-exempt-major-modes nil)
     (setq god-exempt-predicates nil)
