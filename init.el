@@ -263,10 +263,6 @@
 (require 'zoom-frm)
 (editorconfig-mode 1)
 
-(add-hook 'racket-mode-hook
-	  (lambda ()
-	    (define-key racket-mode-map (kbd "<f5>") 'racket-run)))
-
 (setq geiser-active-implementations '(chicken))
 (autoload 'enable-paredit-mode "paredit"
   "Turn on pseudo-structural editing of Lisp code."
