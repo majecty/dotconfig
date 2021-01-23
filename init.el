@@ -88,9 +88,24 @@
   :config
   (progn
     (add-hook 'markdown-mode-hook
-	      (lambda () (progn
-			   (add-hook 'before-save-hook #'format-all-buffer nil 'local)
-			   (message "Hi markdown mode"))))))
+        (lambda () (progn)
+         (add-hook 'before-save-hook #'format-all-buffer nil 'local)
+         (message "Hi markdown mode")))))
+
+(use-package org-roam
+  :ensure t
+  :config
+  (progn
+    (setq org-roam-directory "~/org-roam")
+    (add-hook 'after-init-hook 'org-roam-mode)
+    ;; create maps using function keys
+    ;; find file
+    (global-set-key (kbd "<f5> r f f") #'org-roam-find-file)
+    (global-set-key (kbd "<f5> r t") #'org-roam-today)
+    (define-key org-roam-mode-map (kbd "<f9> i") #'org-roam-insert)
+    (define-key org-roam-mode-map (kbd "<f9> d") #'org-roam-buffer-toggle-display)
+    (define-key org-roam-mode-map (kbd "<f9> t a") #'org-roam-tag-add)
+    (define-key org-roam-mode-map (kbd "<f9> t d") #'org-roam-tag-delete)))
 
 (global-git-commit-mode)
 (xclip-mode 1)
