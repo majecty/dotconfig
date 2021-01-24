@@ -366,6 +366,8 @@ Frames: _f_rame new  _df_ delete
 (global-set-key (kbd "<f5> w") #'hydra-window/body)
 (global-set-key (kbd "C-x C-o") #'hydra-window/body)
 
+(put 'narrow-to-region 'disabled nil)
+
 (provide 'init)
 
 ;;; init.el ends here
