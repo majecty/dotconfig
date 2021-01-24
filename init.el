@@ -325,7 +325,7 @@
 Delete: _o_nly  _da_ce  _dw_indow  _db_uffer  _df_rame
   Move: _s_wap
 Frames: _f_rame new  _df_ delete
-  Misc: _m_ark _a_ce  _u_ndo  _r_edo"
+  Misc: _m_ark _a_ce  _u_ndo  _r_edo _b_uffer"
   ("h" windmove-left)
   ("j" windmove-down)
   ("k" windmove-up)
@@ -334,6 +334,7 @@ Frames: _f_rame new  _df_ delete
   ("J" hydra-move-splitter-down)
   ("K" hydra-move-splitter-up)
   ("L" hydra-move-splitter-right)
+  ("+" balance-windows "balance")
   ("|" (lambda ()
          (interactive)
          (split-window-right)
@@ -359,6 +360,7 @@ Frames: _f_rame new  _df_ delete
   ("q" nil)
 					;("i" ace-maximize-window "ace-one" :color blue)
 					;("b" ido-switch-buffer "buf")
+  ("b" counsel-switch-buffer "buffer")
   ("m" headlong-bookmark-jump))
 
 (global-set-key (kbd "<f5> w") #'hydra-window/body)
