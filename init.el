@@ -299,6 +299,12 @@
                           ;; force fringe update
                           (set-window-buffer nil (current-buffer)))))
 
+(use-package deadgrep
+  :ensure t
+  :config
+  (progn
+    (global-set-key (kbd "<f5> s") #'deadgrep)))
+
 (add-to-list 'load-path "~/jhconfig/emacs")
 (setq flycheck-emacs-lisp-load-path 'inherit)
 (require 'frame-fns)
