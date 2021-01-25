@@ -30,7 +30,7 @@
  '(custom-enabled-themes '(adwaita))
  '(default-input-method "korean-hangul390")
  '(package-selected-packages
-   '(pomidor org-roam format-all format-all-buffer eyebrowse doom-modeline rainbow-delimiters god-mode ivy-posframe parinfer ivy-rich ivy-hydra discover-clj-refactor clojure-snippets clj-refactor ido-completing-read+ back-button flycheck-clj-kondo lsp-haskell cider parinfer-rust-mode use-package lispy paredit geiser racket-mode undo-tree editorconfig treemacs-magit treemacs which-key company fzf rustic rust-mode tide lsp-ui dap-mode flycheck lsp-treemacs lsp-mode xclip twittering-mode magit))
+   '(headlong hydra-examples deadgrep pomidor org-roam format-all format-all-buffer eyebrowse doom-modeline rainbow-delimiters god-mode ivy-posframe parinfer ivy-rich ivy-hydra discover-clj-refactor clojure-snippets clj-refactor ido-completing-read+ back-button flycheck-clj-kondo lsp-haskell cider parinfer-rust-mode use-package lispy paredit geiser racket-mode undo-tree editorconfig treemacs-magit treemacs which-key company fzf rustic rust-mode tide lsp-ui dap-mode flycheck lsp-treemacs lsp-mode xclip twittering-mode magit))
  '(xterm-mouse-mode t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -141,6 +141,9 @@
 
 (which-key-mode)
 
+(use-package headlong
+  :ensure t)
+
 (use-package hydra
   :ensure t)
 
@@ -175,6 +178,9 @@
     (define-key minibuffer-local-map (kbd "C-r") 'counsel-minibuffer-history)))
 
 (use-package ivy-hydra
+  :ensure t)
+
+(use-package hydra-examples
   :ensure t)
 
 (use-package ivy-rich
