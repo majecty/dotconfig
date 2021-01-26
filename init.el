@@ -30,7 +30,7 @@
  '(custom-enabled-themes '(adwaita))
  '(default-input-method "korean-hangul390")
  '(package-selected-packages
-   '(headlong hydra-examples deadgrep pomidor org-roam format-all format-all-buffer eyebrowse doom-modeline rainbow-delimiters god-mode ivy-posframe parinfer ivy-rich ivy-hydra discover-clj-refactor clojure-snippets clj-refactor ido-completing-read+ back-button flycheck-clj-kondo lsp-haskell cider parinfer-rust-mode use-package lispy paredit geiser racket-mode undo-tree editorconfig treemacs-magit treemacs which-key company fzf rustic rust-mode tide lsp-ui dap-mode flycheck lsp-treemacs lsp-mode xclip twittering-mode magit))
+   '(pretty-hydra headlong hydra-examples deadgrep pomidor org-roam format-all format-all-buffer eyebrowse doom-modeline rainbow-delimiters god-mode ivy-posframe parinfer ivy-rich ivy-hydra discover-clj-refactor clojure-snippets clj-refactor ido-completing-read+ back-button flycheck-clj-kondo lsp-haskell cider parinfer-rust-mode use-package lispy paredit geiser racket-mode undo-tree editorconfig treemacs-magit treemacs which-key company fzf rustic rust-mode tide lsp-ui dap-mode flycheck lsp-treemacs lsp-mode xclip twittering-mode magit))
  '(xterm-mouse-mode t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -180,8 +180,10 @@
 (use-package ivy-hydra
   :ensure t)
 
-(use-package hydra-examples
+(use-package pretty-hydra
   :ensure t)
+;; (use-package hydra-examples
+;;   :ensure t)
 
 (use-package ivy-rich
   :after ivy
@@ -334,50 +336,40 @@
 (global-set-key (kbd "C-+") 'zoom-in)
 (global-set-key (kbd "C--") 'zoom-out)
 
-(defhydra hydra-window (:color red
-                               :hint nil)
-  "
- Split: _v_ert _x_:horz
-Delete: _o_nly  _da_ce  _dw_indow  _db_uffer  _df_rame
-  Move: _s_wap
-Frames: _f_rame new  _df_ delete
-  Misc: _m_ark _a_ce  _u_ndo  _r_edo _b_uffer"
-  ("h" windmove-left)
-  ("j" windmove-down)
-  ("k" windmove-up)
-  ("l" windmove-right)
-  ("H" hydra-move-splitter-left)
-  ("J" hydra-move-splitter-down)
-  ("K" hydra-move-splitter-up)
-  ("L" hydra-move-splitter-right)
-  ("+" balance-windows "balance")
-  ("|" (lambda ()
-         (interactive)
-         (split-window-right)
-         (windmove-right)))
-  ("_" (lambda ()
-         (interactive)
-         (split-window-below)
-         (windmove-down)))
-  ("v" split-window-right)
-  ("x" split-window-below)
+(pretty-hydra-define hydra-window
+  (:color red :quit-key "q")
+  ("Move" (("h" windmove-left)
+	   ("j" windmove-down)
+	   ("k" windmove-up)
+	   ("l" windmove-right)
+	   ("s" ace-swap-window))
+   "Split" (("+" balance-windows "balance")
+	    ("|" (lambda ()
+		   (interactive)
+		   (split-window-right)
+		   (windmove-right)))
+	    ("_" (lambda ()
+		   (interactive)
+		   (split-window-below)
+		   (windmove-down)))
+	    ("v" split-window-right)
+	    ("x" split-window-below))
 					;("t" transpose-frame "'")
-  ;; winner-mode must be enabled
-  ("u" winner-undo)
-  ("r" winner-redo) ;;Fixme, not working?
-  ("o" delete-other-windows :exit t)
-  ("a" ace-window :exit t)
-  ("f" new-frame :exit t)
-  ("s" ace-swap-window)
-  ("da" ace-delete-window)
-  ("dw" delete-window)
-  ("db" kill-this-buffer)
-  ("df" delete-frame :exit t)
-  ("q" nil)
+   ;; winner-mode must be enabled
+   "Undo" (("u" winner-undo)
+	   ("r" winner-redo)) ;;Fixme, not working?
+   "Delete" (("o" delete-other-windows :exit t)
+	     ("db" kill-this-buffer)
+	     ("df" delete-frame :exit t)
+	     ("dw" delete-window))
+   "Buffer" (("b" counsel-switch-buffer "buffer")
+	     ;;  ("f" new-frame :exit t)
+	     ("f" fzf "fzf")
+	     ("m" headlong-bookmark-jump)))
+  ;;  ("da" ace-delete-window)
 					;("i" ace-maximize-window "ace-one" :color blue)
 					;("b" ido-switch-buffer "buf")
-  ("b" counsel-switch-buffer "buffer")
-  ("m" headlong-bookmark-jump))
+  )
 
 (global-set-key (kbd "<f5> w") #'hydra-window/body)
 (global-set-key (kbd "C-x C-o") #'hydra-window/body)
