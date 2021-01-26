@@ -216,35 +216,35 @@
 (use-package discover-clj-refactor
   :ensure t)
 
-(use-package god-mode
-  :ensure t
-  :init
-  (setq god-mode-enable-function-key-translation nil)
-  :config
-  (progn
-    (god-mode)
-    (global-set-key (kbd "<escape>") #'god-mode-all)
-    (setq god-exempt-major-modes nil)
-    (setq god-exempt-predicates nil)
+;; (use-package god-mode
+;;   :ensure t
+;;   :init
+;;   (setq god-mode-enable-function-key-translation nil)
+;;   :config
+;;   (progn
+;;     (god-mode)
+;;     (global-set-key (kbd "<escape>") #'god-mode-all)
+;;     (setq god-exempt-major-modes nil)
+;;     (setq god-exempt-predicates nil)
 
-    (defun my-god-mode-update-cursor ()
-      (setq cursor-type (if (or god-local-mode buffer-read-only)
-                            'box
-			  'bar)))
-    (add-hook 'god-mode-enabled-hook #'my-god-mode-update-cursor)
-    (add-hook 'god-mode-disabled-hook #'my-god-mode-update-cursor)
-    (define-key god-local-mode-map (kbd "i") #'god-mode-all)
-    (define-key god-local-mode-map (kbd ".") #'repeat)
-    (define-key god-local-mode-map (kbd "C-x C-b") #'ivy-switch-buffer)
-    (define-key flycheck-mode-map (kbd "C-c C-!") flycheck-command-map)
-    (global-set-key (kbd "C-x C-1") #'delete-other-windows)
-    (global-set-key (kbd "C-x C-2") #'split-window-below)
-    (global-set-key (kbd "C-x C-3") #'split-window-right)
-    (global-set-key (kbd "C-x C-0") #'delete-window)
-    (global-set-key (kbd "C-x C-5 C-1") #'delete-other-frames)
-    (global-set-key (kbd "C-x C-5 C-2") #'make-frame-command)
-    (global-set-key (kbd "C-x C-5 C-o") #'other-frame)
-    (global-set-key (kbd "C-x C-5 C-9") #'other-frame)))
+;;     (defun my-god-mode-update-cursor ()
+;;       (setq cursor-type (if (or god-local-mode buffer-read-only)
+;;                             'box
+;; 			  'bar)))
+;;     (add-hook 'god-mode-enabled-hook #'my-god-mode-update-cursor)
+;;     (add-hook 'god-mode-disabled-hook #'my-god-mode-update-cursor)
+;;     (define-key god-local-mode-map (kbd "i") #'god-mode-all)
+;;     (define-key god-local-mode-map (kbd ".") #'repeat)
+;;     (define-key god-local-mode-map (kbd "C-x C-b") #'ivy-switch-buffer)
+;;     (define-key flycheck-mode-map (kbd "C-c C-!") flycheck-command-map)
+;;     (global-set-key (kbd "C-x C-1") #'delete-other-windows)
+;;     (global-set-key (kbd "C-x C-2") #'split-window-below)
+;;     (global-set-key (kbd "C-x C-3") #'split-window-right)
+;;     (global-set-key (kbd "C-x C-0") #'delete-window)
+;;     (global-set-key (kbd "C-x C-5 C-1") #'delete-other-frames)
+;;     (global-set-key (kbd "C-x C-5 C-2") #'make-frame-command)
+;;     (global-set-key (kbd "C-x C-5 C-o") #'other-frame)
+;;     (global-set-key (kbd "C-x C-5 C-9") #'other-frame)))
 
 (use-package all-the-icons)
 
