@@ -371,7 +371,7 @@
 	     ("dw" delete-window))
    "Buffer" (("b" counsel-switch-buffer "buffer")
 	     ;;  ("f" new-frame :exit t)
-	     ("f" fzf "fzf")
+	     ("f" fzf "fzf" :exit t)
 	     ("m" headlong-bookmark-jump)))
   ;;  ("da" ace-delete-window)
 					;("i" ace-maximize-window "ace-one" :color blue)
