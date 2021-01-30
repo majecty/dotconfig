@@ -314,6 +314,9 @@
   :config
   (dashboard-setup-startup-hook))
 
+(use-package avy
+  :ensure t)
+
 (add-to-list 'load-path "~/jhconfig/emacs")
 (setq flycheck-emacs-lisp-load-path 'inherit)
 (require 'frame-fns)
@@ -395,7 +398,12 @@
    ("v" scroll-up-command)
    ;; Converting M-v to V here by analogy.
    ("V" scroll-down-command)
-   ("l" recenter-top-bottom)))
+   ("l" recenter-top-bottom)
+   ("c" avy-goto-char "char")
+   ("L" avy-goto-line "line")
+   ("w" avy-goto-word-0 "word")
+   ("W" avy-goto-word-0-above "Word")
+   ))
 
 (global-set-key
  (kbd "<f5> q")
