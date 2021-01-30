@@ -418,6 +418,8 @@
 
 (put 'narrow-to-region 'disabled nil)
 
+(setq sentence-end-double-space nil)
+
 (provide 'init)
 
 ;;; init.el ends here
