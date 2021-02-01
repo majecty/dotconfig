@@ -107,7 +107,7 @@
     ;; create maps using function keys
     ;; find file
     (global-set-key (kbd "<f5> r f f") #'org-roam-find-file)
-    (global-set-key (kbd "<f5> r t") #'org-roam-today)
+    (global-set-key (kbd "<f5> r t") #'org-roam-dailies-find-today)
     (define-key org-roam-mode-map (kbd "<f9> i") #'org-roam-insert)
     (define-key org-roam-mode-map (kbd "<f9> d") #'org-roam-buffer-toggle-display)
     (define-key org-roam-mode-map (kbd "<f9> t a") #'org-roam-tag-add)
