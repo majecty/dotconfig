@@ -347,6 +347,11 @@
   :config
   (global-undo-tree-mode))
 
+(use-package winner
+  :ensure t
+  :config
+  (winner-mode 1))
+
 (add-to-list 'load-path "~/jhconfig/emacs")
 (setq flycheck-emacs-lisp-load-path 'inherit)
 (require 'frame-fns)
