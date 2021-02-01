@@ -291,6 +291,9 @@
   (progn
     (global-set-key (kbd "<f5> t") #'treemacs)))
 
+(use-package treemacs-projectile
+  :ensure t)
+
 (use-package pomidor
   :ensure t
   :bind (("<f5> p" . pomidor))
