@@ -19,7 +19,7 @@
 (add-to-list 'package-archives
              '("melpa" . "http://melpa.org/packages/") t)
 (add-to-list 'package-archives
-	     '("org" . "https://orgmode.org/elpha/") t)
+	     '("org" . "https://orgmode.org/elpa/") t)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
