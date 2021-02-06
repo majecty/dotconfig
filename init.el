@@ -94,8 +94,7 @@
   :config
   (progn
     (add-hook 'markdown-mode-hook
-              (lambda () (progn)
-		(add-hook 'before-save-hook #'format-all-buffer nil 'local)))))
+              (lambda () (add-hook 'before-save-hook #'format-all-buffer nil 'local)))))
 
 (use-package org-roam
   :ensure t
