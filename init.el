@@ -30,7 +30,7 @@
  '(custom-enabled-themes '(adwaita))
  '(default-input-method "korean-hangul390")
  '(package-selected-packages
-   '(treemacs-projectile treemacs auto-package-update org-roam-server dashboard pretty-hydra headlong hydra-examples deadgrep pomidor org-roam format-all format-all-buffer eyebrowse doom-modeline rainbow-delimiters god-mode ivy-posframe parinfer ivy-rich ivy-hydra discover-clj-refactor clojure-snippets clj-refactor ido-completing-read+ back-button flycheck-clj-kondo lsp-haskell cider parinfer-rust-mode use-package lispy paredit geiser racket-mode undo-tree editorconfig which-key company fzf rustic rust-mode tide lsp-ui flycheck lsp-mode xclip twittering-mode magit))
+   '(lsp-java treemacs-projectile treemacs auto-package-update org-roam-server dashboard pretty-hydra headlong hydra-examples deadgrep pomidor org-roam format-all format-all-buffer eyebrowse doom-modeline rainbow-delimiters god-mode ivy-posframe parinfer ivy-rich ivy-hydra discover-clj-refactor clojure-snippets clj-refactor ido-completing-read+ back-button flycheck-clj-kondo lsp-haskell cider parinfer-rust-mode use-package lispy paredit geiser racket-mode undo-tree editorconfig which-key company fzf rustic rust-mode tide lsp-ui flycheck lsp-mode xclip twittering-mode magit))
  '(xterm-mouse-mode t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -89,6 +89,9 @@
 (use-package lsp-haskell
   :ensure t)
 
+(use-package lsp-java
+  :ensure t)
+
 (use-package format-all
   :ensure t
   :config
@@ -125,6 +128,7 @@
 (add-hook 'typescript-mode-hook #'lsp)
 (add-hook 'js-mode-hook #'lsp)
 (add-hook 'haskell-mode-hook #'lsp)
+(add-hook 'java-mode-hook #'lsp)
 
 (when (fboundp 'windmove-default-keybindings)
   (windmove-default-keybindings)
