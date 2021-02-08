@@ -30,7 +30,7 @@
  '(custom-enabled-themes '(adwaita))
  '(default-input-method "korean-hangul390")
  '(package-selected-packages
-   '(ranger vterm lsp-java treemacs-projectile treemacs auto-package-update org-roam-server dashboard pretty-hydra headlong hydra-examples deadgrep pomidor org-roam format-all format-all-buffer eyebrowse doom-modeline rainbow-delimiters god-mode ivy-posframe parinfer ivy-rich ivy-hydra discover-clj-refactor clojure-snippets clj-refactor ido-completing-read+ back-button flycheck-clj-kondo lsp-haskell cider parinfer-rust-mode use-package lispy paredit geiser racket-mode undo-tree editorconfig which-key company fzf rustic rust-mode tide lsp-ui flycheck lsp-mode xclip twittering-mode magit))
+   '(lsp-ivy ranger vterm lsp-java treemacs-projectile treemacs auto-package-update org-roam-server dashboard pretty-hydra headlong hydra-examples deadgrep pomidor org-roam format-all format-all-buffer eyebrowse doom-modeline rainbow-delimiters god-mode ivy-posframe parinfer ivy-rich ivy-hydra discover-clj-refactor clojure-snippets clj-refactor ido-completing-read+ back-button flycheck-clj-kondo lsp-haskell cider parinfer-rust-mode use-package lispy paredit geiser racket-mode undo-tree editorconfig which-key company fzf rustic rust-mode tide lsp-ui flycheck lsp-mode xclip twittering-mode magit))
  '(xterm-mouse-mode t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -86,6 +86,27 @@
     (setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-frame-bottom-left)))
     (ivy-posframe-mode 1)))
 
+(use-package lsp-mode
+  :ensure t
+  :init
+  ;; (setq lsp-keymap-prefix "s-l")
+  (setq lsp-keymap-prefix "C-c l")
+  (setq read-process-output-max (* (* 1024 1024) 8)) ;; 1mb
+  (setq lsp-completion-provider :capf)
+  (setq gc-cons-threshold 100000000)
+  :config
+  (progn
+    (add-hook 'rust-mode-hook #'lsp)
+    (add-hook 'typescript-mode-hook #'lsp)
+    (add-hook 'js-mode-hook #'lsp)
+    (add-hook 'haskell-mode-hook #'lsp)
+    (add-hook 'java-mode-hook #'lsp))
+  :commands lsp)
+
+(use-package lsp-ui :ensure t :commands lsp-ui-mode)
+(use-package lsp-ivy :ensure t :commands lsp-ivy-workspace-symbol)
+(use-package lsp-treemacs :ensure t :commands lsp-treemacs-errors-list)
+
 (use-package lsp-haskell
   :ensure t)
 
@@ -118,19 +139,8 @@
 
 (global-git-commit-mode)
 (xclip-mode 1)
-;; (setq lsp-keymap-prefix "s-l")
-(setq lsp-keymap-prefix "C-c l")
-(setq read-process-output-max (* (* 1024 1024) 8)) ;; 1mb
-(setq lsp-completion-provider :capf)
-(setq gc-cons-threshold 100000000)
-(global-set-key (kbd "M-p") 'ace-window)
 
-(require 'lsp-mode)
-(add-hook 'rust-mode-hook #'lsp)
-(add-hook 'typescript-mode-hook #'lsp)
-(add-hook 'js-mode-hook #'lsp)
-(add-hook 'haskell-mode-hook #'lsp)
-(add-hook 'java-mode-hook #'lsp)
+(global-set-key (kbd "M-p") 'ace-window)
 
 (when (fboundp 'windmove-default-keybindings)
   (windmove-default-keybindings)
