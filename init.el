@@ -30,7 +30,7 @@
  '(custom-enabled-themes '(adwaita))
  '(default-input-method "korean-hangul390")
  '(package-selected-packages
-   '(vterm lsp-java treemacs-projectile treemacs auto-package-update org-roam-server dashboard pretty-hydra headlong hydra-examples deadgrep pomidor org-roam format-all format-all-buffer eyebrowse doom-modeline rainbow-delimiters god-mode ivy-posframe parinfer ivy-rich ivy-hydra discover-clj-refactor clojure-snippets clj-refactor ido-completing-read+ back-button flycheck-clj-kondo lsp-haskell cider parinfer-rust-mode use-package lispy paredit geiser racket-mode undo-tree editorconfig which-key company fzf rustic rust-mode tide lsp-ui flycheck lsp-mode xclip twittering-mode magit))
+   '(ranger vterm lsp-java treemacs-projectile treemacs auto-package-update org-roam-server dashboard pretty-hydra headlong hydra-examples deadgrep pomidor org-roam format-all format-all-buffer eyebrowse doom-modeline rainbow-delimiters god-mode ivy-posframe parinfer ivy-rich ivy-hydra discover-clj-refactor clojure-snippets clj-refactor ido-completing-read+ back-button flycheck-clj-kondo lsp-haskell cider parinfer-rust-mode use-package lispy paredit geiser racket-mode undo-tree editorconfig which-key company fzf rustic rust-mode tide lsp-ui flycheck lsp-mode xclip twittering-mode magit))
  '(xterm-mouse-mode t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
@@ -355,6 +355,9 @@
   (winner-mode 1))
 
 (use-package vterm
+  :ensure t)
+
+(use-package ranger
   :ensure t)
 
 (add-to-list 'load-path "~/jhconfig/emacs")
