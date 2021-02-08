@@ -372,6 +372,12 @@
 (use-package ranger
   :ensure t)
 
+(use-package typescript-mode
+  :ensure t
+  :config
+  (progn
+    (define-key typescript-mode-map (kbd "<f9> .") #'lsp-execute-code-action)))
+
 (add-to-list 'load-path "~/jhconfig/emacs")
 (setq flycheck-emacs-lisp-load-path 'inherit)
 (require 'frame-fns)
