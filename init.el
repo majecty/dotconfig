@@ -100,7 +100,8 @@
     (add-hook 'typescript-mode-hook #'lsp)
     (add-hook 'js-mode-hook #'lsp)
     (add-hook 'haskell-mode-hook #'lsp)
-    (add-hook 'java-mode-hook #'lsp))
+    (add-hook 'java-mode-hook #'lsp)
+    (add-hook 'clojure-mode-hook #'lsp)
   :commands lsp)
 
 (use-package lsp-ui :ensure t :commands lsp-ui-mode)
