@@ -389,6 +389,11 @@
   ;; Number the candidates (use M-1, M-2 etc to select completions).
   (setq company-show-numbers t))
 
+(use-package company
+  :ensure t
+  :config
+  (define-key company-mode-map (kbd "C-i") #'company-complete))
+
 (add-to-list 'load-path "~/jhconfig/emacs")
 (setq flycheck-emacs-lisp-load-path 'inherit)
 (require 'frame-fns)
