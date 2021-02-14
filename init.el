@@ -394,6 +394,9 @@
   :config
   (define-key company-mode-map (kbd "C-i") #'company-complete))
 
+(use-package origami
+  :ensure t)
+
 (add-to-list 'load-path "~/jhconfig/emacs")
 (setq flycheck-emacs-lisp-load-path 'inherit)
 (require 'frame-fns)
