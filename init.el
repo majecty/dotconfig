@@ -381,6 +381,14 @@
   (progn
     (define-key typescript-mode-map (kbd "<f9> .") #'lsp-execute-code-action)))
 
+(use-package company-tabnine :ensure t
+  :config
+  (add-to-list 'company-backends #'company-tabnine)
+  ;; Trigger completion immediately.
+  (setq company-idle-delay 0)
+  ;; Number the candidates (use M-1, M-2 etc to select completions).
+  (setq company-show-numbers t))
+
 (add-to-list 'load-path "~/jhconfig/emacs")
 (setq flycheck-emacs-lisp-load-path 'inherit)
 (require 'frame-fns)
