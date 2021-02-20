@@ -29,6 +29,7 @@
  '(current-language-environment "UTF-8")
  '(custom-enabled-themes '(adwaita))
  '(default-input-method "korean-hangul390")
+ '(lsp-ui-doc-max-height 6)
  '(package-selected-packages
    '(lsp-ivy ranger vterm lsp-java treemacs-projectile treemacs auto-package-update org-roam-server dashboard pretty-hydra headlong hydra-examples deadgrep pomidor org-roam format-all format-all-buffer eyebrowse doom-modeline rainbow-delimiters god-mode ivy-posframe parinfer ivy-rich ivy-hydra discover-clj-refactor clojure-snippets clj-refactor ido-completing-read+ back-button flycheck-clj-kondo lsp-haskell cider parinfer-rust-mode use-package lispy paredit geiser racket-mode undo-tree editorconfig which-key company fzf rustic rust-mode tide lsp-ui flycheck lsp-mode xclip twittering-mode magit))
  '(xterm-mouse-mode t))
