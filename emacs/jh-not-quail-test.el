@@ -8,115 +8,217 @@
 (vector 1 2 (+ 1 2))
 (defconst hangulshinp2-keymap
   (vector 33	       ;; !
-   47	       ;; " to /
-   35	       ;; #
-   36	       ;; $
-   37	       ;; %
-   38	       ;; &
-   (+ 28 92)   ;; ' to ㅌ(초)
-   40	       ;; (
-   41	       ;; )
-   42	       ;; *
-   43	       ;; +
-   44	       ;; ,
-   45	       ;; -
-   46	       ;; .
-   (+ 27 92)   ;; / to ㅋ(초)
-   48	       ;; 0
-   49	       ;; 1
-   50	       ;; 2
-   51	       ;; 3
-   52	       ;; 4
-   53	       ;; 5
-   54	       ;; 6
-   55	       ;; 7
-   56	       ;; 8
-   57	       ;; 9
-   58	       ;; :
-   (+ 18 92)   ;; ; to ㅂ(초)
-   60	       ;; <
-   61	       ;; =
-   62	       ;; >
-   (+ 39 34)   ;; ? to ㅗ
-   64	       ;; @
-   (+ 48 34)   ;; A to ㅠ
-   (+ 44 34)   ;; B to ㅜ
-   (+ 36 34)   ;; C to ㅔ
-   (+ 51 34)   ;; D to ㅣ
-   (+ 32 34)   ;; E to ㅐ
-   (+ 31 34)   ;; F to ㅏ
-   (+ 49 34)   ;; G to ㅡ
-   (+ 4 86)    ;; H to ㄴ(초성) TODO
-   (+ 17 92)   ;; I to ㅁ(초성) TODO
-   39	       ;; J to '
-   34	       ;; K to "
-   (+ 24 92)   ;; L to ㅈ(초성) TODO
-   (+ 30 92)   ;; M to ㅎ(초성) TODO
-   (+ 21 92)   ;; N to ㅅ(초성) TODO
-   (+ 26 92)   ;; O to ㅊ(초성) TODO
-   (+ 29 92)   ;; P to ㅍ(초성) TODO
-   (+ 34 34)   ;; Q to ㅒ
-   (+ 35 34)   ;; R to ㅓ
-   (+ 38 34)   ;; S to ㅖ
-   (+ 37 34)   ;; T to ㅕ
-   (+ 7 92)    ;; U to ㄷ(초성) TODO
-   (+ 39 34)   ;; V to ㅗ
-   (+ 33 34)   ;; W to ㅑ
-   (+ 43 34)   ;; X to ㅛ
-   (+ 9 92)    ;; Y to ㄹ(초성) TODO
-   17	       ;; Z to ㅁ(종성) TODO
-   91	       ;; [
-   92	       ;; \
-   93	       ;; ]
-   94	       ;; ^
-   95	       ;; _
-   96	       ;; `
-   23	       ;; a to ㅇ(종성)
-   26	       ;; b to ㅊ(종성)
-   1	       ;; c to ㄱ(종성)
-   30	       ;; d to ㅎ(종성)
-   18	       ;; e to ㅂ(종성)
-   29	       ;; f to ㅍ(종성)
-   7	       ;; g to ㄷ(종성)
-   (+ 4 86)    ;; h to ㄴ(초성)
-   (+ 17 92)   ;; i to ㅁ(초성)
-   (+ 23 92)   ;; j to ㅇ(초성)
-   (+ 1 86)    ;; k to ㄱ(초성)
-   (+ 24 92)   ;; l to ㅈ(초성)
-   (+ 30 92)   ;; m to ㅎ(초성)
-   (+ 21 92)   ;; n to ㅅ(초성)
-   (+ 26 92)   ;; o to ㅊ(초성)
-   (+ 29 92)   ;; p to ㅍ(초성)
-   5	       ;; q to ㅅ(종성)
-   28	       ;; r to ㅌ(종성)
-   4	       ;; s to ㄴ(종성)
-   27	       ;; t to ㅋ(종성)
-   (+ 7 92)    ;; u to ㄷ(초성)
-   24	       ;; v to ㅈ(종성)
-   9	       ;; w to ㄹ(종성)
-   22	       ;; x to ㅆ(종성)
-   9	       ;; y to ㄹ(종성)
-   17	       ;; z to ㅁ(종성)
-   123	       ;; {
-   124	       ;; |
-   125	       ;; }
-   126	       ;; ~
-   ))
+	  47	       ;; " to /
+	  35	       ;; #
+	  36	       ;; $
+	  37	       ;; %
+	  38	       ;; &
+	  (+ 28 92)   ;; ' to ㅌ(초)
+	  40	       ;; (
+	  41	       ;; )
+	  42	       ;; *
+	  43	       ;; +
+	  44	       ;; ,
+	  45	       ;; -
+	  46	       ;; .
+	  (+ 27 92)   ;; / to ㅋ(초)
+	  48	       ;; 0
+	  49	       ;; 1
+	  50	       ;; 2
+	  51	       ;; 3
+	  52	       ;; 4
+	  53	       ;; 5
+	  54	       ;; 6
+	  55	       ;; 7
+	  56	       ;; 8
+	  57	       ;; 9
+	  58	       ;; :
+	  (+ 18 92)   ;; ; to ㅂ(초)
+	  60	       ;; <
+	  61	       ;; =
+	  62	       ;; >
+	  63	       ;; ? to ㅗ
+	  64	       ;; @
+	  (+ 48 34)   ;; A to ㅠ
+	  (+ 44 34)   ;; B to ㅜ
+	  (+ 36 34)   ;; C to ㅔ
+	  (+ 51 34)   ;; D to ㅣ
+	  (+ 32 34)   ;; E to ㅐ
+	  (+ 31 34)   ;; F to ㅏ
+	  (+ 49 34)   ;; G to ㅡ
+	  (+ 4 86)    ;; H to ㄴ(초성) TODO
+	  (+ 17 92)   ;; I to ㅁ(초성) TODO
+	  39	       ;; J to '
+	  34	       ;; K to "
+	  (+ 24 92)   ;; L to ㅈ(초성) TODO
+	  (+ 30 92)   ;; M to ㅎ(초성) TODO
+	  (+ 21 92)   ;; N to ㅅ(초성) TODO
+	  (+ 26 92)   ;; O to ㅊ(초성) TODO
+	  59	      ;; P to ;
+	  (+ 34 34)   ;; Q to ㅒ
+	  (+ 35 34)   ;; R to ㅓ
+	  (+ 38 34)   ;; S to ㅖ
+	  (+ 37 34)   ;; T to ㅕ
+	  (+ 7 92)    ;; U to ㄷ(초성) TODO
+	  (+ 39 34)   ;; V to ㅗ
+	  (+ 33 34)   ;; W to ㅑ
+	  (+ 43 34)   ;; X to ㅛ
+	  (+ 9 92)    ;; Y to ㄹ(초성) TODO
+	  17	       ;; Z to ㅁ(종성) TODO
+	  91	       ;; [
+	  92	       ;; \
+	  93	       ;; ]
+	  94	       ;; ^
+	  95	       ;; _
+	  96	       ;; `
+	  23	       ;; a to ㅇ(종성)
+	  26	       ;; b to ㅊ(종성)
+	  1	       ;; c to ㄱ(종성)
+	  30	       ;; d to ㅎ(종성)
+	  18	       ;; e to ㅂ(종성)
+	  29	       ;; f to ㅍ(종성)
+	  7	       ;; g to ㄷ(종성)
+	  (+ 4 86)    ;; h to ㄴ(초성)
+	  (+ 17 92)   ;; i to ㅁ(초성)
+	  (+ 23 92)   ;; j to ㅇ(초성)
+	  (+ 1 86)    ;; k to ㄱ(초성)
+	  (+ 24 92)   ;; l to ㅈ(초성)
+	  (+ 30 92)   ;; m to ㅎ(초성)
+	  (+ 21 92)   ;; n to ㅅ(초성)
+	  (+ 26 92)   ;; o to ㅊ(초성)
+	  (+ 29 92)   ;; p to ㅍ(초성)
+	  21	       ;; q to ㅅ(종성)
+	  28	       ;; r to ㅌ(종성)
+	  4	       ;; s to ㄴ(종성)
+	  27	       ;; t to ㅋ(종성)
+	  (+ 7 92)    ;; u to ㄷ(초성)
+	  24	       ;; v to ㅈ(종성)
+	  9	       ;; w to ㄹ(종성)
+	  22	       ;; x to ㅆ(종성)
+	  9	       ;; y to ㄹ(종성)
+	  17	       ;; z to ㅁ(종성)
+	  123	       ;; {
+	  124	       ;; |
+	  125	       ;; }
+	  126	       ;; ~
+	  ))
+
+(defun hangul3-shinp2--update-first-jong (key)
+  key)
+
+(defun hangul3-shinp2--only-cho ()
+  (and (notzerop (aref hangul-queue 0))
+       (zerop (aref hangul-queue 2))
+       (zerop (aref hangul-queue 3))
+       (zerop (aref hangul-queue 4))))
+
+(hangul3-shinp2--only-cho)
+
+(defun hangul3-shinp2--empty ()
+  (and (zerop (aref hangul-queue 0))
+       (zerop (aref hangul-queue 1))
+       (zerop (aref hangul-queue 2))
+       (zerop (aref hangul-queue 3))
+       (zerop (aref hangul-queue 4))))
+
+(defun hangul3-shinp2--only-cho-single-mo ()
+  (and (notzerop (aref hangul-queue 0))
+       (notzerop (aref hangul-queue 2))
+       (zerop (aref hangul-queue 3))
+       (zerop (aref hangul-queue 4))))
+
+(eq 1 1)
+(or (eq 1 (+ 1 0)))
+
+(defun hangul3-shinp2--is-galma-cho (char)
+  (or (eq char (+ 17 92)) ;; ㅁ -> ㅡ
+      (eq char (+ 26 92)) ;; ㅊ -> ㅜ
+      (eq char (+ 27 92)))) ;; ㅋ -> ㅗ
+
+(defun hangul3-shinp2--galma-cho-to-jung (char)
+  (cond ((eq char (+ 17 92))     ; ㅁ
+	 (+ 49 34))        ; ㅡ
+	((eq char (+ 26 92))      ; ㅊ
+	 (+ 44 34))        ; ㅜ
+	((eq char (+ 27 92))      ; ㅋ
+	 (+ 39 34))        ; ㅗ
+	(t
+	 char)))
+
+(defun hangul3-shinp2--is-jong (char)
+  (< char 31))
+
+;; jong: lower case. ex) a: 97
+;; jung: upper case. ex) A: 65
+(defun hangul3-shinp2--galma-jong-to-jung (key char)
+  (when (hangul3-shinp2--is-jong char)
+    (let* ((upper-case (- key 32))
+	   (from-bang (- upper-case 33)))
+     (message "change %s to %s" char (aref hangulshinp2-keymap from-bang))
+     (aref hangulshinp2-keymap from-bang))))
+
+;; Original keycode that is typed previously.
+;; This is used to check the double-jamo like ㅘ
+(defvar hangul3-shinp2--prev-key
+  nil)
+
+(defun hangul3-shinp2--prev-key-o-u-eu ()
+  (or (eq hangul3-shinp2--prev-key 47)	; /
+      (eq hangul3-shinp2--prev-key 105)	; i
+      (eq hangul3-shinp2--prev-key 111)	; o
+      ))
+
+(defun hangul3-shinp2--is-double-mo (key char)
+  (cond ((and (eq hangul3-shinp2--prev-key 47) ; /,ㅗ
+	      (or (eq key 102)		       ; ㅏ
+		  (eq key 101)		       ; ㅐ
+		  (eq key 100)))	       ; ㅣ
+	 t)				       ; ㅘ ㅙ ㅚ
+	((and (eq hangul3-shinp2--prev-key 105) ; i,ㅡ
+	      (eq key 100))		; ㅣ
+	 t)				; ㅢ
+	((and (eq hangul3-shinp2--prev-key 111) ; o,ㅜ
+	      (or (eq key 114)		; ㅓ
+		  (eq key 99)		; ㅔ
+		  (eq key 100)))	; ㅣ
+	 t)				; ㅝ ㅞ ㅟ
+	(t
+	 nil)))
+
+(defun hangul3-shinp2--update-galma (key char)
+  (cond ((and (hangul3-shinp2--only-cho)
+              (hangul3-shinp2--is-galma-cho char))
+         (hangul3-shinp2--galma-cho-to-jung char))
+	;; FIXME: we need to handle complex jung like ㅘ
+	((and (hangul3-shinp2--only-cho)
+              (hangul3-shinp2--is-jong char))
+	 (hangul3-shinp2--galma-jong-to-jung key char))
+	((and (hangul3-shinp2--is-double-mo key char)
+	      (hangul3-shinp2--only-cho-single-mo))
+	 (hangul3-shinp2--galma-jong-to-jung key char))
+	(t
+	 char)))
 
 (defun hangul3-shinp2-input-method-internal (key)
-  (let ((char (aref hangulshinp2-keymap (- key 33))))
-    (cond ((or (and (> char 86) (< char 91))
-               (and (> char 96) (< char 123)))
-           (hangul3-input-method-cho (- char (if (< char 97) 86 92))))
-          ((and (> char 64) (< char 86))
-           (hangul3-input-method-jung (- char 34)))
-          ((< char 31)
-           (hangul3-input-method-jong char))
+  (let* ((char (aref hangulshinp2-keymap (- key 33)))
+         (char2 (hangul3-shinp2--update-first-jong char))
+         (char3 (hangul3-shinp2--update-galma key char2)))
+    (cond ((or (and (> char3 86) (< char3 91))
+               (and (> char3 96) (< char3 123)))
+           (hangul3-input-method-cho (- char3 (if (< char3 97) 86 92))))
+          ((and (> char3 64) (< char3 86))
+           (hangul3-input-method-jung (- char3 34)))
+          ((< char3 31)
+           (hangul3-input-method-jong char3))
           (t
            (setq hangul-queue (make-vector 6 0))
-           (insert (decode-char 'ucs char))
-           (move-overlay quail-overlay (point) (point)))))
-)
+           (insert (decode-char 'ucs char3))
+           (move-overlay quail-overlay (point) (point))))))
+
+(defun hangul3-shinp2-input-method-internal-with-prev (key)
+  (let ((char (hangul3-shinp2-input-method-internal key)))
+    (setq hangul3-shinp2--prev-key key)
+    char))
 
 (defun hangul3-shinp2-input-method (key)
   "3-Bulsik shin p2 input method."
@@ -127,7 +229,7 @@
           (echo-keystrokes 0)
           (help-char nil))
       (setq hangul-queue (make-vector 6 0))
-      (hangul3-shinp2-input-method-internal key)
+      (hangul3-shinp2-input-method-internal-with-prev key)
       (unwind-protect
           (catch 'exit-input-loop
             (while t
@@ -138,7 +240,7 @@
                             (= 1 (length seq))
                             (setq key (aref seq 0))
                             (and (>= key 33) (< key 127)))
-                       (hangul3-shinp2-input-method-internal key))
+                       (hangul3-shinp2-input-method-internal-with-prev key))
                       ((commandp cmd)
                        (call-interactively cmd))
                       (t
@@ -146,7 +248,7 @@
                              (nconc (listify-key-sequence seq)
                                     unread-command-events))
                        (throw 'exit-input-loop nil))))))
-       (quail-delete-overlays)))))
+	(quail-delete-overlays)))))
 
 (register-input-method
  "korean-hangul3shinp2"
