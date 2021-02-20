@@ -402,6 +402,14 @@
 (use-package origami
   :ensure t)
 
+(use-package org
+  :ensure t
+  :config
+  (setq org-link-abbrev-alist
+	'(("bigkingtravel"  . "~/code/bigkingtravel/"))) ;; Linux/OSX
+  (global-set-key (kbd "<f5> o c") #'org-capture)
+  (global-set-key (kbd "<f5> o l") #'org-store-link))
+
 (add-to-list 'load-path "~/jhconfig/emacs")
 (setq flycheck-emacs-lisp-load-path 'inherit)
 (require 'frame-fns)
