@@ -150,7 +150,11 @@
   (global-set-key (kbd "C-S-h") 'windmove-swap-states-left)
   (global-set-key (kbd "C-S-j") 'windmove-swap-states-down)
   (global-set-key (kbd "C-S-k") 'windmove-swap-states-up)
-  (global-set-key (kbd "C-S-l") 'windmove-swap-states-right))
+  (global-set-key (kbd "C-S-l") 'windmove-swap-states-right)
+  (global-set-key (kbd "<f5> <left>") 'windmove-left)
+  (global-set-key (kbd "<f5> <down>") 'windmove-down)
+  (global-set-key (kbd "<f5> <up>") 'windmove-up)
+  (global-set-key (kbd "<f5> <right>") 'windmove-right))
 
 (projectile-mode +1)
 (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
