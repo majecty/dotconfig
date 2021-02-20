@@ -514,6 +514,8 @@
 
 (setq sentence-end-double-space nil)
 
+(global-auto-revert-mode)
+
 (provide 'init)
 
 ;;; init.el ends here
