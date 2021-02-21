@@ -69,6 +69,11 @@
 ;; Hide toolbar
 (tool-bar-mode -1)
 
+;; Move to previous point
+;; I'm still confusing how to move back to the point in Emacs.
+(bind-key "C-x p" 'pop-to-mark-command)
+(setq set-mark-command-repeat-pop t)
+
 (add-hook 'after-init-hook #'global-flycheck-mode)
 
 (use-package magit
