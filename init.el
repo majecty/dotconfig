@@ -131,6 +131,8 @@
     (setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-frame-bottom-left)))
     (ivy-posframe-mode 1)))
 
+(ivy-posframe-mode 0)
+
 (use-package lsp-mode
   :ensure t
   :init
