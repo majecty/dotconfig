@@ -66,6 +66,9 @@
         search-ring
         regexp-search-ring))
 
+;; Hide toolbar
+(tool-bar-mode -1)
+
 (add-hook 'after-init-hook #'global-flycheck-mode)
 
 (use-package magit
