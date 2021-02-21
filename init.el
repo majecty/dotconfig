@@ -461,6 +461,10 @@
   (progn
     (setq default-input-method "korean-hangul3shinp2")))
 
+(use-package recomplete
+  :ensure t
+  :bind ("M-/" . recomplete-dabbrev))
+
 (add-to-list 'load-path "~/jhconfig/emacs")
 (setq flycheck-emacs-lisp-load-path 'inherit)
 (require 'frame-fns)
