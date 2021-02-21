@@ -19,7 +19,7 @@
 (add-to-list 'package-archives
              '("melpa" . "http://melpa.org/packages/") t)
 (add-to-list 'package-archives
-	     '("org" . "https://orgmode.org/elpa/") t)
+             '("org" . "https://orgmode.org/elpa/") t)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -74,6 +74,14 @@
 (bind-key "C-x p" 'pop-to-mark-command)
 (setq set-mark-command-repeat-pop t)
 
+;; set default tab char's display width to 4 spaces
+(setq-default tab-width 4) ; emacs 23.1 to 26 default to 8
+
+;; set current buffer's tab char's display width to 4 spaces
+(setq tab-width 4)
+
+(setq-default indent-tabs-mode nil)
+
 (add-hook 'after-init-hook #'global-flycheck-mode)
 
 (bind-key "M-SPC" 'cycle-spacing)
@@ -101,9 +109,9 @@
     (setq parinfer-extensions
           '(defaults       ; should be included.
              pretty-parens  ; different paren styles for different modes.
-	     ;;            evil           ; If you use Evil.
-	     ;;            lispy          ; If you use Lispy. With this extension, you should install Lispy and do not enable lispy-mode directly.
-	     ;;            paredit        ; Introduce some paredit commands.
+         ;;            evil           ; If you use Evil.
+         ;;            lispy          ; If you use Lispy. With this extension, you should install Lispy and do not enable lispy-mode directly.
+         ;;            paredit        ; Introduce some paredit commands.
              smart-tab      ; C-b & C-f jump positions and smart shift with tab & S-tab.
              smart-yank))   ; Yank behavior depend on mode.
     (add-hook 'clojure-mode-hook #'parinfer-mode)
@@ -160,7 +168,7 @@
     (add-hook 'markdown-mode-hook
               (lambda () (add-hook 'before-save-hook #'format-all-buffer nil 'local)))
     (add-hook 'typescript-mode-hook
-	      (lambda () (add-hook 'before-save-hook #'format-all-buffer nil 'local)))))
+              (lambda () (add-hook 'before-save-hook #'format-all-buffer nil 'local)))))
 
 (use-package org-roam
   :ensure t
@@ -256,10 +264,10 @@
   (progn
     (require 'clj-refactor)
     (add-hook 'clojure-mode-hook
-	      (lambda ()
-		(clj-refactor-mode 1)
-		(yas-minor-mode 1)
-		(cljr-add-keybindings-with-prefix "C-c C-m")))))
+              (lambda ()
+                (clj-refactor-mode 1)
+                (yas-minor-mode 1)
+                (cljr-add-keybindings-with-prefix "C-c C-m")))))
 
 (use-package discover
   :ensure t
@@ -288,7 +296,7 @@
 ;;     (defun my-god-mode-update-cursor ()
 ;;       (setq cursor-type (if (or god-local-mode buffer-read-only)
 ;;                             'box
-;; 			  'bar)))
+;;                'bar)))
 ;;     (add-hook 'god-mode-enabled-hook #'my-god-mode-update-cursor)
 ;;     (add-hook 'god-mode-disabled-hook #'my-god-mode-update-cursor)
 ;;     (define-key god-local-mode-map (kbd "i") #'god-mode-all)
@@ -326,12 +334,12 @@
             (define-key eyebrowse-mode-map (kbd "M-2") 'eyebrowse-switch-to-window-config-2)
             (define-key eyebrowse-mode-map (kbd "M-3") 'eyebrowse-switch-to-window-config-3)
             (define-key eyebrowse-mode-map (kbd "M-4") 'eyebrowse-switch-to-window-config-4)
-	    (define-key eyebrowse-mode-map (kbd "M-5") 'eyebrowse-switch-to-window-config-5)
-	    (define-key eyebrowse-mode-map (kbd "M-6") 'eyebrowse-switch-to-window-config-6)
-	    (define-key eyebrowse-mode-map (kbd "M-7") 'eyebrowse-switch-to-window-config-7)
-	    (define-key eyebrowse-mode-map (kbd "M-8") 'eyebrowse-switch-to-window-config-8)
-	    (define-key eyebrowse-mode-map (kbd "M-9") 'eyebrowse-switch-to-window-config-9)
-	    (define-key eyebrowse-mode-map (kbd "M-0") 'eyebrowse-switch-to-window-config-0)
+        (define-key eyebrowse-mode-map (kbd "M-5") 'eyebrowse-switch-to-window-config-5)
+        (define-key eyebrowse-mode-map (kbd "M-6") 'eyebrowse-switch-to-window-config-6)
+        (define-key eyebrowse-mode-map (kbd "M-7") 'eyebrowse-switch-to-window-config-7)
+        (define-key eyebrowse-mode-map (kbd "M-8") 'eyebrowse-switch-to-window-config-8)
+        (define-key eyebrowse-mode-map (kbd "M-9") 'eyebrowse-switch-to-window-config-9)
+        (define-key eyebrowse-mode-map (kbd "M-0") 'eyebrowse-switch-to-window-config-0)
             (eyebrowse-mode t)
             (setq eyebrowse-new-workspace t)))
 
@@ -442,7 +450,7 @@
   :ensure t
   :config
   (setq org-link-abbrev-alist
-	'(("bigkingtravel"  . "~/code/bigkingtravel/"))) ;; Linux/OSX
+        '(("bigkingtravel"  . "~/code/bigkingtravel/"))) ;; Linux/OSX
   (global-set-key (kbd "<f5> o c") #'org-capture)
   (global-set-key (kbd "<f5> o l") #'org-store-link))
 
@@ -461,9 +469,9 @@
 
 (use-package hangul3shinp2
   :straight (hangul3shinp2
-	     :host github
-	     :repo "majecty/hangul3shinp2.el"
-	     :branch "master")
+             :host github
+             :repo "majecty/hangul3shinp2.el"
+             :branch "master")
   :config
   (progn
     (setq default-input-method "korean-hangul3shinp2")))
@@ -522,36 +530,36 @@
 (pretty-hydra-define hydra-window
   (:color red :quit-key "q")
   ("Move" (("h" windmove-left)
-	   ("j" windmove-down)
-	   ("k" windmove-up)
-	   ("l" windmove-right)
-	   ("s" ace-swap-window))
+           ("j" windmove-down)
+           ("k" windmove-up)
+           ("l" windmove-right)
+           ("s" ace-swap-window))
    "Split" (("+" balance-windows "balance")
-	    ("|" (lambda ()
-		   (interactive)
-		   (split-window-right)
-		   (windmove-right)))
-	    ("_" (lambda ()
-		   (interactive)
-		   (split-window-below)
-		   (windmove-down)))
-	    ("v" split-window-right)
-	    ("x" split-window-below))
-					;("t" transpose-frame "'")
+            ("|" (lambda ()
+                   (interactive)
+                   (split-window-right)
+                   (windmove-right)))
+            ("_" (lambda ()
+                   (interactive)
+                   (split-window-below)
+                   (windmove-down)))
+            ("v" split-window-right)
+            ("x" split-window-below))
+                                        ;("t" transpose-frame "'")
    ;; winner-mode must be enabled
    "Undo" (("u" winner-undo)
-	   ("r" winner-redo)) ;;Fixme, not working?
+           ("r" winner-redo)) ;;Fixme, not working?
    "Delete" (("o" delete-other-windows :exit t)
-	     ("db" kill-this-buffer)
-	     ("df" delete-frame :exit t)
-	     ("dw" delete-window))
+             ("db" kill-this-buffer)
+             ("df" delete-frame :exit t)
+             ("dw" delete-window))
    "Buffer" (("b" counsel-switch-buffer "buffer")
-	     ;;  ("f" new-frame :exit t)
-	     ("f" fzf "fzf" :exit t)
-	     ("m" headlong-bookmark-jump)))
+             ;;  ("f" new-frame :exit t)
+             ("f" fzf "fzf" :exit t)
+             ("m" headlong-bookmark-jump)))
   ;;  ("da" ace-delete-window)
-					;("i" ace-maximize-window "ace-one" :color blue)
-					;("b" ido-switch-buffer "buf")
+                                        ;("i" ace-maximize-window "ace-one" :color blue)
+                                        ;("b" ido-switch-buffer "buf")
   )
 
 (global-set-key (kbd "<f5> w") #'hydra-window/body)
@@ -563,15 +571,15 @@
  (kbd "C-n")
  (defhydra hydra-move
    (:post (progn
-	    (when jh-hydra-input-method-toggled
-	      (setq jh-hydra-input-method-toggled nil)
-	      (toggle-input-method))
-	    )
-	  :body-pre (progn
-		      (next-line)
-		      (when input-method-function
-			(toggle-input-method)
-			(setq jh-hydra-input-method-toggled t))))
+            (when jh-hydra-input-method-toggled
+              (setq jh-hydra-input-method-toggled nil)
+              (toggle-input-method))
+            )
+          :body-pre (progn
+                      (next-line)
+                      (when input-method-function
+                        (toggle-input-method)
+                        (setq jh-hydra-input-method-toggled t))))
    "move"
    ("n" next-line)
    ("p" previous-line)
