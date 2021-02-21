@@ -421,6 +421,16 @@
       (goto-char (point-max))
       (eval-print-last-sexp)))
   (load bootstrap-file nil 'nomessage))
+
+(use-package hangul3shinp2
+  :straight (hangul3shinp2
+	     :host github
+	     :repo "majecty/hangul3shinp2.el"
+	     :branch "master")
+  :config
+  (progn
+    (setq default-input-method "korean-hangul3shinp2")))
+
 (add-to-list 'load-path "~/jhconfig/emacs")
 (setq flycheck-emacs-lisp-load-path 'inherit)
 (require 'frame-fns)
