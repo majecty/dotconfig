@@ -498,10 +498,21 @@
 (global-set-key (kbd "<f5> w") #'hydra-window/body)
 (global-set-key (kbd "C-x C-o") #'hydra-window/body)
 
+(defvar jh-hydra-input-method-toggled nil)
+
 (global-set-key
  (kbd "C-n")
  (defhydra hydra-move
-   (:body-pre (next-line))
+   (:post (progn
+	    (when jh-hydra-input-method-toggled
+	      (setq jh-hydra-input-method-toggled nil)
+	      (toggle-input-method))
+	    )
+	  :body-pre (progn
+		      (next-line)
+		      (when input-method-function
+			(toggle-input-method)
+			(setq jh-hydra-input-method-toggled t))))
    "move"
    ("n" next-line)
    ("p" previous-line)
