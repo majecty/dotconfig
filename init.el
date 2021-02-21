@@ -76,6 +76,8 @@
 
 (add-hook 'after-init-hook #'global-flycheck-mode)
 
+(bind-key "M-SPC" 'cycle-spacing)
+
 (use-package magit
   :ensure t
   :config
