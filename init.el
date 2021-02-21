@@ -477,6 +477,9 @@
   :config
   (progn
     (setq default-input-method "korean-hangul3shinp2")))
+(use-package color-theme-sanityinc-tomorrow
+  :ensure t
+  :config (color-theme-sanityinc-tomorrow-night))
 
 ;; (use-package recomplete
 ;;   :ensure t
