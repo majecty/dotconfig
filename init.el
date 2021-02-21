@@ -619,7 +619,7 @@
 (setq sentence-end-double-space nil)
 
 (global-auto-revert-mode)
-
+(setq default-input-method "korean-hangul3shinp2")
 (provide 'init)
 
 ;;; init.el ends here
