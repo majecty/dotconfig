@@ -338,7 +338,8 @@
   :ensure t
   :config
   (progn
-    (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)))
+    (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
+    (setq doom-modeline-buffer-file-name-style 'buffer-name)))
 
 (use-package eyebrowse
   :ensure t
