@@ -180,6 +180,8 @@
     (add-hook 'markdown-mode-hook
               (lambda () (add-hook 'before-save-hook #'format-all-buffer nil 'local)))
     (add-hook 'typescript-mode-hook
+              (lambda () (add-hook 'before-save-hook #'format-all-buffer nil 'local)))
+    (add-hook 'clojure-mode-hook
               (lambda () (add-hook 'before-save-hook #'format-all-buffer nil 'local)))))
 
 (use-package org-roam
