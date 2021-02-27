@@ -486,10 +486,8 @@
   :straight (hangul3shinp2
              :host github
              :repo "majecty/hangul3shinp2.el"
-             :branch "master")
-  :config
-  (progn
-    (setq default-input-method "korean-hangul3shinp2")))
+             :branch "master"))
+
 (use-package color-theme-sanityinc-tomorrow
   :ensure t
   :config (color-theme-sanityinc-tomorrow-night))
