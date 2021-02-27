@@ -561,7 +561,18 @@
 (global-set-key (kbd "C--") 'zoom-out)
 
 (pretty-hydra-define hydra-window
-  (:color red :quit-key "q")
+  (:color red :quit-key "q"
+          :post (progn
+                  (when jh-hydra-input-method-toggled
+                    (setq jh-hydra-input-method-toggled nil)
+                    (toggle-input-method)
+                    (setq input-method-function nil))
+                  )
+          :body-pre (progn
+                      (next-line)
+                      (when input-method-function
+                        (toggle-input-method)
+                        (setq jh-hydra-input-method-toggled t))))
   ("Move" (("h" windmove-left)
            ("j" windmove-down)
            ("k" windmove-up)
