@@ -82,6 +82,14 @@
 
 (setq-default indent-tabs-mode nil)
 
+(global-unset-key (kbd "<f4>"))
+(global-set-key
+ (kbd "<f4> <f4>")
+ (defhydra hydra-macro ()
+    "macro"
+    ("<f4>" end-kbd-macro "end")
+    ("<f5>" call-last-kbd-macro "play")))
+
 (add-hook 'after-init-hook #'global-flycheck-mode)
 
 (bind-key "M-SPC" 'cycle-spacing)
@@ -90,7 +98,7 @@
   :ensure t
   :config
   (progn
-    (global-set-key (kbd "<f5> g") #'magit-status)))
+    (global-set-key (kbd "<f4> g") #'magit-status)))
 
 (use-package flycheck-clj-kondo
   :ensure t)
@@ -192,8 +200,8 @@
     (add-hook 'after-init-hook 'org-roam-mode)
     ;; create maps using function keys
     ;; find file
-    (global-set-key (kbd "<f5> r f f") #'org-roam-find-file)
-    (global-set-key (kbd "<f5> r t") #'org-roam-dailies-find-today)
+    (global-set-key (kbd "<f4> r f f") #'org-roam-find-file)
+    (global-set-key (kbd "<f4> r t") #'org-roam-dailies-find-today)
     (define-key org-roam-mode-map (kbd "<f9> i") #'org-roam-insert)
     (define-key org-roam-mode-map (kbd "<f9> d") #'org-roam-buffer-toggle-display)
     (define-key org-roam-mode-map (kbd "<f9> t a") #'org-roam-tag-add)
@@ -210,10 +218,10 @@
   (global-set-key (kbd "C-S-j") 'windmove-swap-states-down)
   (global-set-key (kbd "C-S-k") 'windmove-swap-states-up)
   (global-set-key (kbd "C-S-l") 'windmove-swap-states-right)
-  (global-set-key (kbd "<f5> <left>") 'windmove-left)
-  (global-set-key (kbd "<f5> <down>") 'windmove-down)
-  (global-set-key (kbd "<f5> <up>") 'windmove-up)
-  (global-set-key (kbd "<f5> <right>") 'windmove-right))
+  (global-set-key (kbd "<f4> <left>") 'windmove-left)
+  (global-set-key (kbd "<f4> <down>") 'windmove-down)
+  (global-set-key (kbd "<f4> <up>") 'windmove-up)
+  (global-set-key (kbd "<f4> <right>") 'windmove-right))
 
 (projectile-mode +1)
 (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
@@ -362,22 +370,22 @@
   :ensure t
   :config
   (progn
-    (global-set-key (kbd "<f5> f f") #'fzf)
-    (global-set-key (kbd "<f5> f g") #'fzf-git)
-    (global-set-key (kbd "<f5> f p") #'fzf-projectile)))
+    (global-set-key (kbd "<f4> f f") #'fzf)
+    (global-set-key (kbd "<f4> f g") #'fzf-git)
+    (global-set-key (kbd "<f4> f p") #'fzf-projectile)))
 
 (use-package treemacs
   :ensure t
   :config
   (progn
-    (global-set-key (kbd "<f5> t") #'treemacs)))
+    (global-set-key (kbd "<f4> t") #'treemacs)))
 
 (use-package treemacs-projectile
   :ensure t)
 
 (use-package pomidor
   :ensure t
-  :bind (("<f5> p" . pomidor))
+  :bind (("<f4> p" . pomidor))
   :config (setq pomidor-sound-tick nil
                 pomidor-sound-tack nil)
   :hook (pomidor-mode . (lambda ()
@@ -391,7 +399,7 @@
   :ensure t
   :config
   (progn
-    (global-set-key (kbd "<f5> s") #'deadgrep)))
+    (global-set-key (kbd "<f4> s") #'deadgrep)))
 
 (use-package dashboard
   :ensure t
@@ -466,8 +474,8 @@
   :config
   (setq org-link-abbrev-alist
         '(("bigkingtravel"  . "~/code/bigkingtravel/"))) ;; Linux/OSX
-  (global-set-key (kbd "<f5> o c") #'org-capture)
-  (global-set-key (kbd "<f5> o l") #'org-store-link))
+  (global-set-key (kbd "<f4> o c") #'org-capture)
+  (global-set-key (kbd "<f4> o l") #'org-store-link))
 
 (defvar bootstrap-version)
 (let ((bootstrap-file
@@ -578,7 +586,7 @@
                                         ;("b" ido-switch-buffer "buf")
   )
 
-(global-set-key (kbd "<f5> w") #'hydra-window/body)
+(global-set-key (kbd "<f4> w") #'hydra-window/body)
 (global-set-key (kbd "C-x C-o") #'hydra-window/body)
 
 (defvar jh-hydra-input-method-toggled nil)
@@ -614,7 +622,7 @@
    ))
 
 (global-set-key
- (kbd "<f5> q")
+ (kbd "<f4> q")
  (defhydra hydra-toggle-simple (:color blue)
    "toggle"
    ("a" abbrev-mode "abbrev")
