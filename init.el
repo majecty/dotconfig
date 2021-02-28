@@ -90,6 +90,8 @@
     ("<f4>" end-kbd-macro "end")
     ("<f5>" call-last-kbd-macro "play")))
 
+(global-set-key (kbd "C-;") #'save-buffer)
+
 (use-package flycheck :ensure t
   :config
   (progn
