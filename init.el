@@ -347,7 +347,8 @@
 ;;     (global-set-key (kbd "C-x C-5 C-o") #'other-frame)
 ;;     (global-set-key (kbd "C-x C-5 C-9") #'other-frame)))
 
-(use-package all-the-icons)
+(use-package all-the-icons
+  :ensure t)
 
 (use-package doom-modeline
   :ensure t
