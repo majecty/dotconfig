@@ -91,6 +91,9 @@
     ("<f5>" call-last-kbd-macro "play")))
 
 (global-set-key (kbd "C-;") #'save-buffer)
+(global-set-key (kbd "<f4> x") #'delete-window)
+(global-set-key (kbd "<f4> v") #'split-window-right)
+(global-set-key (kbd "<f4> c") #'split-window-below)
 
 (use-package flycheck :ensure t
   :config
