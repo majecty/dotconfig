@@ -286,12 +286,12 @@
 ;; (use-package hydra-examples
 ;;   :ensure t)
 
-(use-package ivy-rich
-  :after ivy
-  :config
-  (progn
-    (ivy-rich-mode 1)
-    (setq ivy-rich-path-style 'abbrev)))
+;; (use-package ivy-rich
+;;   :after ivy
+;;   :config
+;;   (progn
+;;     (ivy-rich-mode 1)
+;;     (setq ivy-rich-path-style 'abbrev)))
 
 (use-package clj-refactor
   :ensure t
