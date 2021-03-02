@@ -20,7 +20,7 @@ export PATH="$DENO_INSTALL/bin:$PATH"
 export PATH=$PATH:$HOME/.nvm/versions/node/v13.12.0/bin
 export PATH=$PATH:$HOME/bin/go/bin
 # fnm
-export PATH=/home/juhyung/.fnm:$PATH
+export PATH=$HOME/.fnm:$PATH
 export PATH=$PATH:$HOME/.emacs.d/bin
 # eval "`fnm env --multi`"
 eval `fnm env`
