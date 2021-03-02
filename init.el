@@ -99,6 +99,10 @@
 
 (bind-key "M-SPC" 'cycle-spacing)
 
+(use-package xclip :ensure t)
+(use-package projectile :ensure t)
+(use-package which-key :ensure t)
+
 (use-package magit
   :ensure t
   :config
@@ -242,7 +246,7 @@
 
 (use-package hydra
   :ensure t)
-
+(use-package counsel :ensure t)
 (use-package ivy
   :ensure t
   :config
