@@ -514,6 +514,8 @@
   :ensure t
   :config (color-theme-sanityinc-tomorrow-night))
 
+(use-package terminal-here :ensure t)
+
 ;; (use-package recomplete
 ;;   :ensure t
 ;;   :bind ("M-/" . recomplete-dabbrev))
