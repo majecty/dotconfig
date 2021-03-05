@@ -98,6 +98,8 @@
 (add-hook 'after-init-hook #'global-flycheck-mode)
 
 (bind-key "M-SPC" 'cycle-spacing)
+(global-set-key (kbd  "C-;") #'save-buffer)
+(global-set-key (kbd "<f4> b") #'counsel-switch-buffer)
 
 (use-package xclip :ensure t)
 (use-package projectile :ensure t)
