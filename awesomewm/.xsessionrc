@@ -1,0 +1,15 @@
+export PATH=$PATH:$HOME/.config/rofi/bin
+CLUTTER_IM_MODULE=ibus
+QT4_IM_MODULE=ibus
+GTK_IM_MODULE=ibus
+
+bash $HOME/.screenlayout/awesome-wm-layout.sh
+
+ibus-daemon -drx
+picom &
+
+# enable button scrolling
+xinput set-prop "Kensington Expert Wireless TB Mouse" "libinput Scroll Method Enabled" 0 0 1
+xinput set-prop "Kensington Expert Wireless TB Mouse" "libinput Middle Emulation Enabled" 1
+xinput set-prop "ZSA Technology Labs ErgoDox EZ Mouse" "libinput Scroll Method Enabled" 0 0 1
+xinput set-prop "ZSA Technology Labs ErgoDox EZ Mouse" "libinput Middle Emulation Enabled" 1
