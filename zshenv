@@ -22,6 +22,7 @@ export PATH=$PATH:$HOME/bin/go/bin
 # fnm
 export PATH=$HOME/.fnm:$PATH
 export PATH=$PATH:$HOME/.emacs.d/bin
+export PATH=$PATH:$HOME/.config/rofi/bin
 # eval "`fnm env --multi`"
 eval `fnm env`
 
