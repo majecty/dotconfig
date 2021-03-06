@@ -265,7 +265,8 @@
     ;; enable this if you want `swiper' to use it
     (setq search-default-mode #'char-fold-to-regexp)
     (define-key ivy-minibuffer-map (kbd "C-n") #'ivy-next-line)
-    (global-set-key (kbd "C-S") 'swiper)
+    (global-set-key (kbd "C-S-s") 'swiper)
+    (global-set-key (kbd "C-s") #'isearch-forward)
     (global-set-key (kbd "C-c C-r") 'ivy-resume)
     (global-set-key (kbd "<f6>") 'ivy-resume)
     (global-set-key (kbd "M-x") 'counsel-M-x)
