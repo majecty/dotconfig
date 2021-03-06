@@ -585,7 +585,6 @@
                     (setq input-method-function nil))
                   )
           :body-pre (progn
-                      (next-line)
                       (when input-method-function
                         (toggle-input-method)
                         (setq jh-hydra-input-method-toggled t))))
