@@ -528,6 +528,10 @@
 
 (use-package lua-mode :ensure t)
 
+(use-package rust-mode :ensure t
+  :config
+  (define-key rust-mode-map (kbd "<f9> .") #'lsp-execute-code-action))
+
 ;; (use-package recomplete
 ;;   :ensure t
 ;;   :bind ("M-/" . recomplete-dabbrev))
