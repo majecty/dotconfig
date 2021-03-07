@@ -190,7 +190,7 @@
 
 (use-package lsp-ui :ensure t :commands lsp-ui-mode)
 (use-package lsp-ivy :ensure t :commands lsp-ivy-workspace-symbol)
-(use-package lsp-treemacs :ensure t :commands lsp-treemacs-errors-list
+(use-package lsp-treemacs :ensure t
   :config
   (progn
     (global-set-key (kbd "<f4> e l") #'lsp-treemacs-errors-list)))
