@@ -532,6 +532,8 @@
   :config
   (define-key rust-mode-map (kbd "<f9> .") #'lsp-execute-code-action))
 
+(use-package systemd :ensure t)
+
 ;; (use-package recomplete
 ;;   :ensure t
 ;;   :bind ("M-/" . recomplete-dabbrev))
