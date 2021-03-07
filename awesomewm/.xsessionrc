@@ -1,7 +1,10 @@
 export PATH=$PATH:$HOME/.config/rofi/bin
-CLUTTER_IM_MODULE=ibus
-QT4_IM_MODULE=ibus
-GTK_IM_MODULE=ibus
+
+export XMODIFIERS=@im=ibus
+export CLUTTER_IM_MODULE=ibus
+export QT4_IM_MODULE=ibus
+export QT_IM_MODULE=ibus
+export GTK_IM_MODULE=ibus
 
 bash $HOME/.screenlayout/awesome-wm-layout.sh
 
