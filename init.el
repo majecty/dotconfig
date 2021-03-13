@@ -212,6 +212,11 @@
     (add-hook 'clojure-mode-hook
               (lambda () (add-hook 'before-save-hook #'format-all-buffer nil 'local)))))
 
+(defun org-roam-jh-insert-key ()
+  "Key is a external reference of the document"
+  (interactive)
+  (insert "#+roam_key: "))
+
 (use-package org-roam
   :ensure t
   :config
