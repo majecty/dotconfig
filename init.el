@@ -531,7 +531,10 @@
   :ensure t
   :config (color-theme-sanityinc-tomorrow-night))
 
-(use-package terminal-here :ensure t)
+(use-package terminal-here :ensure t
+  :config
+  (global-set-key (kbd "<f5> t h") #'terminal-here-launch)
+  (global-set-key (kbd "<f5> t p") #'terminal-here-project-launch))
 
 (use-package lua-mode :ensure t)
 
