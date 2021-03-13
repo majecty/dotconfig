@@ -229,6 +229,8 @@
     (global-set-key (kbd "<f4> r t") #'org-roam-dailies-find-today)
     (define-key org-roam-mode-map (kbd "<f9> i") #'org-roam-insert)
     (define-key org-roam-mode-map (kbd "<f9> d") #'org-roam-buffer-toggle-display)
+    (define-key org-roam-mode-map (kbd "<f9> k") #'org-roam-jh-insert-key)
+    (define-key org-roam-mode-map (kbd "<f9> a") #'org-roam-alias-add)
     (define-key org-roam-mode-map (kbd "<f9> t a") #'org-roam-tag-add)
     (define-key org-roam-mode-map (kbd "<f9> t d") #'org-roam-tag-delete)))
 
