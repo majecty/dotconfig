@@ -55,6 +55,18 @@ ln -s -r rc.lua $HOME/.config/awesome/rc.lua
 ln -s -r -b .xsessionrc $HOME/.xsessionrc
 ```
 
+### rofi 설치
+
+프로그램을 실행시키는 도구다. 잘 동작한다.
+<https://github.com/davatorium/rofi>
+
+### awesome wm widget 설치
+
+```
+cd ./.config/awesome/
+git clone https://github.com/streetturtle/awesome-wm-widgets
+```
+
 ## 문제 해결
 
 ### 여러 모니터 설정하기
@@ -65,7 +77,12 @@ arandr을 통해서 모니터가 어떻게 연결할지 조절할 수 있다. ar
 
 arandr 페이지: <https://christian.amsuess.com/tools/arandr/>
 
-### 와이파이와 배터리, 화면 밝기
+## 프로그램 실행하기
+
+기본으로 제공되는 프로그램 실행 방법은 불편하다. rofi를 설치해서
+편하게 프로그램을 실행하자. <https://github.com/davatorium/rofi>
+
+### 와이파이와 배터리, 화면 밝기, 블루투스
 
 awesome wm을 사용하면 그놈 데스크톱 환경에서 제공하던 많은 도구들의
 대체제를 찾아야 한다. 지금은 데스크탑이라서 딱히 설정하지 않았지만,
