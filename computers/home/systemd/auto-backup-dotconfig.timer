@@ -1,0 +1,12 @@
+[Unit]
+Description=Run dotconfig
+Requires=auto-backup-dotconfig.service
+
+[Timer]
+Unit=auto-backup-dotconfig.service
+OnUnitInactiveSec=15m
+RandomizedDelaySec=15m
+AccuracySec=30s
+
+[Install]
+WantedBy=timers.target

@@ -1,0 +1,9 @@
+[Unit]
+Description=Backup dotconfig
+Wants=auto-backup-dotconfig.timer
+
+[Service]
+ExecStart=/home/juhyung/jhconfig/upload.sh
+
+[Install]
+WantedBy=default.target

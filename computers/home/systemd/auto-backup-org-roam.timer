@@ -1,0 +1,12 @@
+[Unit]
+Description=Run org roam backup
+Requires=auto-backup-org-roam.service
+
+[Timer]
+Unit=auto-backup-org-roam.service
+OnUnitInactiveSec=15m
+RandomizedDelaySec=15m
+AccuracySec=30s
+
+[Install]
+WantedBy=timers.target

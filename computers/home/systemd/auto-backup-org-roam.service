@@ -1,0 +1,9 @@
+[Unit]
+Description=Backup org roam
+Wants=auto-backup-org-roam.timer
+
+[Service]
+ExecStart=/home/juhyung/org-roam/upload.sh
+
+[Install]
+WantedBy=default.target
