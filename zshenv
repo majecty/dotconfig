@@ -66,3 +66,5 @@ tnewdir()
   BASE2=$(echo $BASE | sed --expression "s/\./_/g")
   tnew $BASE2
 }
+
+export GOPATH=`go env GOPATH`
