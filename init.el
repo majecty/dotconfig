@@ -107,6 +107,16 @@
 (global-set-key (kbd  "C-;") #'save-buffer)
 (global-set-key (kbd "<f4> b") #'counsel-switch-buffer)
 
+(defun xah-save-all-unsaved ()
+  "Save all unsaved files. no ask.
+Version 2019-11-05"
+  (interactive)
+  (save-some-buffers t ))
+
+(if (version< emacs-version "27")
+    (add-hook 'focus-out-hook 'xah-save-all-unsaved)
+  (setq after-focus-change-function 'xah-save-all-unsaved))
+
 (use-package xclip :ensure t)
 (use-package projectile :ensure t)
 (use-package which-key :ensure t)
