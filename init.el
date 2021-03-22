@@ -559,6 +559,16 @@ Version 2019-11-05"
 
 (use-package systemd :ensure t)
 
+(use-package yasnippet :ensure t
+  :config
+  (yas-global-mode 1))
+
+(use-package yasnippet-snippets :ensure t)
+
+(use-package ivy-yasnippet :ensure t
+  :config
+  (global-set-key (kbd "<f4> y") #'ivy-yasnippet))
+
 ;; (use-package recomplete
 ;;   :ensure t
 ;;   :bind ("M-/" . recomplete-dabbrev))
