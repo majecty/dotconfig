@@ -569,6 +569,12 @@ Version 2019-11-05"
   :config
   (global-set-key (kbd "<f4> y") #'ivy-yasnippet))
 
+(use-package emmet-mode :ensure t
+  :config
+  (progn
+    (add-hook 'html-mode-hook 'emmet-mode))
+  )
+
 ;; (use-package recomplete
 ;;   :ensure t
 ;;   :bind ("M-/" . recomplete-dabbrev))
