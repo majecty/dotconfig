@@ -575,6 +575,8 @@ Version 2019-11-05"
     (add-hook 'html-mode-hook 'emmet-mode))
   )
 
+(use-package gradle-mode :ensure t)
+
 ;; (use-package recomplete
 ;;   :ensure t
 ;;   :bind ("M-/" . recomplete-dabbrev))
