@@ -117,6 +117,11 @@ Version 2019-11-05"
     (add-hook 'focus-out-hook 'xah-save-all-unsaved)
   (setq after-focus-change-function 'xah-save-all-unsaved))
 
+;; stop creating those #auto-save# files
+(setq auto-save-default nil)
+
+(setq create-lockfiles nil)
+
 (use-package xclip :ensure t)
 (use-package projectile :ensure t)
 (use-package which-key :ensure t)
