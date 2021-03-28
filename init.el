@@ -229,6 +229,7 @@ Version 2019-11-05"
   :ensure t
   :config
   (progn
+    (global-set-key (kbd "<f4> C-f") #'format-all-buffer)
     (add-hook 'markdown-mode-hook
               (lambda () (add-hook 'before-save-hook #'format-all-buffer nil 'local)))
     (add-hook 'typescript-mode-hook
