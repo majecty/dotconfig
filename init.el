@@ -604,6 +604,8 @@ Version 2019-11-05"
               ("<backspace>" . nil))
   :config (define-key dired-mode-map (kbd "<f9> p") #'peep-dired))
 
+(use-package eglot :ensure t)
+
 (use-package which-key :ensure t
   :config
   (progn
