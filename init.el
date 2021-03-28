@@ -94,6 +94,12 @@
 (global-set-key (kbd "<f4> x") #'delete-window)
 (global-set-key (kbd "<f4> v") #'split-window-right)
 (global-set-key (kbd "<f4> c") #'split-window-below)
+(defvar search-key-map
+  (let ((map (make-sparse-keymap)))
+    (define-key map (kbd "p") #'isearch-forward-symbol-at-point)
+    (define-key map (kbd "P") #'swiper-isearch-thing-at-point)
+    map))
+(global-set-key (kbd "<f4> S") search-key-map)
 (global-set-key (kbd "<XF86Launch5>") #'toggle-input-method)
 
 (use-package flycheck :ensure t
@@ -124,7 +130,12 @@ Version 2019-11-05"
 
 (use-package xclip :ensure t)
 (use-package projectile :ensure t)
-(use-package which-key :ensure t)
+(use-package which-key :ensure t
+  :config
+  (progn
+    (which-key-add-keymap-based-replacements global-map
+      "<f4> S" "search-prefix")
+    (setq which-key-idle-delay 0.1)))
 
 (use-package magit
   :ensure t
