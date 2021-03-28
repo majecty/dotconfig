@@ -202,6 +202,7 @@ Version 2019-11-05"
   (setq gc-cons-threshold 100000000)
   :config
   (progn
+    (define-key lsp-mode-map (kbd "<f9> .") #'lsp-execute-code-action)
     (add-hook 'rust-mode-hook #'lsp)
     (add-hook 'typescript-mode-hook #'lsp)
     (add-hook 'js-mode-hook #'lsp)
@@ -513,11 +514,7 @@ Version 2019-11-05"
 (use-package ranger
   :ensure t)
 
-(use-package typescript-mode
-  :ensure t
-  :config
-  (progn
-    (define-key typescript-mode-map (kbd "<f9> .") #'lsp-execute-code-action)))
+(use-package typescript-mode :ensure t)
 
 (use-package company-tabnine :ensure t
   :config
@@ -577,9 +574,7 @@ Version 2019-11-05"
 
 (use-package lua-mode :ensure t)
 
-(use-package rust-mode :ensure t
-  :config
-  (define-key rust-mode-map (kbd "<f9> .") #'lsp-execute-code-action))
+(use-package rust-mode :ensure t)
 
 (use-package systemd :ensure t)
 
