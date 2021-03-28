@@ -249,8 +249,12 @@ Version 2019-11-05"
     (add-hook 'after-init-hook 'org-roam-mode)
     ;; create maps using function keys
     ;; find file
-    (global-set-key (kbd "<f4> r f f") #'org-roam-find-file)
-    (global-set-key (kbd "<f4> r t") #'org-roam-dailies-find-today)
+    (setq jh-roam-map
+          (let ((map (make-sparse-keymap)))
+            (define-key map (kbd "f f") #'org-roam-find-file)
+            (define-key map (kbd "t") #'org-roam-dailies-find-today)
+            map))
+    (global-set-key (kbd "<f4> r") jh-roam-map)
     (define-key org-roam-mode-map (kbd "<f9> i") #'org-roam-insert)
     (define-key org-roam-mode-map (kbd "<f9> d") #'org-roam-buffer-toggle-display)
     (define-key org-roam-mode-map (kbd "<f9> k") #'org-roam-jh-insert-key)
@@ -608,7 +612,8 @@ Version 2019-11-05"
       "<f4> S" "search-prefix"
       "<f4> f" "fzf-prefix"
       "<f4> o" "org-prefix"
-      "<f4> e" "error-prefix")
+      "<f4> e" "error-prefix"
+      "<f4> r" "roam-prefix")
     (setq which-key-idle-delay 0.1)))
 
 ;; (use-package recomplete
