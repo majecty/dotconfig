@@ -588,6 +588,12 @@ Version 2019-11-05"
 
 (use-package gradle-mode :ensure t)
 
+(use-package peep-dired :ensure t
+  :bind (:map peep-dired-mode-map
+              ("SPC" . nil)
+              ("<backspace>" . nil))
+  :config (define-key dired-mode-map (kbd "<f9> p") #'peep-dired))
+
 ;; (use-package recomplete
 ;;   :ensure t
 ;;   :bind ("M-/" . recomplete-dabbrev))
