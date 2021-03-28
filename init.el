@@ -529,8 +529,12 @@ Version 2019-11-05"
   :config
   (setq org-link-abbrev-alist
         '(("bigkingtravel"  . "~/code/bigkingtravel/"))) ;; Linux/OSX
-  (global-set-key (kbd "<f4> o c") #'org-capture)
-  (global-set-key (kbd "<f4> o l") #'org-store-link))
+  (setq jh-org-map
+        (let ((map (make-sparse-keymap)))
+          (define-key map (kbd "c") #'org-capture)
+          (define-key map (kbd "l") #'org-store-link)
+          map))
+  (global-set-key (kbd "<f4> o") jh-org-map))
 
 (defvar bootstrap-version)
 (let ((bootstrap-file
@@ -597,7 +601,8 @@ Version 2019-11-05"
   (progn
     (which-key-add-keymap-based-replacements global-map
       "<f4> S" "search-prefix"
-      "<f4> f" "fzf-prefix")
+      "<f4> f" "fzf-prefix"
+      "<f4> o" "org-prefix")
     (setq which-key-idle-delay 0.1)))
 
 ;; (use-package recomplete
