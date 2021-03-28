@@ -677,7 +677,7 @@ Version 2019-11-05"
    ;; winner-mode must be enabled
    "Undo" (("u" winner-undo)
            ("r" winner-redo)) ;;Fixme, not working?
-   "Delete" (("o" delete-other-windows :exit t)
+   "Delete" (("o" delete-other-windows)
              ("db" kill-this-buffer)
              ("df" delete-frame :exit t)
              ("dw" delete-window))
