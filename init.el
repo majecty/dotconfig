@@ -105,8 +105,12 @@
 (use-package flycheck :ensure t
   :config
   (progn
-    (global-set-key (kbd "<f4> e k") #'flycheck-next-error)
-    (global-set-key (kbd "<f4> e j") #'flycheck-previous-error)))
+    (setq jh-error-map
+          (let ((map (make-sparse-keymap)))
+                (define-key map (kbd "k") #'flycheck-next-error)
+                (define-key map (kbd "j") #'flycheck-previous-error)
+                map))
+    (global-set-key (kbd "<f4> e") jh-error-map)))
 (add-hook 'after-init-hook #'global-flycheck-mode)
 
 (bind-key "M-SPC" 'cycle-spacing)
@@ -599,10 +603,12 @@ Version 2019-11-05"
 (use-package which-key :ensure t
   :config
   (progn
+    ;; FIXME: save names in list and apply here.
     (which-key-add-keymap-based-replacements global-map
       "<f4> S" "search-prefix"
       "<f4> f" "fzf-prefix"
-      "<f4> o" "org-prefix")
+      "<f4> o" "org-prefix"
+      "<f4> e" "error-prefix")
     (setq which-key-idle-delay 0.1)))
 
 ;; (use-package recomplete
