@@ -1,4 +1,5 @@
 export PATH=$PATH:$HOME/.config/rofi/bin
+. $HOME/.commonenv.sh
 
 # export XMODIFIERS=@im=ibus
 # export CLUTTER_IM_MODULE=ibus

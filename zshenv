@@ -7,22 +7,8 @@ alias cc-22x-clippy='cargo +nightly-2019-10-13 clippy --all --all-targets'
 
 alias cc-master-fmt='cargo +nightly-2019-12-19 fmt'
 alias cc-master-clippy='cargo +nightly-2019-12-19 clippy --all --all-targets'
-export PATH=$HOME/.local/bin:$PATH
-export PATH=$PATH:/home/juhyung/bin
-export PATH=$PATH:~/.cargo/bin/
-export PATH=$PATH:~/bin
-export PATH=$PATH:~/.yarn/bin/
-export PATH=$PATH:$HOME/.config/yarn/global
-export PATH=$PATH:~/bin/dynalist-1.0.5
-export PATH=$PATH:/snap/bin/
-export PATH=$PATH:$HOME/bin/firefox
-export PATH="$DENO_INSTALL/bin:$PATH"
-export PATH=$PATH:$HOME/.nvm/versions/node/v13.12.0/bin
-export PATH=$PATH:$HOME/bin/go/bin
-# fnm
-export PATH=$HOME/.fnm:$PATH
-export PATH=$PATH:$HOME/.emacs.d/bin
-export PATH=$PATH:$HOME/.config/rofi/bin
+
+source ~/.commonenv.sh
 # eval "`fnm env --multi`"
 eval `fnm env`
 
@@ -44,12 +30,8 @@ eval "$(luarocks path)"
 export FZF_DEFAULT_COMMAND='fd --type f'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export TAG_SEARCH_PROG=rg
-export PATH=$PATH:~/go/bin
 export EDITOR=kak
-export PATH=$PATH:$HOME/perl5/bin
 export BAT_THEME=OneHalfLight
-export PATH=$PATH:~/jhconfig/bin
-export PATH=$PATH:~/jhconfig/lua
 export GTK_IM_MODULE=ibus
 export GLFW_IM_MODULE=ibus
 

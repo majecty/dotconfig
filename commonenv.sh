@@ -1,0 +1,19 @@
+export PATH=$HOME/.local/bin:$PATH
+export PATH=$PATH:~/.cargo/bin/
+export PATH=$PATH:~/bin
+export PATH=$PATH:~/.yarn/bin/
+export PATH=$PATH:$HOME/.config/yarn/global
+export PATH=$PATH:~/bin/dynalist-1.0.5
+export PATH=$PATH:/snap/bin/
+export PATH=$PATH:$HOME/bin/firefox
+export PATH="$DENO_INSTALL/bin:$PATH"
+export PATH=$PATH:$HOME/.nvm/versions/node/v13.12.0/bin
+export PATH=$PATH:$HOME/bin/go/bin
+export PATH=$HOME/.fnm:$PATH
+export PATH=$PATH:$HOME/.emacs.d/bin
+export PATH=$PATH:$HOME/.config/rofi/bin
+export PATH=$PATH:~/go/bin
+export PATH=$PATH:$HOME/perl5/bin
+export PATH=$PATH:~/jhconfig/bin
+export PATH=$PATH:~/jhconfig/lua
+
