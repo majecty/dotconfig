@@ -604,6 +604,8 @@ Version 2019-11-05"
 
 (use-package eglot :ensure t)
 
+(use-package just-mode :ensure t)
+
 (use-package which-key :ensure t
   :config
   (progn
