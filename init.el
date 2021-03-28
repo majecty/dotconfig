@@ -130,12 +130,6 @@ Version 2019-11-05"
 
 (use-package xclip :ensure t)
 (use-package projectile :ensure t)
-(use-package which-key :ensure t
-  :config
-  (progn
-    (which-key-add-keymap-based-replacements global-map
-      "<f4> S" "search-prefix")
-    (setq which-key-idle-delay 0.1)))
 
 (use-package magit
   :ensure t
@@ -427,9 +421,13 @@ Version 2019-11-05"
   :ensure t
   :config
   (progn
-    (global-set-key (kbd "<f4> f f") #'fzf)
-    (global-set-key (kbd "<f4> f g") #'fzf-git)
-    (global-set-key (kbd "<f4> f p") #'fzf-projectile)))
+    (setq jh-fzf-map
+          (let ((map (make-sparse-keymap)))
+            (define-key map (kbd "f") #'fzf)
+            (define-key map (kbd "g") #'fzf-git)
+            (define-key map (kbd "p") #'fzf-projectile)
+            map))
+    (global-set-key (kbd "<f4> f") jh-fzf-map)))
 
 (use-package treemacs
   :ensure t
@@ -593,6 +591,14 @@ Version 2019-11-05"
               ("SPC" . nil)
               ("<backspace>" . nil))
   :config (define-key dired-mode-map (kbd "<f9> p") #'peep-dired))
+
+(use-package which-key :ensure t
+  :config
+  (progn
+    (which-key-add-keymap-based-replacements global-map
+      "<f4> S" "search-prefix"
+      "<f4> f" "fzf-prefix")
+    (setq which-key-idle-delay 0.1)))
 
 ;; (use-package recomplete
 ;;   :ensure t
