@@ -235,6 +235,8 @@ Version 2019-11-05"
     (add-hook 'typescript-mode-hook
               (lambda () (add-hook 'before-save-hook #'format-all-buffer nil 'local)))
     (add-hook 'clojure-mode-hook
+              (lambda () (add-hook 'before-save-hook #'format-all-buffer nil 'local)))
+    (add-hook 'javascript-mode-hook
               (lambda () (add-hook 'before-save-hook #'format-all-buffer nil 'local)))))
 
 (defun org-roam-jh-insert-key ()
