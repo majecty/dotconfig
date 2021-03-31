@@ -19,6 +19,15 @@ nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 nnoremap <leader>wo <C-W>o
 
+nnoremap gh 0
+vnoremap gh 0
+nnoremap gl $
+vnoremap gl $
+nnoremap gk gg
+vnoremap gk gg
+nnoremap gj G
+vnoremap gj G
+
 imap <C-L> <ESC>
 
 nnor ,cf :let @+=expand("%:p")<CR>    " Mnemonic: Copy File path
