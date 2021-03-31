@@ -52,7 +52,7 @@ ln -s -r rc.lua $HOME/.config/awesome/rc.lua
 뜰 때 실행된다.
 
 ```
-ln -s -r -b .xsessionrc $HOME/.xsessionrc
+ln -s -r -b xsessionrc $HOME/.xsessionrc
 ```
 
 ### rofi 설치
