@@ -32,8 +32,6 @@ export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export TAG_SEARCH_PROG=rg
 export EDITOR=kak
 export BAT_THEME=OneHalfLight
-export GTK_IM_MODULE=ibus
-export GLFW_IM_MODULE=ibus
 
 alias tl="tmuxlayout"
 alias tasd="tmuxlayout asd"
