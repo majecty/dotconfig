@@ -210,3 +210,5 @@ export PATH="$PATH:/home/juhyung/.cask/bin"
 export PATH="$PATH:/home/juhyung/bin/graalvm-ce-java11-20.3.0/bin"
 
 alias ta='tmux a -t $(tmux ls -F "#{session_name}" | fzf)'
+
+source $HOME/bin/git-subrepo/.rc
