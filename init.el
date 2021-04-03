@@ -527,6 +527,30 @@ Version 2019-11-05"
 (use-package origami
   :ensure t)
 
+(defun org-jh-time-stamp-minute ()
+  (interactive)
+  (let ((current-prefix-arg '(16)))
+    (call-interactively #'org-time-stamp)))
+
+(pretty-hydra-define hydra-org-roam-insert
+  (:color red :quit-key "q"
+          :post (progn
+                  (when jh-hydra-input-method-toggled
+                    (setq jh-hydra-input-method-toggled nil)
+                    (toggle-input-method)
+                    (setq input-method-function nil))
+                  )
+          :body-pre (progn
+                      (when input-method-function
+                        (toggle-input-method)
+                        (setq jh-hydra-input-method-toggled t))))
+  ("Metadata" (("t" org-roam-tag-add "tag add")
+               ("T" org-roam-tag-delete "tag delete")
+               ("k" org-roam-jh-insert-key "key(link) add")
+               ("a" org-roam-alias-add "alias add"))
+   "Insert" (("n" org-jh-time-stamp-minute "now")
+             ("l" org-insert-link "link"))))
+
 (use-package org
   :ensure t
   :config
