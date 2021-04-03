@@ -789,12 +789,12 @@ Version 2019-11-05"
  (kbd "<f4> q")
  (defhydra hydra-toggle-simple (:color blue)
    "toggle"
+   ("w" whitespace-mode "whitespace")
+   ("u" undo-tree-visualize "undo")
    ("a" abbrev-mode "abbrev")
    ("d" toggle-debug-on-error "debug")
    ("f" auto-fill-mode "fill")
    ("t" toggle-truncate-lines "truncate")
-   ("w" whitespace-mode "whitespace")
-   ("u" undo-tree-visualize "undo")
    ("q" nil "cancel")))
 
 (put 'narrow-to-region 'disabled nil)
