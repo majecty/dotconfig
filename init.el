@@ -633,6 +633,11 @@ Version 2019-11-05"
 
 (use-package just-mode :ensure t)
 
+(use-package counsel-projectile :ensure t
+  :config
+  (progn
+    (global-set-key (kbd "<f4> B") #'counsel-projectile-switch-to-buffer)))
+
 (use-package which-key :ensure t
   :config
   (progn
@@ -733,6 +738,7 @@ Version 2019-11-05"
              ("df" delete-frame :exit t)
              ("dw" delete-window))
    "Buffer" (("b" counsel-switch-buffer "buffer")
+             ("B" counsel-projectile-switch-to-buffer "projectile buffer")
              ;;  ("f" new-frame :exit t)
              ("f" fzf "fzf" :exit t)
              ("m" headlong-bookmark-jump)))
