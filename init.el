@@ -257,14 +257,9 @@ Version 2019-11-05"
           (let ((map (make-sparse-keymap)))
             (define-key map (kbd "f f") #'org-roam-find-file)
             (define-key map (kbd "t") #'org-roam-dailies-find-today)
+            (define-key map (kbd "c t") #'org-roam-dailies-capture-today)
             map))
-    (global-set-key (kbd "<f4> r") jh-roam-map)
-    (define-key org-roam-mode-map (kbd "<f9> i") #'org-roam-insert)
-    (define-key org-roam-mode-map (kbd "<f9> d") #'org-roam-buffer-toggle-display)
-    (define-key org-roam-mode-map (kbd "<f9> k") #'org-roam-jh-insert-key)
-    (define-key org-roam-mode-map (kbd "<f9> a") #'org-roam-alias-add)
-    (define-key org-roam-mode-map (kbd "<f9> t a") #'org-roam-tag-add)
-    (define-key org-roam-mode-map (kbd "<f9> t d") #'org-roam-tag-delete)))
+    (global-set-key (kbd "<f4> r") jh-roam-map)))
 
 (global-git-commit-mode)
 (xclip-mode 1)
@@ -537,12 +532,20 @@ Version 2019-11-05"
   :config
   (setq org-link-abbrev-alist
         '(("bigkingtravel"  . "~/code/bigkingtravel/"))) ;; Linux/OSX
-  (setq jh-org-map
+  (setq jh-org-global-map
         (let ((map (make-sparse-keymap)))
           (define-key map (kbd "c") #'org-capture)
           (define-key map (kbd "l") #'org-store-link)
           map))
-  (global-set-key (kbd "<f4> o") jh-org-map))
+  (global-set-key (kbd "<f4> o") jh-org-global-map)
+  (define-key org-mode-map (kbd "<f9> <f8>") #'hydra-org-roam-insert/body)
+  (define-key org-mode-map (kbd "<f9> i") #'org-roam-insert)
+  (define-key org-mode-map (kbd "<f9> d") #'org-roam-buffer-toggle-display)
+  (define-key org-mode-map (kbd "<f9> k") #'org-roam-jh-insert-key)
+  (define-key org-mode-map (kbd "<f9> a") #'org-roam-alias-add)
+  (define-key org-mode-map (kbd "<f9> t a") #'org-roam-tag-add)
+  (define-key org-mode-map (kbd "<f9> t d") #'org-roam-tag-delete)
+  (define-key org-mode-map (kbd "<f9> t") #'org-time-stamp))
 
 (defvar bootstrap-version)
 (let ((bootstrap-file
