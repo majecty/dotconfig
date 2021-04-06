@@ -793,6 +793,8 @@ Version 2019-11-05"
    "toggle"
    ("w" whitespace-mode "whitespace")
    ("u" undo-tree-visualize "undo")
+   ("r" view-mode "read-only")
+   ("s" visual-line-mode "soft wrap(visual-line)")
    ("a" abbrev-mode "abbrev")
    ("d" toggle-debug-on-error "debug")
    ("f" auto-fill-mode "fill")
