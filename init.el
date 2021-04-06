@@ -638,6 +638,8 @@ Version 2019-11-05"
   (progn
     (global-set-key (kbd "<f4> B") #'counsel-projectile-switch-to-buffer)))
 
+(use-package npm :ensure t)
+
 (use-package which-key :ensure t
   :config
   (progn
