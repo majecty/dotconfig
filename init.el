@@ -642,6 +642,11 @@ Version 2019-11-05"
 
 (use-package js-doc :ensure t)
 
+(use-package editorconfig
+  :ensure t
+  :config
+  (editorconfig-mode 1))
+
 (use-package which-key :ensure t
   :config
   (progn
@@ -681,7 +686,6 @@ Version 2019-11-05"
 (require 'frame-fns)
 (require 'frame-cmds)
 (require 'zoom-frm)
-(editorconfig-mode 1)
 
 (setq geiser-active-implementations '(chicken))
 (autoload 'enable-paredit-mode "paredit"
