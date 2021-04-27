@@ -98,6 +98,7 @@ define-command edit-kakoune-default-config -params 1 -shell-script-candidates 'f
 # addhl global/ show-whitespaces
 
 map -docstring 'ignore case' global prompt <c-s> (?i)
+map -docstring 'in line' global prompt <c-n> (?S)
 map -docstring 'c-q to esc' global prompt <c-q> <esc>
 
 map -docstring 'save' global normal <c-a-a> ':w<ret>'
