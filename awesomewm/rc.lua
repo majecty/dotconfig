@@ -602,6 +602,8 @@ clientkeys = my_table.join(
               {description = "toggle keep on top", group = "client"}),
     awful.key({ modkey,           }, "i",      function (c) c.sticky = not c.sticky          end,
               {description = "toggle sticky", group = "client"}),
+    awful.key({ modkey, "Shift"   }, "i",      function (c) c.floating = not c.floating      end,
+              {description = "toggle sticky", group = "client"}),
     awful.key({ modkey,           }, "n",
         function (c)
             -- The client currently has the input focus, so it cannot be
