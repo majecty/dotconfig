@@ -3,10 +3,18 @@
 ## kakrc 임포트하기
 
 kak 설정파일이 ~/jhconfig/kak/kakrc 를 임포트하게 만들어야 한다.
+일반적으로 "~/.config/kak/kakrc" 파일을 사용한다.
 
 ```
 # 예시
 source "/home/juhyung/jhconfig/kak/kakrc"
+```
+
+## plug.kak 설치하기
+
+```
+mkdir -p $HOME/.config/kak/plugins
+git clone https://github.com/andreyorst/plug.kak.git $HOME/.config/kak/plugins/plug.kak
 ```
 
 ## plugin 설치하기

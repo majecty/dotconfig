@@ -12,7 +12,7 @@ plug "atomrc/kakoune-jsdoc"
 plug "delapouite/kakoune-buffers"
 plug "https://gitlab.com/Screwtapello/kakoune-state-save"
 plug "delapouite/kakoune-registers"
-plug "WhatNodyn/kakoune-wakatime"
+# plug "WhatNodyn/kakoune-wakatime"
 plug "eraserhd/kak-ansi" do %{
   make
 }
