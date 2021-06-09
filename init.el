@@ -87,12 +87,6 @@
 (setq-default indent-tabs-mode nil)
 
 (global-unset-key (kbd "<f4>"))
-(global-set-key
- (kbd "<f4> <f4>")
- (defhydra hydra-macro ()
-    "macro"
-    ("<f4>" end-kbd-macro "end")
-    ("<f5>" call-last-kbd-macro "play")))
 
 (global-set-key (kbd "C-;") #'save-buffer)
 (global-set-key (kbd "<f4> x") #'delete-window)
@@ -324,7 +318,14 @@ Version 2019-11-05"
     (global-set-key (kbd "C-S-o") 'counsel-rhythmbox)
     (global-set-key (kbd "C-c C-SPC C-SPC") 'counsel-mark-ring)
     (global-set-key (kbd "C-c C-SPC C-b") 'counsel-bookmark)
-    (define-key minibuffer-local-map (kbd "C-r") 'counsel-minibuffer-history)))
+    (define-key minibuffer-local-map (kbd "C-r") 'counsel-minibuffer-history)
+    (global-set-key
+      (kbd "<f4> <f4>")
+      (defhydra hydra-macro ()
+          "macro"
+          ("<f4>" end-kbd-macro "end")
+          ("<f5>" call-last-kbd-macro "play")))
+    ))
 
 (use-package ivy-hydra
   :ensure t)
