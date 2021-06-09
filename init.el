@@ -1,6 +1,16 @@
 ;;; init.el --- Emcas config file
 ;;; Code:
 
+;; Copy this file to ~/.emacs.d/init.el
+;; See https://github.com/jwiegley/use-package#installing-use-package
+;; Install use-package from melpa
+
+(require 'package)
+(add-to-list 'package-archives
+             '("melpa" . "http://melpa.org/packages/") t)
+(add-to-list 'package-archives
+             '("org" . "https://orgmode.org/elpa/") t)
+
 (eval-when-compile
   ;; Following line is not needed if use-package.el is in ~/.emacs.d
 ;;  (add-to-list 'load-path "<path where use-package is installed>")
@@ -14,12 +24,6 @@
 
 ;;; Commentary:
 ;;
-
-(require 'package)
-(add-to-list 'package-archives
-             '("melpa" . "http://melpa.org/packages/") t)
-(add-to-list 'package-archives
-             '("org" . "https://orgmode.org/elpa/") t)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
