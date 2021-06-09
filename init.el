@@ -279,8 +279,6 @@ Version 2019-11-05"
 (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
 (setq projectile-project-search-path '("~/code/" "~/code/read/" "~/code/study"))
 
-(which-key-mode)
-
 (use-package headlong
   :ensure t)
 
@@ -402,8 +400,6 @@ Version 2019-11-05"
 (use-package doom-modeline
   :ensure t
   :init (doom-modeline-mode 1))
-
-(which-key-enable-god-mode-support)
 
 (use-package rainbow-delimiters
   :ensure t
@@ -662,7 +658,9 @@ Version 2019-11-05"
       "<f4> o" "org-prefix"
       "<f4> e" "error-prefix"
       "<f4> r" "roam-prefix")
-    (setq which-key-idle-delay 0.1)))
+    (setq which-key-idle-delay 0.1)
+    (which-key-mode)
+    (which-key-enable-god-mode-support)))
 
 ;; (use-package recomplete
 ;;   :ensure t
