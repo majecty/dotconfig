@@ -107,13 +107,16 @@
           (let ((map (make-sparse-keymap)))
                 (define-key map (kbd "k") #'flycheck-next-error)
                 (define-key map (kbd "j") #'flycheck-previous-error)
+                (define-key map (kbd "h") #'previous-error)
+                (define-key map (kbd "l") #'next-error)
                 map))
     (global-set-key (kbd "<f4> e") jh-error-map)))
 (add-hook 'after-init-hook #'global-flycheck-mode)
 
 (bind-key "M-SPC" 'cycle-spacing)
-(global-set-key (kbd  "C-;") #'save-buffer)
+(global-set-key (kbd "C-;") #'save-buffer)
 (global-set-key (kbd "<f4> b") #'counsel-switch-buffer)
+(global-set-key (kbd "<Hangul>") #'toggle-input-method)
 
 (defun xah-save-all-unsaved ()
   "Save all unsaved files. no ask.
@@ -216,7 +219,7 @@ Version 2019-11-05"
 (use-package lsp-treemacs :ensure t
   :config
   (progn
-    (global-set-key (kbd "<f4> e l") #'lsp-treemacs-errors-list)))
+    (global-set-key (kbd "<f4> e ;") #'lsp-treemacs-errors-list)))
 
 (use-package lsp-haskell
   :ensure t)
@@ -315,6 +318,7 @@ Version 2019-11-05"
     (global-set-key (kbd "C-x l") 'counsel-locate)
     (global-set-key (kbd "C-S-o") 'counsel-rhythmbox)
     (global-set-key (kbd "C-c C-SPC C-SPC") 'counsel-mark-ring)
+    (global-set-key (kbd "<f4> SPC") 'counsel-mark-ring)
     (global-set-key (kbd "C-c C-SPC C-b") 'counsel-bookmark)
     (define-key minibuffer-local-map (kbd "C-r") 'counsel-minibuffer-history)
     (global-set-key
@@ -648,6 +652,10 @@ Version 2019-11-05"
   :config
   (editorconfig-mode 1))
 
+(use-package flymake-eslint :ensure t
+  :config
+  (add-hook 'js-mode-hook #'flymake-eslint-enable))
+
 (use-package which-key :ensure t
   :config
   (progn
@@ -769,11 +777,12 @@ Version 2019-11-05"
    (:post (progn
             (when jh-hydra-input-method-toggled
               (setq jh-hydra-input-method-toggled nil)
-              (toggle-input-method))
+;;              (toggle-input-method)
+              )
             )
           :body-pre (progn
                       (when input-method-function
-                        (toggle-input-method)
+;;                        (toggle-input-method)
                         (setq jh-hydra-input-method-toggled t))))
    "move"
    ("C-n" nil)
@@ -816,6 +825,11 @@ Version 2019-11-05"
 
 (global-auto-revert-mode)
 (setq default-input-method "korean-hangul3shinp2")
+;; 아무것도 안 했을 때와 두 번 했을 때의 상태가 다른 것 같아.
+;; 시작할 때 두 번 해주자.
+(toggle-input-method)
+(toggle-input-method)
+
 (provide 'init)
 
 ;;; init.el ends here
