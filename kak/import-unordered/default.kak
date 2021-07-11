@@ -87,7 +87,7 @@ define-command edit-debug %{
 	tmux-terminal-vertical kak -c %val{session} -e "buffer *debug*"
 }
 
-define-command edit-config -params 1 -shell-script-candidates 'fd --type file . ~/jhconfig/kak' %{
+define-command edit-jhconfig-config -params 1 -shell-script-candidates 'fd --type file . ~/jhconfig/kak' %{
   edit %arg{1}
 }
 
