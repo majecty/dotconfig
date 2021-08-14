@@ -251,7 +251,7 @@ Version 2019-11-05"
     ;; find file
     (setq jh-roam-map
           (let ((map (make-sparse-keymap)))
-            (define-key map (kbd "f f") #'org-roam-find-file)
+            (define-key map (kbd "f f") #'org-roam-node-find)
             (define-key map (kbd "t") #'org-roam-dailies-find-today)
             (define-key map (kbd "c t") #'org-roam-dailies-capture-today)
             map))
@@ -563,13 +563,15 @@ Version 2019-11-05"
           map))
   (global-set-key (kbd "<f4> o") jh-org-global-map)
   (define-key org-mode-map (kbd "<f9> <f8>") #'hydra-org-roam-insert/body)
-  (define-key org-mode-map (kbd "<f9> i") #'org-roam-insert)
+  (define-key org-mode-map (kbd "<f9> i") #'org-roam-node-insert)
   (define-key org-mode-map (kbd "<f9> d") #'org-roam-buffer-toggle-display)
   (define-key org-mode-map (kbd "<f9> r") #'org-roam-ref-add)
   (define-key org-mode-map (kbd "<f9> a") #'org-roam-alias-add)
   (define-key org-mode-map (kbd "<f9> t a") #'org-roam-tag-add)
   (define-key org-mode-map (kbd "<f9> t d") #'org-roam-tag-delete)
-  (define-key org-mode-map (kbd "<f9> t") #'org-time-stamp))
+  (define-key org-mode-map (kbd "<f9> t") #'org-time-stamp)
+  (define-key org-mode-map (kbd "<f9> b") #'org-roam-buffer-toggle)
+  (define-key org-mode-map (kbd "<f9> RET") #'org-roam-visit-thing))
 
 (defvar bootstrap-version)
 (let ((bootstrap-file
