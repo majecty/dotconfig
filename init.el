@@ -247,6 +247,12 @@ Version 2019-11-05"
   (progn
     (setq org-roam-directory "~/org-roam")
     (add-hook 'after-init-hook 'org-roam-mode)
+    (org-roam-db-autosync-mode)
+    (setq org-roam-mode-section-functions
+      (list #'org-roam-backlinks-section
+            #'org-roam-reflinks-section
+            ;; #'org-roam-unlinked-references-section
+            ))
     ;; create maps using function keys
     ;; find file
     (setq jh-roam-map
@@ -561,6 +567,8 @@ Version 2019-11-05"
           (define-key map (kbd "c") #'org-capture)
           (define-key map (kbd "l") #'org-store-link)
           map))
+  (setq org-return-follows-link 't)
+
   (global-set-key (kbd "<f4> o") jh-org-global-map)
   (define-key org-mode-map (kbd "<f9> <f8>") #'hydra-org-roam-insert/body)
   (define-key org-mode-map (kbd "<f9> i") #'org-roam-node-insert)
