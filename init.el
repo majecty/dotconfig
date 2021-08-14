@@ -241,11 +241,6 @@ Version 2019-11-05"
     (add-hook 'javascript-mode-hook
               (lambda () (add-hook 'before-save-hook #'format-all-buffer nil 'local)))))
 
-(defun org-roam-jh-insert-key ()
-  "Key is a external reference of the document"
-  (interactive)
-  (insert "#+roam_key: "))
-
 (use-package org-roam
   :ensure t
   :config
@@ -551,7 +546,7 @@ Version 2019-11-05"
                         (setq jh-hydra-input-method-toggled t))))
   ("Metadata" (("t" org-roam-tag-add "tag add")
                ("T" org-roam-tag-delete "tag delete")
-               ("k" org-roam-jh-insert-key "key(link) add")
+               ("r" org-roam-ref-add "ref(link) add")
                ("a" org-roam-alias-add "alias add"))
    "Insert" (("n" org-jh-time-stamp-minute "now")
              ("l" org-insert-link "link"))))
@@ -570,7 +565,7 @@ Version 2019-11-05"
   (define-key org-mode-map (kbd "<f9> <f8>") #'hydra-org-roam-insert/body)
   (define-key org-mode-map (kbd "<f9> i") #'org-roam-insert)
   (define-key org-mode-map (kbd "<f9> d") #'org-roam-buffer-toggle-display)
-  (define-key org-mode-map (kbd "<f9> k") #'org-roam-jh-insert-key)
+  (define-key org-mode-map (kbd "<f9> r") #'org-roam-ref-add)
   (define-key org-mode-map (kbd "<f9> a") #'org-roam-alias-add)
   (define-key org-mode-map (kbd "<f9> t a") #'org-roam-tag-add)
   (define-key org-mode-map (kbd "<f9> t d") #'org-roam-tag-delete)
