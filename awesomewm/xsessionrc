@@ -13,7 +13,7 @@ export XMODIFIERS=@im=kime
 bash $HOME/.screenlayout/awesome-wm-layout.sh
 
 # ibus-daemon -drx
-kime-window &
+kime &
 picom &
 
 # enable button scrolling
