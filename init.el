@@ -243,6 +243,8 @@ Version 2019-11-05"
 
 (use-package org-roam
   :ensure t
+  :init
+  (setq org-roam-v2-ack t)
   :config
   (progn
     (setq org-roam-directory "~/org-roam")
