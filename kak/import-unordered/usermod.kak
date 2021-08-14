@@ -7,6 +7,7 @@ map global user -docstring 'format' o ':format<ret>'
 map global user -docstring 'buffer' b ': enter-user-mode buffers<ret>'
 map global user -docstring 'buffer' B ': enter-user-mode -lock buffers<ret>'
 map global user -docstring 'filetype' <c-f> ':enter-user-mode filetype-mode<ret>'
+map global user W '|fmt --width 80<ret>' -docstring "Wrap to 80 columns"
 
 declare-user-mode path-mode
 map global user -docstring 'path mode' a ':enter-user-mode path-mode<ret>'
