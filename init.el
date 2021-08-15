@@ -540,13 +540,13 @@ Version 2019-11-05"
   (let ((current-prefix-arg '(16)))
     (call-interactively #'org-time-stamp)))
 
-(pretty-hydra-define hydra-org-roam-insert
+(pretty-hydra-define hydra-org-roam-jh
   (:color red :quit-key "q"
           :post (progn
                   (when jh-hydra-input-method-toggled
                     (setq jh-hydra-input-method-toggled nil)
-                    (toggle-input-method)
-                    (setq input-method-function nil))
+                    (toggle-input-method))
+                  (setq input-method-function nil)
                   )
           :body-pre (progn
                       (when input-method-function
@@ -557,7 +557,11 @@ Version 2019-11-05"
                ("r" org-roam-ref-add "ref(link) add")
                ("a" org-roam-alias-add "alias add"))
    "Insert" (("n" org-jh-time-stamp-minute "now")
-             ("l" org-insert-link "link"))))
+             ("l" org-insert-link "link"))
+   "Move" (("d" org-roam-dailies-goto-next-note "tomorrow")
+           ("s" org-roam-dailies-goto-previous-note "yesterday")
+           ("f" org-roam-dailies-goto-date "other day"))
+   ))
 
 (use-package org
   :ensure t
@@ -572,7 +576,7 @@ Version 2019-11-05"
   (setq org-return-follows-link 't)
 
   (global-set-key (kbd "<f4> o") jh-org-global-map)
-  (define-key org-mode-map (kbd "<f9> <f8>") #'hydra-org-roam-insert/body)
+  (define-key org-mode-map (kbd "<f9> <f8>") #'hydra-org-roam-jh/body)
   (define-key org-mode-map (kbd "<f9> i") #'org-roam-node-insert)
   (define-key org-mode-map (kbd "<f9> d") #'org-roam-buffer-toggle-display)
   (define-key org-mode-map (kbd "<f9> r") #'org-roam-ref-add)
