@@ -789,8 +789,7 @@ Version 2019-11-05"
 
 (defvar jh-hydra-input-method-toggled nil)
 
-(global-set-key
- (kbd "C-n")
+(global-set-key (kbd "C-n")
  (defhydra hydra-move
    (:post (progn
             (when jh-hydra-input-method-toggled
@@ -823,8 +822,7 @@ Version 2019-11-05"
    ("v" avy-goto-word-0-above "Word")
    ))
 
-(global-set-key
- (kbd "<f4> q")
+(global-set-key (kbd "<f4> q")
  (defhydra hydra-toggle-simple (:color blue)
    "toggle"
    ("w" whitespace-mode "whitespace")
