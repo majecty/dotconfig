@@ -540,6 +540,10 @@ Version 2019-11-05"
   (let ((current-prefix-arg '(16)))
     (call-interactively #'org-time-stamp)))
 
+(defun org-roam-jh-open-now ()
+  (interactive)
+  (org-roam-node-find nil "now" nil))
+
 (pretty-hydra-define hydra-org-roam-jh
   (:color red :quit-key "q"
           :post (progn
@@ -558,9 +562,12 @@ Version 2019-11-05"
                ("a" org-roam-alias-add "alias add"))
    "Insert" (("n" org-jh-time-stamp-minute "now")
              ("l" org-insert-link "link"))
-   "Move" (("d" org-roam-dailies-goto-next-note "tomorrow")
-           ("s" org-roam-dailies-goto-previous-note "yesterday")
-           ("f" org-roam-dailies-goto-date "other day"))
+   "Dailies" (("d" org-roam-dailies-goto-next-note "tomorrow")
+              ("s" org-roam-dailies-goto-previous-note "yesterday")
+              ("f" org-roam-dailies-goto-date "other day"))
+   "Move" (("N" org-roam-jh-open-now "Now")
+           ("D" org-roam-dailies-goto-today "Today")
+           ("F" org-roam-node-find "Find"))
    ))
 
 (use-package org
