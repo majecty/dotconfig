@@ -835,6 +835,8 @@ Version 2019-11-05"
    ("t" toggle-truncate-lines "truncate")
    ("q" nil "cancel")))
 
+(global-set-key (kbd "<f4> .") #'completion-at-point)
+
 (put 'narrow-to-region 'disabled nil)
 
 (setq sentence-end-double-space nil)
