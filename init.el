@@ -542,7 +542,17 @@ Version 2019-11-05"
 
 (defun org-roam-jh-open-now ()
   (interactive)
-  (org-roam-node-find nil "now" nil))
+  (let ((node (org-roam-node-read "Now")))
+    (org-roam-node-visit node)))
+
+(defun jh-insert-today ()
+  (insert (shell-command-to-string "echo -n $(date +%Y-%m-%d)")))
+
+(defun org-roam-jh-insert-today-link ()
+  (interactive)
+  (set-mark-command nil)
+  (jh-insert-today)
+  (org-roam-node-insert))
 
 (pretty-hydra-define hydra-org-roam-jh
   (:color red :quit-key "q"
@@ -561,7 +571,8 @@ Version 2019-11-05"
                ("r" org-roam-ref-add "ref(link) add")
                ("a" org-roam-alias-add "alias add"))
    "Insert" (("n" org-jh-time-stamp-minute "now")
-             ("l" org-insert-link "link"))
+             ("l" org-insert-link "link")
+             ("o" org-roam-jh-insert-today-link "today link"))
    "Dailies" (("d" org-roam-dailies-goto-next-note "tomorrow")
               ("s" org-roam-dailies-goto-previous-note "yesterday")
               ("f" org-roam-dailies-goto-date "other day"))
