@@ -71,7 +71,7 @@ ZSH_THEME="funky"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git zsh-autosuggestions alias-finder yarn gitfast autojump)
+plugins=(git zsh-autosuggestions alias-finder yarn gitfast autojump alias-tips fzf-alias ubuntu)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -173,7 +173,7 @@ export PATH=$HOME/.local/bin:$PATH
 
 # export PAGER=kak
 # export MANPAGER=kak-man-pager
-alias kak-debug="kak -e open-debug"
+alias kak-debug="kak -e edit-debug"
 
 # export STARSHIP_CONFIG=~/jhconfig/starship.toml
 # eval $(starship init zsh)
@@ -201,7 +201,7 @@ kanew() {
 }
 
 # Aliases
-alias kak=kak-wrapper
+#alias kak=kak-wrapper
 
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
@@ -210,5 +210,6 @@ export PATH="$PATH:/home/juhyung/.cask/bin"
 export PATH="$PATH:/home/juhyung/bin/graalvm-ce-java11-20.3.0/bin"
 
 alias ta='tmux a -t $(tmux ls -F "#{session_name}" | fzf)'
+alias cdf='cd `ls | fzf`'
 
 source $HOME/bin/git-subrepo/.rc
