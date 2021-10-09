@@ -277,8 +277,7 @@ globalkeys = my_table.join(
     --           {description = "move tag to the left", group = "tag"}),
     -- awful.key({ modkey, "Shift" }, "Right", function () lain.util.move_tag(1) end,
     --           {description = "move tag to the right", group = "tag"}),
-    
-    
+
     awful.key({ modkey,           }, "Escape", awful.tag.history.restore,
               {description = "go back", group = "tag"}),
 
@@ -429,10 +428,6 @@ globalkeys = my_table.join(
               end,
               {description = "restore minimized", group = "client"}),
 
-    -- Dropdown application
-    -- awful.key({ modkey, }, "z", function () awful.screen.focused().quake:toggle() end,
-    --           {description = "dropdown application", group = "launcher"}),
-
     -- Widgets popups
     -- awful.key({ altkey, }, "c", function () if beautiful.cal then beautiful.cal.show(7) end end,
     --           {description = "show calendar", group = "widgets"}),
@@ -566,19 +561,7 @@ globalkeys = my_table.join(
             os.execute(string.format("rofi -show %s -theme %s",
             'run', 'dmenu'))
         end,
-        {description = "show rofi", group = "launcher"}),
-
-    awful.key({ modkey }, "z",
-              function ()
-                  awful.prompt.run {
-                    prompt       = "Run Lua code: ",
-                    textbox      = awful.screen.focused().mypromptbox.widget,
-                    exe_callback = awful.util.eval,
-                    history_path = awful.util.get_cache_dir() .. "/history_eval"
-                  }
-              end,
-              {description = "lua execute prompt", group = "awesome"})
-    --]]
+        {description = "show rofi", group = "launcher"})
 )
 
 clientkeys = my_table.join(
@@ -715,8 +698,8 @@ awful.rules.rules = {
     -- Titlebars
     { rule_any = { type = { "dialog", "normal" } },
       properties = { titlebars_enabled = true } },
-    { rule = { class = "Gnome-terminal" },
-      properties = { titlebars_enabled = false } },    
+--    { rule = { class = "Gnome-terminal" },
+--      properties = { titlebars_enabled = false } },
 
     -- Set Firefox to always map on the first tag on screen 1.
     -- { rule = { class = "Firefox" },
