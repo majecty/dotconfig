@@ -16,4 +16,5 @@ export PATH=$PATH:~/go/bin
 export PATH=$PATH:$HOME/perl5/bin
 export PATH=$PATH:~/jhconfig/bin
 export PATH=$PATH:~/jhconfig/lua
-
+export PATH="$HOME/.fzf/bin:$PATH"
+export KALEIDOSCOPE_DIR=$HOME/code/keyboard/Kaleidoscope/
