@@ -65,5 +65,9 @@ Plug 'roxma/vim-tmux-clipboard'
 Plug 'idanarye/vim-casetrate'
 Plug 'raichoo/purescript-vim'
 Plug 'rakr/vim-one'
+Plug 'scrooloose/nerdtree'
+Plug 'github/copilot.vim', { 'branch': 'release' }
+Plug 'morhetz/gruvbox'
+Plug 'skywind3000/vim-quickui'
 " (Optional) Multi-entry selection UI.
 call plug#end()

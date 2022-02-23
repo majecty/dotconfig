@@ -1,50 +1,119 @@
-prompt_order = [
-    "username",
-    "hostname",
-    "kubernetes",
-    "directory",
-    "git_branch",
-    "git_commit",
-    "git_state",
-    "git_status",
-    "hg_branch",
-    "docker_context",
-    "package",
-    "dotnet",
-    "elixir",
-    "elm",
-    "erlang",
-    "golang",
-    "haskell",
-    "java",
-    "julia",
-    "nim",
-    "nodejs",
-    "ocaml",
-    "php",
-    "purescript",
-    "python",
-    "ruby",
-    "rust",
-    "terraform",
-    "zig",
-    "nix_shell",
-    "conda",
-    "memory_usage",
-    "aws",
-    "env_var",
-    "crystal",
-    "cmd_duration",
-    "custom",
-    "line_break",
-    "jobs",
-    "battery",
-    "time",
-    "character"
-]
-
 [directory]
 fish_style_pwd_dir_length = 5
 
 [time]
 disabled = false
+
+[kubernetes]
+disabled = false
+format = 'on [⛵ $context \($namespace\)](green) '
+
+[kubernetes.context_aliases]
+"gke_henesis-wallet-dev_us-central1-a_kc-(?P<cluster>[\\w\\d-]+).*" = "gke-$cluster"
+"gke_henesis-wallet-prod_us-central1-a_kc-(?P<cluster>[\\w\\d-]+).*" = "gke-$cluster"
+
+[aws]
+format = "on [$symbol$profile]($style) "
+style = "bold blue"
+symbol = '🅰 '
+
+[gcloud]
+symbol = "️🇬️ "
+format = '[$symbol$account(@$domain)(\($project\))]($style) '
+[gcloud.region_aliases]
+us-central1 = "uc1"
+asia-northeast1 = "an1"
+
+[status]
+style = "bg:blue"
+symbol = "🔴"
+format = '[\[$symbol $common_meaning$signal_name$maybe_int\]]($style) '
+map_symbol = true
+disabled = false
+
+[cmake]
+format = "via [$symbol]($style)"
+
+[cobol]
+format = "via [$symbol]($style)"
+
+[crystal]
+format = "via [$symbol]($style)"
+
+[dart]
+format = "via [$symbol]($style)"
+
+[deno]
+format = "via [$symbol]($style)"
+
+[dotnet]
+format = "[$symbol(🎯 $tfm )]($style)"
+
+[elixir]
+format = 'via [$symbol]($style)'
+
+[elm]
+format = 'via [$symbol]($style)'
+
+[erlang]
+format = 'via [$symbol]($style)'
+
+[golang]
+format = 'via [$symbol]($style)'
+
+[helm]
+format = 'via [$symbol]($style)'
+
+[julia]
+format = 'via [$symbol]($style)'
+
+[kotlin]
+format = 'via [$symbol]($style)'
+
+[lua]
+format = 'via [$symbol]($style)'
+
+[nim]
+format = 'via [$symbol]($style)'
+
+[nodejs]
+format = 'via [$symbol]($style)'
+
+[ocaml]
+format = 'via [$symbol(\($switch_indicator$switch_name\) )]($style)'
+
+[perl]
+format = 'via [$symbol]($style)'
+
+[php]
+format = 'via [$symbol]($style)'
+
+[pulumi]
+format = 'via [$symbol$stack]($style)'
+
+[purescript]
+format = 'via [$symbol]($style)'
+
+[red]
+format = 'via [$symbol]($style)'
+
+[rlang]
+format = 'via [$symbol]($style)'
+
+[ruby]
+format = 'via [$symbol]($style)'
+
+[rust]
+format = 'via [$symbol]($style)'
+
+[swift]
+format = 'via [$symbol]($style)'
+
+[vagrant]
+format = 'via [$symbol]($style)'
+
+[vlang]
+format = 'via [$symbol]($style)'
+
+[zig]
+format = 'via [$symbol]($style)'
