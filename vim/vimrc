@@ -5,6 +5,7 @@ if empty(glob('~/.vim/autoload/plug.vim'))
 endif
 source $HOME/.vim/vim-include-ordered/package.vim
 source $HOME/.vim/vim-include-ordered/default-config.vim
+source $HOME/.vim/vim-include-ordered/lsp-installer.lua
 
 colorscheme one
 set background=light
