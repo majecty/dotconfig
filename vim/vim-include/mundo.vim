@@ -1,0 +1,2 @@
+nmap \undo :MundoToggle<cr>
+
