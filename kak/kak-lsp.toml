@@ -28,8 +28,17 @@ roots = ["tsconfig.json"]
 command = "typescript-language-server"
 args = ["--stdio"]
 
-[language.purescript]
-filetypes = ["purescript"]
-roots = ["package.json"]
-command = "purescript-language-server"
-args = ["--stdio"]
+# [language.purescript]
+# filetypes = ["purescript"]
+# roots = ["package.json"]
+# command = "purescript-language-server"
+# args = ["--stdio"]
+
+[language.python]
+filetypes = ["python"]
+roots = ["requirements.txt", "setup.py", ".git", ".hg"]
+command = "pyls"
+offset_encoding = "utf-8"
+workaround_server_sends_plaintext_labeled_as_markdown = true
+settings_section = "_"
+[language.python.settings._]
