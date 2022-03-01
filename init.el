@@ -85,6 +85,7 @@
 (setq tab-width 4)
 
 (setq-default indent-tabs-mode nil)
+(setq org-image-actual-width nil)
 
 (global-unset-key (kbd "<f4>"))
 
