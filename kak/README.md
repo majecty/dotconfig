@@ -26,3 +26,15 @@ kak-lsp의 경우 Rust 컴파일을 해야하므로 시간이 걸린다.
 
 kak/install.sh 를 실행시키면 몇가지 설정 파일의 symbolic link를 설치한다.
 
+## kak-lsp
+
+kak-lsp.toml에 설정에 언어에 대한 설정이 저장된다.
+~/.config/kak-lsp/kak-lsp.toml 파일이다.
+자세한 내용은 [이 링크](https://github.com/kak-lsp/kak-lsp)에서 보자.
+
+### kak lsp 상황 확인하기
+
+:lsp capabilities
+위 커맨드 호출해보기
+
+/tmp/lsp_kak-lsp_log 확인하기
