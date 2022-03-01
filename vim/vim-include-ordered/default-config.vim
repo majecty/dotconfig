@@ -136,4 +136,6 @@ set noswapfile
 nmap , \
 vmap , \
 
+nmap <Leader>pi :PlugInstall<cr>
+
 set diffopt+=vertical
