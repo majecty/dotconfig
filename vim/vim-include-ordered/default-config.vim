@@ -133,4 +133,7 @@ set nofoldenable
 set nobackup
 set noswapfile
 
+nmap , \
+vmap , \
+
 set diffopt+=vertical
