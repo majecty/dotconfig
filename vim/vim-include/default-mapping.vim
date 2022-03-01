@@ -30,9 +30,9 @@ vnoremap gj G
 
 imap <C-L> <ESC>
 
-nnor ,cf :let @+=expand("%:p")<CR>    " Mnemonic: Copy File path
-nnor ,yf :let @"=expand("%:p")<CR>    " Mnemonic: Yank File path
-nnor ,fn :let @"=expand("%")<CR>      " Mnemonic: yank File Name
+nnor <leader>cf :let @+=expand("%:p")<CR>    " Mnemonic: Copy File path
+nnor <leader>yf :let @"=expand("%:p")<CR>    " Mnemonic: Yank File path
+nnor <leader>fn :let @"=expand("%")<CR>      " Mnemonic: yank File Name
 nnoremap <C-n> :noh<CR>
 
 nnoremap <leader>bd :bd<CR><C-G>
