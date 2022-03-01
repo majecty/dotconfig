@@ -31,43 +31,61 @@ Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 
 " Unmanaged plugin (manually installed and updated)
-Plug '~/my-prototype-plugin'
+"Plug '~/my-prototype-plugin'
 
-Plug 'tpope/vim-fugitive'
-Plug 'leafgarland/typescript-vim'
-
-Plug 'vimwiki/vimwiki'
 Plug 'mhinz/vim-startify'
+" table formating like | 1 | 2 | 3 |
 Plug 'godlygeek/tabular'
-Plug 'plasticboy/vim-markdown'
-Plug 'majutsushi/tagbar'
+" continuously updated session files
 Plug 'tpope/vim-obsession'
-Plug 'tomasr/molokai'
 Plug 'thaerkh/vim-workspace'
-Plug 'editorconfig/editorconfig-vim'
-"Plug 'autozimu/LanguageClient-neovim', {
-"    \ 'branch': 'next',
-"    \ 'do': 'bash install.sh',
-"    \ }
-Plug 'rust-lang/rust.vim'
+Plug 'simnalamburt/vim-mundo'
+" Run commandline async + build
 Plug 'tpope/vim-dispatch'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'editorconfig/editorconfig-vim'
-Plug 'fholgado/minibufexpl.vim'
-Plug 'othree/html5.vim'
+"Plug 'fholgado/minibufexpl.vim'
 Plug 'mattn/emmet-vim'
 Plug 'lambdalisue/suda.vim'
 Plug 'scrooloose/nerdcommenter'
+" Print documents in echo area
 Plug 'shougo/echodoc'
+" move up -
 Plug 'tpope/vim-vinegar'
+" change calmelCase PasCal
+Plug 'idanarye/vim-casetrate'
+" Plug 'scrooloose/nerdtree'
+Plug 'roy2220/easyjump.tmux'
+" <f5> c-f c-b c-d c-r
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'https://github.com/Iron-E/vim-libmodal'
+" use f to use multiple f
+Plug 'https://github.com/rhysd/clever-f.vim'
+
+Plug 'kyazdani42/nvim-web-devicons'
+Plug 'neovim/nvim-lspconfig'
+Plug 'williamboman/nvim-lsp-installer'
+Plug 'ldelossa/litee.nvim'
+Plug 'ldelossa/litee-calltree.nvim'
+Plug 'ldelossa/litee-symboltree.nvim'
+Plug 'ldelossa/litee-filetree.nvim'
+
+Plug 'vimwiki/vimwiki'
+
+Plug 'editorconfig/editorconfig-vim'
+Plug 'tpope/vim-fugitive'
+"Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'tmux-plugins/vim-tmux-focus-events'
 Plug 'roxma/vim-tmux-clipboard'
-Plug 'idanarye/vim-casetrate'
-Plug 'raichoo/purescript-vim'
-Plug 'rakr/vim-one'
-Plug 'scrooloose/nerdtree'
 Plug 'github/copilot.vim', { 'branch': 'release' }
+
+Plug 'plasticboy/vim-markdown'
+Plug 'rust-lang/rust.vim'
+Plug 'leafgarland/typescript-vim'
+Plug 'othree/html5.vim'
+Plug 'raichoo/purescript-vim'
+
+Plug 'tomasr/molokai'
+Plug 'rakr/vim-one'
 Plug 'morhetz/gruvbox'
-Plug 'skywind3000/vim-quickui'
+
 " (Optional) Multi-entry selection UI.
 call plug#end()
