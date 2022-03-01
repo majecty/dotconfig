@@ -64,3 +64,5 @@ nnoremap <leader>sp :sp<CR>
 
 nnoremap <leader>gs :Gstatus<CR>
 nnoremap <leader>source :source ~/.vimrc<CR>
+nnoremap <leader>srcthis :source %<cr>
+nnoremap <leader>luathis :luafile %<cr>
