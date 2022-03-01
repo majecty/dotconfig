@@ -1,5 +1,5 @@
 " Open FZF files
-nnoremap <F1><F1> :Files<cr>
+nnoremap <F1> :Maps<cr>
 nnoremap <Leader>ff :Files<cr>
 let g:fzf_preview_window = 'right:60%'
 nnoremap <Leader>rg :RG<cr>
