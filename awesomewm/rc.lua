@@ -551,7 +551,7 @@ globalkeys = my_table.join(
     --           {description = "run prompt", group = "launcher"}),
 
 
-    awful.key({ modkey }, "c", function ()
+    awful.key({ modkey }, "z", function ()
           os.execute("launcher_text")
         end,
        {description = "show rofi", group = "launcher"}),
