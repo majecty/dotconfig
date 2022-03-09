@@ -19,3 +19,6 @@ export PATH=$PATH:~/jhconfig/lua
 export PATH="$HOME/.fzf/bin:$PATH"
 export KALEIDOSCOPE_DIR=$HOME/code/keyboard/Kaleidoscope/
 export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
+export PATH="$PATH:$HOME/.cask/bin"
+
+export ZSH_CONFIG=$HOME/jhconfig/zsh

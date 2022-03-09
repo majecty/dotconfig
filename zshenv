@@ -2,14 +2,7 @@ alias cac='cargo check'
 alias fmt="cargo +nightly-2020-10-20 fmt"
 alias clippy="cargo +stable clippy --all --all-targets"
 
-alias cc-22x-fmt='cargo +nightly-2019-10-13 fmt'
-alias cc-22x-clippy='cargo +nightly-2019-10-13 clippy --all --all-targets'
-
-alias cc-master-fmt='cargo +nightly-2019-12-19 fmt'
-alias cc-master-clippy='cargo +nightly-2019-12-19 clippy --all --all-targets'
-
 source ~/.commonenv.sh
-# eval "`fnm env --multi`"
 eval `fnm env`
 
 alias c='xclip -selection clipboard'
@@ -48,3 +41,8 @@ tnewdir()
 }
 
 export GOPATH=`go env GOPATH`
+
+if [[ -f ~/henesis.sh ]]; then
+  source ~/henesis.sh
+fi
+

@@ -75,6 +75,12 @@ plugins=(git zsh-autosuggestions alias-finder yarn gitfast alias-tips fzf-alias 
 
 source $ZSH/oh-my-zsh.sh
 
+for file in $ZSH_CONFIG/**/*.sh;
+do
+    source $file
+done
+
+
 # User configuration
 
 # export MANPATH="/usr/local/man:$MANPATH"
@@ -108,97 +114,21 @@ source $ZSH/oh-my-zsh.sh
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # coppied from https://www.reddit.com/r/emacs/comments/9b1bhs/emacsshell_protip_alias_magit/
-alias magit='emacsclient -nw -a emacs -e "(magit-status \"$(git rev-parse --show-toplevel)\")"'
-
-alias cac='cargo check'
-export EDITOR=kak
 
 export ZSH_ALIAS_FINDER_AUTOMATIC=true
 
+alias magit='emacsclient -nw -a emacs -e "(magit-status \"$(git rev-parse --show-toplevel)\")"'
+alias cac='cargo check'
+export EDITOR=kak
 alias vim=nvim
-alias tmux="TERM=xterm-256color tmux"
-
-export DENO_INSTALL=$HOME"/.deno"
-
-alias update-copyright="git diff --name-only HEAD^ | xargs -L 1 deno --allow-read --allow-write ~/bin/copyright.ts"
 alias vimdiff='nvim -d'
-
-mkcdir ()
-{
-    mkdir -p -- "$1" &&
-      cd -P -- "$1"
-}
-
-alias rust-musl-builder='docker run --rm -it -v "$(pwd)":/home/rust/src majecty/rust-musl-cross:aarch64-musl'
-alias rust-musl-build='rust-musl-builder cargo rustc -- -C link-arg=-lgcc'
-alias rust-musl-build-release='rust-musl-builder cargo rustc --release -- -C link-arg=-lgcc'
-
-
-_fzf_complete_git() {
-    ARGS="$@"
-
-    # these are commands I commonly call on commit hashes.
-    # cp->cherry-pick, co->checkout
-
-    if [[ $ARGS == 'git cp'* || \
-          $ARGS == 'git cherry-pick'* || \
-          $ARGS == 'git co'* || \
-          $ARGS == 'git checkout'* || \
-          $ARGS == 'git reset'* ]]; then
-        _fzf_complete "--reverse --multi" "$@" < <(
-            git log \
-                --graph \
-                --abbrev-commit \
-                --decorate \
-                --all \
-                --date=short \
-                --format=format:'%C(bold blue)%h%C(reset) %C(bold cyan)%ad%C(reset) | %C(white)%s%C(reset) %C(dim green)[%an]%C(reset) %C(bold yellow)%d%C(reset)'
-        )
-    else
-        eval "zle ${fzf_default_completion:-expand-or-complete}"
-    fi
-}
-
-_fzf_complete_git_post() {
-    sed -e 's/^[^a-z0-9]*//' | awk '{print $1}'
-}
-
-if (( $+commands[tag] )); then
-  tag() { command tag "$@"; source ${TAG_ALIAS_FILE:-/tmp/tag_aliases} 2>/dev/null }
-fi
-
-export TAG_CMD_FMT_STRING="kak {{.Filename}} +{{.LineNumber}}:{{.ColumnNumber}}"
-# For the kak
-export PATH=$HOME/.local/bin:$PATH
-
-# export PAGER=kak
-# export MANPAGER=kak-man-pager
-alias kak-debug="kak -e edit-debug"
-
+alias cdf='cd `ls | fzf`'
+source /home/juhyung/.config/broot/launcher/bash/br
 export STARSHIP_CONFIG=~/jhconfig/starship.toml
 eval $(starship init zsh)
 
-source ~/perl5/perlbrew/etc/bashrc
-eval $(perl -I ~/perl5/lib/perl5/ -Mlocal::lib)
+export DENO_INSTALL=$HOME"/.deno"
 
-# Environment variables
-export KAKOUNE_SESSION=kakoune
-
-# Functions
-kamux() {
-  KAKOUNE_SESSION=$(tmux display-message -p '#{session_name}' | sed --expression "s/\//_/g") \
-  kak-wrapper "$@"
-}
-
-ka.() {
-  KAKOUNE_SESSION=$(pwd | sed --expression "s/\//_/g") \
-  kak-wrapper "$@"
-}
-
-kanew() {
-  KAKOUNE_SESSION=$(print-random.lua | sed --expression "s/\.//g") \
-  kak-wrapper "$@"
-}
 
 # Aliases
 #alias kak=kak-wrapper
@@ -206,10 +136,13 @@ kanew() {
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 export LANGUAGE=en_US.UTF-8
-export PATH="$PATH:/home/juhyung/.cask/bin"
-export PATH="$PATH:/home/juhyung/bin/graalvm-ce-java11-20.3.0/bin"
-
-alias ta='tmux a -t $(tmux ls -F "#{session_name}" | fzf)'
-alias cdf='cd `ls | fzf`'
 
 source $HOME/bin/git-subrepo/.rc
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="/home/juhyung/.sdkman"
+[[ -s "/home/juhyung/.sdkman/bin/sdkman-init.sh" ]] && source "/home/juhyung/.sdkman/bin/sdkman-init.sh"
+
+source <(kubectl completion zsh)
+
+eval "$(zoxide init zsh)"
