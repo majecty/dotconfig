@@ -59,6 +59,7 @@ Plug 'ctrlpvim/ctrlp.vim'
 Plug 'https://github.com/Iron-E/vim-libmodal'
 " use f to use multiple f
 Plug 'https://github.com/rhysd/clever-f.vim'
+Plug 'easymotion/vim-easymotion'
 
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'neovim/nvim-lspconfig'
