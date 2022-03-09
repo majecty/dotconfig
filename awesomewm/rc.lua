@@ -248,6 +248,7 @@ end)
 awful.screen.connect_for_each_screen(function(s) beautiful.at_screen_connect(s) end)
 -- }}}
 
+-- 바탕화면에서 마우스 인터렉션
 -- {{{ Mouse bindings
 root.buttons(my_table.join(
     awful.button({ }, 3, function () awful.util.mymainmenu:toggle() end),
@@ -275,23 +276,24 @@ globalkeys = my_table.join(
               {description = "view previous", group = "tag"}),
     awful.key({ modkey,           }, "Right",  awful.tag.viewnext,
               {description = "view next", group = "tag"}),
-    -- awful.key({ modkey, "Shift" }, "Left", function () lain.util.move_tag(-1) end,
-    --           {description = "move tag to the left", group = "tag"}),
-    -- awful.key({ modkey, "Shift" }, "Right", function () lain.util.move_tag(1) end,
-    --           {description = "move tag to the right", group = "tag"}),
+
+     --awful.key({ modkey, "Shift" }, "Left", function () lain.util.move_tag(-1) end,
+               --{description = "move tag to the left", group = "tag"}),
+     --awful.key({ modkey, "Shift" }, "Right", function () lain.util.move_tag(1) end,
+               --{description = "move tag to the right", group = "tag"}),
 
     awful.key({ modkey,           }, "Escape", awful.tag.history.restore,
               {description = "go back", group = "tag"}),
 
     -- Non-empty tag browsing
-    awful.key({ modkey, altkey    }, "Left", function () lain.util.tag_view_nonempty(-1) end,
-              {description = "view  previous nonempty", group = "tag"}),
-    awful.key({ modkey, altkey    }, "Right", function () lain.util.tag_view_nonempty(1) end,
-              {description = "view  previous nonempty", group = "tag"}),
+    --awful.key({ modkey, altkey    }, "Left", function () lain.util.tag_view_nonempty(-1) end,
+              --{description = "view  previous nonempty", group = "tag"}),
+    --awful.key({ modkey, altkey    }, "Right", function () lain.util.tag_view_nonempty(1) end,
+              --{description = "view  previous nonempty", group = "tag"}),
 
     awful.key({ modkey, altkey,    }, "j",
        function ()
-          awful.client.focus.byidx( 1)
+          awful.client.focus.byidx(1)
        end,
        {description = "focus next by index", group = "client"}
     ),
@@ -387,10 +389,10 @@ globalkeys = my_table.join(
               {description = "add new tag", group = "tag"}),
     awful.key({ modkey, "Shift" }, "r", function () lain.util.rename_tag() end,
               {description = "rename tag", group = "tag"}),
-    -- awful.key({ modkey, "Shift" }, "Left", function () lain.util.move_tag(-1) end,
-    --           {description = "move tag to the left", group = "tag"}),
-    -- awful.key({ modkey, "Shift" }, "Right", function () lain.util.move_tag(1) end,
-    --           {description = "move tag to the right", group = "tag"}),
+     --awful.key({ modkey, "Shift" }, "Left", function () lain.util.move_tag(-1) end,
+               --{description = "move tag to the left", group = "tag"}),
+     --awful.key({ modkey, "Shift" }, "Right", function () lain.util.move_tag(1) end,
+               --{description = "move tag to the right", group = "tag"}),
     awful.key({ modkey, "Shift" }, "d", function () lain.util.delete_tag() end,
               {description = "delete tag", group = "tag"}),
 
@@ -596,7 +598,46 @@ clientkeys = my_table.join(
             c.maximized = not c.maximized
             c:raise()
         end ,
-        {description = "maximize", group = "client"})
+        {description = "maximize", group = "client"}),
+
+
+    awful.key({ modkey, "Shift" }, "Left", function (c)
+        local tags = awful.screen.focused().tags
+        local current_tag = c.first_tag or nil
+        if not current_tag then return end
+
+        local prev_tag = nil
+        for k, t in ipairs(tags) do
+            if t == current_tag then
+                prev_tag = tags[gears.math.cycle(#tags, k - 1)]
+                break
+            end
+        end
+
+        c:move_to_tag(prev_tag)
+        awful.tag.viewprev(c.screen)
+    end,
+              {description = "move client to next tag", group = "client"}),
+
+    awful.key({ modkey, "Shift" }, "Right", function (c)
+
+        local tags = awful.screen.focused().tags
+        local current_tag = c.first_tag or nil
+        if not current_tag then return end
+
+        local prev_tag = nil
+        for k, t in ipairs(tags) do
+            if t == current_tag then
+                prev_tag = tags[gears.math.cycle(#tags, k + 1)]
+                break
+            end
+        end
+
+        c:move_to_tag(prev_tag)
+        awful.tag.viewnext(c.screen)
+    end,
+              {description = "move client to the prev tag", group = "client"})
+
 )
 
 -- Bind all key numbers to tags.
@@ -657,6 +698,7 @@ for i = 1, 9 do
     )
 end
 
+--마우스로 이동, 사이즈 조절.
 clientbuttons = gears.table.join(
     awful.button({ }, 1, function (c)
         c:emit_signal("request::activate", "mouse_click", {raise = true})
