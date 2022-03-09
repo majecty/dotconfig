@@ -149,3 +149,7 @@ libinput 프로퍼티 중에 마우스 가운데 버튼을 누르고 마우스�
 동시 해야 하는 경우, 이 기능이 기존 기능보다 더 편리하다.
 
 
+### collision
+
+https://github.com/elv13/collision
+floating 화면을 키보드 만으로 이동하고 리사이즈해주는 도구.
