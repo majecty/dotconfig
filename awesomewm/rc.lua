@@ -90,7 +90,8 @@ local themes = {
     "vertex",          -- 10
 }
 
-local chosen_theme = themes[8]
+--local chosen_theme = themes[8]
+local chosen_theme = themes[5]
 local modkey       = "Mod4"
 local altkey       = "Mod1"
 -- local terminal     = "urxvtc"
