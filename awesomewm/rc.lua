@@ -78,8 +78,11 @@ local themes = {
     "blackburn",       -- 1
     "copland",         -- 2
     "dremora",         -- 3
+    -- below menu bar. cpu, bigger top icon
     "holo",            -- 4
+    -- below menu bar. top cpu memory, network, etc
     "multicolor",      -- 5
+    -- all in top
     "powerarrow",      -- 6
     "powerarrow-dark", -- 7
     "rainbow",         -- 8
