@@ -66,3 +66,8 @@ nnoremap <leader>gs :Gstatus<CR>
 nnoremap <leader>source :source ~/.vimrc<CR>
 nnoremap <leader>srcthis :source %<cr>
 nnoremap <leader>luathis :luafile %<cr>
+
+nnoremap <leader>nvs :vs<CR>:enew<CR>
+nnoremap <leader>nsp :sp<CR>:enew<CR>
+nnoremap <leader>en :enew<CR>
+nnoremap <leader>fd :r! fd --type=d<CR>
