@@ -68,6 +68,7 @@ Plug 'ldelossa/litee.nvim'
 Plug 'ldelossa/litee-calltree.nvim'
 Plug 'ldelossa/litee-symboltree.nvim'
 Plug 'ldelossa/litee-filetree.nvim'
+Plug 'nvim-lua/plenary.nvim'
 Plug 'jose-elias-alvarez/nvim-lsp-ts-utils'
 
 Plug 'vimwiki/vimwiki'
