@@ -231,14 +231,15 @@ Version 2019-11-05"
             ;; #'org-roam-unlinked-references-section
             ))
     ;; create maps using function keys
-    ;; find file
-    (setq jh-roam-map
-          (let ((map (make-sparse-keymap)))
+    (let ((jh-roam-map
+           (let ((map (make-sparse-keymap)))
             (define-key map (kbd "f f") #'org-roam-node-find)
-            (define-key map (kbd "t") #'org-roam-dailies-find-today)
+            (define-key map (kbd "t") #'org-roam-dailies-goto-today)
             (define-key map (kbd "c t") #'org-roam-dailies-capture-today)
-            map))
-    (global-set-key (kbd "<f4> r") jh-roam-map)))
+            map)
+           ))
+      (global-set-key (kbd "<f4> r") jh-roam-map))
+    ))
 
 (global-git-commit-mode)
 (xclip-mode 1)
