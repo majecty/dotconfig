@@ -412,13 +412,14 @@ Version 2019-11-05"
   :ensure t
   :config
   (progn
-    (setq jh-fzf-map
-          (let ((map (make-sparse-keymap)))
-            (define-key map (kbd "f") #'fzf)
-            (define-key map (kbd "g") #'fzf-git)
-            (define-key map (kbd "p") #'fzf-projectile)
-            map))
-    (global-set-key (kbd "<f4> f") jh-fzf-map)))
+    (let ((jh-fzf-map
+           (let ((map (make-sparse-keymap)))
+             (define-key map (kbd "f") #'fzf)
+             (define-key map (kbd "g") #'fzf-git)
+             (define-key map (kbd "p") #'fzf-projectile)
+             map)))
+          (global-set-key (kbd "<f4> f") jh-fzf-map)
+      )))
 
 (use-package treemacs
   :ensure t
