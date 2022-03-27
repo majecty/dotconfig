@@ -25,50 +25,8 @@
 ;;; Commentary:
 ;;
 
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(current-language-environment "UTF-8")
- '(custom-enabled-themes '(adwaita))
- '(lsp-ui-doc-max-height 6)
- '(package-selected-packages
-   '(ivy-taskrunner taskrunner origami company-mode company-tabnine lsp-ivy ranger vterm lsp-java treemacs-projectile treemacs auto-package-update org-roam-server dashboard pretty-hydra headlong hydra-examples deadgrep pomidor org-roam format-all format-all-buffer eyebrowse doom-modeline rainbow-delimiters god-mode ivy-posframe parinfer ivy-rich ivy-hydra discover-clj-refactor clojure-snippets clj-refactor ido-completing-read+ back-button flycheck-clj-kondo lsp-haskell cider parinfer-rust-mode use-package lispy paredit geiser racket-mode undo-tree editorconfig which-key company fzf rustic rust-mode tide lsp-ui flycheck lsp-mode xclip twittering-mode magit))
- '(xterm-mouse-mode t))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(default ((t (:inherit nil :stipple nil :inverse-video nil :box nil :strike-through nil :overline nil :underline nil :slant normal :weight normal :height 143 :width normal :foundry "GOOG" :family "Noto Sans Mono CJK KR")))))
-
-;; related backup
-;; Emacs saves backup files in the same directory as the original file.
-;; The line below changes the backup directory to other directory.
-(setq backup-directory-alist '(("." . "~/.config/emacs/backups")))
-;; The line below makes emacs remove excess backup versions silently
-(setq delete-old-versions -1)
-;; Make Emacs versioning its backup files. I don't know how this affect my workflow.
-;; It seems that this [link](https://www.emacswiki.org/emacs/ForceBackups) is related.
-(setq version-control t)
-;; Backup files in git repository, since we don't commit every changes.
-(setq vc-make-backup-files t)
-;; Move auto saved `#file-name#` files to a directory.
-(setq auto-save-file-name-transforms '((".*" "~/.config/emacs/auto-save-list/" t)))
-
-;; history
-;; minibuffer history is saved in the file
-(setq savehist-file "~/.config/emacs/savehist")
-(savehist-mode 1)
-;; Do not truncate history
-(setq history-length t)
-(setq history-delete-duplicates t)
-(setq savehist-save-minibuffer-history 1)
-(setq savehist-additional-variables
-      '(kill-ring
-        search-ring
-        regexp-search-ring))
+(setq custom-file "~/.emacs.d/custom.el")
+(load custom-file)
 
 ;; Hide toolbar
 (tool-bar-mode -1)
