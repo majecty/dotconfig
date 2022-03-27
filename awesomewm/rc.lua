@@ -58,7 +58,7 @@ local function run_once(cmd_arr)
     end
 end
 
-run_once({ "unclutter -root" }) -- entries must be separated by commas
+run_once({ "unclutter -root", "/usr/lib/x86_64-linux-gnu/polkit-mate/polkit-mate-authentication-agent-1" }) -- entries must be separated by commas
 
 -- This function implements the XDG autostart specification
 --[[
