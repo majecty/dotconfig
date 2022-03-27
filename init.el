@@ -821,7 +821,6 @@ Version 2019-11-05"
 (require 'frame-cmds)
 (require 'zoom-frm)
 
-(setq geiser-active-implementations '(chicken))
 (autoload 'enable-paredit-mode "paredit"
   "Turn on pseudo-structural editing of Lisp code."
   t)
