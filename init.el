@@ -516,19 +516,23 @@ Version 2019-11-05"
   :ensure t)
 
 (defun org-jh-time-stamp-minute ()
+  "Add timestamp minute."
   (interactive)
   (let ((current-prefix-arg '(16)))
     (call-interactively #'org-time-stamp)))
 
 (defun org-roam-jh-open-now ()
+  "Open now org roam."
   (interactive)
   (let ((node (org-roam-node-read "Now")))
     (org-roam-node-visit node)))
 
 (defun jh-insert-today ()
+  "Insert today."
   (insert (shell-command-to-string "echo -n $(date +%Y-%m-%d)")))
 
 (defun org-roam-jh-insert-today-link ()
+  "Insert today org roam link."
   (interactive)
   (set-mark-command nil)
   (jh-insert-today)
