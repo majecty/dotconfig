@@ -54,9 +54,13 @@
 ;; set current buffer's tab char's display width to 4 spaces
 (setq tab-width 4)
 
+;; do not use tab to indent
 (setq-default indent-tabs-mode nil)
+
+;; to resize org image
 (setq org-image-actual-width nil)
 
+;; original f4 is used to record it is moved to f4 f4
 (global-unset-key (kbd "<f4>"))
 
 (global-set-key (kbd "C-;") #'save-buffer)
