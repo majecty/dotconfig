@@ -28,6 +28,18 @@
 (setq custom-file "~/.emacs.d/custom.el")
 (load custom-file)
 
+(defconst user-init-dir "~/jhconfig/emacs")
+(defun load-user-file (file)
+  "Load a FILE in the user config directory."
+  (interactive "f")
+  (load-file (expand-file-name file user-init-dir)))
+
+;; related to the emacs backup file
+(load-user-file "backup.el")
+(load-user-file "history.el")
+
+(setq auto-save-timeout 3)
+
 ;; Hide toolbar
 (tool-bar-mode -1)
 
