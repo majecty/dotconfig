@@ -538,6 +538,8 @@ Version 2019-11-05"
   (jh-insert-today)
   (org-roam-node-insert))
 
+(defvar jh-hydra-input-method-toggled nil)
+
 (pretty-hydra-define hydra-org-roam-jh
   (:color red :quit-key "q"
           :post (progn
@@ -570,24 +572,25 @@ Version 2019-11-05"
   :config
   (setq org-link-abbrev-alist
         '(("bigkingtravel"  . "~/code/bigkingtravel/"))) ;; Linux/OSX
-  (setq jh-org-global-map
-        (let ((map (make-sparse-keymap)))
-          (define-key map (kbd "c") #'org-capture)
-          (define-key map (kbd "l") #'org-store-link)
-          map))
   (setq org-return-follows-link 't)
 
-  (global-set-key (kbd "<f4> o") jh-org-global-map)
-  (define-key org-mode-map (kbd "<f9> <f8>") #'hydra-org-roam-jh/body)
-  (define-key org-mode-map (kbd "<f9> i") #'org-roam-node-insert)
-  (define-key org-mode-map (kbd "<f9> d") #'org-roam-buffer-toggle-display)
-  (define-key org-mode-map (kbd "<f9> r") #'org-roam-ref-add)
-  (define-key org-mode-map (kbd "<f9> a") #'org-roam-alias-add)
-  (define-key org-mode-map (kbd "<f9> t a") #'org-roam-tag-add)
-  (define-key org-mode-map (kbd "<f9> t d") #'org-roam-tag-delete)
-  (define-key org-mode-map (kbd "<f9> t") #'org-time-stamp)
-  (define-key org-mode-map (kbd "<f9> b") #'org-roam-buffer-toggle)
-  (define-key org-mode-map (kbd "<f9> RET") #'org-roam-visit-thing))
+  (let ((jh-org-global-map
+         (let ((map (make-sparse-keymap)))
+           (define-key map (kbd "c") #'org-capture)
+           (define-key map (kbd "l") #'org-store-link)
+           map)))
+    (global-set-key (kbd "<f4> o") jh-org-global-map)
+    (define-key org-mode-map (kbd "<f9> <f8>") #'hydra-org-roam-jh/body)
+    (define-key org-mode-map (kbd "<f9> i") #'org-roam-node-insert)
+    (define-key org-mode-map (kbd "<f9> d") #'org-roam-buffer-toggle-display)
+    (define-key org-mode-map (kbd "<f9> r") #'org-roam-ref-add)
+    (define-key org-mode-map (kbd "<f9> a") #'org-roam-alias-add)
+    (define-key org-mode-map (kbd "<f9> t a") #'org-roam-tag-add)
+    (define-key org-mode-map (kbd "<f9> t d") #'org-roam-tag-delete)
+    (define-key org-mode-map (kbd "<f9> t") #'org-time-stamp)
+    (define-key org-mode-map (kbd "<f9> b") #'org-roam-buffer-toggle)
+    (define-key org-mode-map (kbd "<f9> RET") #'org-roam-buffer-visit-thing))
+  )
 
 (defvar bootstrap-version)
 (let ((bootstrap-file
