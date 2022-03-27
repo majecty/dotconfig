@@ -6,10 +6,9 @@
 ;; Install use-package from melpa
 
 (require 'package)
+
 (add-to-list 'package-archives
              '("melpa" . "http://melpa.org/packages/") t)
-(add-to-list 'package-archives
-             '("org" . "https://orgmode.org/elpa/") t)
 
 (eval-when-compile
   ;; Following line is not needed if use-package.el is in ~/.emacs.d
@@ -505,7 +504,7 @@ Version 2019-11-05"
   ;; Trigger completion immediately.
   (setq company-idle-delay 0)
   ;; Number the candidates (use M-1, M-2 etc to select completions).
-  (setq company-show-numbers t))
+  (setq company-show-quick-access t))
 
 (use-package company
   :ensure t
@@ -800,8 +799,8 @@ Version 2019-11-05"
 (bind-key "M-/" 'hippie-expand)
 
 (defun sanityinc/dabbrev-friend-buffer (other-buffer)
+  "Exclude OTHER-BUFFER if it is too big."
   (< (buffer-size other-buffer) (* 1 1024 1024)))
-(setq dabbrev-friend-buffer-function 'sanityinc/dabbrev-friend-buffer)
 (setq hippie-expand-try-functions-list
       '(yas-hippie-try-expand
         try-expand-all-abbrevs
@@ -890,8 +889,6 @@ Version 2019-11-05"
 
 (global-set-key (kbd "<f4> w") #'hydra-window/body)
 (global-set-key (kbd "C-x C-o") #'hydra-window/body)
-
-(defvar jh-hydra-input-method-toggled nil)
 
 (global-set-key (kbd "C-n")
  (defhydra hydra-move
