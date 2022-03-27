@@ -485,6 +485,9 @@ Version 2019-11-05"
 
 (use-package winner
   :ensure t
+  :bind (("M-[" . winner-undo)
+         ("M-]" . winndr-redo)
+         )
   :config
   (winner-mode 1))
 
