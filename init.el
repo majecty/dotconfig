@@ -661,8 +661,6 @@ Version 2019-11-05"
 
 (use-package npm :ensure t)
 
-(use-package js-doc :ensure t)
-
 (use-package editorconfig
   :ensure t
   :config
