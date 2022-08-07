@@ -229,6 +229,14 @@ Version 2019-11-05"
             #'org-roam-reflinks-section
             ;; #'org-roam-unlinked-references-section
             ))
+    (add-to-list 'display-buffer-alist
+             '("\\*org-roam\\*"
+               (display-buffer-in-side-window)
+               (side . right)
+               (slot . 0)
+               (window-width . 0.33)
+               (window-parameters . ((no-other-window . t)
+                                     (no-delete-other-windows . t)))))
     ;; create maps using function keys
     (let ((jh-roam-map
            (let ((map (make-sparse-keymap)))
