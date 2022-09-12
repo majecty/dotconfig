@@ -25,9 +25,15 @@
 ;;
 
 (setq custom-file "~/.emacs.d/custom.el")
-(load custom-file)
+(load custom-file t)
 
-(defconst user-init-dir "~/jhconfig/emacs")
+(defconst user-init-dir 
+  (if (string= system-type "windows-nt")
+      (concat (getenv "USERPROFILE") "/jhconfig/emacs")
+    (concat (getenv "HOME") "/jhconfig/emacs")))
+
+(add-to-list 'load-path user-init-dir)
+
 (defun load-user-file (file)
   "Load a FILE in the user config directory."
   (interactive "f")
@@ -834,7 +840,6 @@ Version 2019-11-05"
         try-complete-lisp-symbol-partially
         try-complete-lisp-symbol))
 
-(add-to-list 'load-path "~/jhconfig/emacs")
 (setq flycheck-emacs-lisp-load-path 'inherit)
 (require 'frame-fns)
 (require 'frame-cmds)
