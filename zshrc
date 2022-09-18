@@ -132,6 +132,3 @@ source <(kubectl completion zsh)
 
 eval "$(zoxide init zsh)"
 
-# Add JBang to environment
-alias j!=jbang
-export PATH="$HOME/.jbang/bin:$PATH"
