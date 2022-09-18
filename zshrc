@@ -96,12 +96,7 @@ done
 # For a full list of active aliases, run `alias`.
 #
 # Example aliases
-# alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-
-#. /usr/share/autojump/autojump.sh
-
-# source /usr/share/doc/fzf/examples/key-bindings.zsh
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
