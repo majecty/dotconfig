@@ -261,7 +261,7 @@ root.buttons(my_table.join(
 globalkeys = my_table.join(
     -- Take a screenshot
     -- https://github.com/lcpz/dots/blob/master/bin/screenshot
-    awful.key({ modkey }, "p", function() os.execute("flameshot gui -p /home/juhyung/Pictures/") end,
+    awful.key({ modkey }, "p", function() awful.spawn("flameshot gui") end,
               {description = "take a screenshot", group = "hotkeys"}),
 
     -- X screen locker
