@@ -601,6 +601,7 @@ Version 2019-11-05"
     (global-set-key (kbd "<f4> o") jh-org-global-map)
     (define-key org-mode-map (kbd "<f9> <f8>") #'hydra-org-roam-jh/body)
     (define-key org-mode-map (kbd "<f9> i") #'org-roam-node-insert)
+    (define-key org-mode-map (kbd "<f4> 9 i") #'org-roam-node-insert)
     (define-key org-mode-map (kbd "<f9> d") #'org-roam-buffer-toggle-display)
     (define-key org-mode-map (kbd "<f9> r") #'org-roam-ref-add)
     (define-key org-mode-map (kbd "<f9> a") #'org-roam-alias-add)
