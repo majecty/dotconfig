@@ -137,8 +137,6 @@ export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 export LANGUAGE=en_US.UTF-8
 
-source $HOME/bin/git-subrepo/.rc
-
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="/home/juhyung/.sdkman"
 [[ -s "/home/juhyung/.sdkman/bin/sdkman-init.sh" ]] && source "/home/juhyung/.sdkman/bin/sdkman-init.sh"
