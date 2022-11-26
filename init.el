@@ -975,6 +975,9 @@ Version 2019-11-05"
 (toggle-input-method)
 (toggle-input-method)
 
+(load "server")
+(unless (server-running-p) (server-start))
+
 (provide 'init)
 
 ;;; init.el ends here
