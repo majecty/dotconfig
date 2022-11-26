@@ -916,38 +916,38 @@ Version 2019-11-05"
 (global-set-key (kbd "<f4> w") #'hydra-window/body)
 (global-set-key (kbd "C-x C-o") #'hydra-window/body)
 
-(global-set-key (kbd "C-n")
- (defhydra hydra-move
-   (:post (progn
-            (when jh-hydra-input-method-toggled
-              (setq jh-hydra-input-method-toggled nil)
-;;              (toggle-input-method)
-              )
-            )
-          :body-pre (progn
-                      (when input-method-function
-;;                        (toggle-input-method)
-                        (setq jh-hydra-input-method-toggled t))))
-   "move"
-   ("C-n" nil)
-   ("k" next-line "up")
-   ("i" previous-line "down")
-   ("l" forward-char "right")
-   ("j" backward-char "left")
-   ("M-j" delete-char "delete")
-   ("L" forward-word "w-right")
-   ("J" backward-word "w-left")
-   ("s" beginning-of-line "home")
-   ("f" move-end-of-line "end")
-   ("d" scroll-up-command "scroll up")
-   ;; Converting M-v to V here by analogy.
-   ("e" scroll-down-command "scroll down")
-   (";" recenter-top-bottom "recenter")
-   ("z" avy-goto-char "char")
-   ("x" avy-goto-line "line")
-   ("c" avy-goto-word-0 "word")
-   ("v" avy-goto-word-0-above "Word")
-   ))
+;; (global-set-key (kbd "C-n")
+;;  (defhydra hydra-move
+;;    (:post (progn
+;;             (when jh-hydra-input-method-toggled
+;;               (setq jh-hydra-input-method-toggled nil)
+;; ;;              (toggle-input-method)
+;;               )
+;;             )
+;;           :body-pre (progn
+;;                       (when input-method-function
+;; ;;                        (toggle-input-method)
+;;                         (setq jh-hydra-input-method-toggled t))))
+;;    "move"
+;;    ("C-n" nil)
+;;    ("k" next-line "up")
+;;    ("i" previous-line "down")
+;;    ("l" forward-char "right")
+;;    ("j" backward-char "left")
+;;    ("M-j" delete-char "delete")
+;;    ("L" forward-word "w-right")
+;;    ("J" backward-word "w-left")
+;;    ("s" beginning-of-line "home")
+;;    ("f" move-end-of-line "end")
+;;    ("d" scroll-up-command "scroll up")
+;;    ;; Converting M-v to V here by analogy.
+;;    ("e" scroll-down-command "scroll down")
+;;    (";" recenter-top-bottom "recenter")
+;;    ("z" avy-goto-char "char")
+;;    ("x" avy-goto-line "line")
+;;    ("c" avy-goto-word-0 "word")
+;;    ("v" avy-goto-word-0-above "Word")
+;;    ))
 
 (global-set-key (kbd "<f4> q")
  (defhydra hydra-toggle-simple (:color blue)
