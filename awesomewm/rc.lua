@@ -192,6 +192,9 @@ lain.layout.cascade.tile.nmaster       = 5
 lain.layout.cascade.tile.ncol          = 2
 
 beautiful.init(string.format("%s/.config/awesome/themes/%s/theme.lua", os.getenv("HOME"), chosen_theme))
+beautiful.font = "Pretendard 12"
+beautiful.useless_gap = 5
+beautiful.border_width = 5
 -- }}}
 
 -- {{{ Menu
@@ -817,8 +820,14 @@ client.connect_signal("mouse::enter", function(c)
     c:emit_signal("request::activate", "mouse_enter", {raise = vi_focus})
 end)
 
-client.connect_signal("focus", function(c) c.border_color = beautiful.border_focus end)
-client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
+client.connect_signal("focus", function(c)
+  c.border_color = beautiful.border_focus
+  c.opacity = 1
+end)
+client.connect_signal("unfocus", function(c)
+  c.border_color = beautiful.border_normal
+  c.opacity = 1
+end)
 
 -- possible workaround for tag preservation when switching back to default screen:
 -- https://github.com/lcpz/awesome-copycats/issues/251
