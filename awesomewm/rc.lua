@@ -15,6 +15,7 @@ local awful         = require("awful")
 local wibox         = require("wibox")
 local beautiful
    = require("beautiful")
+
 local naughty       = require("naughty")
 local lain          = require("lain")
 --local menubar       = require("menubar")
@@ -584,6 +585,35 @@ clientkeys = my_table.join(
               {description = "close", group = "client"}),
     awful.key({ modkey, "Control" }, "space",  awful.client.floating.toggle                     ,
               {description = "toggle floating", group = "client"}),
+    awful.key({ modkey,           }, ",",
+        function (c)
+            if c.floating then
+              c.floating = false
+              return
+            end
+            c.floating = true
+            local geo = {}
+            geo.x = screen[1].geometry.x
+            geo.y = screen[1].geometry.y
+            geo.width = screen[1].geometry.width
+            geo.height = screen[1].geometry.height
+            geo.x2 = geo.x + geo.width
+            geo.y2 = geo.y + geo.height
+            for s in screen do
+                local geo2 = s.geometry
+                geo.x = math.min(geo.x, geo2.x)
+                geo.y = math.min(geo.y, geo2.y)
+                geo.x2 = math.max(geo.x2, geo2.x + geo2.width)
+                geo.y2 = math.max(geo.y2, geo2.y + geo2.height)
+            end
+            c:geometry{
+                x = geo.x,
+                y = geo.y,
+                width = geo.x2 - geo.x,
+                height = geo.y2 - geo.y
+            }
+        end,
+        {description = "toggle fullscreen over monitors", group = "client"}),
     awful.key({ modkey, "Control" }, "Return", function (c) c:swap(awful.client.getmaster()) end,
               {description = "move to master", group = "client"}),
     awful.key({ modkey,           }, "o",      function (c) c:move_to_screen()               end,
