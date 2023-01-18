@@ -95,10 +95,12 @@ local chosen_theme = themes[5]
 local modkey       = "Mod4"
 local altkey       = "Mod1"
 -- local terminal     = "urxvtc"
-local terminal     = "alacritty"
+-- local terminal     = "alacritty"
+local terminal     = "hyper"
 local vi_focus     = false -- vi-like client focus - https://github.com/lcpz/awesome-copycats/issues/275
 local cycle_prev   = true -- cycle trough all previous client or just the first -- https://github.com/lcpz/awesome-copycats/issues/274
-local editor       = os.getenv("EDITOR") or "vim"
+-- local editor       = os.getenv("EDITOR") or "vim"
+local editor = "emacsclient -c -a emacs"
 local scrlocker    = "slock"
 
 awful.util.terminal = terminal
@@ -267,6 +269,9 @@ globalkeys = my_table.join(
     awful.key({ modkey }, "p", function() awful.spawn("flameshot gui") end,
               {description = "take a screenshot", group = "hotkeys"}),
 
+    awful.key({ modkey }, "e", function() awful.spawn("emacsclient -c -a emacs") end,
+              {description = "Run emacs", group = "hotkeys"}),
+    
     -- X screen locker
     awful.key({ modkey, "Control", altkey }, "l", function () os.execute(scrlocker) end,
               {description = "lock screen", group = "hotkeys"}),
