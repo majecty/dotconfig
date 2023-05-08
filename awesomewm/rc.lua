@@ -197,7 +197,9 @@ beautiful.font = "Pretendard 12"
 beautiful.useless_gap = 5
 beautiful.border_width = 5
 -- }}}
-
+--
+beautiful.useless_gap = 5;
+beautiful.border_width = 5;
 -- {{{ Menu
 local myawesomemenu = {
     { "hotkeys", function() return false, hotkeys_popup.show_help end },
