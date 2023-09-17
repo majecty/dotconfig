@@ -1,0 +1,2 @@
+xmodmap -e 'remove mod1 = Alt_R'
+xmodmap -e 'keycode 108 = F14'
