@@ -62,7 +62,6 @@ zmodule zsh-users/zsh-autosuggestions
 #
 
 zmodule exa
-zmodule fzf
 zmodule magic-enter
 zmodule kiesman99/zim-zoxide
 
@@ -70,3 +69,6 @@ zmodule djui/alias-tips
 zmodule thirteen37/fzf-alias
 
 zmodule ohmyzsh/ohmyzsh --root plugins/git
+zmodule jeffreytse/zsh-vi-mode
+zmodule fzf
+
