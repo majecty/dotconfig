@@ -78,8 +78,10 @@
 
 # focus window
 # alt - h : yabai -m window --focus west
-cmd - h : yabai -m window --focus west
-cmd - l : yabai -m window --focus east
+cmd - h : yabai -m window --focus west || yabai -m window --focus prev
+cmd - l : yabai -m window --focus east || yabai -m window --focus next
+meh - m : yabai -m window --focus "$(yabai -m query --windows --space | jq -re "[sort_by(.id, .frame) | reverse | .[] | select(.role == \"AXWindow\" and .subrole == \"AXStandardWindow\") | .id] | nth(index($(yabai -m query --windows --window | jq -re ".id")) - 1)")"
+# cmd - o : yabai -m window --focus next
 cmd - j : yabai -m window --focus south || yabai -m display --focus next || yabai -m display --focus prev
 cmd - k : yabai -m window --focus north || yabai -m display --focus prev || yabai -m display --focus next
 
