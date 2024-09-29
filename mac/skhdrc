@@ -126,8 +126,8 @@ shift + cmd - n : yabai -m space --create && \
 # shift + cmd - z : yabai -m window --space next; yabai -m space --focus next
 ctrl + cmd - right : yabai -m window --space next --focus
 ctrl + cmd - left : yabai -m window --space prev --focus
-ctrl - right : yabai -m space --focus next
-ctrl - left : yabai -m space --focus prev
+# ctrl - right : yabai -m space --focus next
+# ctrl - left : yabai -m space --focus prev
 # shift + cmd - 2 : yabai -m window --space  2; yabai -m space --focus 2
 
 # focus monitor
