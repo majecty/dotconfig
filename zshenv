@@ -43,7 +43,7 @@ tnewdir()
 
 export GOPATH=`go env GOPATH`
 
-if [[ -f ~/henesis.sh ]]; then
-  source ~/henesis.sh
+if [[ -f ~/.haechi/env.sh ]]; then
+  source ~/.haechi/env.sh
 fi
 
