@@ -16,6 +16,7 @@ alias zshrc='KAKOUNE_SESSION=zshrc kak ~/jhconfig/zshrc'
 alias zshenv='KAKOUNE_SESSION=zhenv kak ~/jhconfig/zshenv'
 alias tmuxconf='KAKOUNE_SESSION=tmuxconf kak ~/jhconfig/tmux.conf'
 alias sshconfig='KAKOUNE_SESSION=sshconfig kak ~/.ssh/config'
+alias awesomeconf='KAKOUNE_SESSION=awesomeconf kak ~/jhconfig/awesomewm/rc.lua'
 
 alias mic2speaker-on='pactl load-module module-loopback latency_msec=1'
 alias mic2speaker-off='pactl unload-module module-loopback'
