@@ -60,3 +60,6 @@ if [[ -d $HOME/.foundry/bin ]]; then
 fi
 
 alias grupp="grup -p"
+if [[ -f $HOME/jhconfig/secret.sh ]]; then
+  source $HOME/jhconfig/secret.sh
+fi
