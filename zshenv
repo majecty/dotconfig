@@ -51,4 +51,8 @@ fbd() {
   git branch -D $(echo "$branch" | sed "s/.* //" | sed "s#remotes/[^/]*/##")
 }
 
+if [[ -f $HOME/.cargo/env ]]; then
+  source $HOME/.cargo/env
+fi
+
 alias grupp="grup -p"
