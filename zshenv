@@ -20,7 +20,7 @@ alias awesomeconf='KAKOUNE_SESSION=awesomeconf kak ~/jhconfig/awesomewm/rc.lua'
 
 alias mic2speaker-on='pactl load-module module-loopback latency_msec=1'
 alias mic2speaker-off='pactl unload-module module-loopback'
-eval "$(luarocks path)"
+# eval "$(luarocks path)"
 export FZF_DEFAULT_COMMAND='fd --type f'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export TAG_SEARCH_PROG=rg
