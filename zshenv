@@ -55,3 +55,4 @@ fbd() {
   git branch -D $(echo "$branch" | sed "s/.* //" | sed "s#remotes/[^/]*/##")
 }
 
+alias grupp="grup -p"
