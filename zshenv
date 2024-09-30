@@ -63,3 +63,6 @@ alias grupp="grup -p"
 if [[ -f $HOME/jhconfig/secret.sh ]]; then
   source $HOME/jhconfig/secret.sh
 fi
+
+alias gcai='gt c --ai && gc!'
+alias gppmain='gb -f main && gp origin main'
