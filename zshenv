@@ -1,7 +1,3 @@
-alias cac='cargo check'
-alias fmt="cargo +nightly-2020-10-20 fmt"
-alias clippy="cargo +stable clippy --all --all-targets"
-
 source ~/.commonenv.sh
 eval `fnm env`
 
