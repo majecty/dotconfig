@@ -13,6 +13,7 @@
 ;;   _ _ _ _ _     _ _ _ _ _
 ;;   _ _ _ _ _     _ _ _ _ _
 ;;       _ _ _     _ _ _
+        ;;  _ _         _ _
 ;; )
 
 (defsrc
@@ -20,6 +21,7 @@
   tab  q w e r      i o p [ ]
   caps a s d f      k l ; ' ent
          x c v      m , .
+         met spc      rmet ralt
 )
 
 (deflayer base
@@ -27,6 +29,7 @@
   @A @S d f   g     h   j   k @L @SCL
   z  x  c v   b     n   m   , .  /
   @TAB @SPC @BSP    @L1 @ENT @ESC
+       @GRV @DEL        @HOME @END
 )
 
 (defalias
@@ -45,7 +48,12 @@
 
   SPC2 (tap-hold 200 spc (layer-toggle special))
   ENT2 (tap-hold 200 ent (layer-toggle special))
-  
+
+  GRV (tap-hold 200 grv alt)
+  DEL (tap-hold 200 del ctl)
+
+  HOME (tap-hold 200 home alt)
+  END (tap-hold 200 end ctl)
 )
 
 (deflayer symbol
@@ -53,6 +61,7 @@
   # $ \( \) -     \_ \\ | ; :
   % ^ [  ]  =     +  <  > /  ?
       _  @SPC2  _     l1  @ENT2 `
+         _ _         _ _
 )
 
 (deflayer number
@@ -60,6 +69,7 @@
   f1 f2 f3 f4 f5    left down up  right _
   f6 f7 f8 f9 f10   f11  f12  f13 f14   _
         S-tab @SPC2 del     _ @ENT2 _
+         _ _         _ _
 )
 
 (deflayer special
@@ -67,6 +77,7 @@
   _ _ capslock menu _     home pgdn pgup end _
   _ _ _ _ _     _ _ _ _ _
       _ _ _     _ _ _
+         _ _         _ _
 )
 
 ;;KeyKbdLayoutNext
