@@ -4,6 +4,10 @@ eval `fnm env`
 alias c='xclip -selection clipboard'
 alias v='xclip -selection clipboard -o'
 
+alias gcai='gt c --ai && gc!'
+alias gppmain='git branch -f main && git push origin main'
+alias gppmaster='git branch -f master && git push origin master'
+
 alias tmuxc='tmux loadb -'
 alias tmuxv='tmux saveb -'
 
