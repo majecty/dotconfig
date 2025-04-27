@@ -72,3 +72,4 @@ zmodule ohmyzsh/ohmyzsh --root plugins/git
 zmodule jeffreytse/zsh-vi-mode
 zmodule fzf
 
+zmodule aichat
