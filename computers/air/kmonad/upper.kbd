@@ -52,7 +52,7 @@
   ! @ {  }  &     * ` ~ '  S-'
   # $ \( \) -     \_ \\ | ; :
   % ^ [  ]  =     +  <  > /  ?
-      _  @SPC2  _     _  @ENT2  _
+      _  @SPC2  _     l1  @ENT2 `
 )
 
 (deflayer number
@@ -64,7 +64,11 @@
 
 (deflayer special
   _ _ _ _ _     _ _ _ _ _
-  _ _ _ menu _     home pgdn pgup end _
+  _ _ capslock menu _     home pgdn pgup end _
   _ _ _ _ _     _ _ _ _ _
       _ _ _     _ _ _
 )
+
+;;KeyKbdLayoutNext
+;; KeyMacro14
+;; KeyACKeyboardLayoutSelect
