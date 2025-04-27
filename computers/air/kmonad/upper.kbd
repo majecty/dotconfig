@@ -54,6 +54,9 @@
 
   HOME (tap-hold 200 home alt)
   END (tap-hold 200 end ctl)
+
+  MOUSEH (tap-hold 200 A-M-x alt)
+  MOUSE (tap-hold 200 A-M-c ctl)
 )
 
 (deflayer symbol
@@ -73,11 +76,11 @@
 )
 
 (deflayer special
-  _ _ _ _ _     _ _ _ _ _
-  _ _ capslock menu _     home pgdn pgup end _
-  _ _ _ _ _     _ _ _ _ _
-      _ _ _     _ _ _
-         _ _         _ _
+  _ _ _ _ _               _ _ _ _ _
+  a x capslock menu _     h j k l A-M-c
+  _ _ _ _ _               h j k l A-M-x
+      _ _ _               _ _ _
+         _ _              _ _
 )
 
 ;;KeyKbdLayoutNext
