@@ -27,7 +27,7 @@
 (deflayer base
   q  w  e r   t     y   u   i o  p
   @A @S d f   g     h   j   k @L @SCL
-  z  x  c v   b     n   m   , .  /
+  @Z  x  c v   b     n   m   , .  @SLASH
   @TAB @SPC @BSP    @L1 @ENT @ESC
        @GRV @DEL        @HOME @END
 )
@@ -45,6 +45,8 @@
   S  (tap-hold 200 s alt)
   L  (tap-hold 200 l alt)
   SCL (tap-hold 200 ; ctl)
+  Z  (tap-hold 200 z sft)
+  SLASH (tap-hold 200 / met)
 
   SPC2 (tap-hold 200 spc (layer-toggle special))
   ENT2 (tap-hold 200 ent (layer-toggle special))
@@ -76,8 +78,8 @@
 )
 
 (deflayer special
-  _ _ _ _ _               _ _ _ _ _
-  a x capslock menu _     h j k l A-M-c
+  _ w e _ r               _ A-left A-right _ _
+  a d capslock menu _     m , . _ A-M-c
   _ _ _ _ _               h j k l A-M-x
       _ _ _               _ _ _
          _ _              _ _
