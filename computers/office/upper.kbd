@@ -1,0 +1,94 @@
+
+(defcfg
+;;  input (device-file "keyboard")
+;;  input (iokit-name "Apple Internal Keyboard / Trackpad")
+;;  input (iokit-name "Karabiner DriverKit VirtualHIDKeyboard 1.8.0")
+;;  output (kext)
+;;  output (uinput-sink "Miryoku KMonad output")
+
+ input (device-file "/dev/input/by-path/pci-0000:2d:00.3-usb-0:3.2:1.0-event-kbd")
+  output (uinput-sink "My KMonad output"
+    "/bin/sleep 1 && /bin/setxkbmap -option compose:rctl")
+  fallthrough false
+)
+
+;; (deflayer dummy
+;;   _ _ _ _ _     _ _ _ _ _
+;;   _ _ _ _ _     _ _ _ _ _
+;;   _ _ _ _ _     _ _ _ _ _
+;;       _ _ _     _ _ _
+        ;;  _ _         _ _
+;; )
+
+(defsrc
+  1 2 3 4 5         7 8 9 0 -
+  q w e r t         u i o p [
+  a s d f g         j k l ; '
+         c v b      n m , 
+         met spc      rmet ralt
+)
+
+(deflayer base
+  q  w  e r   t     y   u   i o  p
+  @A @S d f   g     h   j   k @L @SCL
+  @Z  x  c v   b     n   m   , .  @SLASH
+  @TAB @SPC @BSP    @L1 @ENT @ESC
+       @GRV @DEL        @HOME @END
+)
+
+(defalias
+  BSP (tap-hold 200 bspc sft) ;; outer thumb
+  L1 (tap-hold 200 f14 met) ;; outer thumb
+
+  SPC (tap-hold 200 spc (layer-toggle symbol))
+  ENT (tap-hold 200 ent (layer-toggle number))
+
+  TAB (tap-hold 200 tab met)
+  ESC (tap-hold 200 esc sft)
+  A  (tap-hold 200 a ctl)
+  S  (tap-hold 200 s alt)
+  L  (tap-hold 200 l alt)
+  SCL (tap-hold 200 ; ctl)
+  Z  (tap-hold 200 z sft)
+  SLASH (tap-hold 200 / met)
+
+  SPC2 (tap-hold 200 spc (layer-toggle special))
+  ENT2 (tap-hold 200 ent (layer-toggle special))
+
+  GRV (tap-hold 200 grv alt)
+  DEL (tap-hold 200 del ctl)
+
+  HOME (tap-hold 200 home alt)
+  END (tap-hold 200 end ctl)
+
+  MOUSEH (tap-hold 200 A-M-x alt)
+  MOUSE (tap-hold 200 A-M-c ctl)
+)
+
+(deflayer symbol
+  ! @ {  }  &     * ` ~ '  S-'
+  # $ \( \) -     \_ \\ | : '
+  % ^ [  ]  =     +  <  > /  ?
+      _  @SPC2  _     _  @ENT2 `
+         _ _         _ _
+)
+
+(deflayer number
+  1  2  3  4  5     6    7    8   9     0
+  f1 f2 f3 f4 f5    left down up  right _
+  f6 f7 f8 f9 f10   f11  f12  f13 f14   _
+        S-tab @SPC2 del     _ @ENT2 _
+         _ _         _ _
+)
+
+(deflayer special
+  _ w e _ r               _ A-left A-right _ _
+  a d capslock menu _     m , . _ A-M-c
+  _ _ _ _ _               h j k l A-M-x
+      _ _ _               _ _ _
+         _ _              _ _
+)
+
+;;KeyKbdLayoutNext
+;; KeyMacro14
+;; KeyACKeyboardLayoutSelect
