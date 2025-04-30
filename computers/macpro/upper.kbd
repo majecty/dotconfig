@@ -26,20 +26,28 @@
         ;;  _ _         _ _
 ;; )
 
+;;(defsrc
+;;  1 2 3 4 5         7 8 9 0 -
+;;  q w e r t         u i o p [
+;;  a s d f g         j k l ; '
+;;         c v b      n m , 
+;;         met spc      rmet ralt
+;;)
+
 (defsrc
-  1 2 3 4 5         7 8 9 0 -
-  q w e r t         u i o p [
-  a s d f g         j k l ; '
-         c v b      n m , 
-         met spc      rmet ralt
+  grv  1 2 3 4      8 9 0 - =
+  tab  q w e r      i o p [ ]
+  caps a s d f      k l ; ' ent
+         x c v      m , .
+         met spc      ralt rmeta
 )
 
 (deflayer base
   q  w  e r   t     y   u   i o  p
-  @A @S d f   g     h   j   k @L @SCL
+  @A @S d @F   g     h   j   k @L @SCL
   @Z  x  c v   b     n   m   , .  @SLASH
   @TAB @SPC @BSP    @L1 @ENT @ESC
-       @GRV @DEL        @HOME @END
+       @GRV @DEL        f13 b
 )
 
 (defalias
@@ -53,6 +61,7 @@
   ESC (tap-hold 200 200 esc sft)
   A  (tap-hold 200 200 a ctl)
   S  (tap-hold 200 200 s alt)
+  F  (tap-hold 200 200 f (layer-toggle special))
   L  (tap-hold 200 200 l alt)
   SCL (tap-hold 200 200 ; ctl)
   Z  (tap-hold 200 200 z sft)
@@ -64,8 +73,8 @@
   GRV (tap-hold 200 200 grv alt)
   DEL (tap-hold 200 200 del ctl)
 
-  HOME (tap-hold 200 200 home alt)
-  END (tap-hold 200 200 end ctl)
+  HOME (tap-hold 200 200 f13 alt)
+  END (tap-hold 200 200 S-f13 ctl)
 
   MOUSEH (tap-hold 200 200 A-M-x alt)
   MOUSE (tap-hold 200 200 A-M-c ctl)
@@ -109,9 +118,9 @@
 )
 
 (deflayer special
-  @mwl @mwd @mwu @mwr _               _ A-left A-right _ _
-  mlft mrgt menu _ _      @ma← @ma← @ma↓ @ma↑ @ma→
-  _ _ _ _ _               @ma← @ms← @ms↓ @ms↑ @ma→
+  @mwl @mwd @mwu @mwr _               M-left M-right A-left A-right _
+  mlft mrgt M-left _ M-right      @ma← @ma↓ @ma↑ @ma→ @ma→
+  _ _ _ _ _               @ma← @ma← @ma↓ @ma↑ @ma→
       _ _ _               _ _ _
          _ _              _ _
 )
