@@ -35,12 +35,16 @@
 ;;         met spc      rmet ralt
 ;;)
 
+(deflocalkeys-macos
+  print 210
+)
+
 (defsrc
   grv  1 2 3 4      8 9 0 - =
   tab  q w e r      i o p [ ]
   caps a s d f      k l ; ' ent
          x c v      m , .
-         met spc      ralt rmeta
+         alt spc      ralt print
 )
 
 (deflayer base
