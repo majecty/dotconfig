@@ -43,7 +43,7 @@
 )
 
 (deflayer base
-  q  w  e r   t     y   u   i o  p
+  @Q  @W  @E @R   t     y   u   i o  p
   @A @S d @F   g     h   j   k @L @SCL
   @Z  x  c v   b     n   m   , .  @SLASH
   @TAB @SPC @BSP    @L1 @ENT @ESC
@@ -62,6 +62,11 @@
   A  (tap-hold 200 200 a ctl)
   S  (tap-hold 200 200 s alt)
   F  (tap-hold 200 200 f (layer-toggle special))
+  Q  (tap-hold 200 200 q (layer-toggle qlayer))
+  W  (tap-hold 200 200 w (layer-toggle wlayer))
+  E  (tap-hold 200 200 e (layer-toggle elayer))
+  R  (tap-hold 200 200 r (layer-toggle rlayer))
+
   L  (tap-hold 200 200 l alt)
   SCL (tap-hold 200 200 ; ctl)
   Z  (tap-hold 200 200 z sft)
@@ -128,3 +133,35 @@
 ;;KeyKbdLayoutNext
 ;; KeyMacro14
 ;; KeyACKeyboardLayoutSelect
+
+(deflayer qlayer
+  _ _ _ _ _     _ _ _ _ _
+  _ _ _ _ _     C-left C-down C-up C-right _
+  _ _ _ _ _     _ _ _ _ _
+      _ _ _     _ _ _
+         _ _         _ _
+)
+
+(deflayer wlayer
+  _ _ _ _ _     _ _ _ _ _
+  _ _ _ _ _     A-left A-down A-up A-right _
+  _ _ _ _ _     _ _ _ _ _
+      _ _ _     _ _ _
+         _ _         _ _
+)
+
+(deflayer elayer
+  _ _ _ _ _     _ _ _ _ _
+  _ _ _ _ _     S-left S-down S-up S-right _
+  _ _ _ _ _     _ _ _ _ _
+      _ _ _     _ _ _
+         _ _         _ _
+)
+
+(deflayer rlayer
+  _ _ _ _ _     _ _ _ _ _
+  _ _ _ _ _     M-left M-down M-up M-right _
+  _ _ _ _ _     _ _ _ _ _
+      _ _ _     _ _ _
+         _ _         _ _
+)
