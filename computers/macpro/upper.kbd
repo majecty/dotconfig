@@ -44,7 +44,7 @@
   tab  q w e r      i o p [ ]
   caps a s d f      k l ; ' ent
          x c v      m , .
-         met spc      ralt print
+         alt spc      ralt print
 )
 
 (deflayer base
