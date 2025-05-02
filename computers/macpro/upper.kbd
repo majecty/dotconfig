@@ -107,10 +107,10 @@
 )
 
 (defalias
-  mwu (mwheel-up 50 5)
-  mwd (mwheel-down 50 5)
-  mwl (mwheel-left 50 5)
-  mwr (mwheel-right 50 5)
+  mwu (mwheel-up 50 3)
+  mwd (mwheel-down 50 3)
+  mwl (mwheel-left 50 3)
+  mwr (mwheel-right 50 3)
 
   ms↑ (movemouse-up 10 1)
   ms← (movemouse-left 10 1)
@@ -128,8 +128,8 @@
 )
 
 (deflayer special
-  @mwl @mwd @mwu @mwr _               M-left M-right A-left A-right _
-  mlft mrgt M-left _ M-right      @ma← @ma↓ @ma↑ @ma→ @ma→
+  @mwl @mwu @mwd @mwr _               M-left M-right A-left A-right _
+  mlft mrgt _ _ _      @ma← @ma↓ @ma↑ @ma→ @ma→
   _ _ _ _ _               @ma← @ma← @ma↓ @ma↑ @ma→
       _ _ _               _ _ _
          _ _              _ _
