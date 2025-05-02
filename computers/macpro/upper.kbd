@@ -52,7 +52,7 @@
   @A @S d @F   g     h   j   k @L @SCL
   @Z  x  c v   b     n   m   , .  @SLASH
   @TAB @SPC @BSP    @L1 @ENT @ESC
-       @GRV @DEL        f13 b
+       @GRV @DEL        f13 S-f13
 )
 
 (defalias
