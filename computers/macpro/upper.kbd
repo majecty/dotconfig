@@ -138,3 +138,35 @@
 ;;KeyKbdLayoutNext
 ;; KeyMacro14
 ;; KeyACKeyboardLayoutSelect
+
+(deflayer qlayer
+  _ _ _ _ _     _ _ _ _ _
+  _ _ _ _ _     C-left C-down C-up C-right _
+  _ _ _ _ _     _ _ _ _ _
+      _ _ _     _ _ _
+         _ _         _ _
+)
+
+(deflayer wlayer
+  _ _ _ _ _     _ _ _ _ _
+  _ _ _ _ _     A-left A-down A-up A-right _
+  _ _ _ _ _     _ _ _ _ _
+      _ _ _     _ _ _
+         _ _         _ _
+)
+
+(deflayer elayer
+  _ _ _ _ _     _ _ _ _ _
+  _ _ _ _ _     S-left S-down S-up S-right _
+  _ _ _ _ _     _ _ _ _ _
+      _ _ _     _ _ _
+         _ _         _ _
+)
+
+(deflayer rlayer
+  _ _ _ _ _     _ _ _ _ _
+  _ _ _ _ _     M-left M-down M-up M-right _
+  _ _ _ _ _     _ _ _ _ _
+      _ _ _     _ _ _
+         _ _         _ _
+)
