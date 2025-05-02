@@ -10,9 +10,10 @@
 ;;  output (uinput-sink "My KMonad output"
 ;;    "/bin/sleep 1 && /bin/setxkbmap -option compose:rctl")
 ;;  fallthrough false
-   process-unmapped-keys no
-  ;;process-unmapped-keys yes
-    movemouse-inherit-accel-state yes
+;;   process-unmapped-keys no
+  process-unmapped-keys yes
+  block-unmapped-keys yes
+  movemouse-inherit-accel-state yes
   macos-dev-names-include (
     "TrackPoint Keyboard II"
   )
