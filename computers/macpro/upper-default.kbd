@@ -1,0 +1,172 @@
+
+(defcfg
+;;  input (device-file "keyboard")
+;;  input (iokit-name "TrackPoint Keyboard II")
+;;  input (iokit-name "Karabiner DriverKit VirtualHIDKeyboard 1.8.0")
+;;  output (kext)
+;;  output (uinput-sink "Miryoku KMonad output")
+
+;; input (device-file "/dev/input/by-path/pci-0000:2d:00.3-usb-0:3.2:1.0-event-kbd")
+;;  output (uinput-sink "My KMonad output"
+;;    "/bin/sleep 1 && /bin/setxkbmap -option compose:rctl")
+;;  fallthrough false
+;;   process-unmapped-keys no
+  process-unmapped-keys yes
+  block-unmapped-keys yes
+  movemouse-inherit-accel-state yes
+  macos-dev-names-include (
+    "Apple Internal Keyboard / Trackpad"
+  )
+)
+
+;; (deflayer dummy
+;;   _ _ _ _ _     _ _ _ _ _
+;;   _ _ _ _ _     _ _ _ _ _
+;;   _ _ _ _ _     _ _ _ _ _
+;;       _ _ _     _ _ _
+        ;;  _ _         _ _
+;; )
+
+;;(defsrc
+;;  1 2 3 4 5         7 8 9 0 -
+;;  q w e r t         u i o p [
+;;  a s d f g         j k l ; '
+;;         c v b      n m , 
+;;         met spc      rmet ralt
+;;)
+
+(deflocalkeys-macos
+  print 210
+)
+
+(defsrc
+  grv  1 2 3 4      8 9 0 - =
+  tab  q w e r      i o p [ ]
+  caps a s d f      k l ; ' ent
+         x c v      m , .
+         lmet spc      rmet ralt
+)
+
+(deflayer base
+  @Q @W @E @R  t     y   u   i o  p
+  @A @S d @F   g     h   j   k @L @SCL
+  @Z  x  c v   b     n   m   , .  @SLASH
+  @TAB @SPC @BSP    @L1 @ENT @ESC
+       @GRV @DEL        f13 S-f13
+)
+
+(defalias
+  BSP (tap-hold 200 200 bspc sft) ;; outer thumb
+  L1 (tap-hold 200 200 f14 met) ;; outer thumb
+
+  SPC (tap-hold 200 200 spc (layer-toggle symbol))
+  ENT (tap-hold 200 200 ent (layer-toggle number))
+
+  TAB (tap-hold 200 200 tab met)
+  ESC (tap-hold 200 200 esc sft)
+  A  (tap-hold 200 200 a ctl)
+  S  (tap-hold 200 200 s alt)
+  F  (tap-hold 200 200 f (layer-toggle special))
+  Q  (tap-hold 200 200 q (layer-toggle qlayer))
+  W  (tap-hold 200 200 w (layer-toggle wlayer))
+  E  (tap-hold 200 200 e (layer-toggle elayer))
+  R  (tap-hold 200 200 r (layer-toggle rlayer))
+
+  L  (tap-hold 200 200 l alt)
+  SCL (tap-hold 200 200 ; ctl)
+  Z  (tap-hold 200 200 z sft)
+  SLASH (tap-hold 200 200 / met)
+
+  SPC2 (tap-hold 200 200 spc (layer-toggle special))
+  ENT2 (tap-hold 200 200 ent (layer-toggle special))
+
+  GRV (tap-hold 200 200 S-tab alt)
+  DEL (tap-hold 200 200 del ctl)
+
+  HOME (tap-hold 200 200 f13 alt)
+  END (tap-hold 200 200 S-f13 ctl)
+
+  MOUSEH (tap-hold 200 200 A-M-x alt)
+  MOUSE (tap-hold 200 200 A-M-c ctl)
+)
+
+(deflayer symbol
+  S-1 S-2 S-[  S-]  S-7     S-8 ` S-` '  S-'
+  S-3 S-4 S-9 S-0 -     S-- \ S-\ S-; '
+  S-5 S-6 [  ]  =     +  S-,  S-. /  S-/
+      _  @SPC2  _     _  @ENT2 `
+         _ _         _ _
+)
+
+(deflayer number
+  1  2  3  4  5     6    7    8   9     0
+  f1 f2 f3 f4 f5    left down up  right _
+  f6 f7 f8 f9 f10   f11  f12  f13 f14   _
+        S-tab @SPC2 del     _ @ENT2 _
+         _ _         _ _
+)
+
+(defalias
+  mwu (mwheel-up 50 3)
+  mwd (mwheel-down 50 3)
+  mwl (mwheel-left 50 3)
+  mwr (mwheel-right 50 3)
+
+  ms↑ (movemouse-up 10 1)
+  ms← (movemouse-left 10 1)
+  ms↓ (movemouse-down 10 1)
+  ms→ (movemouse-right 10 1)
+
+  ma↑ (movemouse-accel-up 10 1000 1 50)
+  ma← (movemouse-accel-left 10 1000 1 50)
+  ma↓ (movemouse-accel-down 10 1000 1 50)
+  ma→ (movemouse-accel-right 10 1000 1 50)
+
+  sm (setmouse 32228 32228)
+
+  fst (movemouse-speed 200)
+)
+
+(deflayer special
+  @mwl @mwu @mwd @mwr _               M-left M-right A-left A-right _
+  mlft mrgt _ _ _      @ma← @ma↓ @ma↑ @ma→ @ma→
+  _ _ _ _ _               @ma← @ma← @ma↓ @ma↑ @ma→
+      _ _ _               _ _ _
+         _ _              _ _
+)
+
+;;KeyKbdLayoutNext
+;; KeyMacro14
+;; KeyACKeyboardLayoutSelect
+
+(deflayer qlayer
+  _ _ _ _ _     _ _ _ _ _
+  _ _ _ _ _     C-left C-down C-up C-right _
+  _ _ _ _ _     _ _ _ _ _
+      _ _ _     _ _ _
+         _ _         _ _
+)
+
+(deflayer wlayer
+  _ _ _ _ _     _ _ _ _ _
+  _ _ _ _ _     A-left A-down A-up A-right _
+  _ _ _ _ _     _ _ _ _ _
+      _ _ _     _ _ _
+         _ _         _ _
+)
+
+(deflayer elayer
+  _ _ _ _ _     _ _ _ _ _
+  _ _ _ _ _     S-left S-down S-up S-right _
+  _ _ _ _ _     _ _ _ _ _
+      _ _ _     _ _ _
+         _ _         _ _
+)
+
+(deflayer rlayer
+  _ _ _ _ _     _ _ _ _ _
+  _ _ _ _ _     M-left M-down M-up M-right _
+  _ _ _ _ _     _ _ _ _ _
+      _ _ _     _ _ _
+         _ _         _ _
+)
