@@ -96,8 +96,8 @@ local chosen_theme = themes[5]
 local modkey       = "Mod4"
 local altkey       = "Mod1"
 -- local terminal     = "urxvtc"
--- local terminal     = "alacritty"
-local terminal     = "hyper"
+local terminal     = "alacritty"
+-- local terminal     = "hyper"
 local vi_focus     = false -- vi-like client focus - https://github.com/lcpz/awesome-copycats/issues/275
 local cycle_prev   = true -- cycle trough all previous client or just the first -- https://github.com/lcpz/awesome-copycats/issues/274
 -- local editor       = os.getenv("EDITOR") or "vim"
@@ -197,11 +197,10 @@ lain.layout.cascade.tile.ncol          = 2
 beautiful.init(string.format("%s/.config/awesome/themes/%s/theme.lua", os.getenv("HOME"), chosen_theme))
 beautiful.font = "Pretendard 12"
 beautiful.useless_gap = 5
-beautiful.border_width = 5
 -- }}}
 --
 beautiful.useless_gap = 5;
-beautiful.border_width = 5;
+beautiful.border_width = 1;
 -- {{{ Menu
 local myawesomemenu = {
     { "hotkeys", function() return false, hotkeys_popup.show_help end },
@@ -243,14 +242,14 @@ end)
 
 -- No borders when rearranging only 1 non-floating or maximized client
 screen.connect_signal("arrange", function (s)
-    local only_one = #s.tiled_clients == 1
-    for _, c in pairs(s.clients) do
-        if only_one and not c.floating or c.maximized then
-            c.border_width = 0
-        else
-            c.border_width = beautiful.border_width
-        end
-    end
+--    local only_one = #s.tiled_clients == 1
+--    for _, c in pairs(s.clients) do
+--        if only_one and not c.floating or c.maximized then
+--            c.border_width = 0
+--        else
+--            c.border_width = beautiful.border_width
+--        end
+--    end
 end)
 -- Create a wibox for each screen and add it
 awful.screen.connect_for_each_screen(function(s) beautiful.at_screen_connect(s) end)
@@ -274,6 +273,15 @@ globalkeys = my_table.join(
 
     awful.key({ modkey }, "e", function() awful.spawn("emacsclient -c -a emacs") end,
               {description = "Run emacs", group = "hotkeys"}),
+
+    awful.key({ modkey, "Shift" }, "f", function() awful.spawn("gtk-launch firefox") end,
+              {description = "Run firefox", group = "hotkeys"}),
+
+    awful.key({ modkey, "Shift" }, "s", function() awful.spawn("gtk-launch slack") end,
+              {description = "Run slack", group = "hotkeys"}),
+
+    awful.key({ modkey }, "F1", function() awful.spawn("gtk-launch 1password") end,
+              {description = "Run 1password", group = "hotkeys"}),
     
     -- X screen locker
     awful.key({ modkey, "Control", altkey }, "l", function () os.execute(scrlocker) end,
@@ -398,8 +406,28 @@ globalkeys = my_table.join(
     -- Dynamic tagging
     awful.key({ modkey, "Shift" }, "n", function () lain.util.add_tag() end,
               {description = "add new tag", group = "tag"}),
-    awful.key({ modkey, "Shift" }, "r", function () lain.util.rename_tag() end,
-              {description = "rename tag", group = "tag"}),
+--    awful.key({ modkey, "Shift" }, "r", function () lain.util.rename_tag() end,
+--              {description = "rename tag", group = "tag"}),
+awful.key({ modkey, "Shift"}, "p",
+   function ()
+      if (recording)
+      then
+         recording=false
+         awful.util.spawn_with_shell("pkill ffmpeg")
+      else
+         recording=true
+         awful.util.spawn_with_shell("sleep 0.5 && \
+T=$(date +%Y-%m-%d_%H-%M_%S) && \
+FILE=~/Pictures/Screenshots/RECORD-$T && \
+ffmpeg -y -f x11grab -framerate 30 -window_id $(xwininfo | grep 'xwininfo: Window id' | awk '{print $4}') -i :0.0 $FILE.mp4; \
+mkdir /tmp/$T/ && \
+ffmpeg -i $FILE.mp4 /tmp/$T/frame%04d.png && \
+gifski --width 320 -o $FILE.gif /tmp/$T/frame*.png && \
+rm -rf /tmp/$T")
+      end
+   end,
+   {description = "record window", group = "applications"}),
+
      --awful.key({ modkey, "Shift" }, "Left", function () lain.util.move_tag(-1) end,
                --{description = "move tag to the left", group = "tag"}),
      --awful.key({ modkey, "Shift" }, "Right", function () lain.util.move_tag(1) end,
@@ -571,7 +599,35 @@ globalkeys = my_table.join(
             os.execute(string.format("rofi -show %s -theme %s",
             'run', 'dmenu'))
         end,
-        {description = "show rofi", group = "launcher"})
+        {description = "show rofi", group = "launcher"}),
+
+    awful.key({ modkey }, "c", function ()
+            --os.execute("kupfer")
+            awful.util.spawn("kupfer")
+        end,
+        {description = "show kupfer", group = "launcher"}),
+
+    awful.key({ modkey }, "i", function ()
+      os.execute("hints")
+    end,
+    {description = "hints", group = "mouse"}),
+
+    awful.key({ modkey }, "y", function ()
+      os.execute("hints --mode scroll")
+    end,
+    {description = "hints", group = "mouse"}),
+
+    awful.key({ modkey }, "v", function ()
+            --os.execute("kupfer")
+            os.execute(string.format("rofi -modi \"clipboard:greenclip print\" -show clipboard -run-command '{cmd}'"))
+        end,
+        {description = "show clipboard", group = "clipboard"}),
+
+    awful.key({ modkey, "Shift" }, "v", function ()
+            --os.execute("kupfer")
+            os.execute(string.format("pkill greenclip && greenclip clear && greenclip daemon &"))
+        end,
+        {description = "clear clipboard", group = "clipboard"})
 )
 
 clientkeys = my_table.join(
@@ -786,6 +842,11 @@ awful.rules.rules = {
 
     { rule = { class = "Gimp", role = "gimp-image-window" },
           properties = { maximized = true } },
+    { rule = { class = "TelegramDesktop" },
+          properties = { titlebars_enabled = false,
+                         border_width = false
+          }
+    }
 }
 -- }}}
 
@@ -859,10 +920,13 @@ end)
 
 client.connect_signal("focus", function(c)
   c.border_color = beautiful.border_focus
+  c.border_width = beautiful.border_width
   c.opacity = 1
 end)
 client.connect_signal("unfocus", function(c)
   c.border_color = beautiful.border_normal
+--  c.border_width = beautiful.border_width
+  c.border_width = 0
   c.opacity = 1
 end)
 
