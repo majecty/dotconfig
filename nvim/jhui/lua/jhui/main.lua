@@ -43,6 +43,10 @@ function M.open()
     vim.keymap.set('n', '<CR>', function()
         ui:on_enter()
     end, { buffer = buf })
+    
+    vim.keymap.set('n', 'h', function()
+        ui:debug_render()
+    end, { buffer = buf })
 end
 
 vim.api.nvim_create_user_command('JHOpen', function()
@@ -109,6 +113,39 @@ function UI:on_enter()
             0
         }
     end
+end
+
+function UI:debug_render()
+    -- get cursor position
+    local cur = vim.api.nvim_win_get_cursor(0)
+    -- print(cur[1], cur[2])
+    -- 
+    local rendered = {}
+    rendered.cursor = {
+        x = cur[1],
+        y = cur[2]
+    }
+    
+    local component_start = {1, 0}
+    for _, component in ipairs(self.components) do
+        local component_end = {
+            component_start[1],
+            component_start[2] + #component:render()
+        }
+        table.insert(rendered, {
+            startX = component_start[1],
+            startY = component_start[2],
+            endX = component_end[1],
+            endY = component_end[2],
+            text = component:render()
+        })
+        component_start = {
+            component_end[1] + 1,
+            0
+        }
+    end
+    
+    print(vim.inspect(rendered))
 end
 
 
