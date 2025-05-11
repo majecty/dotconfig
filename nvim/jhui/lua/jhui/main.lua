@@ -12,13 +12,16 @@ end, { desc = "Print hello world from jhui" })
 
 -- create a new buffer and open it
 function M.open()
-    
     -- create an empty buffer and write hello to it
     local buf = vim.api.nvim_create_buf(false, true)
     vim.api.nvim_buf_set_lines(buf, 0, 0, false, {"hello"})
-    -- open the buffer
+
     vim.api.nvim_open_win(buf, true, {
-        split = "right",
+        relative = "win",
+        width = 100,
+        height = 100,
+        row = 0,
+        col = 0,
     })
 end
 
@@ -30,7 +33,7 @@ vim.keymap.set('n', '<leader>o', function()
     M.open()
 end, { desc = "Open the jhui buffer" })
 
-vim.keymap.set('n', '<leader>rj', function()
+vim.keymap.set('n', '<leader>r', function()
     package.loaded['jhui.main'] = nil
     require('jhui.main')
     vim.notify("jhui plugin reloaded", vim.log.levels.INFO)
