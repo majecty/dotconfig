@@ -13,8 +13,12 @@ end, { desc = "Print hello world from jhui" })
 -- create a new buffer and open it
 function M.open()
     -- create an empty buffer and write hello to it
-    local buf = vim.api.nvim_create_buf(false, true)
+    local buf = vim.api.nvim_create_buf(true, true) -- listed, scratch
     vim.api.nvim_buf_set_lines(buf, 0, 0, false, {"hello"})
+
+    -- make buffer readonly
+    vim.api.nvim_buf_set_option(buf, "modifiable", false)
+    vim.api.nvim_buf_set_option(buf, "readonly", true)
 
     vim.api.nvim_open_win(buf, true, {
         relative = "win",
