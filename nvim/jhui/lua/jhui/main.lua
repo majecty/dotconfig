@@ -14,7 +14,7 @@ end, { desc = "Print hello world from jhui" })
 function M.open()
     -- create an empty buffer and write hello to it
     local buf = vim.api.nvim_create_buf(true, true) -- listed, scratch
-    vim.api.nvim_buf_set_lines(buf, 0, 0, false, {"hello"})
+    vim.api.nvim_buf_set_lines(buf, 0, 0, false, {"hello", "button"})
 
     -- make buffer readonly
     vim.api.nvim_buf_set_option(buf, "modifiable", false)
@@ -27,6 +27,18 @@ function M.open()
         row = 0,
         col = 0,
     })
+    
+    vim.keymap.set('n', '<CR>', function()
+        M._on_enter()
+    end, { buffer = buf })
+end
+
+function M._on_enter()
+    local cur = vim.api.nvim_win_get_cursor(0)
+    local line = vim.api.nvim_get_current_line()
+    if line == "hello" then
+        print("hello")
+    end
 end
 
 vim.api.nvim_create_user_command('JHOpen', function()
