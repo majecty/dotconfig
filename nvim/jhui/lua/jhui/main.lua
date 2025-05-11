@@ -1,6 +1,9 @@
 -- local config = require("jhui.config")
 -- 
 local M = {}
+local UI = {}
+local Component = {}
+local Button = {}
 
 function M.hello()
   print("hello world")
@@ -14,7 +17,16 @@ end, { desc = "Print hello world from jhui" })
 function M.open()
     -- create an empty buffer and write hello to it
     local buf = vim.api.nvim_create_buf(true, true) -- listed, scratch
-    vim.api.nvim_buf_set_lines(buf, 0, 0, false, {"hello", "button"})
+    
+    local ui = UI:new()
+    ui:add_component(Button:new("hello", function() 
+        print("hello")
+    end))
+    ui:add_component(Button:new("world", function() 
+        print("world")
+    end))
+    
+    vim.api.nvim_buf_set_lines(buf, 0, 0, false, ui:render())
 
     -- make buffer readonly
     vim.api.nvim_buf_set_option(buf, "modifiable", false)
@@ -29,16 +41,8 @@ function M.open()
     })
     
     vim.keymap.set('n', '<CR>', function()
-        M._on_enter()
+        ui:on_enter()
     end, { buffer = buf })
-end
-
-function M._on_enter()
-    local cur = vim.api.nvim_win_get_cursor(0)
-    local line = vim.api.nvim_get_current_line()
-    if line == "hello" then
-        print("hello")
-    end
 end
 
 vim.api.nvim_create_user_command('JHOpen', function()
@@ -54,5 +58,58 @@ vim.keymap.set('n', '<leader>r', function()
     require('jhui.main')
     vim.notify("jhui plugin reloaded", vim.log.levels.INFO)
 end, { desc = "Reload the jhui plugin" })
+
+
+function Button:new(text, on_enter)
+    local self = setmetatable({}, { __index = Button })
+    self.text = text
+    self.on_enter = on_enter
+    return self
+end
+
+function Button:render()
+    return self.text
+end
+
+function UI:new()
+    local self = setmetatable({}, { __index = UI })
+    self.components = {}
+    return self
+end
+
+function UI:add_component(component)
+    table.insert(self.components, component)
+end
+
+function UI:render()
+    local rendered = {}
+    for _, component in ipairs(self.components) do
+        table.insert(rendered, component:render())
+    end
+    return rendered
+end
+
+function UI:on_enter()
+    -- get cursor position
+    local cur = vim.api.nvim_win_get_cursor(0)
+    -- print(cur[1], cur[2])
+    
+    local component_start = {1, 0}
+    for _, component in ipairs(self.components) do
+        local component_end = {
+            component_start[1],
+            component_start[2] + #component:render()
+        }
+        if cur[1] >= component_start[1] and cur[1] <= component_end[1] and cur[2] >= component_start[2] and cur[2] <= component_end[2] then
+            component:on_enter()
+            break
+        end
+        component_start = {
+            component_end[1] + 1,
+            0
+        }
+    end
+end
+
 
 return M
