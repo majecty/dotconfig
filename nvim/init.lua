@@ -13,6 +13,10 @@ end, { desc = 'Reload Neovim config' })
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
+-- Enable smart case search
+vim.opt.ignorecase = true
+vim.opt.smartcase = true
+
 if vim.g.vscode then
     vim.opt.clipboard = "unnamedplus" 
 end
