@@ -33,6 +33,21 @@ alias tasdf="tmuxlayout asdf"
 alias tnew="tmux new -s"
 # alias tnewdir="tmux new -s `pwd`"
 
+gswai() {
+  # Get today's date in YY-MM-DD format
+  local today=$(date +%y-%m-%d)
+  
+  # Get the commit title and escape special characters
+  local commit_title=$(git log -1 --pretty=%B | head -n1 | sed 's/[^a-zA-Z0-9]/-/g')
+  
+  # Create new branch name
+  local new_branch="borre/${today}-${commit_title}"
+  
+  # Create and checkout new branch
+  git checkout -b "$new_branch"
+}
+
+
 tnewdir()
 {
   DIR=$(pwd)
