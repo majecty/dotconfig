@@ -108,6 +108,12 @@ gswc-head() {
   git switch -c "borre/$message"
 }
 
+bunr() {
+  local script=$(jq -r '.scripts | to_entries[] | "\(.key) \(.value)"' package.json | fzf --prompt="Select bun script: " | awk '{print $1}')
+  echo "$script"
+  bun run "$script"
+}
+
 
 # bun completions
 [ -s "/home/borre/.bun/_bun" ] && source "/home/borre/.bun/_bun"
