@@ -30,3 +30,10 @@ map global window-mode -docstring 'exit' <c-Q> ':quit!<ret>'
 declare-user-mode filetype-mode
 map global filetype-mode -docstring 'highlight shell' s ':set buffer filetype sh<ret>'
 map global filetype-mode -docstring 'highlight json' j ':set buffer filetype json<ret>'
+
+declare-user-mode assistant
+map global user -docstring 'ai mode' g ':enter-user-mode assistant<ret>'
+map global assistant -docstring "Replace selection with code assistant's answer" r '<a-|>tee /tmp/kak-tmp-code.txt; echo "You are a code generator.\nWriting comments is forbidden.\nWriting test code is forbidden.\nWriting English explanations is forbidden.\nDont include general translations.\nContinue this $kak_bufname code:\n" > /tmp/kak-gpt-prompt.txt; cat /tmp/kak-tmp-code.txt >> /tmp/kak-gpt-prompt.txt<ret>| cat /tmp/kak-gpt-prompt.txt | chatgpt <ret>'
+map global assistant -docstring "Commit message revise" c '<a-|>tee /tmp/kak-tmp-code.txt; echo "Please revise the commit message below.\nWriting English explanation is forbidden\nJust print commit message only\n$kak_bufname\n" > /tmp/kak-gpt-prompt.txt; cat /tmp/kak-tmp-code.txt >> /tmp/kak-gpt-prompt.txt<ret>| cat /tmp/kak-gpt-prompt.txt | chatgpt <ret>'
+
+
