@@ -83,5 +83,47 @@ if [[ -f $HOME/jhconfig/secret.sh ]]; then
   source $HOME/jhconfig/secret.sh
 fi
 
-alias gcai='gt c --ai && gc!'
+alias gcai='gt c --ai -v && gc!'
 alias gppmain='gb -f main && gp origin main'
+alias gppmaster='gb -f master && gp origin master'
+alias gtsss='gt sync && gt ss -p'
+alias gtsss_draft='gt sync && gt ss'
+alias gtsc='gt sync'
+alias gtcu='gt continue'
+alias gai='git add -i'
+alias gcni='git clean -i'
+alias gtssp='gt ss -p'
+
+alias ffmt='forge fmt'
+
+gtrn() {
+  local message=$(git log -1 --pretty=%B)
+  gt rename "$message"
+}
+
+gswc-head() {
+  local message=$(git log -1 --pretty=%B)
+  # echo "$message"
+  message=$(echo "$message" | sed 's/[^a-zA-Z0-9\s_-]/_/g')
+  git switch -c "borre/$message"
+}
+
+
+# bun completions
+[ -s "/home/borre/.bun/_bun" ] && source "/home/borre/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
+export PATH="$PATH:/home/borre/Applications/"
+
+
+alias fzf-port='sudo lsof -i -P -n | fzf --header-lines=1 --multi --layout=reverse --height=50% --border'
+alias fzf-port-netstat='sudo -ntlp | fzf --header-lines=1 --multi --layout=reverse --height=50% --border'
+
+
+# for cursor ide https://github.com/getcursor/cursor/issues/549
+[[ "$TERM_PROGRAM" == "vscode" ]] && unset ARGV0
+
+export PERPLEXITY_API_KEY="pplx-"
