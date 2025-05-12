@@ -125,10 +125,41 @@ export LANG=en_US.UTF-8
 export LANGUAGE=en_US.UTF-8
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
-export SDKMAN_DIR="/home/juhyung/.sdkman"
-[[ -s "/home/juhyung/.sdkman/bin/sdkman-init.sh" ]] && source "/home/juhyung/.sdkman/bin/sdkman-init.sh"
+export SDKMAN_DIR="/home/borre/.sdkman"
+[[ -s "/home/borre/.sdkman/bin/sdkman-init.sh" ]] && source "/home/borre/.sdkman/bin/sdkman-init.sh"
 
+eval "$(fnm env --use-on-cd --shell zsh)"
 source <(kubectl completion zsh)
 
 eval "$(zoxide init zsh)"
+eval "$(gt completion)"
 
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/home/borre/bin/gcloud/google-cloud-sdk/path.zsh.inc' ]; then . '/home/borre/bin/gcloud/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/home/borre/bin/gcloud/google-cloud-sdk/completion.zsh.inc' ]; then . '/home/borre/bin/gcloud/google-cloud-sdk/completion.zsh.inc'; fi
+
+
+
+[[ -s "/home/borre/.gvm/scripts/gvm" ]] && source "/home/borre/.gvm/scripts/gvm"
+
+export USE_GKE_GCLOUD_AUTH_PLUGIN=True
+
+# pnpm
+export PNPM_HOME="/home/borre/.local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
+
+alias ass='gt show'
+alias asd='gt delete'
+alias asc='gt co'
+
+# bun completions
+[ -s "/home/borre/.bun/_bun" ] && source "/home/borre/.bun/_bun"
+
+# Added by LM Studio CLI (lms)
+export PATH="$PATH:/home/borre/.lmstudio/bin"
