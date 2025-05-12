@@ -334,6 +334,8 @@ Version 2019-11-05"
           ("<f5>" call-last-kbd-macro "play")))
     ))
 
+(use-package counsel-fd :ensure t)
+
 (use-package ivy-hydra
   :ensure t)
 
