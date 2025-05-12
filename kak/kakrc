@@ -1,12 +1,14 @@
-declare-option str jhconfig_kak_path "/home/juhyung/jhconfig/kak"
+# declare-option str jhconfig_kak_path "/home/juhyung/jhconfig/kak"
+declare-option str jhconfig_kak_path "%sh{echo $HOME}/jhconfig/kak"
 
 source "%opt{jhconfig_kak_path}/import-ordered/plugins.kak"
-colorscheme gruvbox
+# colorscheme gruvbox
 # colorscheme seagull-custom
 
 evaluate-commands %sh{
     for f in $kak_opt_jhconfig_kak_path/import-unordered/*.kak
     do
+        printf "echo -debug source \"%s\"\n" $f
         printf "source \"%s\"\n" $f
     done
 }
