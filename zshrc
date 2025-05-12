@@ -110,7 +110,7 @@ export EDITOR=kak
 alias vim=nvim
 alias vimdiff='nvim -d'
 alias cdf='cd `ls | fzf`'
-source /home/juhyung/.config/broot/launcher/bash/br
+# source /home/juhyung/.config/broot/launcher/bash/br
 export STARSHIP_CONFIG=~/jhconfig/starship.toml
 eval $(starship init zsh)
 
