@@ -513,14 +513,14 @@ Version 2019-11-05"
 
 (use-package winner
   :ensure t
-  :bind (("M-[" . winner-undo)
-         ("M-]" . winndr-redo)
-         )
+  ;; :bind (("M-[" . winner-undo)
+  ;;        ("M-]" . winndr-redo)
+  ;;        )
   :config
   (winner-mode 1))
 
-(use-package vterm
-  :ensure t)
+;; (use-package vterm
+;;   :ensure t)
 
 (use-package ranger
   :ensure t)

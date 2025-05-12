@@ -13,7 +13,7 @@ hook global NormalIdle .* %{
     } }
 }
 
-add-highlighter global/ dynregex '%opt{curword}' 0:CurWord
+# add-highlighter global/ dynregex '%opt{curword}' 0:CurWord
 
 map global normal '#' :comment-line<ret>
 
