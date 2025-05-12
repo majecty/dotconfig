@@ -25,7 +25,8 @@
 ;;
 
 (setq custom-file "~/.emacs.d/custom.el")
-(load custom-file t)
+(when (file-exists-p custom-file)
+  (load custom-file))
 
 (defconst user-init-dir 
   (if (string= system-type "windows-nt")
