@@ -21,3 +21,10 @@ export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 export PATH="$PATH:$HOME/.cask/bin"
 
 export ZSH_CONFIG=$HOME/jhconfig/zsh
+export PATH="$PATH:$HOME/bin/brave"
+export PATH="$PATH:$HOME/bin/solana/solana-release/bin"
+
+export ANDROID_HOME=$HOME/Android/Sdk/
+export PATH="$PATH:$ANDROID_HOME/tools"
+export PATH="$PATH:$ANDROID_HOME/tools/bin"
+export PATH="$PATH:$ANDROID_HOME/platform-tools"
