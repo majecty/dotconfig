@@ -38,7 +38,7 @@
 
 (defalias
   BSP (tap-hold 200 bspc sft) ;; outer thumb
-  L1 (tap-hold 200 f14 met) ;; outer thumb
+  L1 (tap-hold 200 hangeul met) ;; outer thumb
 
   SPC (tap-hold 200 spc (layer-toggle symbol))
   ENT (tap-hold 200 ent (layer-toggle number))
@@ -82,8 +82,8 @@
 )
 
 (deflayer special
-  _ w e _ r               _ A-left A-right _ _
-  a d capslock menu _     m , . _ A-M-c
+  _ _ C-left C-right _               _ A-left A-right _ _
+  a d _ menu _     m , . _ A-M-c
   _ _ _ _ _               h j k l A-M-x
       _ _ _               _ _ _
          _ _              _ _
