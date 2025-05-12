@@ -71,7 +71,7 @@ ZSH_THEME="funky"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git zsh-autosuggestions alias-finder yarn gitfast alias-tips fzf-alias ubuntu zsh-aliases-exa  docker-compose common-aliases archlinux autoupdate)
+plugins=(git zsh-autosuggestions alias-finder yarn gitfast alias-tips fzf-alias ubuntu  docker-compose common-aliases archlinux  emacs)
 
 source $ZSH/oh-my-zsh.sh
 
