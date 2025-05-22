@@ -1,7 +1,7 @@
 return {
   {
       'fzf',
-      dir = '/opt/homebrew/opt/fzf',
+      dir = '~/.fzf',
       build = './install --all',
       config = function()
         -- help

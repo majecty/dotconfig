@@ -6,7 +6,13 @@ end, { desc = 'Reload Neovim config' })
 
 vim.keymap.set('n', '<leader>e', function()
   vim.cmd('edit ' .. vim.fn.expand('~/.config/nvim/init.lua'))
+  print("open init.lua")
 end, { desc = 'Edit Neovim config' })
+
+vim.keymap.set('n', 'U', function()
+  vim.cmd('redo')
+  print('redo')
+end, { desc = 'Redo' })
 
 -- Set leader key
 vim.g.mapleader = ' '
