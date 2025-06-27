@@ -63,4 +63,5 @@ else
   vim.keymap.set('n', '<leader>,p', function ()
     vim.cmd('source ' .. vim.fn.expand('~/.config/nvim/lua/user/plugins_notvscode/a.lua'))
   end, { desc = 'plugins' })
+  vim.keymap.set('n', '<f4><f4>', "<cmd>Commands<cr>", { desc = "commands" })
 end
