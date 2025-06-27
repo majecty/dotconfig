@@ -30,5 +30,6 @@ return {
         desc = "Buffer Local Keymaps (which-key)",
       },
     },
-  }
+  },
+  { 'echasnovski/mini.nvim', version = false },
 }
