@@ -41,7 +41,7 @@ if vim.g.neovide then
   vim.keymap.set('n', '<D-v>', '"+p')
   vim.keymap.set('v', '<D-v>', '"+p')
   vim.keymap.set('c', '<D-v>', '<C-R>+')
-  vim.keymap.set('i', '<D-v>', '<ESC>l"+Pli')
+  vim.keymap.set('i', '<D-v>', '<ESC>"+p')
 
   vim.opt.expandtab = true      -- Tab을 실제 탭 문자가 아니라 스페이스로 변환
   vim.opt.tabstop = 2          -- 파일 내 탭 문자의 표시 폭을 2로
