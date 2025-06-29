@@ -106,12 +106,19 @@ return {
 
   {
     "nvim-treesitter/nvim-treesitter",
-    opts = {
-      ensure_installed = { "go", "gomod", "gowork", "gosum" },
-      highlight = {
-        enable = true,
-      },
-    },
+    build = ":TSUpdate",
+    config = function ()
+      local configs = require("nvim-treesitter.configs")
+      configs.setup({
+        ensure_installed = { "go", "gomod", "gowork", "gosum" },
+        highlight = {
+          enable = true,
+        },
+        indent = {
+          enable = true
+        },
+      })
+    end,
   },
 
   {
