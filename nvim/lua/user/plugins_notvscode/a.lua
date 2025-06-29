@@ -128,6 +128,16 @@ return {
     config = function ()
       vim.lsp.enable("gopls")
     end,
+  },
+  {
+    "echasnovski/mini.icons",
+    opts = {
+      file = {
+        [".go-version"] = { glyph = "", hl = "MiniIconsBlue" },
+      },
+      filetype = {
+        gotmpl = { glyph = "󰟓", hl = "MiniIconsGrey" },
+      },
+    },
   }
-
 }
