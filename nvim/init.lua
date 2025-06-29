@@ -70,4 +70,6 @@ else
     vim.cmd('edit ' .. vim.fn.expand('~/.config/nvim/init.lua'))
     print("open init.lua")
   end, { desc = 'Edit Neovim config' })
+  vim.keymap.set('n', '<leader>fpcd', "<cmd>cd %:h<cr>", { desc = "cd to file path" })
+
 end
