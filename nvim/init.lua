@@ -60,9 +60,11 @@ if vim.g.vscode then
 else
   vim.keymap.set('n', '<leader>b', "<cmd>Buffers<cr>", { desc = 'buffers' })
   vim.keymap.set('n', '<leader>gg', "<cmd>Git<cr>", { desc = 'git' })
+
   vim.keymap.set('n', '<leader>,p', function ()
-    vim.cmd('source ' .. vim.fn.expand('~/.config/nvim/lua/user/plugins_notvscode/a.lua'))
-  end, { desc = 'plugins' })
+    vim.cmd('edit ' .. vim.fn.expand('~/.config/nvim/lua/user/plugins_notvscode/a.lua'))
+  end, { desc = 'open plugins' })
+
   vim.keymap.set('n', '<f4><f4>', "<cmd>Commands<cr>", { desc = "commands" })
   vim.keymap.set('n', '<leader>e', function()
     vim.cmd('edit ' .. vim.fn.expand('~/.config/nvim/init.lua'))
