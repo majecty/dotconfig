@@ -72,4 +72,5 @@ else
   end, { desc = 'Edit Neovim config' })
   vim.keymap.set('n', '<leader>fpcd', "<cmd>cd %:h<cr>", { desc = "cd to file path" })
 
+  vim.g.neovide_input_macos_option_key_is_meta = 'only_left'
 end
