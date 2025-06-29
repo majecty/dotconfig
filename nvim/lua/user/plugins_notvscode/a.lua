@@ -1,15 +1,15 @@
 return {
   {
-      'fzf',
-      dir = '~/.fzf',
-      build = './install --all',
-      config = function()
-        -- help
-        vim.keymap.set('n', '<leader>h', ':Help<CR>', { desc = "Help" })
-      end,
-},
+    'fzf',
+    dir = '~/.fzf',
+    build = './install --all',
+    config = function()
+      -- help
+      vim.keymap.set('n', '<leader>h', ':Help<CR>', { desc = "Help" })
+    end,
+  },
   {
-      'junegunn/fzf.vim',
+    'junegunn/fzf.vim',
   },
   { 'tpope/vim-fugitive', },
   {
@@ -106,7 +106,12 @@ return {
 
   {
     "nvim-treesitter/nvim-treesitter",
-    opts = { ensure_installed = { "go", "gomod", "gowork", "gosum" } },
+    opts = {
+      ensure_installed = { "go", "gomod", "gowork", "gosum" },
+      highlight = {
+        enable = true,
+      },
+    },
   },
 
   {
