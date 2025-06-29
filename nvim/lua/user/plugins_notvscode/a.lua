@@ -102,6 +102,20 @@ return {
         ft = { "markdown", "Avante" },
       },
     },
+  },
+
+  {
+    "nvim-treesitter/nvim-treesitter",
+    opts = { ensure_installed = { "go", "gomod", "gowork", "gosum" } },
+  },
+
+  {
+    "neovim/nvim-lspconfig",
+    opts = {
+    },
+    config = function ()
+      vim.lsp.enable("gopls")
+    end,
   }
 
 }
