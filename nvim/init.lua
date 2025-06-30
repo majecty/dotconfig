@@ -59,7 +59,20 @@ vim.api.nvim_echo({{"[nvim/init.lua] loaded", "None"}}, false, {})
 if vim.g.vscode then
 else
   vim.keymap.set('n', '<leader>b', "<cmd>Buffers<cr>", { desc = 'buffers' })
+  vim.keymap.set('n', '<leader>ff', "<cmd>Files<cr>", { desc = 'open files' })
   vim.keymap.set('n', '<leader>gg', "<cmd>Git<cr>", { desc = 'git' })
+
+  vim.keymap.set('n', 'grt', vim.lsp.buf.type_definition, { noremap = true, silent = true, desc = 'type_definition' })
+  vim.keymap.set('n', '<leader>cc', vim.lsp.codelens.run, { desc = 'codelens' })
+  vim.keymap.set('n', '<leader>cC', vim.lsp.codelens.refresh, { desc = 'codelens refresh' })
+  vim.keymap.set('n', 'K', vim.lsp.buf.hover, { noremap = true, silent = true, desc = 'hover' })
+  vim.keymap.set('n', 'gK', vim.lsp.buf.signature_help, { noremap = true, silent = true, desc = 'signature_help' })
+  vim.keymap.set('i', '<c-k>', vim.lsp.buf.signature_help, { noremap = true, silent = true, desc = 'signature_help' })
+
+  vim.keymap.set('n', 'gd', vim.lsp.buf.definition, { noremap = true, silent = true })
+
+  vim.keymap.set('n', '<leader>ot', "<cmd>OverseerTaskAction<cr>", { desc = 'OverseerTaskAction' })
+  vim.keymap.set('n', '<leader>oo', "<cmd>OverseerToggle<cr>", { desc = 'OverseerToggle' })
 
   vim.keymap.set('n', '<leader>,p', function ()
     vim.cmd('edit ' .. vim.fn.expand('~/.config/nvim/lua/user/plugins_notvscode/a.lua'))
