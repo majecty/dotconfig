@@ -198,5 +198,8 @@ return {
       -- Setup shortcuts here (see Usage > Shortcuts in the Documentation/Readme)
     end,
   },
+  {
+    'stevearc/overseer.nvim',
+    opts = {},
   }
 }
