@@ -1,17 +1,35 @@
 return {
   {
-    'fzf',
-    dir = '~/.fzf',
-    build = './install --all',
-    config = function()
-      -- help
-      vim.keymap.set('n', '<leader>h', ':Help<CR>', { desc = "Help" })
-    end,
+    "ibhagwan/fzf-lua",
+    event = "VeryLazy",
+    -- optional for icon support
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+    -- or if using mini.icons/mini.nvim
+    -- dependencies = { "echasnovski/mini.icons" },
+    opts = {}
   },
   {
-    'junegunn/fzf.vim',
+    "nvim-treesitter/nvim-treesitter-context",
+    event = "VeryLazy",
+    opts = {
+      enable = true
+    }
   },
-  { 'tpope/vim-fugitive', },
+  -- {
+  --   'fzf',
+  --   dir = '~/.fzf',
+  --   build = './install --all',
+  --   config = function()
+  --     -- help
+  --     vim.keymap.set('n', '<leader>h', ':Help<CR>', { desc = "Help" })
+  --   end,
+  -- },
+  -- {
+  --   'junegunn/fzf.vim',
+  -- },
+  { 'tpope/vim-fugitive',
+    event = "VeryLazy",
+  },
   {
     "folke/which-key.nvim",
     event = "VeryLazy",
@@ -31,9 +49,12 @@ return {
       },
     },
   },
-  { 'echasnovski/mini.nvim', version = false },
+  { 'echasnovski/mini.nvim', version = false,
+    event = "VeryLazy",
+  },
   {
     "Exafunction/windsurf.nvim",
+    event = "VeryLazy",
     dependencies = {
       "nvim-lua/plenary.nvim",
       "hrsh7th/nvim-cmp",
@@ -53,6 +74,7 @@ return {
   {
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",
+    event = "VeryLazy",
     config = function ()
       local configs = require("nvim-treesitter.configs")
       configs.setup({
@@ -69,18 +91,12 @@ return {
 
   {
     "neovim/nvim-lspconfig",
-    opts = function()
-      local keys = require("lazyvim.plugins.lsp.keymaps").get()
-      -- change a keymap
-      keys[#keys + 1] = { "K", "<cmd>echo 'hello'<cr>" }
-      -- disable a keymap
-      keys[#keys + 1] = { "K", false }
-      -- add a keymap
-      keys[#keys + 1] = { "H", "<cmd>echo 'hello'<cr>" }
-    end,
+    config = function()
+    end
   },
   {
     "echasnovski/mini.icons",
+    event = "VeryLazy",
     opts = {
       file = {
         [".go-version"] = { glyph = "", hl = "MiniIconsBlue" },
@@ -98,10 +114,12 @@ return {
       require('lualine').setup({
         -- sections = { lualine_d = { require('codeium.virtual_text').status_string } }
       })
-    end
+    end,
+    event = "VeryLazy",
   },
   {
     'saghen/blink.cmp',
+    event = "VeryLazy",
     -- optional: provides snippets for the snippet source
     dependencies = { 'rafamadriz/friendly-snippets' },
 
@@ -160,6 +178,7 @@ return {
   -- lazy.nvim
   {
     "robitx/gp.nvim",
+    event = "VeryLazy",
     config = function()
       local conf = {
         -- For customization, refer to Install > Configuration in the Documentation/Readme
@@ -200,6 +219,17 @@ return {
   },
   {
     'stevearc/overseer.nvim',
+    event = "VeryLazy",
     opts = {},
-  }
+  },
+
+  {
+    "rachartier/tiny-inline-diagnostic.nvim",
+    event = "VeryLazy", -- Or `LspAttach`
+    priority = 1000, -- needs to be loaded in first
+    config = function()
+      require('tiny-inline-diagnostic').setup()
+      vim.diagnostic.config({ virtual_text = false }) -- Only if needed in your configuration, if you already have native LSP diagnostics
+    end
+  }, 
 }

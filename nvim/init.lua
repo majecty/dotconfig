@@ -58,35 +58,106 @@ vim.api.nvim_echo({{"[nvim/init.lua] loaded", "None"}}, false, {})
 
 if vim.g.vscode then
 else
-  vim.keymap.set('n', '<leader>b', "<cmd>Buffers<cr>", { desc = 'buffers' })
-  vim.keymap.set('n', '<leader>ff', "<cmd>Files<cr>", { desc = 'open files' })
+  -- fzf
+  local FzfLua = require('fzf-lua')
+  FzfLua.register_ui_select()
+  vim.keymap.set('n', '<leader>b', FzfLua.buffers, { desc = 'buffers' })
+  vim.keymap.set('n', '<leader>ff', FzfLua.files, { desc = 'open files' })
+  vim.keymap.set('n', '<leader>sd', FzfLua.diagnostics_workspace, { desc = 'diagnostics' })
+  vim.keymap.set('n', '<leader>sD', FzfLua.diagnostics_document, { desc = 'buffer diagnostics' })
+  vim.keymap.set({'n', 'v'}, '<leader>ca', FzfLua.lsp_code_actions, { desc = 'code actions' })
+  vim.keymap.set('n', '<leader>h', FzfLua.helptags, { desc = 'helptags' })
+  -- vim.keymap.set('v', '<leader>ca', FzfLua.lsp_code_actions, { desc = 'code actions' })
+
+  -- git
   vim.keymap.set('n', '<leader>gg', "<cmd>Git<cr>", { desc = 'git' })
 
+  -- lsp
   vim.keymap.set('n', 'grt', vim.lsp.buf.type_definition, { noremap = true, silent = true, desc = 'type_definition' })
   vim.keymap.set('n', '<leader>cc', vim.lsp.codelens.run, { desc = 'codelens' })
   vim.keymap.set('n', '<leader>cC', vim.lsp.codelens.refresh, { desc = 'codelens refresh' })
   vim.keymap.set('n', 'K', vim.lsp.buf.hover, { noremap = true, silent = true, desc = 'hover' })
   vim.keymap.set('n', 'gK', vim.lsp.buf.signature_help, { noremap = true, silent = true, desc = 'signature_help' })
   vim.keymap.set('i', '<c-k>', vim.lsp.buf.signature_help, { noremap = true, silent = true, desc = 'signature_help' })
-
   vim.keymap.set('n', 'gd', vim.lsp.buf.definition, { noremap = true, silent = true })
 
+  -- overseer
   vim.keymap.set('n', '<leader>ot', "<cmd>OverseerTaskAction<cr>", { desc = 'OverseerTaskAction' })
   vim.keymap.set('n', '<leader>oo', "<cmd>OverseerToggle<cr>", { desc = 'OverseerToggle' })
 
-  vim.keymap.set('n', '<leader>,p', function ()
-    vim.cmd('edit ' .. vim.fn.expand('~/.config/nvim/lua/user/plugins_notvscode/a.lua'))
-  end, { desc = 'open plugins' })
+  vim.keymap.set('n', '<f4><f4>', FzfLua.commands, { desc = "commands" })
 
-  vim.keymap.set('n', '<f4><f4>', "<cmd>Commands<cr>", { desc = "commands" })
+  -- config edit
   vim.keymap.set('n', '<leader>e', function()
     vim.cmd('edit ' .. vim.fn.expand('~/.config/nvim/init.lua'))
     print("open init.lua")
   end, { desc = 'Edit Neovim config' })
+  vim.keymap.set('n', '<leader>,p', function ()
+    vim.cmd('edit ' .. vim.fn.expand('~/.config/nvim/lua/user/plugins_notvscode/a.lua'))
+  end, { desc = 'open plugins' })
+
   vim.keymap.set('n', '<leader>fpcd', "<cmd>cd %:h<cr>", { desc = "cd to file path" })
+  vim.keymap.set('n', '<leader>f.', "<cmd>e %:h<cr>", { desc = "open file's directory" })
 
   vim.g.neovide_input_macos_option_key_is_meta = 'only_left'
 
+  -- require('nvim-lspconfig')
+  vim.lsp.set_log_level("debug")
+  -- lsp
+  vim.lsp.config("gopls", {
+    settings = {
+      gopls = {
+        gofumpt = true,
+        codelenses = {
+          gc_details = true,
+          generate = true,
+          regenerate_cgo = true,
+          run_govulncheck = true,
+          test = true,
+          tidy = true,
+          upgrade_dependency = true,
+          vendor = true,
+        },
+        hints = {
+          assignVariableTypes = true,
+          compositeLiteralFields = true,
+          compositeLiteralTypes = true,
+          constantValues = true,
+          functionTypeParameters = true,
+          parameterNames = true,
+          rangeVariableTypes = true,
+        },
+        analyses = {
+          nilness = true,
+          unusedparams = true,
+          unusedwrite = true,
+          useany = true,
+        },
+        usePlaceholders = true,
+        completeUnimported = true,
+        staticcheck = true,
+        directoryFilters = { "-.git", "-.vscode", "-.idea", "-.vscode-test", "-node_modules" },
+        semanticTokens = true,
+      }
+    },
+  })
   vim.lsp.enable("gopls")
+
+  vim.lsp.config("lua_ls", {
+    settings = {
+      Lua = {
+        diagnostics = {
+          enable = false,
+          globals = { "vim" }
+
+        },
+      },
+    },
+  })
   vim.lsp.enable("lua_ls")
+
+  vim.lsp.inlay_hint.enable()
+
+  vim.keymap.set('i', '<c-;>', function() return vim.fn['codeium#CycleCompletions'](1) end, { expr = true, silent = true })
+  vim.keymap.set('i', '<c-,>', function() return vim.fn['codeium#CycleCompletions'](-1) end, { expr = true, silent = true })
 end
