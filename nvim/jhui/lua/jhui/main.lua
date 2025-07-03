@@ -53,11 +53,11 @@ vim.api.nvim_create_user_command('JHOpen', function()
     M.open()
 end, { desc = "Open the jhui buffer" })
 
-vim.keymap.set('n', '<leader>o', function()
+vim.keymap.set('n', '<leader>jho', function()
     M.open()
 end, { desc = "Open the jhui buffer" })
 
-vim.keymap.set('n', '<leader>r', function()
+vim.keymap.set('n', '<leader>jhr', function()
     package.loaded['jhui.main'] = nil
     require('jhui.main')
     vim.notify("jhui plugin reloaded", vim.log.levels.INFO)
