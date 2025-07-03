@@ -49,6 +49,8 @@ if vim.g.neovide then
   vim.opt.shiftwidth = 2       -- 자동 들여쓰기(`>>`, `<<` 등) 시 2칸 스페이스 사용
   vim.opt.autoindent = true    -- 자동 들여쓰기
   vim.opt.smartindent = true   -- 스마트 들여쓰기(선택)
+
+  vim.cmd("colorscheme unokai")
 end
 
 
