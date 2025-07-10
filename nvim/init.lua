@@ -69,6 +69,7 @@ else
   vim.keymap.set('n', '<leader>sD', FzfLua.diagnostics_document, { desc = 'buffer diagnostics' })
   vim.keymap.set({'n', 'v'}, '<leader>ca', FzfLua.lsp_code_actions, { desc = 'code actions' })
   vim.keymap.set('n', '<leader>h', FzfLua.helptags, { desc = 'helptags' })
+  vim.keymap.set('n', '<leader>m', FzfLua.keymaps, { desc = 'keymaps' })
   -- vim.keymap.set('v', '<leader>ca', FzfLua.lsp_code_actions, { desc = 'code actions' })
 
   -- git
@@ -86,6 +87,7 @@ else
   -- overseer
   vim.keymap.set('n', '<leader>ot', "<cmd>OverseerTaskAction<cr>", { desc = 'OverseerTaskAction' })
   vim.keymap.set('n', '<leader>oo', "<cmd>OverseerToggle<cr>", { desc = 'OverseerToggle' })
+  vim.keymap.set('n', '<leader>or', "<cmd>OverseerRun<cr>", { desc = 'OverseerRun' })
 
   vim.keymap.set('n', '<f4><f4>', FzfLua.commands, { desc = "commands" })
 
