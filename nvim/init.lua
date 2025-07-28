@@ -148,6 +148,13 @@ else
   })
   vim.lsp.enable("gopls")
 
+  vim.api.nvim_create_autocmd("BufWritePre", {
+    pattern = "*.go",
+    callback = function()
+      vim.lsp.buf.format()
+    end,
+  })
+
   vim.lsp.config("lua_ls", {
     settings = {
       Lua = {
