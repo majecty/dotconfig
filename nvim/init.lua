@@ -94,7 +94,7 @@ else
 
   -- config edit
   vim.keymap.set('n', '<leader>e', function()
-    vim.cmd('edit ' .. vim.fn.expand('~/.config/nvim/init.lua'))
+    vim.cmd('edit ' .. vim.fn.expand('~/jhconfig/nvim/init.lua'))
     print("open init.lua")
   end, { desc = 'Edit Neovim config' })
   vim.keymap.set('n', '<leader>,p', function ()
