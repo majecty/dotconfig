@@ -71,6 +71,7 @@ else
   vim.keymap.set('n', '<leader>h', FzfLua.helptags, { desc = 'helptags' })
   vim.keymap.set('n', '<leader>m', FzfLua.keymaps, { desc = 'keymaps' })
   -- vim.keymap.set('v', '<leader>ca', FzfLua.lsp_code_actions, { desc = 'code actions' })
+  vim.keymap.set('n', '<leader>s"', FzfLua.registers, { desc = "registers" })
 
   -- git
   vim.keymap.set('n', '<leader>gg', "<cmd>Git<cr>", { desc = 'git' })
