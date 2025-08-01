@@ -200,31 +200,51 @@ else
     end
     
     -- Use stdin to avoid shell escaping issues
-    local handle = io.popen('aichat -r commit', 'w')
-    handle:write(full_prompt)
-    handle:close()
+    -- local handle = io.popen('aichat -r commit', 'w')
+    -- handle:write(full_prompt)
+    -- handle:close()
 
     -- Stream output directly to buffer
     local bufnr = vim.api.nvim_get_current_buf()
-    vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, {})  -- Clear buffer
+    -- vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, {})  -- Clear buffer
     
+    -- add stdout after the current cursor ai!
     local Job = require('plenary.job')
     Job:new({
       command = 'aichat',
       args = {'-r', 'commit'},
-      on_stdout = function(_, line)
+      on_stdout = function(err, line)
+        if err ~= nil then
+          print("Error(stdout): " .. err)
+          return
+        end
+        if line == nil then
+          return
+        end
         vim.schedule(function()
           local current_lines = vim.api.nvim_buf_get_lines(bufnr, 0, -1, false)
           table.insert(current_lines, line)
           vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, current_lines)
         end)
       end,
-      on_exit = function()
+      on_stderr = function(err, line)
+        if err ~= nil then
+          print("Error(stderr): " .. err)
+          return
+        end
+        if line == nil then
+          return
+        end
         vim.schedule(function()
-          print("Commit message generation complete")
+          print("stderr: " .. line)
         end)
       end,
-      writer = {full_prompt}
+      on_exit = function(_, code, signal)
+        vim.schedule(function()
+          print("Commit message generation complete with code " .. code .. " and signal " .. signal)
+        end)
+      end,
+      writer = full_prompt
     }):start()
   end, { desc = 'Generate git commit message' })
 
