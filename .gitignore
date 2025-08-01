@@ -3,3 +3,4 @@ vim/.undodir/
 Session.vim
 secret.sh
 .DS_Store
+.aider*
