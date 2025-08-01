@@ -193,7 +193,7 @@ else
       return
     end
     
-    -- Build complete prompt
+    -- add diff only if the existing_msg does not have diff ai!
     local full_prompt = prompt .. diff
     
     -- Use stdin to avoid shell escaping issues
