@@ -208,8 +208,8 @@ else
     local bufnr = vim.api.nvim_get_current_buf()
     -- vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, {})  -- Clear buffer
     
-    -- add stdout after the current cursor ai!
     local Job = require('plenary.job')
+    local cursor_pos = vim.api.nvim_win_get_cursor(0)
     Job:new({
       command = 'aichat',
       args = {'-r', 'commit'},
@@ -223,8 +223,11 @@ else
         end
         vim.schedule(function()
           local current_lines = vim.api.nvim_buf_get_lines(bufnr, 0, -1, false)
-          table.insert(current_lines, line)
+          table.insert(current_lines, cursor_pos[1], line)
           vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, current_lines)
+          -- Move cursor down after each insertion
+          cursor_pos[1] = cursor_pos[1] + 1
+          vim.api.nvim_win_set_cursor(0, cursor_pos)
         end)
       end,
       on_stderr = function(err, line)
