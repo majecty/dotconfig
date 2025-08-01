@@ -193,8 +193,11 @@ else
       return
     end
     
-    -- add diff only if the existing_msg does not have diff ai!
-    local full_prompt = prompt .. diff
+    -- Only include diff if it's not already in existing message
+    local full_prompt = prompt
+    if not existing_msg:match(diff:sub(1, 50)) then  -- Check first 50 chars of diff
+      full_prompt = full_prompt .. diff
+    end
     
     -- Use stdin to avoid shell escaping issues
     local handle = io.popen('aichat -r commit', 'w')
