@@ -203,6 +203,8 @@ else
     local handle = io.popen('aichat -r commit', 'w')
     handle:write(full_prompt)
     handle:close()
+
+    -- llm output to vim buffer streaming ai!
     
     -- Get the output
     local message = vim.fn.system('aichat -r commit', full_prompt)
