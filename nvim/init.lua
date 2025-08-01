@@ -175,14 +175,23 @@ else
   vim.keymap.set('i', '<c-,>', function() return vim.fn['codeium#CycleCompletions'](-1) end, { expr = true, silent = true })
 
   vim.keymap.set('n', '<leader>gm', function()
-    -- 이 커맨드는 fzf commit buffer에서 실행할거야. 거기에 이미 내가 작성한 commit message가 있을거야. 그걸 aichat 호출할 때 포함시켜 ai! 
-
     local diff = vim.fn.system('git diff --cached')
     if diff == '' then
       print('No staged changes to generate commit message for')
       return
     end
-    local cmd = 'aichat -r commit "Generate a concise git commit message based on these changes:\n\n' .. diff .. '"'
+    
+    -- Get current buffer content as existing message
+    local existing_msg = table.concat(vim.api.nvim_buf_get_lines(0, 0, -1, false), "\n")
+    
+    local prompt = "Generate a concise git commit message based on these changes"
+    if existing_msg ~= "" then
+      prompt = prompt .. " and improve/complete this existing message:\n\n" .. existing_msg
+    else 
+      prompt = prompt .. ":\n\n"
+    end
+    
+    local cmd = 'aichat -r commit "' .. prompt .. diff .. '"'
     local message = vim.fn.system(cmd)
     vim.api.nvim_paste(message, true, -1)
   end, { desc = 'Generate git commit message' })
