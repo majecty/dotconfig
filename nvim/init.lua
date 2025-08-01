@@ -174,13 +174,13 @@ else
   vim.keymap.set('i', '<c-;>', function() return vim.fn['codeium#CycleCompletions'](1) end, { expr = true, silent = true })
   vim.keymap.set('i', '<c-,>', function() return vim.fn['codeium#CycleCompletions'](-1) end, { expr = true, silent = true })
 
-  -- Generate git commit message using aichat
   vim.keymap.set('n', '<leader>gm', function()
     local diff = vim.fn.system('git diff --cached')
     if diff == '' then
       print('No staged changes to generate commit message for')
       return
     end
+    -- add commit title and message in current buffer ai!
     local cmd = 'aichat -r commit "Generate a concise git commit message based on these changes:\n\n' .. diff .. '"'
     local message = vim.fn.system(cmd)
     vim.api.nvim_paste(message, true, -1)
