@@ -186,9 +186,23 @@ else
       prompt = prompt .. ":\n\n"
     end
     
-    -- use stdin to handle proper escaping ai!
-    local cmd = 'aichat -r commit "' .. prompt .. '"'
-    local message = vim.fn.system(cmd)
+    -- Get git diff for stdin
+    local diff = vim.fn.system('git diff --cached')
+    if diff == '' then
+      print('No staged changes to generate commit message for')
+      return
+    end
+    
+    -- Build complete prompt
+    local full_prompt = prompt .. diff
+    
+    -- Use stdin to avoid shell escaping issues
+    local handle = io.popen('aichat -r commit', 'w')
+    handle:write(full_prompt)
+    handle:close()
+    
+    -- Get the output
+    local message = vim.fn.system('aichat -r commit', full_prompt)
     vim.api.nvim_paste(message, true, -1)
   end, { desc = 'Generate git commit message' })
 
