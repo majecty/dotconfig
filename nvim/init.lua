@@ -35,6 +35,7 @@ end
 if vim.g.neovide then
   -- 저장
   vim.keymap.set('n', '<D-s>', ':w<CR>')
+  vim.keymap.set('i', '<D-s>', '<ESC>:w<CR>')
   -- 복사 (비주얼 모드)
   vim.keymap.set('v', '<D-c>', '"+y')
   -- 붙여넣기 (노멀/비주얼/커맨드/인서트 모드)
@@ -172,4 +173,7 @@ else
 
   vim.keymap.set('i', '<c-;>', function() return vim.fn['codeium#CycleCompletions'](1) end, { expr = true, silent = true })
   vim.keymap.set('i', '<c-,>', function() return vim.fn['codeium#CycleCompletions'](-1) end, { expr = true, silent = true })
+
+  -- add function that run "aichat" to generate git message ai!
+
 end
