@@ -204,11 +204,28 @@ else
     handle:write(full_prompt)
     handle:close()
 
-    -- llm output to vim buffer streaming ai!
+    -- Stream output directly to buffer
+    local bufnr = vim.api.nvim_get_current_buf()
+    vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, {})  -- Clear buffer
     
-    -- Get the output
-    local message = vim.fn.system('aichat -r commit', full_prompt)
-    vim.api.nvim_paste(message, true, -1)
+    local Job = require('plenary.job')
+    Job:new({
+      command = 'aichat',
+      args = {'-r', 'commit'},
+      on_stdout = function(_, line)
+        vim.schedule(function()
+          local current_lines = vim.api.nvim_buf_get_lines(bufnr, 0, -1, false)
+          table.insert(current_lines, line)
+          vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, current_lines)
+        end)
+      end,
+      on_exit = function()
+        vim.schedule(function()
+          print("Commit message generation complete")
+        end)
+      end,
+      writer = {full_prompt}
+    }):start()
   end, { desc = 'Generate git commit message' })
 
 end
