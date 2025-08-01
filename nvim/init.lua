@@ -181,8 +181,9 @@ else
       print('No staged changes to generate commit message for')
       return
     end
-    local cmd = 'aichat -f "Generate a concise git commit message based on these changes:\n\n' .. diff .. '"'
+    local cmd = 'aichat -r commit "Generate a concise git commit message based on these changes:\n\n' .. diff .. '"'
     local message = vim.fn.system(cmd)
+    -- 아래 대로 하면 포매팅이 이상해져. message를 통째로 붙여넣어줘. ai!
     vim.api.nvim_command('normal! i' .. message)
   end, { desc = 'Generate git commit message' })
 
