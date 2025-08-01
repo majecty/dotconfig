@@ -183,8 +183,7 @@ else
     end
     local cmd = 'aichat -r commit "Generate a concise git commit message based on these changes:\n\n' .. diff .. '"'
     local message = vim.fn.system(cmd)
-    -- 아래 대로 하면 포매팅이 이상해져. message를 통째로 붙여넣어줘. ai!
-    vim.api.nvim_command('normal! i' .. message)
+    vim.api.nvim_paste(message, true, -1)
   end, { desc = 'Generate git commit message' })
 
 end
