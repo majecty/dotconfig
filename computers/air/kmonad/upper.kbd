@@ -16,6 +16,7 @@
         ;;  _ _         _ _
 ;; )
 
+;; todo: please add \ after ] and fill it _ in all other layers. it should be second layer's last position ai!
 (defsrc
   grv  1 2 3 4      8 9 0 - =
   tab  q w e r      i o p [ ]
