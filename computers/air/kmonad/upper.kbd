@@ -26,7 +26,7 @@
 
 (deflayer base
   q  w  e r   t     y   u   i o  p
-  @A @S d f   g     h   j   k @L @SCL
+  @A @S d f   g     h   j   k @L @SCL '
   @Z  x  c v   b     n   m   , .  @SLASH
   @TAB @SPC @BSP    @L1 @ENT @ESC
        @GRV @DEL        @HOME @END
@@ -63,7 +63,7 @@
 
 (deflayer symbol
   ! @ {  }  &     * ` ~ '  S-'
-  # $ \( \) -     \_ \\ | : ' \
+  # $ \( \) -     \_ \\ | : ' _
   % ^ [  ]  =     +  <  > /  ?
       _  @SPC2  _     l1  @ENT2 `
          _ _         _ _
