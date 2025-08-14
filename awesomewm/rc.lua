@@ -414,6 +414,10 @@ awful.key({ modkey, "Shift"}, "p",
       then
          recording=false
          awful.util.spawn_with_shell("pkill ffmpeg")
+
+          naughty.notify({ preset = naughty.config.presets.normal,
+                           title = "Save gifs",
+                           text = "save gifs to /Pictures/Screenshots" })
       else
          recording=true
          awful.util.spawn_with_shell("sleep 0.5 && \
@@ -424,6 +428,10 @@ mkdir /tmp/$T/ && \
 ffmpeg -i $FILE.mp4 /tmp/$T/frame%04d.png && \
 gifski --width 320 -o $FILE.gif /tmp/$T/frame*.png && \
 rm -rf /tmp/$T")
+
+          naughty.notify({ preset = naughty.config.presets.normal,
+                           title = "Start gif recording",
+                           text = "gifs will be saved in /Pictures/Screenshots" })
       end
    end,
    {description = "record window", group = "applications"}),
