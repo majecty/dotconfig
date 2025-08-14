@@ -133,3 +133,5 @@ alias fzf-port-netstat='sudo -ntlp | fzf --header-lines=1 --multi --layout=rever
 [[ "$TERM_PROGRAM" == "vscode" ]] && unset ARGV0
 
 export PERPLEXITY_API_KEY="pplx-"
+
+export PATH="/home/borre/.local/share/solana/install/active_release/bin:$PATH"

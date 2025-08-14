@@ -34,6 +34,6 @@ map global filetype-mode -docstring 'highlight json' j ':set buffer filetype jso
 declare-user-mode assistant
 map global user -docstring 'ai mode' g ':enter-user-mode assistant<ret>'
 map global assistant -docstring "Replace selection with code assistant's answer" r '<a-|>tee /tmp/kak-tmp-code.txt; echo "You are a code generator.\nWriting comments is forbidden.\nWriting test code is forbidden.\nWriting English explanations is forbidden.\nDont include general translations.\nContinue this $kak_bufname code:\n" > /tmp/kak-gpt-prompt.txt; cat /tmp/kak-tmp-code.txt >> /tmp/kak-gpt-prompt.txt<ret>| cat /tmp/kak-gpt-prompt.txt | chatgpt <ret>'
-map global assistant -docstring "Commit message revise" c '<a-|>tee /tmp/kak-tmp-code.txt; echo "Please revise the commit message below.\nWriting English explanation is forbidden\nJust print commit message only\n$kak_bufname\n" > /tmp/kak-gpt-prompt.txt; cat /tmp/kak-tmp-code.txt >> /tmp/kak-gpt-prompt.txt<ret>| cat /tmp/kak-gpt-prompt.txt | chatgpt <ret>'
+map global assistant -docstring "Commit message revise" c '<|>tee /tmp/kak-tmp-draft.txt; git diff --cached > /tmp/kak-tmp-diff.txt; cat /tmp/kak-tmp-draft.txt > /tmp/kak-tmp-prompt.txt; cat /tmp/kak-tmp-diff.txt >> /tmp/kak-tmp-prompt.txt; cat /tmp/kak-tmp-prompt.txt | aichat -r commit <ret>'
 
-
+map global assistant -docstring "Commit message revise 2" b '<a-|>tee /tmp/kak-tmp-draft2.txt <ret>'

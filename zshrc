@@ -163,3 +163,7 @@ alias asc='gt co'
 
 # Added by LM Studio CLI (lms)
 export PATH="$PATH:/home/borre/.lmstudio/bin"
+export PATH="$HOME/.local/bin:$PATH"
+
+# opencode
+export PATH=/home/borre/.opencode/bin:$PATH
