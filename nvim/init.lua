@@ -44,6 +44,12 @@ if vim.g.neovide then
   vim.keymap.set('c', '<D-v>', '<C-R>+')
   vim.keymap.set('i', '<D-v>', '<ESC>"+p')
 
+  vim.keymap.set({'n', 'x'}, '<C-S-V>', '"+p', { desc = 'Paste system clipboard' })
+  -- 비주얼, 노멀 모드: Ctrl+Shift+C로 복사
+  vim.keymap.set({'n', 'x'}, '<C-S-C>', '"+y', { desc = 'Copy system clipboard' })
+  -- 인서트 모드: Ctrl+Shift+V로 붙여넣기
+  vim.keymap.set('i', '<C-S-V>', '<ESC>"+pa', { desc = 'Paste clipboard (insert mode)' })
+
   vim.opt.expandtab = true      -- Tab을 실제 탭 문자가 아니라 스페이스로 변환
   vim.opt.tabstop = 2          -- 파일 내 탭 문자의 표시 폭을 2로
   vim.opt.softtabstop = 2      -- Insert 모드에서 Tab 키를 누를 때 2칸 스페이스로 동작
