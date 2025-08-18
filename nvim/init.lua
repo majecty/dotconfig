@@ -67,7 +67,9 @@ vim.api.nvim_echo({{"[nvim/init.lua] loaded", "None"}}, false, {})
 
 if vim.g.vscode then
 else
-  vim.keymap.set('t', '<Esc>', [[<C-\><C-n>]], { noremap = true, silent = true })
+  vim.keymap.set('t', '<Esc><Esc>', [[<C-\><C-n>]], { noremap = true, silent = true })
+  vim.keymap.set('n', '<leader>wq', '<cmd>wq<cr>', { noremap = true, silent = true, desc = 'save and quit' })
+  vim.keymap.set('n', '<leader>ww', '<cmd>w<cr>', { noremap = true, silent = true, desc = 'save' })
 
   -- fzf
   local FzfLua = require('fzf-lua')
