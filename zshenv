@@ -135,3 +135,5 @@ alias fzf-port-netstat='sudo -ntlp | fzf --header-lines=1 --multi --layout=rever
 export PERPLEXITY_API_KEY="pplx-"
 
 export PATH="/home/borre/.local/share/solana/install/active_release/bin:$PATH"
+. "$HOME/.cargo/env"
+export PATH="$HOME/.avm/bin:$PATH"
