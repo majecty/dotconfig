@@ -95,6 +95,7 @@ alias gcni='git clean -i'
 alias gtssp='gt ss -p'
 
 alias ffmt='forge fmt'
+alias cfmt='cargo fmt'
 
 gtrn() {
   local message=$(git log -1 --pretty=%B)
