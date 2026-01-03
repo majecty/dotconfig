@@ -15,8 +15,13 @@ alias kakrc='KAKOUNE_SESSION=kakrc kak ~/jhconfig/kak/kakrc'
 alias zshrc='KAKOUNE_SESSION=zshrc kak ~/jhconfig/zshrc'
 alias zshenv='KAKOUNE_SESSION=zhenv kak ~/jhconfig/zshenv'
 alias tmuxconf='KAKOUNE_SESSION=tmuxconf kak ~/jhconfig/tmux.conf'
+alias commonenv='KAKOUNE_SESSION=commonenv kak ~/jhconfig/commonenv.sh'
 alias sshconfig='KAKOUNE_SESSION=sshconfig kak ~/.ssh/config'
+
 alias awesomeconf='KAKOUNE_SESSION=awesomeconf kak ~/jhconfig/awesomewm/rc.lua'
+
+alias awesomewmconfig='KAKOUNE_SESSION=awesomewm kak ~/jhconfig/awesomewm/rc.lua'
+alias gitconfig='KAKOUNE_SESSION=gitconfig kak ~/.gitconfig'
 
 alias mic2speaker-on='pactl load-module module-loopback latency_msec=1'
 alias mic2speaker-off='pactl unload-module module-loopback'
@@ -61,6 +66,7 @@ export GOPATH=`go env GOPATH`
 if [[ -f ~/.haechi/env.sh ]]; then
   source ~/.haechi/env.sh
 fi
+
 
 # fbd - delete git branch (including remote branches)
 fbd() {
@@ -138,3 +144,5 @@ export PERPLEXITY_API_KEY="pplx-"
 export PATH="/home/borre/.local/share/solana/install/active_release/bin:$PATH"
 . "$HOME/.cargo/env"
 export PATH="$HOME/.avm/bin:$PATH"
+
+
