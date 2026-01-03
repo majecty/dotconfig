@@ -8,8 +8,8 @@ export ZSH=$HOME"/.oh-my-zsh"
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-#ZSH_THEME="robbyrussell"
-ZSH_THEME="funky"
+ZSH_THEME="robbyrussell"
+#ZSH_THEME="funky"
 #ZSH_THEME="lambda"
 
 
@@ -71,7 +71,8 @@ ZSH_THEME="funky"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git zsh-autosuggestions alias-finder yarn gitfast alias-tips fzf-alias ubuntu  docker-compose common-aliases archlinux  emacs)
+#
+plugins=(git zsh-autosuggestions alias-finder yarn gitfast alias-tips fzf-alias ubuntu   docker-compose common-aliases archlinux autoupdate emacs)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -110,9 +111,12 @@ export EDITOR=kak
 alias vim=nvim
 alias vimdiff='nvim -d'
 alias cdf='cd `ls | fzf`'
+
 # source /home/juhyung/.config/broot/launcher/bash/br
 export STARSHIP_CONFIG=~/jhconfig/starship.toml
 eval $(starship init zsh)
+
+source /home/juhyung/.config/broot/launcher/bash/br
 
 export DENO_INSTALL=$HOME"/.deno"
 
@@ -167,3 +171,37 @@ export PATH="$HOME/.local/bin:$PATH"
 
 # opencode
 export PATH=/home/borre/.opencode/bin:$PATH
+
+[[ -s "/home/juhyung/.gvm/scripts/gvm" ]] && source "/home/juhyung/.gvm/scripts/gvm"
+
+alias mydocker='docker build -t mydocker . && docker run --cap-add="SYS_ADMIN" mydocker'
+
+# bun completions
+[ -s "/home/juhyung/.bun/_bun" ] && source "/home/juhyung/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
+export STARSHIP_CONFIG=~/jhconfig/starship.toml
+eval $(starship init zsh)
+#compdef gt
+###-begin-gt-completions-###
+#
+# yargs command completion script
+#
+# Installation: gt completion >> ~/.zshrc
+#    or gt completion >> ~/.zprofile on OSX.
+#
+_gt_yargs_completions()
+{
+  local reply
+  local si=$IFS
+  IFS=$'
+' reply=($(COMP_CWORD="$((CURRENT-1))" COMP_LINE="$BUFFER" COMP_POINT="$CURSOR" gt --get-yargs-completions "${words[@]}"))
+  IFS=$si
+  _describe 'values' reply
+}
+compdef _gt_yargs_completions gt
+###-end-gt-completions-###
+
