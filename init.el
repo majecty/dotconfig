@@ -133,7 +133,9 @@ Version 2019-11-05"
   :ensure t
   :config
   (progn
-    (global-set-key (kbd "<f4> g") #'magit-status)))
+    (global-set-key (kbd "<f4> g") #'magit-status)
+    (global-git-commit-mode))
+  )
 
 (use-package flycheck-clj-kondo
   :ensure t)
@@ -267,7 +269,10 @@ Version 2019-11-05"
       (global-set-key (kbd "<f4> r") jh-roam-map))
     ))
 
-(global-git-commit-mode)
+(use-package ace-window
+  :ensure t)
+
+
 (xclip-mode 1)
 
 (global-set-key (kbd "M-p") 'ace-window)
@@ -499,17 +504,18 @@ Version 2019-11-05"
 ;;        org-roam-server-network-label-truncate-length 60
 ;;        org-roam-server-network-label-wrap-length 20))
 ;;
-;; (use-package auto-package-update
-;;   :ensure t
-;;   :config
-;;   (setq auto-package-update-delete-old-versions t
-;;         auto-package-update-interval 4)
-;;   (auto-package-update-maybe))
+(use-package auto-package-update
+  :ensure t
+  :config
+  (setq auto-package-update-delete-old-versions t
+        auto-package-update-interval 4)
+  (auto-package-update-maybe))
 
 (use-package undo-tree
   :ensure t
   :config
-  (global-undo-tree-mode))
+  (global-undo-tree-mode)
+  (setq undo-tree-history-directory-alist '(("." . "~/.emacs.d/undo"))))
 
 (use-package winner
   :ensure t
@@ -688,7 +694,7 @@ Version 2019-11-05"
   (progn
     (global-set-key (kbd "<f4> B") #'counsel-projectile-switch-to-buffer)))
 
-(use-package npm :ensure t)
+;; (use-package npm :ensure t)
 
 (use-package editorconfig
   :ensure t
@@ -825,6 +831,27 @@ Version 2019-11-05"
   :after (treemacs)
   :ensure t
   :config (treemacs-set-scope-type 'Tabs))
+
+;; show *help*, *completions*, *compilation* buffer in the below popup window
+;; close popup window by moving focus to another window or by typing c-g.
+(use-package popwin
+  :ensure t
+  :config (popwin-mode 1))
+
+(use-package yaml-mode
+  :ensure t)
+
+;; (use-package exwm
+;;   :ensure t
+;;   :config (load-user-file "exwm.el"))
+
+;; (use-package edwina
+;;   :ensure t
+;;   :config
+;;   (setq display-buffer-base-action '(display-buffer-below-selected))
+;;   (edwina-setup-dwm-keys 'super)
+;;   (setq edwina-keymap-prefix (kbd "s-a"))
+;;   (edwina-mode 1))
 
 (bind-key "M-/" 'hippie-expand)
 
