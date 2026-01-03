@@ -78,7 +78,7 @@ Plug 'tpope/vim-fugitive'
 "Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'tmux-plugins/vim-tmux-focus-events'
 Plug 'roxma/vim-tmux-clipboard'
-Plug 'github/copilot.vim', { 'branch': 'release' }
+"Plug 'github/copilot.vim', { 'branch': 'release' }
 
 Plug 'plasticboy/vim-markdown'
 Plug 'rust-lang/rust.vim'
@@ -89,6 +89,10 @@ Plug 'raichoo/purescript-vim'
 Plug 'tomasr/molokai'
 Plug 'rakr/vim-one'
 Plug 'morhetz/gruvbox'
+
+Plug 'evanleck/vim-svelte'
+
+
 
 " (Optional) Multi-entry selection UI.
 call plug#end()

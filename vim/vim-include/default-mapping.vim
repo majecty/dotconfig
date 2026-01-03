@@ -1,5 +1,5 @@
 " Use <F11> to toggle between 'paste' and 'nopaste'
-set pastetoggle=<F11>
+" set pastetoggle=<F11>
 
 " " Copy to clipboard
 vnoremap  <leader>y  "+y
