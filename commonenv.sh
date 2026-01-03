@@ -19,6 +19,7 @@ export PATH="$HOME/.fzf/bin:$PATH"
 export KALEIDOSCOPE_DIR=$HOME/code/keyboard/Kaleidoscope/
 export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 export PATH="$PATH:$HOME/.cask/bin"
+export PATH="$PATH:$HOME/bin/google-cloud-sdk/bin"
 
 export ZSH_CONFIG=$HOME/jhconfig/zsh
 export PATH="$PATH:$HOME/bin/brave"
@@ -28,3 +29,10 @@ export ANDROID_HOME=$HOME/Android/Sdk/
 export PATH="$PATH:$ANDROID_HOME/tools"
 export PATH="$PATH:$ANDROID_HOME/tools/bin"
 export PATH="$PATH:$ANDROID_HOME/platform-tools"
+export PATH="/home/juhyung/.local/share/solana/install/active_release/bin:$PATH"
+export ANDROID_HOME="$HOME/Android/Sdk/"
+export PATH="$PATH:/home/juhyung/.local/share/JetBrains/Toolbox/scripts"
+
+export GTK_IM_MODULE=kime
+export QT_IM_MODULE=kime
+export XMODIFIERS=@im=kime
