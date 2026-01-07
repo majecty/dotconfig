@@ -102,6 +102,22 @@ cmd + shift - k : yabai -m window --swap north || \
         && (yabai -m display --focus prev || yabai -m display --focus next) \
     )
 
+# flip/mirror space layout (mode to avoid conflicts with swap keys above)
+:: flip @
+cmd + shift - f ; flip
+
+# NOTE: yabai axis naming:
+# - --mirror y-axis => 좌우반전 (left/right)
+# - --mirror x-axis => 상하반전 (up/down)
+flip < h : yabai -m space --mirror y-axis
+flip < l : yabai -m space --mirror y-axis
+flip < j : yabai -m space --mirror x-axis
+flip < k : yabai -m space --mirror x-axis
+
+# exit flip mode
+flip < escape ; default
+flip < f ; default
+
 # move managed window
 # shift + cmd - h : yabai -m window --warp east
 
