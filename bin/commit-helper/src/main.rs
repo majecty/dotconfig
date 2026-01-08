@@ -1,0 +1,165 @@
+use anyhow::Result;
+use clap::{Arg, Command};
+use reqwest::Client;
+use serde::{Deserialize, Serialize};
+use std::process;
+use tokio;
+
+#[derive(Serialize)]
+struct OpenRouterRequest {
+    model: String,
+    messages: Vec<Message>,
+    max_tokens: u32,
+}
+
+#[derive(Serialize, Deserialize)]
+struct Message {
+    role: String,
+    content: String,
+}
+
+#[derive(Deserialize)]
+struct OpenRouterResponse {
+    choices: Vec<Choice>,
+}
+
+#[derive(Deserialize)]
+struct Choice {
+    message: Message,
+}
+
+async fn get_git_diff() -> Result<String> {
+    let output = process::Command::new("git")
+        .args(&["diff", "--cached"])
+        .output()?;
+    
+    if !output.status.success() {
+        anyhow::bail!("Failed to get git diff");
+    }
+    
+    Ok(String::from_utf8(output.stdout)?)
+}
+
+async fn generate_commit_message(diff: &str, api_key: &str) -> Result<String> {
+    let client = Client::new();
+    
+    let request = OpenRouterRequest {
+        model: "anthropic/claude-3-haiku".to_string(),
+        messages: vec![
+            Message {
+                role: "system".to_string(),
+                content: "You are a helpful assistant that generates concise, clear git commit messages based on code diffs. Follow conventional commit format when appropriate.".to_string(),
+            },
+            Message {
+                role: "user".to_string(),
+                content: format!("Generate a commit message for this diff:\n\n{}", diff),
+            },
+        ],
+        max_tokens: 100,
+    };
+    
+    let response = client
+        .post("https://openrouter.ai/api/v1/chat/completions")
+        .header("Authorization", format!("Bearer {}", api_key))
+        .header("Content-Type", "application/json")
+        .json(&request)
+        .send()
+        .await?;
+    
+    let response_body: OpenRouterResponse = response.json().await?;
+    
+    if let Some(choice) = response_body.choices.first() {
+        Ok(choice.message.content.trim().to_string())
+    } else {
+        anyhow::bail!("No response from API")
+    }
+}
+
+async fn interactive_commit_flow(api_key: &str) -> Result<()> {
+    // Get git diff
+    let diff = get_git_diff().await?;
+    if diff.trim().is_empty() {
+        println!("No staged changes found. Use 'git add' to stage files first.");
+        return Ok(());
+    }
+    
+    // Generate initial commit message
+    println!("Generating commit message...");
+    let mut commit_message = generate_commit_message(&diff, api_key).await?;
+    
+    loop {
+        println!("\nProposed commit message:");
+        println!("------------------------");
+        println!("{}", commit_message);
+        println!("------------------------");
+        
+        println!("\nOptions:");
+        println!("1. Accept and commit");
+        println!("2. Edit message");
+        println!("3. Regenerate");
+        println!("4. Cancel");
+        
+        print!("Choose (1-4): ");
+        use std::io::{self, Write};
+        io::stdout().flush()?;
+        
+        let mut input = String::new();
+        io::stdin().read_line(&mut input)?;
+        
+        match input.trim() {
+            "1" => {
+                // Commit with the message
+                let output = process::Command::new("git")
+                    .args(&["commit", "-m", &commit_message])
+                    .output()?;
+                
+                if output.status.success() {
+                    println!("✅ Committed successfully!");
+                } else {
+                    println!("❌ Commit failed: {}", String::from_utf8_lossy(&output.stderr));
+                }
+                break;
+            }
+            "2" => {
+                println!("Enter new commit message:");
+                let mut new_message = String::new();
+                io::stdin().read_line(&mut new_message)?;
+                commit_message = new_message.trim().to_string();
+            }
+            "3" => {
+                println!("Regenerating commit message...");
+                commit_message = generate_commit_message(&diff, api_key).await?;
+            }
+            "4" => {
+                println!("Cancelled.");
+                break;
+            }
+            _ => {
+                println!("Invalid option. Please choose 1-4.");
+            }
+        }
+    }
+    
+    Ok(())
+}
+
+#[tokio::main]
+async fn main() -> Result<()> {
+    let matches = Command::new("commit-helper")
+        .about("AI-powered git commit message generator")
+        .arg(
+            Arg::new("api-key")
+                .long("api-key")
+                .value_name("KEY")
+                .help("OpenRouter API key")
+                .env("OPENROUTER_API_KEY")
+                .required(true),
+        )
+        .get_matches();
+    
+    let api_key = matches.get_one::<String>("api-key").unwrap();
+    
+    interactive_commit_flow(api_key).await?;
+    
+    Ok(())
+}
