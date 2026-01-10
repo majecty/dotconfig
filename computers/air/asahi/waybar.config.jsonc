@@ -20,11 +20,12 @@
         "cpu",
         "memory",
         // "temperature",
-        // "backlight",
+        "backlight",
         // "sway/language",
         "battery",
         "clock",
-        "tray"
+        "tray",
+        "custom/controlcenter"
     ],
     // Modules configuration
     // "sway/workspaces": {
@@ -99,7 +100,7 @@
         // "icon-size": 21,
         "spacing": 10,
         "icons": {
-          "blueman": "bluetooth",
+          "blueman": "bluetooth"
         //   "TelegramDesktop": "$HOME/.local/share/icons/hicolor/16x16/apps/telegram.png"
         }
     },
@@ -223,5 +224,10 @@
         "tooltip-format": "Current Submap: {name}\n{apps}",
         "show-apps": true,
         "apps-limit": 5
+    },
+    "custom/controlcenter": {
+        "format": "",
+        "tooltip-format": "Control Center\nClick to open",
+        "on-click": "exec $HOME/.config/waybar/control_center.sh"
     }
 }
