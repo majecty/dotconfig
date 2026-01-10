@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# 현재 클립보드 텍스트만 가져오기
+CONTENT=$(wl-paste -t text 2>/dev/null || echo "")
+
+if [ -z "$CONTENT" ]; then
+  TEXT="(empty)"
+  ICON="empty"
+else
+  # 한 줄로 만들고 길이 제한
+  ONE_LINE=$(printf "%s" "$CONTENT" | tr '\n' ' ' | sed 's/  */ /g')
+  SHORT=$(printf "%.40s" "$ONE_LINE")
+  [ "${#ONE_LINE}" -gt 40 ] && SHORT="${SHORT}…"
+  TEXT="$SHORT"
+  ICON="full"
+fi
+
+# Waybar JSON
+jq -n --arg text "$TEXT" --arg tooltip "$CONTENT" --arg icon "$ICON" \
+  '{text: $text, tooltip: $tooltip, alt: $icon}'
