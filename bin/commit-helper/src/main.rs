@@ -69,7 +69,7 @@ async fn generate_commit_message(diff: &str, api_key: &str) -> Result<String> {
         messages: vec![
             Message {
                 role: "system".to_string(),
-                content: "You are a helpful assistant that generates concise, clear git commit messages based on code diffs. Follow conventional commit format when appropriate.".to_string(),
+                content: "You are a helpful assistant that generates concise, clear git commit messages based on code diffs. Follow conventional commit format when appropriate. Output ONLY the commit message itself, without any explanations, markdown formatting, or conversational text.".to_string(),
             },
             Message {
                 role: "user".to_string(),
