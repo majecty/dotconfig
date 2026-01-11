@@ -114,11 +114,7 @@ async fn interactive_commit_flow(api_key: &str) -> Result<()> {
         println!("{}", commit_message);
         println!("------------------------");
         
-        println!("\nOptions:");
-        println!("1. Accept and commit");
-        println!("2. Edit message");
-        println!("3. Regenerate");
-        println!("4. Cancel");
+        println!("\nOptions: 1. Accept and commit  2. Edit message  3. Regenerate  4. Cancel");
         
         print!("Choose (1-4): ");
         use std::io::{self, Write};
