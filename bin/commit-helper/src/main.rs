@@ -138,10 +138,8 @@ async fn interactive_commit_flow(api_key: &str) -> Result<()> {
                 break;
             }
             "2" => {
-                println!("Enter new commit message:");
-                let mut new_message = String::new();
-                io::stdin().read_line(&mut new_message)?;
-                commit_message = new_message.trim().to_string();
+                // Open editor to edit the commit message
+                commit_message = edit_commit_message(&commit_message).await?;
             }
             "3" => {
                 println!("Regenerating commit message...");
@@ -158,6 +156,34 @@ async fn interactive_commit_flow(api_key: &str) -> Result<()> {
     }
     
     Ok(())
+}
+
+async fn edit_commit_message(message: &str) -> Result<String> {
+    // Create a temporary file with the current commit message
+    let mut temp_file = std::env::temp_dir();
+    temp_file.push("commit_message.txt");
+    
+    fs::write(&temp_file, message)?;
+    
+    // Get the editor from environment variable or default to 'nano'
+    let editor = std::env::var("EDITOR").unwrap_or_else(|_| "nano".to_string());
+    
+    // Open the editor
+    let status = process::Command::new(&editor)
+        .arg(&temp_file)
+        .status()?;
+    
+    if !status.success() {
+        anyhow::bail!("Editor exited with non-zero status");
+    }
+    
+    // Read the edited message
+    let edited_message = fs::read_to_string(&temp_file)?;
+    
+    // Clean up the temporary file
+    fs::remove_file(&temp_file)?;
+    
+    Ok(edited_message.trim().to_string())
 }
 
 #[tokio::main]
