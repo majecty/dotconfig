@@ -118,6 +118,7 @@ async fn interactive_commit_flow(api_key: &str) -> Result<()> {
         let options = vec![
             "Accept and commit",
             "Edit message",
+            "Proofread with AI",
             "Regenerate",
             "Cancel"
         ];
@@ -147,10 +148,15 @@ async fn interactive_commit_flow(api_key: &str) -> Result<()> {
                 commit_message = edit_commit_message(&commit_message).await?;
             }
             2 => {
+                // Proofread the commit message with AI
+                println!("Proofreading commit message...");
+                commit_message = proofread_commit_message(&commit_message, api_key).await?;
+            }
+            3 => {
                 println!("Regenerating commit message...");
                 commit_message = generate_commit_message(&diff, api_key).await?;
             }
-            3 => {
+            4 => {
                 println!("Cancelled.");
                 break;
             }
@@ -189,6 +195,41 @@ async fn edit_commit_message(message: &str) -> Result<String> {
     fs::remove_file(&temp_file)?;
     
     Ok(edited_message.trim().to_string())
+}
+
+async fn proofread_commit_message(message: &str, api_key: &str) -> Result<String> {
+    let client = Client::new();
+    
+    let request = OpenRouterRequest {
+        model: "allenai/olmo-3.1-32b-instruct".to_string(),
+        messages: vec![
+            Message {
+                role: "system".to_string(),
+                content: "You are a helpful assistant that proofreads and improves git commit messages. Make the message clearer, more concise, and follow conventional commit format when appropriate. Output ONLY the improved commit message itself, without any explanations, markdown formatting, or conversational text.".to_string(),
+            },
+            Message {
+                role: "user".to_string(),
+                content: format!("Proofread and improve this commit message:\n\n{}", message),
+            },
+        ],
+        max_tokens: 100,
+    };
+    
+    let response = client
+        .post("https://openrouter.ai/api/v1/chat/completions")
+        .header("Authorization", format!("Bearer {}", api_key))
+        .header("Content-Type", "application/json")
+        .json(&request)
+        .send()
+        .await?;
+    
+    let response_body: OpenRouterResponse = response.json().await?;
+    
+    if let Some(choice) = response_body.choices.first() {
+        Ok(choice.message.content.trim().to_string())
+    } else {
+        anyhow::bail!("No response from API")
+    }
 }
 
 #[tokio::main]
