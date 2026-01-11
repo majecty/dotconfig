@@ -6,3 +6,4 @@ secret.sh
 .aider*
 
 Cargo.lock
+target/
