@@ -1,5 +1,6 @@
 use anyhow::Result;
 use clap::{Arg, Command};
+use dialoguer::Select;
 use reqwest::Client;
 use serde::{Deserialize, Serialize};
 use std::fs;
@@ -114,17 +115,21 @@ async fn interactive_commit_flow(api_key: &str) -> Result<()> {
         println!("{}", commit_message);
         println!("------------------------");
         
-        println!("\nOptions: 1. Accept and commit  2. Edit message  3. Regenerate  4. Cancel");
+        let options = vec![
+            "Accept and commit",
+            "Edit message",
+            "Regenerate",
+            "Cancel"
+        ];
         
-        print!("Choose (1-4): ");
-        use std::io::{self, Write};
-        io::stdout().flush()?;
+        let selection = Select::with_theme(&dialoguer::theme::ColorfulTheme::default())
+            .with_prompt("Choose an option")
+            .items(&options)
+            .default(0)
+            .interact()?;
         
-        let mut input = String::new();
-        io::stdin().read_line(&mut input)?;
-        
-        match input.trim() {
-            "1" => {
+        match selection {
+            0 => {
                 // Commit with the message
                 let output = process::Command::new("git")
                     .args(&["commit", "-m", &commit_message])
@@ -137,20 +142,20 @@ async fn interactive_commit_flow(api_key: &str) -> Result<()> {
                 }
                 break;
             }
-            "2" => {
+            1 => {
                 // Open editor to edit the commit message
                 commit_message = edit_commit_message(&commit_message).await?;
             }
-            "3" => {
+            2 => {
                 println!("Regenerating commit message...");
                 commit_message = generate_commit_message(&diff, api_key).await?;
             }
-            "4" => {
+            3 => {
                 println!("Cancelled.");
                 break;
             }
             _ => {
-                println!("Invalid option. Please choose 1-4.");
+                println!("Invalid option.");
             }
         }
     }
