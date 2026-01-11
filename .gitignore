@@ -4,3 +4,5 @@ Session.vim
 secret.sh
 .DS_Store
 .aider*
+
+Cargo.lock
