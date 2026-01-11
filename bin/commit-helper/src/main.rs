@@ -150,7 +150,17 @@ async fn interactive_commit_flow(api_key: &str) -> Result<()> {
             2 => {
                 // Proofread the commit message with AI
                 println!("Proofreading commit message...");
-                commit_message = proofread_commit_message(&commit_message, api_key).await?;
+                let proofread_result = proofread_commit_message(&commit_message, api_key).await?;
+                let parts: Vec<&str> = proofread_result.split("\n---\n").collect();
+                if parts.len() == 2 {
+                    commit_message = parts[0].trim().to_string();
+                    println!("\nProofread explanation:");
+                    println!("----------------------");
+                    println!("{}", parts[1]);
+                    println!("----------------------");
+                } else {
+                    commit_message = proofread_result;
+                }
             }
             3 => {
                 println!("Regenerating commit message...");
@@ -205,14 +215,14 @@ async fn proofread_commit_message(message: &str, api_key: &str) -> Result<String
         messages: vec![
             Message {
                 role: "system".to_string(),
-                content: "You are a helpful assistant that proofreads and improves git commit messages. Make the message clearer, more concise, and follow conventional commit format when appropriate. Output ONLY the improved commit message itself, without any explanations, markdown formatting, or conversational text.".to_string(),
+                content: "You are a helpful assistant that proofreads and improves git commit messages. Make the message clearer, more concise, and follow conventional commit format when appropriate. Output the improved commit message followed by a brief explanation of why you made those changes, separated by a line containing '---'. For example: 'Improved commit message\n---\nI made this change because...'".to_string(),
             },
             Message {
                 role: "user".to_string(),
                 content: format!("Proofread and improve this commit message:\n\n{}", message),
             },
         ],
-        max_tokens: 100,
+        max_tokens: 200,
     };
     
     let response = client
