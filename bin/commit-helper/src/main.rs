@@ -152,14 +152,17 @@ async fn main() -> Result<()> {
                 .long("api-key")
                 .value_name("KEY")
                 .help("OpenRouter API key")
-                .env("OPENROUTER_API_KEY")
-                .required(true),
+                .required(false),
         )
         .get_matches();
     
-    let api_key = matches.get_one::<String>("api-key").unwrap();
+    let api_key = matches
+        .get_one::<String>("api-key")
+        .map(|s| s.to_string())
+        .or_else(|| std::env::var("OPENROUTER_API_KEY").ok())
+        .ok_or_else(|| anyhow::anyhow!("API key must be provided via --api-key or OPENROUTER_API_KEY environment variable"))?;
     
-    interactive_commit_flow(api_key).await?;
+    interactive_commit_flow(&api_key).await?;
     
     Ok(())
 }
