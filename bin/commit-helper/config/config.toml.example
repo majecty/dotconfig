@@ -1,0 +1,4 @@
+# Example configuration file for commit-helper
+# Save this as ~/.config/commit-helper/config.toml
+
+api_key = "your-openrouter-api-key-here"

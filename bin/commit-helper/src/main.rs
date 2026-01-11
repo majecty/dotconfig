@@ -2,6 +2,7 @@ use anyhow::Result;
 use clap::{Arg, Command};
 use reqwest::Client;
 use serde::{Deserialize, Serialize};
+use std::fs;
 use std::process;
 use tokio;
 
@@ -28,6 +29,26 @@ struct Choice {
     message: Message,
 }
 
+#[derive(Deserialize)]
+struct Config {
+    api_key: Option<String>,
+}
+
+fn read_api_key_from_config() -> Result<Option<String>> {
+    let config_path = dirs::home_dir()
+        .ok_or_else(|| anyhow::anyhow!("Could not determine home directory"))?
+        .join(".config/commit-helper/config.toml");
+    
+    if !config_path.exists() {
+        return Ok(None);
+    }
+    
+    let config_content = fs::read_to_string(&config_path)?;
+    let config: Config = toml::from_str(&config_content)?;
+    
+    Ok(config.api_key)
+}
+
 async fn get_git_diff() -> Result<String> {
     let output = process::Command::new("git")
         .args(&["diff", "--cached"])
@@ -44,7 +65,7 @@ async fn generate_commit_message(diff: &str, api_key: &str) -> Result<String> {
     let client = Client::new();
     
     let request = OpenRouterRequest {
-        model: "anthropic/claude-3-haiku".to_string(),
+        model: "allenai/olmo-3.1-32b-instruct".to_string(),
         messages: vec![
             Message {
                 role: "system".to_string(),
@@ -160,7 +181,8 @@ async fn main() -> Result<()> {
         .get_one::<String>("api-key")
         .map(|s| s.to_string())
         .or_else(|| std::env::var("OPENROUTER_API_KEY").ok())
-        .ok_or_else(|| anyhow::anyhow!("API key must be provided via --api-key or OPENROUTER_API_KEY environment variable"))?;
+        .or_else(|| read_api_key_from_config().ok().flatten())
+        .ok_or_else(|| anyhow::anyhow!("API key must be provided via --api-key, OPENROUTER_API_KEY environment variable, or ~/.config/commit-helper/config.toml"))?;
     
     interactive_commit_flow(&api_key).await?;
     
