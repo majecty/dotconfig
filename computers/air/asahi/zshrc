@@ -179,4 +179,18 @@ export NVM_DIR="$HOME/.nvm"
 export PATH=/home/juhyung/.opencode/bin:$PATH
 
 # fzf key bindings (Ctrl-R for history, Alt-C for cd, Ctrl-T for files)
-source /usr/share/fzf/shell/key-bindings.zsh
+source <(fzf --zsh)
+
+# fzf alias search with Alt-A
+fzf-alias-widget() {
+  local selected
+  selected=$(alias | fzf --height 40% --reverse --query="$LBUFFER")
+  if [ -n "$selected" ]; then
+    # Extract the command part after the '=' and remove quotes
+    local cmd=$(echo "$selected" | sed "s/[^=]*=//" | sed "s/^'//" | sed "s/'$//")
+    LBUFFER="$cmd"
+  fi
+  zle redisplay
+}
+zle -N fzf-alias-widget
+bindkey '^[a' fzf-alias-widget  # Alt-A
