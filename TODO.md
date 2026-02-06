@@ -8,3 +8,10 @@
   - (FLTK, Iced, Slint prototypes in bin/whichkey/)
 - [x] create a auto todo skill
 - [ ] nvim rust analyzer
+- [ ] nvim config organize
+- [ ] install tailscale
+- [ ] use homeserver llm
+- [ ] ctrl-s to save
+- [ ] firugre out cmd- s currently in w
+- [ ] oil.nvim
+- [ ] gcp skill to create git commit push skill
