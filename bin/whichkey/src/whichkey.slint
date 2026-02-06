@@ -1,0 +1,62 @@
+import { StandardButton, VerticalBox } from "std-widgets.slint";
+
+export struct KeyItem {
+    key: string,
+    description: string,
+}
+
+export component AppWindow inherits Window {
+    width: 500px;
+    height: 400px;
+    title: "Which-Key";
+    
+    property <[KeyItem]> items: [];
+    
+    callback escape();
+    callback key-pressed(KeyEvent);
+
+    background: @linear-gradient(90deg, #2b2d31, #1e1f22);
+
+    VerticalBox {
+        padding: 20px;
+        
+        Text {
+            text: "Which-Key - Press any key";
+            color: #ffffff;
+            font-size: 14px;
+        }
+
+        Rectangle {
+            background: #3f4147;
+            border-radius: 8px;
+            padding: 10px;
+
+            for item in root.items: HorizontalBox {
+                padding: 10px;
+                spacing: 15px;
+
+                Text {
+                    text: item.key;
+                    color: #5865f2;
+                    font-weight: 700;
+                    width: 40px;
+                    font-size: 14px;
+                }
+
+                Text {
+                    text: item.description;
+                    color: #ffffff;
+                    font-size: 13px;
+                }
+            }
+        }
+    }
+
+    key-released(event) => {
+        if (event.text == "Escape") {
+            root.escape();
+        } else {
+            root.key-pressed(event);
+        }
+    }
+}

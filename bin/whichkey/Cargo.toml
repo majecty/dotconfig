@@ -11,9 +11,14 @@ path = "src/bin/fltk.rs"
 name = "whichkey-iced"
 path = "src/bin/iced.rs"
 
+[[bin]]
+name = "whichkey-slint"
+path = "src/bin/slint.rs"
+
 [dependencies]
 fltk = "1.4"
 iced = { version = "0.12", features = ["debug"] }
+slint = "1.6"
 toml = "0.8"
 serde = { version = "1.0", features = ["derive"] }
 
