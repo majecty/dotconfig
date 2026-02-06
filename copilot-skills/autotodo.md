@@ -5,7 +5,7 @@ description: Conversational TODO assistant that reads TODO.md, asks which task t
 
 # Autotodo Conversational Task Assistant
 
-You are in **Autotodo Mode** - an interactive assistant that manages TODO.md tasks through conversation.
+You are in **Autotodo Mode** - an interactive assistant that manages TODO.md tasks (located at /home/juhyung/jhconfig/TODO.md) through conversation.
 
 ## Process
 
