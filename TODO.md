@@ -1,13 +1,10 @@
 # TODO - Directory Organization
 
-- [ ] create global which-key program (Rust - multiple GUI frameworks)
-  - [x] Decide on tech stack & approach
-  - [x] FLTK version - works, but font rendering issues
-  - [x] Iced version - fast but keyboard handling API limited (0.12)
-  - [x] Slint version - started, keyboard handling WIP
-  - [ ] **RETHINK:** Decide which framework to focus on + finalize keyboard handling
-  - [ ] Hyprland keybind setup & integration
-  - [ ] Test all versions, pick best one
-  - [ ] Polish & documentation
+- [ ] global which-key using wofi
+  - [ ] Create wofi-based which-key wrapper script
+  - [ ] Bind F11 in Hyprland to launch it
+  - [ ] Test with custom config
+- [ ] create global which-key program (Rust - future)
+  - (FLTK, Iced, Slint prototypes in bin/whichkey/)
 - [x] create a auto todo skill
 - [ ] nvim rust analyzer

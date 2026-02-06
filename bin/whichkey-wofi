@@ -1,0 +1,53 @@
+#!/usr/bin/env bash
+# Which-key using wofi - Wayland-native launcher
+
+CONFIG_FILE="${WHICHKEY_CONFIG:=$HOME/.config/whichkey.toml}"
+
+if [[ ! -f "$CONFIG_FILE" ]]; then
+    echo "Config not found: $CONFIG_FILE" >&2
+    exit 1
+fi
+
+# Parse TOML and extract keybindings into menu format
+parse_toml() {
+    local file="$1"
+    awk '
+        /^\[keybindings\./ {
+            gsub(/\[keybindings\."/, "")
+            gsub(/"\]/, "")
+            key = $1
+        }
+        /description = / {
+            gsub(/description = "/, "")
+            gsub(/"/, "")
+            desc = $0
+            printf "%s  %s\n", key, desc
+        }
+    ' "$file"
+}
+
+# Show menu with wofi
+MENU=$(parse_toml "$CONFIG_FILE")
+SELECTED=$(echo "$MENU" | wofi --dmenu --prompt "Which-Key" | awk '{print $1}')
+
+if [[ -z "$SELECTED" ]]; then
+    exit 0
+fi
+
+# Extract command from TOML
+COMMAND=$(awk -v key="$SELECTED" '
+    /^\[keybindings\./ {
+        gsub(/\[keybindings\."/, "")
+        gsub(/"\]/, "")
+        current_key = $1
+    }
+    current_key == key && /command = / {
+        gsub(/command = "/, "")
+        gsub(/"/, "")
+        print $0
+    }
+' "$CONFIG_FILE")
+
+if [[ -n "$COMMAND" ]]; then
+    eval "$COMMAND" &
+fi
