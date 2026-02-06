@@ -7,3 +7,4 @@
   - [ ] Phase 3: Hyprland integration & binary optimization
   - [ ] Phase 4: Polish & documentation
 - [x] create a auto todo skill
+- [ ] nvim rust analyzer

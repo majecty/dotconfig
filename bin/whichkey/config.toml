@@ -1,0 +1,20 @@
+# Which-key configuration
+# Format: [keybindings."<key>"]
+# description = "what this does"
+# command = "shell command to execute"
+
+[keybindings."t"]
+description = "Open TODO"
+command = "emacs ~/.config/todo.md"
+
+[keybindings."f"]
+description = "Open file manager"
+command = "thunar ~"
+
+[keybindings."e"]
+description = "Open editor"
+command = "emacs"
+
+[keybindings."q"]
+description = "Quit"
+command = "echo 'Menu closed'"
