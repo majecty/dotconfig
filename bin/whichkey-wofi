@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Which-key using wofi - Wayland-native launcher
 
-CONFIG_FILE="${WHICHKEY_CONFIG:=$HOME/.config/whichkey.toml}"
+CONFIG_FILE="${WHICHKEY_CONFIG:=$HOME/jhconfig/whichkey.toml}"
 
 if [[ ! -f "$CONFIG_FILE" ]]; then
     echo "Config not found: $CONFIG_FILE" >&2

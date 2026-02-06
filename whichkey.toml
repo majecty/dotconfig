@@ -1,0 +1,28 @@
+# Which-key configuration for wofi
+# Format: [keybindings."<key>"]
+#   description = "what this does"
+#   command = "shell command to execute"
+
+[keybindings."t"]
+description = "Open TODO"
+command = "emacs ~/.config/todo.md"
+
+[keybindings."f"]
+description = "Open file manager"
+command = "nautilus ~"
+
+[keybindings."e"]
+description = "Open editor (Emacs)"
+command = "emacs"
+
+[keybindings."c"]
+description = "Open terminal"
+command = "kitty"
+
+[keybindings."b"]
+description = "Open browser"
+command = "firefox"
+
+[keybindings."q"]
+description = "Quit (do nothing)"
+command = "echo 'Menu closed'"
