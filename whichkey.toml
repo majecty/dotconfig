@@ -5,15 +5,11 @@
 
 [keybindings."t"]
 description = "Open TODO"
-command = "emacs ~/.config/todo.md"
+command = "kitty nvim ~/jhconfig/TODO.md"
 
 [keybindings."f"]
 description = "Open file manager"
 command = "nautilus ~"
-
-[keybindings."e"]
-description = "Open editor (Emacs)"
-command = "emacs"
 
 [keybindings."c"]
 description = "Open terminal"
