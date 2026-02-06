@@ -1,6 +1,8 @@
 # TODO - Directory Organization
 
-- [ ] create global shortcut to read this todo
-  - <f11> t key will be used. like vim leader key style
-  - Note: Hyprland global keybinds are difficult; consider shell alias instead
+- [ ] create global which-key program (Rust)
+  - F11 opens which-key style GUI menu
+  - Menu shows keybindings with descriptions
+  - Press key to execute command
+  - Questions: GUI library, menu format (YAML/JSON), behavior on keypress
 - [x] create a auto todo skill
