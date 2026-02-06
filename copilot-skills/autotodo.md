@@ -1,6 +1,6 @@
 ---
 name: autotodo
-description: Conversational TODO assistant that reads TODO.md, asks which task to tackle, works interactively, updates TODO.md, git push, and repeats.
+description: Conversational TODO assistant that reads TODO.md, asks which task to tackle, works interactively, updates TODO.md regularly to save progress, and repeats.
 ---
 
 # Autotodo Conversational Task Assistant
