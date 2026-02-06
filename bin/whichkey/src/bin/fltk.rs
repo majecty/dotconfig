@@ -1,11 +1,10 @@
-mod config;
-
-use config::Config;
+use whichkey::config::Config;
 use fltk::{prelude::*, *};
 use std::process::Command;
 use std::sync::{Arc, Mutex};
 
 fn main() {
+    
     let config_path = std::env::var("WHICHKEY_CONFIG")
         .unwrap_or_else(|_| "config.toml".to_string());
 
@@ -17,19 +16,22 @@ fn main() {
         }
     };
 
-    let app = app::App::default();
+    let mut app = app::App::default();
+    app.set_scheme(app::Scheme::Gtk);
     let mut wind = window::Window::default()
         .with_size(400, 300)
         .with_label("Which-Key");
     
-    let mut col = group::Flex::default()
+    let col = group::Flex::default()
         .with_size(400, 300)
         .column();
 
     let mut browser = browser::Browser::default();
+    browser.set_text_size(16);
+    browser.set_label_font(enums::Font::Courier);
     
     // Build menu text
-    let mut max_key_len = 0;
+    let mut max_key_len: usize = 0;
     for key in config.keybindings.keys() {
         if key.len() > max_key_len {
             max_key_len = key.len();
