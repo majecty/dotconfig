@@ -17,3 +17,9 @@ This repository manages global settings and skills for this computer, including 
 - Update skills in `copilot-skills/` and commit changes
 - Reload Copilot CLI skills after updates
 - Use this file to document conventions, preferences, and instructions for Copilot
+
+## Search Convention
+- Use fd and rg for searching files and contents in this repository.
+
+## Git Convention
+- "gcp" means "git commit push" (commit and push changes).
