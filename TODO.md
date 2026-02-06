@@ -1,11 +1,13 @@
 # TODO - Directory Organization
 
-- [ ] create global which-key program (Rust + fltk-rs + TOML)
-  - [x] Decide on tech stack (fltk-rs, TOML config, silent execution)
-  - [x] Phase 1: Project setup (struct, deps, config.toml)
-  - [x] FLTK version buildable with font improvements
-  - [ ] Phase 2: Create Iced version (faster startup)
-  - [ ] Phase 3: Hyprland integration & binary optimization
-  - [ ] Phase 4: Polish & documentation
+- [ ] create global which-key program (Rust - multiple GUI frameworks)
+  - [x] Decide on tech stack & approach
+  - [x] FLTK version - works, but font rendering issues
+  - [x] Iced version - fast but keyboard handling API limited (0.12)
+  - [x] Slint version - started, keyboard handling WIP
+  - [ ] **RETHINK:** Decide which framework to focus on + finalize keyboard handling
+  - [ ] Hyprland keybind setup & integration
+  - [ ] Test all versions, pick best one
+  - [ ] Polish & documentation
 - [x] create a auto todo skill
 - [ ] nvim rust analyzer
