@@ -3,8 +3,17 @@ name = "whichkey"
 version = "0.1.0"
 edition = "2024"
 
+[[bin]]
+name = "whichkey-fltk"
+path = "src/bin/fltk.rs"
+
+[[bin]]
+name = "whichkey-iced"
+path = "src/bin/iced.rs"
+
 [dependencies]
 fltk = "1.4"
+iced = { version = "0.12", features = ["debug"] }
 toml = "0.8"
 serde = { version = "1.0", features = ["derive"] }
 
