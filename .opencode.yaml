@@ -1,0 +1,9 @@
+version: 1.0
+instructions:
+  - path: .github/instructions/memory.instruction.md
+    applyTo: '**'
+    autoLoad: true
+
+memory:
+  enabled: true
+  file: .github/instructions/memory.instruction.md
