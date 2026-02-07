@@ -1,40 +1,20 @@
 # TODO - Directory Organization
 
-- [x] global which-key using wofi
-  - [x] Create wofi-based which-key wrapper script
-  - [x] Bind F11 in Hyprland to launch it
-  - [x] Create sample config at ~/.config/whichkey.toml
-- [x] create a auto todo skill
-- [x] install tailscale
+## Pending Tasks
 
 - [ ] run installed local llm running in macbook-pro by tailscale network
 - [ ] create global which-key program (Rust - future)
   - (FLTK, Iced, Slint prototypes in bin/whichkey/)
 - [ ] nvim rust analyzer
-- [x] nvim config organize
-  - [x] migrate to feature-based modular structure (files per feature in lua/plugins, minimal init.lua, lazy loaded)
-  - [ ] review modular config for further minimalism
-    - [x] Centralized all <leader> keymaps with which-key
-  - [ ] autotodo: regular update of TODO.md for config changes
+- [ ] review modular config for further minimalism
+- [ ] autotodo: regular update of TODO.md for config changes
 - [ ] use homeserver llm
-- [x] ctrl-s to save
-- [x] figured out cmd-s in Hyprland: SUPER+S toggles special workspace 'magic', no remap needed
-- [x] oil.nvim
-    - [x] Removed netrw settings to prevent conflict; oil.nvim is now exclusive directory handler.
 - [ ] gcp skill to create git commit push skill
 - [ ] cmd - c is easy to make mistake. change close command to cmd shift c in hyprland confg
-- [x] add sandbox config in opencode
-  - [ ] Sandbox plugin removed: reliability issues with srt/nosrt sandbox mode.
-      - Attempts to auto-retry with nosrt led to inconsistent file permissions and errors (e.g. read-only file system, permission denied).
-      - Lessons: Prefer direct command execution unless sandboxing is proven reliable; fallback logic adds complexity and sometimes masks underlying platform or mount issues.
-      - Future: If sandbox needed, thoroughly validate cross-platform/FS mechanics and clarify fallback criteria before use.
-- [x] ai plugin remove
 - [ ] add copilot
 - [ ] session setting for nvim
   - [ ] add shortcut in whichkey that reload session
 - [ ] whichkey based keymap
-- [x] nvim save on outfocus
-  - [x] Added vim-auto-save plugin with FocusLost and WinLeave events
 - [ ] hyprland config make a window bigger twice
 - [ ] lua lsp make know the vim variable in opencode
 
