@@ -47,6 +47,28 @@ git add -A && git commit -m "[message describing the change]"
 - **One concern per commit** - Don't mix unrelated changes
 - **Update memory if needed** - If adding new keybind patterns or preferences
 
+## Which-key Best Practices
+
+- **Always use which-key for new keybinds** (not direct keybinds)
+- **Use which-key groups for multi-key sequences** (e.g., `<leader>s` group for `<leader>ss`, `<leader>sl`, `<leader>sr`)
+- Use `wk.add()` API (new version, not deprecated `register()`)
+- Always add group names with `group = '+name'` for grouping
+- Keep related keymaps together in logical groups
+
+## Stylua Configuration
+
+Stylua is configured in `~/jhconfig/stylua.toml`:
+```toml
+indent_type = "Spaces"
+indent_width = 2
+line_endings = "Unix"
+quote_style = "AutoPreferSingle"
+```
+
+- Always run stylua on nvim lua files before committing
+- Formats with 2 spaces (no tabs), Unix line endings, single quotes
+- Command: `stylua /home/juhyung/jhconfig/nvim/lua/`
+
 ## Example
 
 ```
