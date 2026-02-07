@@ -49,18 +49,25 @@ return {
          end,
          desc = "Load session (pick from list)",
        },
-        {
-          "<leader>sr",
-          function()
-            local cwd = vim.fn.getcwd()
-            _G.nvim_session.save()
-            -- Small delay to ensure session is written
-            vim.cmd("sleep 100m")
-            os.execute("cd '" .. cwd .. "' && neovide &")
-            vim.cmd("qa!")
-          end,
-          desc = "Save session and reopen with GUI",
-        },
+         {
+           "<leader>sr",
+           function()
+             local cwd = vim.fn.getcwd()
+             _G.nvim_session.save()
+             -- Small delay to ensure session is written
+             vim.cmd("sleep 100m")
+             os.execute("cd '" .. cwd .. "' && neovide &")
+             vim.cmd("qa!")
+           end,
+           desc = "Save session and reopen with GUI",
+         },
+         {
+           "<leader>E",
+           function()
+             vim.cmd("e")
+           end,
+           desc = "Open file for editing",
+         },
     },
   }
 }
