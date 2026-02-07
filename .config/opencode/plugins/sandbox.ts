@@ -121,7 +121,7 @@ export const SandboxPlugin: Plugin = async ({ project, client, $, directory }) =
         })
 
         // Update the command to be executed (would integrate with actual sandbox)
-        output.args.command = `sandbox-run --timeout ${sandboxConfig.sandbox.resourceLimits.timeout} --memory ${sandboxConfig.sandbox.resourceLimits.maxMemory} -- ${cleanCommand}`
+        output.args.command = `srt --timeout ${sandboxConfig.sandbox.resourceLimits.timeout} --memory ${sandboxConfig.sandbox.resourceLimits.maxMemory} -- ${cleanCommand}`
       } else {
         // nosrt mode
         await client.app.log({
