@@ -56,7 +56,28 @@ Always show progress like:
 [More work...]
 ```
 
-### 6. Final Completion
+### 6. Completion File Creation
+When a task is completed:
+- Create a markdown file in `/home/juhyung/jhconfig/.todos/done/`
+- Filename: `task-name-slugified.md` (e.g., `add-dark-mode-toggle.md`)
+- Content format:
+  ```markdown
+  # Task Name
+  
+  **Status:** Done
+  **Date:** YYYY-MM-DD
+  
+  ## Details
+  - Brief summary of what was done
+  - Key changes or implementations
+  - Features added/fixed
+  
+  ## Notes
+  - Additional context or learnings
+  - Any gotchas or special considerations
+  ```
+
+### 7. Final Completion
 When all TODOs are done:
 - Show: "🎉 All tasks completed!"
 - Summarize what was accomplished
