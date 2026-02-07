@@ -17,6 +17,7 @@ return {
             'Buffer Local Keymaps',
           },
           jh = {
+            name = '+jhui',
             o = {
               function()
                 require('jhui.main').open()
@@ -39,6 +40,7 @@ return {
             'Toggle file tree',
           },
           s = {
+            name = '+session',
             s = {
               function()
                 _G.nvim_session.save()
@@ -69,6 +71,7 @@ return {
             'Open file',
           },
           w = {
+            name = '+window',
             w = {
               function()
                 vim.cmd('wincmd =')
@@ -77,6 +80,7 @@ return {
             },
           },
           f = {
+            name = '+file',
             f = {
               function()
                 require('fzf-lua').files()
