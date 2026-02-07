@@ -66,5 +66,29 @@ export const SandboxPlugin: Plugin = async ({ client }) => {
         output.args.command = cleanCommand
       }
     },
+
+    "tool.execute.after": async (input, output) => {
+      if (input.tool !== "bash") return
+
+      // Check if command failed and was in sandbox mode
+      if (!output || typeof output !== "object" || !("output" in output)) {
+        return
+      }
+
+      const outputText = output.output as string
+      const metadata = output.metadata as any
+
+      // If the command was sandboxed and failed, provide guidance
+      if (outputText && outputText.includes("srt") && metadata?.exitCode !== 0) {
+        await client.app.log({
+          body: {
+            service: "sandbox-plugin",
+            level: "warn",
+            message: `Sandbox command failed. Try again with nosrt: prefix if the operation requires unrestricted access.\n\nExample: nosrt: ${stripSandboxPrefix(outputText)}\n\nUse nosrt: prefix for:\n  - Global npm installs: nosrt: npm install -g package\n  - System operations: nosrt: sudo command\n  - Protected directories: nosrt: command /usr/local/bin\n  - File operations outside /tmp: nosrt: rm -rf /path`,
+          },
+        })
+      }
+    }
+    },
   }
 }
