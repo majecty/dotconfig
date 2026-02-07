@@ -16,16 +16,16 @@ return {
           end,
           desc = 'Buffer Local Keymaps',
         },
-        { '<leader>jh', group = '+jhui' },
+        { '<leader>j', group = '+jump' },
         {
-          '<leader>jho',
+          '<leader>jo',
           function()
             require('jhui.main').open()
           end,
           desc = 'Open jhui buffer',
         },
         {
-          '<leader>jhr',
+          '<leader>jr',
           function()
             package.loaded['jhui.main'] = nil
             require('jhui.main')
