@@ -35,3 +35,5 @@
 - [ ] whichkey based keymap
 - [ ] save outfocus
 - [ ] hyprland config make a window bigger twice
+- [x] file tree in nvim for directory tour
+  - [x] Added nvim-tree as secondary file explorer (oil is primary)
