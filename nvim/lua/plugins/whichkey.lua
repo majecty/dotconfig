@@ -42,13 +42,23 @@ return {
         end,
         desc = "Save session (auto project name)",
       },
-      {
-        "<leader>sl",
-        function()
-          _G.nvim_session.load_picker()
-        end,
-        desc = "Load session (pick from list)",
-      },
+       {
+         "<leader>sl",
+         function()
+           _G.nvim_session.load_picker()
+         end,
+         desc = "Load session (pick from list)",
+       },
+       {
+         "<leader>sr",
+         function()
+           _G.nvim_session.save()
+           vim.cmd("qa!")
+           -- Reopen with neovide (GUI)
+           os.execute("neovide &")
+         end,
+         desc = "Save session and reopen with GUI",
+       },
     },
   }
 }

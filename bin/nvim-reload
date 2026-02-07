@@ -1,0 +1,14 @@
+#!/bin/bash
+# nvim-reload: Close nvim and reopen with the same session
+# Usage: nvim-reload [directory]
+
+DIR="${1:-.}"
+
+# Close all nvim instances
+pkill -f "nvim" || true
+
+# Wait a moment for clean shutdown
+sleep 0.5
+
+# Reopen nvim in the specified directory
+cd "$DIR" && nvim
