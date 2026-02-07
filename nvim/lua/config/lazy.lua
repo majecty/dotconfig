@@ -17,13 +17,5 @@ vim.opt.rtp:prepend(lazypath)
 
 -- Setup lazy.nvim
 require("lazy").setup({
-  -- Configure any other settings here. See the documentation for more details.
-  -- colorscheme that will be used when installing plugins.
-  install = { colorscheme = { "habamax" } },
-  -- automatically check for plugin updates
-  checker = { enabled = true },
-  
-  { import = "user.plugins_notvscode", cond = (function () return not vim.g.vscode end) },
-  { import = "user.plugins_always",    cond = true },
-  { import = "user.plugins_vscode",    cond = (function() return vim.g.vscode end) },
+  { import = "plugins" },
 })
