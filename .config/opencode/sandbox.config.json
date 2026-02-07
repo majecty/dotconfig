@@ -1,0 +1,45 @@
+{
+  "$schema": "https://opencode.ai/sandbox.schema.json",
+  "description": "Sandbox configuration for safe LLM/agent execution",
+  "enabled": true,
+  "defaultMode": "srt",
+  "notes": "srt = sandboxed/restricted, nosrt = no sandbox/unrestricted",
+  "sandbox": {
+    "engine": "claude-code-sandbox",
+    "npm": "@ai-sdk/sandbox",
+    "description": "Using Claude Code's sandbox via npm for command execution isolation",
+    "resourceLimits": {
+      "timeout": 30000,
+      "maxMemory": "512MB"
+    }
+  },
+  "commandPrefixes": {
+    "srt": {
+      "description": "Run command in sandbox (safe/restricted)",
+      "isolation": "enabled",
+      "allowedOperations": [
+        "read",
+        "write",
+        "execute",
+        "list"
+      ]
+    },
+    "nosrt": {
+      "description": "Run command without sandbox (unrestricted)",
+      "isolation": "disabled",
+      "requiresConfirmation": true
+    }
+  },
+  "security": {
+    "restrictedOperations": [
+      "network_access",
+      "system_calls",
+      "file_deletion"
+    ],
+    "allowedPaths": [
+      "/tmp",
+      "$HOME/.cache",
+      "$PROJECT_ROOT"
+    ]
+  }
+}
