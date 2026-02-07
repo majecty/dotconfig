@@ -20,3 +20,4 @@
 - [x] nvim close and reopen with same session
 - [ ] search smartcase in nvim
 - [ ] remember opencode configs should be in this directory 
+- [ ] add a nvim editing skill

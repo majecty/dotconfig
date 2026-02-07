@@ -29,6 +29,7 @@ applyTo: '**'
 - **Always use which-key for new keybinds** (not direct keybinds)
 - **All configs managed from ~/jhconfig directory** (nvim and others symlinked/referenced there)
 - **OpenCode configs and skills are in ~/jhconfig/.opencode/** (skills, SKILL.md files)
+- **Auto-format nvim lua files with stylua before committing:** `stylua ~/.config/nvim/lua/`
 
 # How to Manage This Memory File
 
