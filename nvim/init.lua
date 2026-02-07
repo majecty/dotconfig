@@ -114,8 +114,10 @@ else
     vim.cmd('edit ' .. vim.fn.expand('~/.config/nvim/lua/user/plugins_notvscode/a.lua'))
   end, { desc = 'open plugins' })
 
-  vim.keymap.set('n', '<leader>fpcd', "<cmd>cd %:h<cr>", { desc = "cd to file path" })
-  vim.keymap.set('n', '<leader>f.', "<cmd>e %:h<cr>", { desc = "open file's directory" })
+   vim.keymap.set('n', '<leader>fpcd', "<cmd>cd %:h<cr>", { desc = "cd to file path" })
+   vim.keymap.set('n', '<leader>f.', "<cmd>e %:h<cr>", { desc = "open file's directory" })
+   vim.keymap.set('n', '<leader>-', require('oil').open, { desc = 'Open Oil Directory Browser' })
+
 
   vim.g.neovide_input_macos_option_key_is_meta = 'only_left'
 
