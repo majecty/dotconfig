@@ -17,4 +17,5 @@
 - [ ] whichkey based keymap
 - [ ] hyprland config make a window bigger twice
 - [ ] lua lsp make know the vim variable in opencode
+- [ ] nvim close and reopen with same session
 

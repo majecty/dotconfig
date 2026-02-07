@@ -90,6 +90,7 @@ When all TODOs are done:
 - **Granular**: Update after each logical chunk completes (success OR failure)
 - **Transparent**: Show what you're doing and why
 - **Consistent**: Apply this to all substantive work
+- **Give recommendations**: When asking clarifying questions, always provide your recommendation first (e.g., "I recommend X because Y. Does that work?")
 - Use 📝✅⚠️🎉 emojis for visibility and branding
 
 ## When to Skip
