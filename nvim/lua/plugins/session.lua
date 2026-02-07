@@ -216,6 +216,31 @@ end
 -- Initialize auto-save on plugin load
 setup_auto_save()
 
+-- Auto-load session on startup if it exists (silently)
+local function setup_auto_load()
+  local group = vim.api.nvim_create_augroup("NvimSessionAutoLoad", { clear = true })
+  
+  -- Auto-load on VimEnter (when opening nvim)
+  vim.api.nvim_create_autocmd("VimEnter", {
+    group = group,
+    callback = function()
+      -- Only auto-load if in a git directory
+      local project_info = get_project_info()
+      -- Check if we actually found a .git directory
+      if vim.fn.isdirectory(project_info.path .. "/.git") == 1 then
+        local session_filename = get_session_filename(project_info)
+        local session_path = session_dir .. "/" .. session_filename .. ".vim"
+        if vim.fn.filereadable(session_path) == 1 then
+          vim.cmd("source " .. session_path)
+        end
+      end
+    end,
+    once = true,  -- Only run once on startup
+  })
+end
+
+setup_auto_load()
+
 -- Expose functions for which-key
 _G.nvim_session = {
   save = save_session,
