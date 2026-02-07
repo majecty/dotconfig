@@ -25,6 +25,7 @@ applyTo: '**'
 - Minimal, modular Neovim config—feature-based, file-per-plugin structure.
 - Only use explanations when asked; keep confirmations brief.
 - Conversational, turn-by-turn, single-question workflow for Autotodo mode.
+- **Communicate in Korean** - Use Korean for all user interactions and responses
 - **All configs managed from ~/jhconfig directory** (nvim and others symlinked/referenced there)
 - **OpenCode configs and skills are in ~/jhconfig/.opencode/** (skills, SKILL.md files)
 
