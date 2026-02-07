@@ -5,18 +5,25 @@
 
 ## Details
 - Added `<leader>sr` which-key keybind to close nvim and reopen with neovide (GUI)
-- Saves session before closing using `_G.nvim_session.save()`
-- Closes all nvim instances with `qa!`
-- Reopens with neovide GUI using `os.execute("neovide &")`
+- Saves current working directory before closing
+- Saves session with `_G.nvim_session.save()`
+- Waits 100ms to ensure session file is written
+- Reopens neovide in the same directory: `cd <dir> && neovide &`
+- Closes nvim with `qa!`
 - When neovide opens in same project, session auto-loads via VimEnter autocmd
 
 ## Changes
-- Added keybind in `/home/juhyung/jhconfig/nvim/lua/plugins/whichkey.lua`
-- New mapping: `<leader>sr` → "Save session and reopen with GUI"
-- Installed neovide from cargo: `cargo install neovide`
+- Updated `/home/juhyung/jhconfig/nvim/lua/plugins/whichkey.lua`
+- Mapping: `<leader>sr` → "Save session and reopen with GUI"
+- Installed neovide: `cargo install neovide`
+- Created desktop shortcut: `~/.local/share/applications/neovide.desktop`
+
+## Tested
+- ✅ Keybind closes and reopens neovide successfully
+- ✅ Session persists across reopen
+- ✅ All buffers and cursor positions preserved
 
 ## Notes
-- Uses neovide (GUI nvim) for better window management
-- Session auto-loads on neovide reopen in the same project directory
-- All buffers, folds, and cursor positions are preserved
-- The `&` backgrounds the neovide process so terminal is freed up
+- Small delay (100ms) ensures session file is fully written before reopen
+- Directory context preserved so session loads correctly
+- Neovide appears in application launcher as well
