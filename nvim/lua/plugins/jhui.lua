@@ -1,3 +1,3 @@
 return {
-	{ dir = "~/jhconfig/nvim/jhui" },
+  { dir = '~/jhconfig/nvim/jhui' },
 }

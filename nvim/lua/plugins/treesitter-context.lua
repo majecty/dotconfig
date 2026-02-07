@@ -1,7 +1,7 @@
 return {
-	{
-		"nvim-treesitter/nvim-treesitter-context",
-		event = "VeryLazy",
-		opts = { enable = true },
-	},
+  {
+    'nvim-treesitter/nvim-treesitter-context',
+    event = 'VeryLazy',
+    opts = { enable = true },
+  },
 }
