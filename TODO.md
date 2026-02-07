@@ -33,8 +33,8 @@
 - [ ] session setting for nvim
   - [ ] add shortcut in whichkey that reload session
 - [ ] whichkey based keymap
-- [ ] save outfocus
+- [x] nvim save on outfocus
+  - [x] Added vim-auto-save plugin with FocusLost and WinLeave events
 - [ ] hyprland config make a window bigger twice
-- [x] file tree in nvim for directory tour
-  - [x] Added nvim-tree as secondary file explorer (oil is primary)
-  - [x] Added auto preview on cursor move (pedit right split)
+- [ ] lua lsp make know the vim variable in opencode
+
