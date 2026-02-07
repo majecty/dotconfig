@@ -19,6 +19,7 @@
 - [x] ctrl-s to save
 - [ ] firugre out cmd- s currently in w
 - [x] oil.nvim
+    - [x] Removed netrw settings to prevent conflict; oil.nvim is now exclusive directory handler.
 - [ ] gcp skill to create git commit push skill
 - [ ] cmd - c is easy to make mistake. change close command to cmd shift c in hyprland confg
 - [x] add sandbox config in opencode
