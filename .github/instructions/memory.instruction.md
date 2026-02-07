@@ -25,4 +25,5 @@ applyTo: '**'
 - Minimal, modular Neovim config—feature-based, file-per-plugin structure.
 - Only use explanations when asked; keep confirmations brief.
 - Conversational, turn-by-turn, single-question workflow for Autotodo mode.
+- **After every nvim lua config update, run health check:** `nvim --headless -c 'checkhealth' -c 'quit'`
 
