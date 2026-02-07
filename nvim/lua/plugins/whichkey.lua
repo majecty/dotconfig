@@ -28,6 +28,13 @@ return {
         end,
         desc = "Reload the jhui plugin",
       },
+      {
+        "<leader>e",
+        function()
+          require("nvim-tree.api").tree.toggle()
+        end,
+        desc = "Toggle file tree explorer",
+      },
     },
   }
 }

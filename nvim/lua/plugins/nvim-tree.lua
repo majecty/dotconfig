@@ -26,9 +26,5 @@ return {
         update_cwd = true,
       },
     })
-
-    -- Keybinds
-    local api = require("nvim-tree.api")
-    vim.keymap.set("n", "<leader>e", api.tree.toggle, { noremap = true, silent = true })
   end,
 }
