@@ -27,7 +27,7 @@ applyTo: '**'
 - Conversational, turn-by-turn, single-question workflow for Autotodo mode.
 - **After every nvim lua config update, run health check:** `nvim --headless -c 'checkhealth' -c 'quit'`
 - **Always use which-key for new keybinds** (not direct keybinds)
-- **All nvim configs are in ~/.config/nvim** (not in jhconfig repo)
+- **All configs managed from ~/jhconfig directory** (nvim and others symlinked/referenced there)
 
 # How to Manage This Memory File
 
