@@ -18,7 +18,7 @@
   - [ ] autotodo: regular update of TODO.md for config changes
 - [ ] use homeserver llm
 - [x] ctrl-s to save
-- [ ] firugre out cmd- s currently in w
+- [x] figured out cmd-s in Hyprland: SUPER+S toggles special workspace 'magic', no remap needed
 - [x] oil.nvim
     - [x] Removed netrw settings to prevent conflict; oil.nvim is now exclusive directory handler.
 - [ ] gcp skill to create git commit push skill
