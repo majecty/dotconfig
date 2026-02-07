@@ -37,3 +37,5 @@
 - [ ] hyprland config make a window bigger twice
 - [x] file tree in nvim for directory tour
   - [x] Added nvim-tree as secondary file explorer (oil is primary)
+  - [x] Added auto preview on cursor move (pedit right split)
+- [ ] REMEMBER: Run `nvim --headless -c 'checkhealth' -c 'quit'` after each nvim config update
