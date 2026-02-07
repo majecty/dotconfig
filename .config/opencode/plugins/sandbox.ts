@@ -88,7 +88,6 @@ export const SandboxPlugin: Plugin = async ({ client }) => {
           },
         })
       }
-    }
     },
   }
 }
