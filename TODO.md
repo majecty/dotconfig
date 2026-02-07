@@ -14,6 +14,7 @@
 - [x] nvim config organize
   - [x] migrate to feature-based modular structure (files per feature in lua/plugins, minimal init.lua, lazy loaded)
   - [ ] review modular config for further minimalism
+    - [x] Centralized all <leader> keymaps with which-key
   - [ ] autotodo: regular update of TODO.md for config changes
 - [ ] use homeserver llm
 - [x] ctrl-s to save
