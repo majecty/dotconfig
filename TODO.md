@@ -19,3 +19,7 @@
 - [ ] gcp skill to create git commit push skill
 - [ ] cmd - c is easy to make mistake. change close command to cmd shift c in hyprland confg
 - [x] add sandbox config in opencode
+  - [ ] Sandbox plugin removed: reliability issues with srt/nosrt sandbox mode.
+      - Attempts to auto-retry with nosrt led to inconsistent file permissions and errors (e.g. read-only file system, permission denied).
+      - Lessons: Prefer direct command execution unless sandboxing is proven reliable; fallback logic adds complexity and sometimes masks underlying platform or mount issues.
+      - Future: If sandbox needed, thoroughly validate cross-platform/FS mechanics and clarify fallback criteria before use.
