@@ -7,12 +7,14 @@
 - Implemented minimal native Neovim session management (no plugins)
 - Auto-detects project name from directory containing .git
 - Saves/loads: buffers, cursor position, folds, marks, terminal buffers, window sizes
-- Added keybindings in which-key:
+- **Session switching with UI:**
   - `<leader>ss`: Save session (auto project name)
-  - `<leader>sl`: Load session (auto project name)
+  - `<leader>sl`: Load session from list picker (shows all saved sessions)
+- **Directory switching:** pwd changes to project directory when loading session
+- Sessions stored in ~/.config/nvim/sessions/
 
 ## Notes
 Minimal, robust implementation using Neovim's built-in :mksession command.
-Sessions stored in ~/.config/nvim/sessions/
-Project name auto-detection from .git directory makes it reliable and easy to use.
+Session picker allows easy switching between multiple project sessions.
+Working directory automatically updates to project root when loading.
 

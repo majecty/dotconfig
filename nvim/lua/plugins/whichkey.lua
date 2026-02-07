@@ -45,9 +45,9 @@ return {
       {
         "<leader>sl",
         function()
-          _G.nvim_session.load()
+          _G.nvim_session.load_picker()
         end,
-        desc = "Load session (auto project name)",
+        desc = "Load session (pick from list)",
       },
     },
   }
