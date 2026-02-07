@@ -14,12 +14,14 @@ You are in **Autotodo Manager Mode** - an automatic TODO management system that 
 - Visible activation message: "📝 Starting TODO tracking..."
 - Skip only for trivial single-step tasks or pure informational requests
 
-### 2. Initial TODO Creation
+### 2. Add TODOs to TODO.md
 When starting work:
 - Analyze the request and break it into logical chunks
-- Create TODOs for each chunk using TodoWrite
-- Display the created TODOs to the user
-- Example: "Creating 4 TODOs: [list items]"
+- Add TODOs directly to `/home/juhyung/jhconfig/TODO.md` under "## Pending Tasks"
+- Use format: `- [ ] Task name`
+- Display the added TODOs to the user
+- Example: "Adding 4 TODOs to TODO.md"
+- Commit changes: `git add TODO.md && git commit -m "add todos: [task names]"`
 
 ### 3. Progress Tracking - After Each Logical Chunk
 After completing each logical chunk of work:
@@ -30,34 +32,8 @@ After completing each logical chunk of work:
 - If failure occurs, document it and add new TODO for fix
 - Continue to next chunk
 
-### 4. Failure Handling
-When work fails:
-- Mark current TODO with failure status or note
-- Create new TODO: "Fix/resolve: [specific issue]"
-- Continue working on the fix TODO
-- Show: "⚠️ Issue found. Adding fix TODO..."
-
-### 5. Visibility Pattern
-Always show progress like:
-```
-📝 Starting TODO tracking...
-- [ ] Task 1
-- [ ] Task 2
-- [ ] Task 3
-
-[Work happens...]
-
-✅ Marked 'Task 1' as completed
-📝 Updated TODO list:
-- [x] Task 1
-- [ ] Task 2
-- [ ] Task 3
-
-[More work...]
-```
-
-### 6. Completion File Creation
-When a task is completed:
+### 4. Done TODOs - Create Completion Records
+When a TODO is fully completed:
 - Create a markdown file in `/home/juhyung/jhconfig/.todos/done/`
 - Filename: `task-name-slugified.md` (e.g., `add-dark-mode-toggle.md`)
 - Content format:
@@ -76,11 +52,42 @@ When a task is completed:
   - Additional context or learnings
   - Any gotchas or special considerations
   ```
+- Commit: `git add .todos/done/[filename] && git commit -m "add completion record: [task name]"`
+
+### 5. Failure Handling
+When work fails:
+- Mark current TODO with failure status or note
+- Create new TODO in TODO.md: `- [ ] Fix/resolve: [specific issue]`
+- Continue working on the fix TODO
+- Show: "⚠️ Issue found. Adding fix TODO..."
+
+### 6. Visibility Pattern
+Always show progress like:
+```
+📝 Starting TODO tracking...
+Adding TODOs:
+- [ ] Task 1
+- [ ] Task 2
+- [ ] Task 3
+
+[Work happens...]
+
+✅ Marked 'Task 1' as completed
+📝 Done! Created completion record: task-1.md
+
+📝 Updated TODO.md:
+- [x] Task 1
+- [ ] Task 2
+- [ ] Task 3
+
+[More work...]
+```
 
 ### 7. Final Completion
 When all TODOs are done:
 - Show: "🎉 All tasks completed!"
 - Summarize what was accomplished
+- List all completion files created
 - Offer next steps if applicable
 
 ## Guidelines
