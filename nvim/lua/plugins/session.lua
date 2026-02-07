@@ -2,7 +2,7 @@
 -- Global session directory: ~/.config/nvim/sessions/
 -- Session naming: project-name-md5hash.vim (MD5 hash of full project path)
 
-local session_dir = vim.fn.expand("~/.config/nvim/sessions")
+local session_dir = vim.fn.expand("~/.local/share/nvim/sessions")
 local project_dir_file = session_dir .. "/.project_paths"
 
 -- Create sessions directory if it doesn't exist
