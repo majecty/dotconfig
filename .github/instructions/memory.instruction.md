@@ -27,3 +27,14 @@ applyTo: '**'
 - Conversational, turn-by-turn, single-question workflow for Autotodo mode.
 - **After every nvim lua config update, run health check:** `nvim --headless -c 'checkhealth' -c 'quit'`
 
+# How to Manage This Memory File
+
+- **Location:** `.github/instructions/memory.instruction.md`
+- **Auto-loaded:** Via `.opencode.yaml` on every OpenCode run
+- **How to update:** 
+  - Add new preferences/rules to "User Preferences" section
+  - Always commit changes with descriptive messages
+  - Keep sections organized: Autotodo Essentials → Session Workflow → User Preferences → How to Manage
+- **Review before adding:** Ask user for approval before updating memory
+- **Format:** Markdown with clear sections and bullet points
+
