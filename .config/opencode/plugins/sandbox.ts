@@ -119,7 +119,6 @@ export const SandboxPlugin: Plugin = async ({ project, client, $, directory }) =
 
       if (useSandbox) {
         // Wrap command in sandbox execution
-        // Note: This is a placeholder. Real implementation would use Claude Code's sandbox npm package
         await client.app.log({
           body: {
             service: "sandbox-plugin",
@@ -129,8 +128,8 @@ export const SandboxPlugin: Plugin = async ({ project, client, $, directory }) =
           },
         })
 
-        // Update the command to be executed (would integrate with actual sandbox)
-        output.args.command = `srt --timeout ${sandboxConfig.sandbox.resourceLimits.timeout} --memory ${sandboxConfig.sandbox.resourceLimits.maxMemory} -- ${cleanCommand}`
+        // Update the command to be executed with srt prefix
+        output.args.command = `srt ${cleanCommand}`
       } else {
         // nosrt mode
         await client.app.log({
