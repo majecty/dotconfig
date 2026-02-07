@@ -2,14 +2,14 @@ import type { Plugin } from "@opencode-ai/plugin"
 
 // Strip sandbox prefix from command
 function stripSandboxPrefix(command: string): string {
-  return command.replace(/^(srt|nosrt):/, "")
+  return command.replace(/^(srt|nosrt)/, "")
 }
 
 // Check if command should run in sandbox
 function shouldUseSandbox(command: string): boolean {
   // Check command prefix
-  if (command.startsWith("nosrt:")) return false // Explicitly disabled
-  if (command.startsWith("srt:")) return true // Explicitly enabled
+  if (command.startsWith("nosrt")) return false // Explicitly disabled
+  if (command.startsWith("srt")) return true // Explicitly enabled
 
   // Default to sandbox mode
   return true
