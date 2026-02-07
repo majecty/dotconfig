@@ -89,13 +89,20 @@ return {
             end,
             desc = "Move to up split",
           },
-          {
-            "<C-l>",
-            function()
-              vim.cmd("wincmd l")
-            end,
-            desc = "Move to right split",
-          },
+           {
+             "<C-l>",
+             function()
+               vim.cmd("wincmd l")
+             end,
+             desc = "Move to right split",
+           },
+           {
+             "<leader>ww",
+             function()
+               vim.cmd("wincmd =")
+             end,
+             desc = "Equalize split sizes",
+           },
     },
   }
 }
