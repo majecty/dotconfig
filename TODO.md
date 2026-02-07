@@ -10,7 +10,7 @@
 - [ ] autotodo: regular update of TODO.md for config changes
 - [ ] use homeserver llm
 - [ ] gcp skill to create git commit push skill
-- [ ] cmd - c is easy to make mistake. change close command to cmd shift c in hyprland confg
+- [x] cmd - c is easy to make mistake. change close command to cmd shift c in hyprland confg
 - [ ] add copilot
 - [x] session setting for nvim
   - [x] add shortcut in whichkey that reload session
