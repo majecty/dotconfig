@@ -19,7 +19,7 @@ return {
     opts = {},
     keys = {
       {
-        "<leader>w",
+        -- "<leader>w",
         function()
           local wk = require("which-key")
           wk.show({ global = false })

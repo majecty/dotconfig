@@ -30,3 +30,7 @@
 - [x] ai plugin remove
 - [ ] add copilot
 - [ ] session setting for nvim
+  - [ ] add shortcut in whichkey that reload session
+- [ ] whichkey based keymap
+- [ ] save outfocus
+- [ ] hyprland config make a window bigger twice

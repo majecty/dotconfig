@@ -12,6 +12,22 @@ return {
         end,
         desc = "Buffer Local Keymaps (which-key)",
       },
+      {
+        "<leader>jho",
+        function()
+          require("jhui.main").open()
+        end,
+        desc = "Open the jhui buffer",
+      },
+      {
+        "<leader>jhr",
+        function()
+          package.loaded['jhui.main'] = nil
+          require('jhui.main')
+          vim.notify("jhui plugin reloaded", vim.log.levels.INFO)
+        end,
+        desc = "Reload the jhui plugin",
+      },
     },
   }
 }
