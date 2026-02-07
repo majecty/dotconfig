@@ -1,12 +1,18 @@
 -- Minimal native Neovim session management
--- No plugins - uses built-in :mksession
--- Session name is auto-detected from directory containing .git
+-- Global session directory: ~/.config/nvim/sessions/
+-- Session naming: project-name-md5hash.vim (MD5 hash of full project path)
 
 local session_dir = vim.fn.expand("~/.config/nvim/sessions")
+local project_dir_file = session_dir .. "/.project_paths"
 
 -- Create sessions directory if it doesn't exist
 if vim.fn.isdirectory(session_dir) == 0 then
   vim.fn.mkdir(session_dir, "p")
+end
+
+-- Helper function to compute MD5 hash of a string
+local function md5_hash(str)
+  return vim.fn.system("echo -n '" .. str:gsub("'", "'\\''") .. "' | md5sum | cut -d' ' -f1"):gsub("\n", "")
 end
 
 -- Helper function to find .git directory and get project name and path
@@ -33,7 +39,52 @@ local function get_project_info()
   }
 end
 
--- Helper function to list all saved sessions
+-- Helper function to generate session filename from project info
+local function get_session_filename(project_info)
+  local hash = md5_hash(project_info.path):sub(1, 8)  -- Use first 8 chars of MD5
+  return project_info.name .. "-" .. hash
+end
+
+-- Helper function to store project path mapping
+local function store_project_path(session_name, project_path)
+  local lines = {}
+  if vim.fn.filereadable(project_dir_file) == 1 then
+    lines = vim.fn.readfile(project_dir_file)
+  end
+  
+  -- Check if entry already exists and update it
+  local found = false
+  for i, line in ipairs(lines) do
+    if line:match("^" .. session_name .. "|") then
+      lines[i] = session_name .. "|" .. project_path
+      found = true
+      break
+    end
+  end
+  
+  -- Add new entry if not found
+  if not found then
+    table.insert(lines, session_name .. "|" .. project_path)
+  end
+  
+  vim.fn.writefile(lines, project_dir_file)
+end
+
+-- Helper function to get project path from mapping
+local function get_project_path(session_name)
+  if vim.fn.filereadable(project_dir_file) == 1 then
+    local lines = vim.fn.readfile(project_dir_file)
+    for _, line in ipairs(lines) do
+      local name, path = line:match("^(.+)|(.+)$")
+      if name == session_name then
+        return path
+      end
+    end
+  end
+  return nil
+end
+
+-- Helper function to list all saved sessions with display names
 local function list_sessions()
   local sessions = {}
   local handle = vim.loop.fs_scandir(session_dir)
@@ -43,7 +94,10 @@ local function list_sessions()
       if not name then break end
       if type == "file" and name:match("%.vim$") then
         -- Remove .vim extension
-        table.insert(sessions, name:gsub("%.vim$", ""))
+        local session_name = name:gsub("%.vim$", "")
+        if session_name ~= ".project_paths" then
+          table.insert(sessions, session_name)
+        end
       end
     end
   end
@@ -52,43 +106,39 @@ local function list_sessions()
 end
 
 -- Helper function to load session from path
-local function load_session_from_path(session_path, session_name)
+local function load_session_from_file(session_filename, display_name)
+  local session_path = session_dir .. "/" .. session_filename .. ".vim"
+  
   if vim.fn.filereadable(session_path) == 1 then
-    -- Extract project path from session file (read first few lines for comments)
-    local lines = vim.fn.readfile(session_path, "", 5)
-    local project_path = nil
+    -- Get project path from mapping
+    local project_path = get_project_path(session_filename)
     
-    -- Try to find project root by looking for .git in common locations
-    -- Or just use session_name to guess project directory
-    for dir in vim.fn.glob(vim.fn.expand("~") .. "/*", 1, 1) do
-      if vim.fn.isdirectory(dir) == 1 and vim.fn.fnamemodify(dir, ":t") == session_name then
-        project_path = dir
-        break
-      end
-    end
-    
-    if project_path then
+    -- Try to change to project directory
+    if project_path and vim.fn.isdirectory(project_path) == 1 then
       vim.cmd("cd " .. project_path)
+      vim.notify("Changed directory to: " .. project_path, vim.log.levels.INFO)
     end
     
     vim.cmd("source " .. session_path)
-    vim.notify("Session loaded: " .. session_name, vim.log.levels.INFO)
+    vim.notify("Session loaded: " .. display_name, vim.log.levels.INFO)
   else
-    vim.notify("Session not found: " .. session_name, vim.log.levels.WARN)
+    vim.notify("Session not found: " .. display_name, vim.log.levels.WARN)
   end
 end
 
--- Helper functions
-local function get_session_path(name)
-  return session_dir .. "/" .. name .. ".vim"
-end
-
-local function save_session(name)
+-- Main session management functions
+local function save_session()
   local project_info = get_project_info()
-  local session_name = name or project_info.name
-  local path = get_session_path(session_name)
-  vim.cmd("mksession! " .. path)
-  vim.notify("Session saved: " .. session_name, vim.log.levels.INFO)
+  local session_filename = get_session_filename(project_info)
+  local session_path = session_dir .. "/" .. session_filename .. ".vim"
+  
+  -- Save the session
+  vim.cmd("mksession! " .. session_path)
+  
+  -- Store project path mapping
+  store_project_path(session_filename, project_info.path)
+  
+  vim.notify("Session saved: " .. project_info.name, vim.log.levels.INFO)
 end
 
 local function load_session_with_picker()
@@ -101,25 +151,30 @@ local function load_session_with_picker()
   
   vim.ui.select(sessions, { prompt = "Select session to load: " }, function(choice)
     if choice then
-      local session_path = get_session_path(choice)
-      load_session_from_path(session_path, choice)
+      load_session_from_file(choice, choice)
     end
   end)
 end
 
-local function load_session(name)
+local function load_session()
   local project_info = get_project_info()
-  local session_name = name or project_info.name
-  local path = get_session_path(session_name)
-  load_session_from_path(path, session_name)
+  local session_filename = get_session_filename(project_info)
+  local session_path = session_dir .. "/" .. session_filename .. ".vim"
+  
+  if vim.fn.filereadable(session_path) == 1 then
+    load_session_from_file(session_filename, project_info.name)
+  else
+    vim.notify("No session found for: " .. project_info.name, vim.log.levels.WARN)
+  end
 end
 
 -- Auto-load session on startup if it exists
 local function auto_load_session()
   local project_info = get_project_info()
-  local path = get_session_path(project_info.name)
-  if vim.fn.filereadable(path) == 1 then
-    vim.cmd("source " .. path)
+  local session_filename = get_session_filename(project_info)
+  local session_path = session_dir .. "/" .. session_filename .. ".vim"
+  if vim.fn.filereadable(session_path) == 1 then
+    vim.cmd("source " .. session_path)
   end
 end
 
