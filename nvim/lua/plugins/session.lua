@@ -149,11 +149,17 @@ local function load_session_with_picker()
     return
   end
   
-  vim.ui.select(sessions, { prompt = "Select session to load: " }, function(choice)
-    if choice then
-      load_session_from_file(choice, choice)
-    end
-  end)
+  local fzf = require("fzf-lua")
+  fzf.fzf_lua(sessions, {
+    prompt = "Sessions> ",
+    actions = {
+      ["default"] = function(selected)
+        if selected and #selected > 0 then
+          load_session_from_file(selected[1], selected[1])
+        end
+      end
+    }
+  })
 end
 
 local function load_session()
