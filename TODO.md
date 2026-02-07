@@ -12,6 +12,9 @@
   - (FLTK, Iced, Slint prototypes in bin/whichkey/)
 - [ ] nvim rust analyzer
 - [x] nvim config organize
+  - [x] migrate to feature-based modular structure (files per feature in lua/plugins, minimal init.lua, lazy loaded)
+  - [ ] review modular config for further minimalism
+  - [ ] autotodo: regular update of TODO.md for config changes
 - [ ] use homeserver llm
 - [x] ctrl-s to save
 - [ ] firugre out cmd- s currently in w
@@ -23,5 +26,6 @@
       - Attempts to auto-retry with nosrt led to inconsistent file permissions and errors (e.g. read-only file system, permission denied).
       - Lessons: Prefer direct command execution unless sandboxing is proven reliable; fallback logic adds complexity and sometimes masks underlying platform or mount issues.
       - Future: If sandbox needed, thoroughly validate cross-platform/FS mechanics and clarify fallback criteria before use.
-- [ ] ai plugin remove
+- [x] ai plugin remove
 - [ ] add copilot
+- [ ] session setting for nvim
