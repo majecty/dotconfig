@@ -5,7 +5,7 @@ description: Skill for editing nvim configuration files - handles formatting, te
 
 # Nvim Editing Skill
 
-Use this skill whenever you edit nvim lua configuration files in `~/.config/nvim/lua/` or `/home/juhyung/jhconfig/nvim/lua/`.
+Use this skill whenever you edit nvim lua configuration files in `/home/juhyung/jhconfig/nvim/lua/`.
 
 ## Activation
 

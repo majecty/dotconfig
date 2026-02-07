@@ -14,4 +14,3 @@
 - [ ] hyprland config make a window bigger twice
 - [ ] lua lsp make know the vim variable in opencode
 - [ ] search smartcase in nvim
-- [ ] add a nvim editing skill
