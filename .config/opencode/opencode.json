@@ -16,6 +16,14 @@
   },
   "plugin": [
     "sandbox"
-  ]
+  ],
+  "permission": {
+    "bash": {
+      "*": "ask",
+      "srt *": "allow",
+      "nosrt *": "ask"
+    }
+  }
 }
+
 
