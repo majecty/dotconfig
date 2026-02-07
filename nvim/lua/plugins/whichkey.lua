@@ -96,13 +96,20 @@ return {
              end,
              desc = "Move to right split",
            },
-           {
-             "<leader>ww",
-             function()
-               vim.cmd("wincmd =")
-             end,
-             desc = "Equalize split sizes",
-           },
+            {
+              "<leader>ww",
+              function()
+                vim.cmd("wincmd =")
+              end,
+              desc = "Equalize split sizes",
+            },
+            {
+              "<leader>ff",
+              function()
+                require("fzf-lua").files()
+              end,
+              desc = "Find files (fzf)",
+            },
     },
   }
 }
