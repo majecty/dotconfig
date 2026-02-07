@@ -12,8 +12,8 @@
 - [ ] gcp skill to create git commit push skill
 - [ ] cmd - c is easy to make mistake. change close command to cmd shift c in hyprland confg
 - [ ] add copilot
-- [ ] session setting for nvim
-  - [ ] add shortcut in whichkey that reload session
+- [x] session setting for nvim
+  - [x] add shortcut in whichkey that reload session
 - [ ] whichkey based keymap
 - [ ] hyprland config make a window bigger twice
 - [ ] lua lsp make know the vim variable in opencode

@@ -35,6 +35,20 @@ return {
         end,
         desc = "Toggle file tree explorer",
       },
+      {
+        "<leader>ss",
+        function()
+          _G.nvim_session.save()
+        end,
+        desc = "Save session (auto project name)",
+      },
+      {
+        "<leader>sl",
+        function()
+          _G.nvim_session.load()
+        end,
+        desc = "Load session (auto project name)",
+      },
     },
   }
 }
