@@ -11,7 +11,7 @@
 - [ ] create global which-key program (Rust - future)
   - (FLTK, Iced, Slint prototypes in bin/whichkey/)
 - [ ] nvim rust analyzer
-- [ ] nvim config organize
+- [x] nvim config organize
 - [ ] use homeserver llm
 - [x] ctrl-s to save
 - [ ] firugre out cmd- s currently in w
@@ -23,4 +23,4 @@
       - Attempts to auto-retry with nosrt led to inconsistent file permissions and errors (e.g. read-only file system, permission denied).
       - Lessons: Prefer direct command execution unless sandboxing is proven reliable; fallback logic adds complexity and sometimes masks underlying platform or mount issues.
       - Future: If sandbox needed, thoroughly validate cross-platform/FS mechanics and clarify fallback criteria before use.
-
+- [ ] 

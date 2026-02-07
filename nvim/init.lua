@@ -93,16 +93,12 @@ else
   -- git
   vim.keymap.set('n', '<leader>gg', "<cmd>Git<cr>", { desc = 'git' })
 
-  -- lsp
-  vim.keymap.set('n', 'grt', vim.lsp.buf.type_definition, { noremap = true, silent = true, desc = 'type_definition' })
-  vim.keymap.set('n', '<leader>cc', vim.lsp.codelens.run, { desc = 'codelens' })
-  vim.keymap.set('n', '<leader>cC', vim.lsp.codelens.refresh, { desc = 'codelens refresh' })
-  vim.keymap.set('n', 'K', vim.lsp.buf.hover, { noremap = true, silent = true, desc = 'hover' })
-  vim.keymap.set('n', 'gK', vim.lsp.buf.signature_help, { noremap = true, silent = true, desc = 'signature_help' })
-  vim.keymap.set('i', '<c-k>', vim.lsp.buf.signature_help, { noremap = true, silent = true, desc = 'signature_help' })
-  vim.keymap.set('n', 'gd', vim.lsp.buf.definition, { noremap = true, silent = true })
+   -- Minimal LSP config
+   -- Uncomment below if you want default LSP
+   -- require('nvim-lspconfig')
+   -- You can configure servers in plugin files
 
-  -- overseer
+   -- overseer
   vim.keymap.set('n', '<leader>ot', "<cmd>OverseerTaskAction<cr>", { desc = 'OverseerTaskAction' })
   vim.keymap.set('n', '<leader>oo', "<cmd>OverseerToggle<cr>", { desc = 'OverseerToggle' })
   vim.keymap.set('n', '<leader>or', "<cmd>OverseerRun<cr>", { desc = 'OverseerRun' })
@@ -123,148 +119,9 @@ else
 
   vim.g.neovide_input_macos_option_key_is_meta = 'only_left'
 
-  -- require('nvim-lspconfig')
-  vim.lsp.set_log_level("debug")
-  -- lsp
-  vim.lsp.config("gopls", {
-    settings = {
-      gopls = {
-        gofumpt = true,
-        codelenses = {
-          gc_details = true,
-          generate = true,
-          regenerate_cgo = true,
-          run_govulncheck = true,
-          test = true,
-          tidy = true,
-          upgrade_dependency = true,
-          vendor = true,
-        },
-        hints = {
-          assignVariableTypes = true,
-          compositeLiteralFields = true,
-          compositeLiteralTypes = true,
-          constantValues = true,
-          functionTypeParameters = true,
-          parameterNames = true,
-          rangeVariableTypes = true,
-        },
-        analyses = {
-          nilness = true,
-          unusedparams = true,
-          unusedwrite = true,
-          useany = true,
-        },
-        usePlaceholders = true,
-        completeUnimported = true,
-        staticcheck = true,
-        directoryFilters = { "-.git", "-.vscode", "-.idea", "-.vscode-test", "-node_modules" },
-        semanticTokens = true,
-      }
-    },
-  })
-  vim.lsp.enable("gopls")
+   -- Minimal LSP config
+   -- Uncomment below if you want default LSP
+   -- require('nvim-lspconfig')
+   -- You can configure servers in plugin files
 
-  vim.api.nvim_create_autocmd("BufWritePre", {
-    pattern = "*.go",
-    callback = function()
-      vim.lsp.buf.format()
-    end,
-  })
-
-  vim.lsp.config("lua_ls", {
-    settings = {
-      Lua = {
-        diagnostics = {
-          enable = false,
-          globals = { "vim" }
-
-        },
-      },
-    },
-  })
-  vim.lsp.enable("lua_ls")
-
-  vim.lsp.inlay_hint.enable()
-
-  vim.keymap.set('i', '<c-;>', function() return vim.fn['codeium#CycleCompletions'](1) end, { expr = true, silent = true })
-  vim.keymap.set('i', '<c-,>', function() return vim.fn['codeium#CycleCompletions'](-1) end, { expr = true, silent = true })
-
-  vim.keymap.set('n', '<leader>gm', function()
-    
-    -- Get current buffer content as existing message
-    local existing_msg = table.concat(vim.api.nvim_buf_get_lines(0, 0, -1, false), "\n")
-    
-    local prompt = "Generate a concise git commit message based on these changes"
-    if existing_msg ~= "" then
-      prompt = prompt .. " and improve/complete this existing message:\n\n" .. existing_msg
-    else 
-      prompt = prompt .. ":\n\n"
-    end
-    
-    -- Get git diff for stdin
-    local diff = vim.fn.system('git diff --cached')
-    if diff == '' then
-      print('No staged changes to generate commit message for')
-      return
-    end
-    
-    -- Only include diff if it's not already in existing message
-    local full_prompt = prompt
-    if not existing_msg:match(diff:sub(1, 50)) then  -- Check first 50 chars of diff
-      full_prompt = full_prompt .. diff
-    end
-    
-    -- Use stdin to avoid shell escaping issues
-    -- local handle = io.popen('aichat -r commit', 'w')
-    -- handle:write(full_prompt)
-    -- handle:close()
-
-    -- Stream output directly to buffer
-    local bufnr = vim.api.nvim_get_current_buf()
-    -- vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, {})  -- Clear buffer
-    
-    local Job = require('plenary.job')
-    local cursor_pos = vim.api.nvim_win_get_cursor(0)
-    Job:new({
-      command = 'aichat',
-      args = {'-r', 'commit'},
-      on_stdout = function(err, line)
-        if err ~= nil then
-          print("Error(stdout): " .. err)
-          return
-        end
-        if line == nil then
-          return
-        end
-        vim.schedule(function()
-          local current_lines = vim.api.nvim_buf_get_lines(bufnr, 0, -1, false)
-          table.insert(current_lines, cursor_pos[1], line)
-          vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, current_lines)
-          -- Move cursor down after each insertion
-          cursor_pos[1] = cursor_pos[1] + 1
-          vim.api.nvim_win_set_cursor(0, cursor_pos)
-        end)
-      end,
-      on_stderr = function(err, line)
-        if err ~= nil then
-          print("Error(stderr): " .. err)
-          return
-        end
-        if line == nil then
-          return
-        end
-        vim.schedule(function()
-          print("stderr: " .. line)
-        end)
-      end,
-      on_exit = function(_, code, signal)
-        vim.schedule(function()
-          print("Commit message generation complete with code " .. code .. " and signal " .. signal)
-        end)
-      end,
-      writer = full_prompt
-    }):start()
-  end, { desc = 'Generate git commit message' })
-
-end
+ end
