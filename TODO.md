@@ -18,4 +18,5 @@
 - [ ] hyprland config make a window bigger twice
 - [ ] lua lsp make know the vim variable in opencode
 - [ ] nvim close and reopen with same session
-
+- [ ] search smartcase in nvim
+- [ ] remember opencode configs should be in this directory 

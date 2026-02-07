@@ -28,6 +28,7 @@ applyTo: '**'
 - **After every nvim lua config update, run health check:** `nvim --headless -c 'checkhealth' -c 'quit'`
 - **Always use which-key for new keybinds** (not direct keybinds)
 - **All configs managed from ~/jhconfig directory** (nvim and others symlinked/referenced there)
+- **OpenCode configs and skills are in ~/jhconfig/.opencode/** (skills, SKILL.md files)
 
 # How to Manage This Memory File
 
