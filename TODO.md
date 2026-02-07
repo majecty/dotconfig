@@ -14,7 +14,7 @@
 - [ ] add copilot
 - [x] session setting for nvim
   - [x] add shortcut in whichkey that reload session
-- [ ] whichkey based keymap
+- [x] whichkey based keymap
 - [ ] hyprland config make a window bigger twice
 - [ ] lua lsp make know the vim variable in opencode
 - [x] nvim close and reopen with same session
