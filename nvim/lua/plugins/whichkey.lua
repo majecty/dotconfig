@@ -61,13 +61,41 @@ return {
            end,
            desc = "Save session and reopen with GUI",
          },
-         {
-           "<leader>E",
-           function()
-             vim.cmd("e")
-           end,
-           desc = "Open file for editing",
-         },
+          {
+            "<leader>E",
+            function()
+              vim.cmd("e")
+            end,
+            desc = "Open file for editing",
+          },
+          {
+            "<C-h>",
+            function()
+              vim.cmd("wincmd h")
+            end,
+            desc = "Move to left split",
+          },
+          {
+            "<C-j>",
+            function()
+              vim.cmd("wincmd j")
+            end,
+            desc = "Move to down split",
+          },
+          {
+            "<C-k>",
+            function()
+              vim.cmd("wincmd k")
+            end,
+            desc = "Move to up split",
+          },
+          {
+            "<C-l>",
+            function()
+              vim.cmd("wincmd l")
+            end,
+            desc = "Move to right split",
+          },
     },
   }
 }
