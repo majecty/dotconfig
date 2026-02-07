@@ -27,6 +27,7 @@ applyTo: '**'
 - Conversational, turn-by-turn, single-question workflow for Autotodo mode.
 - **After every nvim lua config update, run health check:** `nvim --headless -c 'checkhealth' -c 'quit'`
 - **Always use which-key for new keybinds** (not direct keybinds)
+- **Use which-key groups for multi-key sequences** (e.g., `<leader>s` group for `<leader>ss`, `<leader>sl`, `<leader>sr`)
 - **All configs managed from ~/jhconfig directory** (nvim and others symlinked/referenced there)
 - **OpenCode configs and skills are in ~/jhconfig/.opencode/** (skills, SKILL.md files)
 - **Auto-format nvim lua files with stylua before committing:** `stylua ~/.config/nvim/lua/`
