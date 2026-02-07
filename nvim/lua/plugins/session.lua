@@ -169,6 +169,19 @@ local function load_session()
   end
 end
 
+-- Auto-save session silently (no notifications)
+local function auto_save_session_silent()
+  local project_info = get_project_info()
+  local session_filename = get_session_filename(project_info)
+  local session_path = session_dir .. "/" .. session_filename .. ".vim"
+  
+  -- Save the session silently
+  vim.cmd("mksession! " .. session_path)
+  
+  -- Store project path mapping
+  store_project_path(session_filename, project_info.path)
+end
+
 -- Auto-load session on startup if it exists
 local function auto_load_session()
   local project_info = get_project_info()
@@ -179,12 +192,37 @@ local function auto_load_session()
   end
 end
 
+-- Setup auto-save on VimLeavePre and FocusLost events
+local function setup_auto_save()
+  local group = vim.api.nvim_create_augroup("NvimSessionAutoSave", { clear = true })
+  
+  -- Auto-save on VimLeavePre (when exiting nvim)
+  vim.api.nvim_create_autocmd("VimLeavePre", {
+    group = group,
+    callback = function()
+      auto_save_session_silent()
+    end,
+  })
+  
+  -- Auto-save on FocusLost (when switching away from nvim)
+  vim.api.nvim_create_autocmd("FocusLost", {
+    group = group,
+    callback = function()
+      auto_save_session_silent()
+    end,
+  })
+end
+
+-- Initialize auto-save on plugin load
+setup_auto_save()
+
 -- Expose functions for which-key
 _G.nvim_session = {
   save = save_session,
   load = load_session,
   load_picker = load_session_with_picker,
   auto_load = auto_load_session,
+  auto_save_silent = auto_save_session_silent,
   list = list_sessions,
   dir = session_dir,
   get_project_info = get_project_info,
