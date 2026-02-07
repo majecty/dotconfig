@@ -18,4 +18,4 @@
 - [ ] oil.nvim
 - [ ] gcp skill to create git commit push skill
 - [ ] cmd - c is easy to make mistake. change close command to cmd shift c in hyprland confg
-- [ ] add sandbox config in opencode
+- [x] add sandbox config in opencode
