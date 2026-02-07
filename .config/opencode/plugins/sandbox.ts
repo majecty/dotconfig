@@ -98,7 +98,16 @@ export const SandboxPlugin: Plugin = async ({ project, client, $, directory }) =
     "tool.execute.before": async (input, output) => {
       if (input.tool !== "bash") return
 
-      const command = output.args.command
+      // Safely access command from args
+      if (!output.args || typeof output.args !== "object" || !("command" in output.args)) {
+        return
+      }
+
+      const command = output.args.command as string
+      if (typeof command !== "string") {
+        return
+      }
+
       const useSandbox = shouldUseSandbox(command)
       const cleanCommand = stripSandboxPrefix(command)
 
@@ -140,17 +149,23 @@ export const SandboxPlugin: Plugin = async ({ project, client, $, directory }) =
     "tool.execute.after": async (input, output) => {
       if (input.tool !== "bash") return
 
-      // Log successful sandbox execution
-      const command = stripSandboxPrefix(output.args.command)
-      if (shouldUseSandbox(command)) {
-        await client.app.log({
-          body: {
-            service: "sandbox-plugin",
-            level: "info",
-            message: "Sandbox command executed successfully",
-          },
-        })
+      // Safely access output
+      if (!output || typeof output !== "object" || !("output" in output)) {
+        return
       }
+
+      const outputText = output.output as string
+      if (typeof outputText !== "string") {
+        return
+      }
+
+      await client.app.log({
+        body: {
+          service: "sandbox-plugin",
+          level: "info",
+          message: "Bash command executed",
+        },
+      })
     },
   }
 }
