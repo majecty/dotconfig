@@ -10,7 +10,5 @@
 - [ ] autotodo: regular update of TODO.md for config changes
 - [ ] use homeserver llm
 - [ ] gcp skill to create git commit push skill
-- [ ] add copilot
 - [ ] hyprland config make a window bigger twice
 - [ ] lua lsp make know the vim variable in opencode
-- [ ] search smartcase in nvim
