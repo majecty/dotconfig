@@ -17,3 +17,8 @@
 - [x] nvim H L to move between tabs
 - [x] update all configs to lazy nvim style
 - [x] make local nvim configs lazy plugins
+- [x] install typescript language server
+- [x] fix neovide session restart
+- [x] add tmux session integration
+- [x] optimize autosave settings
+- [x] add auto-reload for external file changes
