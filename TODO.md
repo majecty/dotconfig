@@ -16,3 +16,4 @@
 - [ ] search smartcase in nvim
 - [x] nvim H L to move between tabs
 - [x] update all configs to lazy nvim style
+- [x] make local nvim configs lazy plugins
