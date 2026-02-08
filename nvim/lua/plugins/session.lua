@@ -1,5 +1,5 @@
 -- Minimal native Neovim session management
--- Global session directory: ~/.config/nvim/sessions/
+-- Global session directory: ~/.local/share/nvim/sessions/
 -- Session naming: project-name-md5hash.vim (MD5 hash of full project path)
 
 local session_dir = vim.fn.expand('~/.local/share/nvim/sessions')
@@ -255,4 +255,5 @@ _G.nvim_session = {
   get_project_info = get_project_info,
 }
 
+-- Return as empty plugin spec - session setup is all done above
 return {}
