@@ -15,4 +15,4 @@
 - [ ] lua lsp make know the vim variable in opencode
 - [ ] search smartcase in nvim
 - [x] nvim H L to move between tabs
-- [ ] update all configs to lazy nvim style
+- [x] update all configs to lazy nvim style
