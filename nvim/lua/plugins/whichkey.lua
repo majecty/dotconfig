@@ -99,6 +99,13 @@ return {
           desc = 'Find buffers',
         },
         {
+          '<leader>fg',
+          function()
+            require('fzf-lua').live_grep()
+          end,
+          desc = 'Find text in repo',
+        },
+        {
           '<C-h>',
           function()
             vim.cmd('wincmd h')
