@@ -14,3 +14,6 @@
 - [ ] hyprland config make a window bigger twice
 - [ ] lua lsp make know the vim variable in opencode
 - [ ] search smartcase in nvim
+- [x] esc as escape to normalmode in nvim terminal
+- [x] shift esc as send to esc in nvim terminal
+- [x] vim copy to system
