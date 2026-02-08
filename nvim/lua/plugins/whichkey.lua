@@ -130,15 +130,11 @@ return {
         },
         {
           '<C-j>',
-          '<Plug>(copilot.accept)',
+          'copilot#Accept("\\<CR>")',
           desc = 'Accept copilot suggestion',
           mode = { 'i' },
-        },
-        {
-          '<C-k>',
-          '<Plug>(copilot.dismiss)',
-          desc = 'Dismiss copilot suggestion',
-          mode = { 'i' },
+          expr = true,
+          replace_keycodes = false,
         },
       })
     end,
