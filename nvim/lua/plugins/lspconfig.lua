@@ -19,7 +19,10 @@ return {
 
       -- Configure Tailwind CSS Language Server
       vim.lsp.config('tailwindcss', {
-        cmd = { 'tailwindcss-language-server', '--stdio' },
+        cmd = {
+          '/home/juhyung/.local/share/fnm/node-versions/v24.11.1/installation/lib/node_modules/@tailwindcss/language-server/bin/tailwindcss-language-server',
+          '--stdio',
+        },
         filetypes = { 'html', 'css', 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' },
         root_markers = {
           'tailwind.config.js',
