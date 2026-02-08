@@ -1,6 +1,9 @@
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
+-- Clipboard: sync with system clipboard
+vim.opt.clipboard = 'unnamedplus'
+
 -- Disable netrw, prefer oil.nvim
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
