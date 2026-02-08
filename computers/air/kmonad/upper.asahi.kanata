@@ -6,7 +6,7 @@
 ;;  output (kext)
 ;;  output (uinput-sink "Miryoku KMonad output")
 
-  input (device-file "/dev/input/by-id/usb-Apple_MTP_keyboard-event-kbd")
+  linux-dev "/dev/input/event1"
 ;;  output (uinput-sink "My KMonad output"
 ;;    "/bin/sleep 1 && /bin/setxkbmap -option compose:rctl")
 ;;  fallthrough false
