@@ -68,11 +68,15 @@ return {
              local project_info = _G.nvim_session.get_project_info()
              local session_name = project_info.name
              
+             -- Create tmux session if it doesn't exist
+             local cmd = "tmux has-session -t " .. session_name .. " 2>/dev/null || tmux new-session -d -s " .. session_name .. " -c " .. project_info.path
+             os.execute(cmd)
+             
              -- Open terminal at bottom
              vim.cmd('split | terminal tmux attach-session -t ' .. session_name)
              vim.cmd('resize 15')
            end,
-           desc = 'Tmux attach session',
+           desc = 'Tmux attach/create session',
          },
          {
            '<leader>sr',
