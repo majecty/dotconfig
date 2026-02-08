@@ -1,0 +1,14 @@
+# Neovide configuration - disable all animations
+
+[animations]
+# Disable all animation durations
+cursor_animation_length = 0.0
+scroll_animation_length = 0.0
+floating_window_animation_length = 0.0
+window_animation_length = 0.0
+
+# Disable cursor trail
+cursor_trail_length = 0
+
+# Disable smooth scroll
+scroll_animation = false
