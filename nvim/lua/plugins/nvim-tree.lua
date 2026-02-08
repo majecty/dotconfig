@@ -27,6 +27,21 @@ return {
         enable = true,
         update_cwd = true,
       },
+      on_attach = function(bufnr)
+        local opts = { buffer = bufnr, noremap = true, silent = true }
+        -- Use 'e' to open in oil.nvim
+        vim.keymap.set('n', 'e', function()
+          local node = api.tree.get_node_under_cursor()
+          if node then
+            local path = node.absolute_path
+            if node.type == 'file' then
+              path = vim.fn.fnamemodify(path, ':h')
+            end
+            api.tree.close()
+            vim.cmd('Oil ' .. path)
+          end
+        end, opts)
+      end,
     })
 
     -- Auto preview on cursor move
@@ -43,28 +58,6 @@ return {
             vim.cmd('wincmd p')
           end
         end
-      end,
-    })
-
-    -- Setup keybindings for nvim-tree buffer
-    vim.api.nvim_create_autocmd('FileType', {
-      pattern = 'NvimTree',
-      callback = function(opts)
-        local bufnr = opts.buf
-        -- Use 'O' (capital O) to open directory in oil.nvim
-        vim.keymap.set('n', 'O', function()
-          local node = api.tree.get_node_under_cursor()
-          if node then
-            local path = node.absolute_path
-            -- If it's a file, open its parent directory
-            if node.type == 'file' then
-              path = vim.fn.fnamemodify(path, ':h')
-            end
-            -- Close nvim-tree and open oil
-            api.tree.close()
-            vim.cmd('Oil ' .. path)
-          end
-        end, { buffer = bufnr, noremap = true, silent = true })
       end,
     })
   end,
