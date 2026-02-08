@@ -11,4 +11,12 @@ return {
       require('oil').setup(opts)
     end,
   },
+  {
+    dir = '~/jhconfig/nvim/lua/packages/oil_keymaps',
+    name = 'oil-keymaps',
+    event = 'VeryLazy',
+    config = function()
+      require('packages.oil_keymaps').setup()
+    end,
+  },
 }

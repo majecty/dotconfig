@@ -15,25 +15,22 @@ return {
     config = function(_, opts)
       local wk = require('which-key')
       local session = require('packages.session_manager')
+      local oil = require('packages.oil_keymaps')
       wk.setup(opts)
 
       -- Add keymaps using the new API
       wk.add({
         {
           '-',
-          '<CMD>Oil<CR>',
+          function()
+            oil.open_parent()
+          end,
           desc = 'Open parent directory',
         },
         {
           'gp',
           function()
-            local oil = require('oil')
-            local dir = oil.get_current_dir()
-            if dir then
-              vim.notify('Oil path: ' .. dir, vim.log.levels.INFO)
-            else
-              vim.notify('Not in oil.nvim buffer', vim.log.levels.WARN)
-            end
+            oil.show_path()
           end,
           desc = 'Show oil.nvim path',
         },
