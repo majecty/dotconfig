@@ -4,6 +4,9 @@
 
 local M = {}
 
+local session_dir = vim.fn.expand('~/.local/share/nvim/sessions')
+local project_dir_file = session_dir .. '/.project_paths'
+
 -- Create sessions directory if it doesn't exist
 if vim.fn.isdirectory(session_dir) == 0 then
   vim.fn.mkdir(session_dir, 'p')
