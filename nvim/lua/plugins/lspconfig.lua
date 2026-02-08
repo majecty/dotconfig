@@ -20,8 +20,17 @@ return {
           '/home/juhyung/.local/share/fnm/node-versions/v24.11.1/installation/bin/typescript-language-server',
           '--stdio',
         },
-        filetypes = { 'typescript', 'typescriptreact', 'typescript.tsx' },
+        filetypes = { 'typescript', 'typescriptreact', 'typescript.tsx', 'javascript', 'javascriptreact' },
         on_attach = on_attach,
+        init_options = {
+          preferences = {
+            quotePreference = 'single',
+            importModuleSpecifierPreference = 'relative',
+            importModuleSpecifierEnding = 'auto',
+            allowTextChangesInNewFiles = true,
+            allowRenameDefaultExport = true,
+          },
+        },
       })
 
       -- Enable typescript language server for appropriate file types

@@ -83,6 +83,28 @@ return {
           end,
           desc = 'Reload with GUI',
         },
+        { '<leader>l', group = '+lsp' },
+        {
+          '<leader>la',
+          function()
+            vim.lsp.buf.code_action()
+          end,
+          desc = 'Code actions',
+        },
+        {
+          '<leader>lr',
+          function()
+            vim.lsp.buf.rename()
+          end,
+          desc = 'Rename symbol',
+        },
+        {
+          '<leader>ld',
+          function()
+            vim.lsp.buf.definition()
+          end,
+          desc = 'Go to definition',
+        },
         { '<leader>f', group = '+file' },
         {
           '<leader>ff',
