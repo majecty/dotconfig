@@ -122,13 +122,6 @@ return {
            end,
            desc = 'Find buffers',
          },
-         {
-           '<leader>fs',
-           function()
-             require('packages.oil_utils').change_sort()
-           end,
-           desc = 'Change oil sort',
-         },
         {
           '<C-h>',
           function()
