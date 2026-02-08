@@ -125,7 +125,7 @@ return {
          {
            '<leader>fs',
            function()
-             _G.oil_change_sort()
+             require('packages.oil_utils').change_sort()
            end,
            desc = 'Change oil sort',
          },
