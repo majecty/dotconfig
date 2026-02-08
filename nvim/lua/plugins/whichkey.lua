@@ -143,6 +143,12 @@ return {
           expr = true,
           replace_keycodes = false,
         },
+        {
+          '<C-x><C-o>',
+          '<C-x><C-o>',
+          desc = 'Trigger LSP completion',
+          mode = { 'i' },
+        },
       })
     end,
   },

@@ -5,6 +5,15 @@ return {
       -- Enable LSP info logging
       vim.lsp.set_log_level('info')
 
+      -- Setup omnifunc for built-in completion
+      vim.opt.omnifunc = 'v:lua.vim.lsp.omnifunc'
+
+      -- On attach handler for LSP
+      local on_attach = function(client, bufnr)
+        -- Set omnifunc when LSP attaches
+        vim.bo[bufnr].omnifunc = 'v:lua.vim.lsp.omnifunc'
+      end
+
       -- Configure TypeScript Language Server using vim.lsp.config
       vim.lsp.config('ts_ls', {
         cmd = {
@@ -12,6 +21,7 @@ return {
           '--stdio',
         },
         filetypes = { 'typescript', 'typescriptreact', 'typescript.tsx' },
+        on_attach = on_attach,
       })
 
       -- Enable typescript language server for appropriate file types
@@ -34,6 +44,7 @@ return {
           'postcss.config.cjs',
           'postcss.config.mjs',
         },
+        on_attach = on_attach,
       })
 
       -- Enable tailwind language server
