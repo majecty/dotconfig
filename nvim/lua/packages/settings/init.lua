@@ -28,6 +28,12 @@ function M.setup()
   vim.opt.ignorecase = true
   vim.opt.smartcase = true
 
+  -- Indentation: use spaces instead of tabs, 2-space indent
+  vim.opt.expandtab = true
+  vim.opt.tabstop = 2
+  vim.opt.softtabstop = 2
+  vim.opt.shiftwidth = 2
+
   -- Minimal ctrl-s Save in all modes
   vim.keymap.set('n', '<C-s>', ':w<CR>', { silent = true })
   vim.keymap.set('i', '<C-s>', '<Esc>:w<CR>a', { silent = true })
