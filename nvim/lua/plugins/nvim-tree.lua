@@ -44,5 +44,17 @@ return {
         end
       end,
     })
+
+    -- Register keymaps with which-key
+    require('which-key').add({
+      { '<leader>e', group = '+explore' },
+      {
+        '<leader>ee',
+        function()
+          api.tree.toggle()
+        end,
+        desc = 'Toggle file tree',
+      },
+    })
   end,
 }
