@@ -3,6 +3,8 @@ return {
   lazy = false,
   dependencies = { 'nvim-tree/nvim-web-devicons' },
   config = function()
+    local api = require('nvim-tree.api')
+    
     require('nvim-tree').setup({
       view = {
         width = 30,
@@ -28,7 +30,6 @@ return {
     })
 
     -- Auto preview on cursor move
-    local api = require('nvim-tree.api')
     vim.api.nvim_create_autocmd('CursorMoved', {
       group = vim.api.nvim_create_augroup('NvimTreePreview', { clear = true }),
       callback = function()
@@ -45,19 +46,26 @@ return {
       end,
     })
 
-    -- Custom keybinding to open directory in oil.nvim
-    vim.keymap.set('n', 'o', function()
-      local node = api.tree.get_node_under_cursor()
-      if node then
-        local path = node.absolute_path
-        -- If it's a file, open its parent directory
-        if node.type == 'file' then
-          path = vim.fn.fnamemodify(path, ':h')
-        end
-        -- Close nvim-tree and open oil
-        api.tree.close()
-        vim.cmd('Oil ' .. path)
-      end
-    end, { buffer = true, noremap = true, silent = true })
+    -- Setup keybindings for nvim-tree buffer
+    vim.api.nvim_create_autocmd('FileType', {
+      pattern = 'NvimTree',
+      callback = function(opts)
+        local bufnr = opts.buf
+        -- Use 'O' (capital O) to open directory in oil.nvim
+        vim.keymap.set('n', 'O', function()
+          local node = api.tree.get_node_under_cursor()
+          if node then
+            local path = node.absolute_path
+            -- If it's a file, open its parent directory
+            if node.type == 'file' then
+              path = vim.fn.fnamemodify(path, ':h')
+            end
+            -- Close nvim-tree and open oil
+            api.tree.close()
+            vim.cmd('Oil ' .. path)
+          end
+        end, { buffer = bufnr, noremap = true, silent = true })
+      end,
+    })
   end,
 }
