@@ -1,10 +1,16 @@
-# Install TypeScript Language Server
+# install typescript language server
 
-## Status: DONE
+**Status:** Done
+**Date:** 2026-02-08
 
-- Installed typescript-language-server and typescript via npm
-- Configured nvim-lspconfig with TypeScript LSP
-- Set absolute path to typescript-language-server binary
-- Reduced LSP log level to info
+## Details
+- Installed typescript-language-server via npm
+- Configured LSP using new vim.lsp.config() API (not deprecated lspconfig)
+- Set proper absolute path to typescript-language-server binary
+- Reduced LSP log level to 'info' for better performance
+- Fixed TypeScript/JavaScript language support in Neovim
 
-## Date: 2026-02-08
+## Notes
+- Uses modern Neovim LSP API instead of deprecated lspconfig framework
+- Absolute path ensures consistent binary resolution
+- Verified via :checkhealth command

@@ -1,10 +1,15 @@
-# Fix Neovide Session Restart
+# fix neovide session restart
 
-## Status: DONE
+**Status:** Done
+**Date:** 2026-02-08
 
-- Fixed <leader>sr to properly restart Neovide with session
-- Used absolute path to neovide binary
-- Fixed environment variable handling in os.execute command
-- Added error output redirection
+## Details
+- Fixed <leader>sr keymap to properly restart Neovide with session preservation
+- Used absolute path to neovide: /home/juhyung/.cargo/bin/neovide
+- Added proper environment variable handling in os.execute()
+- Session data now persists through Neovide restart
 
-## Date: 2026-02-08
+## Notes
+- Keymap defined in whichkey.lua
+- Function implemented in session_manager module
+- Relative paths were causing issues; absolute path resolved the problem
