@@ -11,4 +11,3 @@
 - [ ] use homeserver llm
 - [ ] gcp skill to create git commit push skill
 - [ ] hyprland config make a window bigger twice
-- [ ] lua lsp make know the vim variable in opencode
