@@ -7,7 +7,7 @@ return {
         expr = true,
         replace_keycodes = false,
       })
-      vim.keymap.set('i', '<C-K>', 'copilot#Next()', {
+      vim.keymap.set('i', '<C-K>', 'copilot#Suggest()', {
         expr = true,
         replace_keycodes = false,
       })
