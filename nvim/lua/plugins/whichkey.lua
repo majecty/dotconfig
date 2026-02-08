@@ -27,7 +27,7 @@ return {
           desc = 'Find whichkey bindings',
         },
         {
-          '<leader>-',
+          '-',
           function()
             oil.open_parent()
           end,
@@ -111,6 +111,7 @@ return {
             vim.cmd('wincmd j')
           end,
           desc = 'Move down',
+          mode = { 'n' },
         },
         {
           '<C-k>',
@@ -118,6 +119,7 @@ return {
             vim.cmd('wincmd k')
           end,
           desc = 'Move up',
+          mode = { 'n' },
         },
         {
           '<C-l>',
@@ -125,6 +127,18 @@ return {
             vim.cmd('wincmd l')
           end,
           desc = 'Move right',
+        },
+        {
+          '<C-j>',
+          '<Plug>(copilot.accept)',
+          desc = 'Accept copilot suggestion',
+          mode = { 'i' },
+        },
+        {
+          '<C-k>',
+          '<Plug>(copilot.dismiss)',
+          desc = 'Dismiss copilot suggestion',
+          mode = { 'i' },
         },
       })
     end,
