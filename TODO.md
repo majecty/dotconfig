@@ -14,5 +14,5 @@
 - [ ] hyprland config make a window bigger twice
 - [ ] lua lsp make know the vim variable in opencode
 - [ ] search smartcase in nvim
-- [ ] nvim H L to move between tabs
-- [ ] kime setting
+- [x] nvim H L to move between tabs
+- [ ] update all configs to lazy nvim style
