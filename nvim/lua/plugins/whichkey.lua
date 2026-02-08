@@ -128,6 +128,18 @@ return {
           end,
           desc = 'Move right',
         },
+        {
+          '<C-j>',
+          '<Plug>(copilot.accept)',
+          desc = 'Accept copilot suggestion',
+          mode = { 'i' },
+        },
+        {
+          '<C-k>',
+          '<Plug>(copilot.dismiss)',
+          desc = 'Dismiss copilot suggestion',
+          mode = { 'i' },
+        },
       })
     end,
   },
