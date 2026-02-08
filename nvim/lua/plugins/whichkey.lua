@@ -10,16 +10,25 @@ return {
       '<C-l>',
       '-',
       'gp',
+      '<leader>?',
     },
     opts = {},
     config = function(_, opts)
       local wk = require('which-key')
       local session = require('packages.session_manager')
       local oil = require('packages.oil_keymaps')
+      local wk_bindings = require('packages.whichkey_bindings')
       wk.setup(opts)
 
       -- Add keymaps using the new API
       wk.add({
+        {
+          '<leader>?',
+          function()
+            wk_bindings.find_bindings()
+          end,
+          desc = 'Find whichkey bindings',
+        },
         {
           '-',
           function()
