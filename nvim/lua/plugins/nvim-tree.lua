@@ -3,8 +3,6 @@ return {
   lazy = false,
   dependencies = { 'nvim-tree/nvim-web-devicons' },
   config = function()
-    local api = require('nvim-tree.api')
-    
     require('nvim-tree').setup({
       view = {
         width = 30,
@@ -27,24 +25,10 @@ return {
         enable = true,
         update_cwd = true,
       },
-      on_attach = function(bufnr)
-        local opts = { buffer = bufnr, noremap = true, silent = true }
-        -- Use 'e' to open in oil.nvim
-        vim.keymap.set('n', 'e', function()
-          local node = api.tree.get_node_under_cursor()
-          if node then
-            local path = node.absolute_path
-            if node.type == 'file' then
-              path = vim.fn.fnamemodify(path, ':h')
-            end
-            api.tree.close()
-            vim.cmd('Oil ' .. path)
-          end
-        end, opts)
-      end,
     })
 
     -- Auto preview on cursor move
+    local api = require('nvim-tree.api')
     vim.api.nvim_create_autocmd('CursorMoved', {
       group = vim.api.nvim_create_augroup('NvimTreePreview', { clear = true }),
       callback = function()

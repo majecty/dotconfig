@@ -40,13 +40,29 @@ return {
           end,
           desc = 'Reload jhui plugin',
         },
-        {
-          '<leader>e',
-          function()
-            require('nvim-tree.api').tree.toggle()
-          end,
-          desc = 'Toggle file tree',
-        },
+         { '<leader>e', group = '+explore' },
+         {
+           '<leader>ee',
+           function()
+             require('nvim-tree.api').tree.toggle()
+           end,
+           desc = 'Toggle file tree',
+         },
+         {
+           '<leader>eo',
+           function()
+             local api = require('nvim-tree.api')
+             local node = api.tree.get_node_under_cursor()
+             if node then
+               local path = node.absolute_path
+               if node.type == 'file' then
+                 path = vim.fn.fnamemodify(path, ':h')
+               end
+               vim.cmd('Oil ' .. path)
+             end
+           end,
+           desc = 'Open in oil.nvim',
+         },
          { '<leader>s', group = '+session' },
          {
            '<leader>ss',
