@@ -10,4 +10,3 @@
 - [ ] autotodo: regular update of TODO.md for config changes
 - [ ] use homeserver llm
 - [ ] gcp skill to create git commit push skill
-- [ ] hyprland config make a window bigger twice
