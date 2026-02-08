@@ -18,6 +18,8 @@ applyTo: '**'
 - After each task, update TODO.md, mark completed, commit, and push.
 - Track big decisions and preferences in memory file for persistent recall.
 - Always adapt to recent user requests and structure.
+- **When ordered to complete tasks:** Remove completed [x] items from TODO.md and ensure corresponding done files exist in `.todos/done/`
+- After removing done items and adding done files, commit changes with message "remove done todo items, add done files"
 
 # User Preferences (from recent sessions)
 
