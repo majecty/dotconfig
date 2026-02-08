@@ -13,6 +13,17 @@ function M.setup()
   vim.g.loaded_netrw = 1
   vim.g.loaded_netrwPlugin = 1
 
+  -- Auto reload file when changed externally
+  vim.opt.autoread = true
+  vim.api.nvim_create_autocmd({ 'FocusGained', 'BufEnter', 'CursorHold' }, {
+    pattern = '*',
+    callback = function()
+      if vim.fn.getcmdtype() == '' then
+        vim.cmd('checktime')
+      end
+    end,
+  })
+
   -- Minimal ctrl-s Save in all modes
   vim.keymap.set('n', '<C-s>', ':w<CR>', { silent = true })
   vim.keymap.set('i', '<C-s>', '<Esc>:w<CR>a', { silent = true })
