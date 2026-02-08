@@ -7,8 +7,7 @@ return {
         expr = true,
         replace_keycodes = false,
       })
-      vim.keymap.set('i', '<C-K>', 'copilot#GetDisplayedSuggestion().is_empty ? "" : copilot#Next()', {
-        expr = true,
+      vim.keymap.set('i', '<C-K>', 'copilot#Next()', {
         silent = true,
       })
       vim.g.copilot_no_tab_map = true
