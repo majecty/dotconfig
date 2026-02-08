@@ -44,5 +44,20 @@ return {
         end
       end,
     })
+
+    -- Custom keybinding to open directory in oil.nvim
+    vim.keymap.set('n', 'o', function()
+      local node = api.tree.get_node_under_cursor()
+      if node then
+        local path = node.absolute_path
+        -- If it's a file, open its parent directory
+        if node.type == 'file' then
+          path = vim.fn.fnamemodify(path, ':h')
+        end
+        -- Close nvim-tree and open oil
+        api.tree.close()
+        vim.cmd('Oil ' .. path)
+      end
+    end, { buffer = true, noremap = true, silent = true })
   end,
 }
