@@ -62,17 +62,19 @@ return {
           end,
           desc = 'Load session',
         },
-        {
-          '<leader>sr',
-          function()
-            local cwd = vim.fn.getcwd()
-            _G.nvim_session.save()
-            vim.cmd('sleep 100m')
-            os.execute("cd '" .. cwd .. "' && neovide &")
-            vim.cmd('qa!')
-          end,
-          desc = 'Reload with GUI',
-        },
+         {
+           '<leader>sr',
+           function()
+             local cwd = vim.fn.getcwd()
+             _G.nvim_session.save()
+             vim.cmd('sleep 100m')
+             local cmd = "cd '" .. cwd:gsub("'", "'\\''") .. "' && /home/juhyung/.cargo/bin/neovide > /dev/null 2>&1 &"
+             vim.notify('Starting Neovide: ' .. cmd, vim.log.levels.INFO)
+             os.execute(cmd)
+             vim.cmd('qa!')
+           end,
+           desc = 'Reload with GUI',
+         },
         {
           '<leader>E',
           function()

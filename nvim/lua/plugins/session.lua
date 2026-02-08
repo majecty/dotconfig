@@ -233,8 +233,13 @@ local function setup_auto_load()
         local session_filename = get_session_filename(project_info)
         local session_path = session_dir .. '/' .. session_filename .. '.vim'
         if vim.fn.filereadable(session_path) == 1 then
+          vim.notify('Loading session: ' .. session_filename, vim.log.levels.INFO)
           vim.cmd('source ' .. session_path)
+        else
+          vim.notify('No session found at: ' .. session_path, vim.log.levels.WARN)
         end
+      else
+        vim.notify('Not in git directory: ' .. project_info.path, vim.log.levels.WARN)
       end
     end,
     once = true, -- Only run once on startup
