@@ -1,0 +1,30 @@
+#!/bin/bash
+
+# XDG 환경 변수 디버깅 스크립트
+LOG_FILE="/home/juhyung/.log/wofi-debug.log"
+
+{
+    echo "=== wofi menu debug session ==="
+    echo "Timestamp: $(date '+%Y-%m-%d %H:%M:%S')"
+    echo ""
+    echo "Current XDG_DATA_DIRS: $XDG_DATA_DIRS"
+    echo "Current XDG_CONFIG_HOME: $XDG_CONFIG_HOME"
+    echo "Current XDG_CACHE_HOME: $XDG_CACHE_HOME"
+    echo ""
+    echo "Modified XDG_DATA_DIRS: $XDG_DATA_DIRS:/home/juhyung/.local/share"
+    echo ""
+    echo "Desktop files locations to be searched:"
+    env XDG_DATA_DIRS="$XDG_DATA_DIRS:/home/juhyung/.local/share" printenv XDG_DATA_DIRS | tr ':' '\n'
+    echo ""
+    echo "Actual desktop files found:"
+    for dir in $(env XDG_DATA_DIRS="$XDG_DATA_DIRS:/home/juhyung/.local/share" printenv XDG_DATA_DIRS | tr ':' '\n'); do
+        if [ -d "$dir/applications" ]; then
+            echo "  From $dir/applications:"
+            ls "$dir/applications"/*.desktop 2>/dev/null | wc -l
+        fi
+    done
+    echo "---"
+} >> "$LOG_FILE"
+
+# wofi 실행
+env XDG_DATA_DIRS="$XDG_DATA_DIRS:/home/juhyung/.local/share" wofi --show drun
