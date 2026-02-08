@@ -122,27 +122,6 @@ return {
            end,
            desc = 'Find buffers',
          },
-         {
-           '<leader>fs',
-           function()
-             local sort_methods = {
-               'basename',
-               'modification_time',
-               'type',
-             }
-             require('fzf-lua').fzf_exec(sort_methods, {
-               prompt = 'Oil sort method> ',
-               actions = {
-                 default = function(selected)
-                   local method = selected[1]
-                   require('oil').set_sort(method)
-                   vim.notify('Oil sort changed to: ' .. method, vim.log.levels.INFO)
-                 end,
-               },
-             })
-           end,
-           desc = 'Change oil sort',
-         },
         {
           '<C-h>',
           function()
