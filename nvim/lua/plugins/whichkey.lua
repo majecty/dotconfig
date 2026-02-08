@@ -12,6 +12,7 @@ return {
     opts = {},
     config = function(_, opts)
       local wk = require('which-key')
+      local session = require('packages.session_manager')
       wk.setup(opts)
 
       -- Add keymaps using the new API
@@ -28,28 +29,28 @@ return {
         {
           '<leader>ss',
           function()
-            _G.nvim_session.save()
+            session.save()
           end,
           desc = 'Save session',
         },
         {
           '<leader>sl',
           function()
-            _G.nvim_session.load_picker()
+            session.load_picker()
           end,
           desc = 'Load session',
         },
         {
           '<leader>st',
           function()
-            _G.session_tmux_attach()
+            session.tmux_attach()
           end,
           desc = 'Tmux attach/create session',
         },
         {
           '<leader>sr',
           function()
-            _G.session_neovide_restart()
+            session.neovide_restart()
           end,
           desc = 'Reload with GUI',
         },
