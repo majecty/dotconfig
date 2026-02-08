@@ -1,6 +1,6 @@
 {
   "LazyVim": { "branch": "main", "commit": "c64a61734fc9d45470a72603395c02137802bc6f" },
-  "fzf-lua": { "branch": "main", "commit": "ec3fe3d9587005a995a00d55ea424bfc924eaf3e" },
+  "fzf-lua": { "branch": "main", "commit": "a3508e89f1662bd8d57ece727343fce4202bdf38" },
   "lazy.nvim": { "branch": "main", "commit": "306a05526ada86a7b30af95c5cc81ffba93fef97" },
   "lualine.nvim": { "branch": "master", "commit": "47f91c416daef12db467145e16bed5bbfe00add8" },
   "mini.icons": { "branch": "main", "commit": "efc85e42262cd0c9e1fdbf806c25cb0be6de115c" },
