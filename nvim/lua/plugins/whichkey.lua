@@ -43,9 +43,9 @@ return {
         {
           '<leader>e',
           function()
-            vim.cmd('e .')
+            vim.cmd('e')
           end,
-          desc = 'Open current directory',
+          desc = 'Open file dialog',
         },
         {
           '<leader>E',
