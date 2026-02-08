@@ -248,6 +248,31 @@ end
 
 setup_auto_load()
 
+-- Function to attach tmux session
+local function tmux_attach()
+  local project_info = get_project_info()
+  local session_name = project_info.name
+  
+  -- Create tmux session if it doesn't exist
+  local cmd = "tmux has-session -t " .. session_name .. " 2>/dev/null || tmux new-session -d -s " .. session_name .. " -c " .. project_info.path
+  os.execute(cmd)
+  
+  -- Open terminal at bottom
+  vim.cmd('split | terminal tmux attach-session -t ' .. session_name)
+  vim.cmd('resize 15')
+end
+
+-- Function to restart with neovide
+local function neovide_restart()
+  local cwd = vim.fn.getcwd()
+  save_session()
+  vim.cmd('sleep 100m')
+  local cmd = "cd '" .. cwd:gsub("'", "'\\''") .. "' && /home/juhyung/.cargo/bin/neovide > /dev/null 2>&1 &"
+  vim.notify('Starting Neovide: ' .. cmd, vim.log.levels.INFO)
+  os.execute(cmd)
+  vim.cmd('qa!')
+end
+
 -- Expose functions for which-key
 _G.nvim_session = {
   save = save_session,
@@ -260,53 +285,8 @@ _G.nvim_session = {
   get_project_info = get_project_info,
 }
 
--- Register keymaps with which-key
-require('which-key').add({
-  { '<leader>s', group = '+session' },
-  {
-    '<leader>ss',
-    function()
-      save_session()
-    end,
-    desc = 'Save session',
-  },
-  {
-    '<leader>sl',
-    function()
-      load_session_with_picker()
-    end,
-    desc = 'Load session',
-  },
-  {
-    '<leader>st',
-    function()
-      local project_info = get_project_info()
-      local session_name = project_info.name
-      
-      -- Create tmux session if it doesn't exist
-      local cmd = "tmux has-session -t " .. session_name .. " 2>/dev/null || tmux new-session -d -s " .. session_name .. " -c " .. project_info.path
-      os.execute(cmd)
-      
-      -- Open terminal at bottom
-      vim.cmd('split | terminal tmux attach-session -t ' .. session_name)
-      vim.cmd('resize 15')
-    end,
-    desc = 'Tmux attach/create session',
-  },
-  {
-    '<leader>sr',
-    function()
-      local cwd = vim.fn.getcwd()
-      save_session()
-      vim.cmd('sleep 100m')
-      local cmd = "cd '" .. cwd:gsub("'", "'\\''") .. "' && /home/juhyung/.cargo/bin/neovide > /dev/null 2>&1 &"
-      vim.notify('Starting Neovide: ' .. cmd, vim.log.levels.INFO)
-      os.execute(cmd)
-      vim.cmd('qa!')
-    end,
-    desc = 'Reload with GUI',
-  },
-})
+_G.session_tmux_attach = tmux_attach
+_G.session_neovide_restart = neovide_restart
 
 -- Return as empty plugin spec - session setup is all done above
 return {}

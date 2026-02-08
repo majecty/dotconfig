@@ -21,25 +21,6 @@ return {
           },
         },
       })
-
-      -- Register keymaps with which-key
-      require('which-key').add({
-        { '<leader>f', group = '+file' },
-        {
-          '<leader>ff',
-          function()
-            fzf.files()
-          end,
-          desc = 'Find files',
-        },
-        {
-          '<leader>fb',
-          function()
-            fzf.buffers()
-          end,
-          desc = 'Find buffers',
-        },
-      })
     end,
   },
 }
