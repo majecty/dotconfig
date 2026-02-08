@@ -53,6 +53,7 @@ git add -A && git commit -m "[message describing the change]"
 - **Plugin files** (`nvim/lua/plugins/`): Plugin setup and configuration only
 - **Package files** (`nvim/lua/packages/`): Shared functionality and utilities
 - **No global variables**: Use `require()` to import modules instead of `_G`
+- **Absolute paths**: Always use absolute paths for executables (neovide, etc.)
 
 ### Function Placement
 - **whichkey.lua**: 
@@ -63,6 +64,14 @@ git add -A && git commit -m "[message describing the change]"
   - Function implementations
   - Helper functions
   - Module exports via `return M`
+
+### Critical Rules
+- ❌ NEVER define functions in whichkey.lua
+- ❌ NEVER use _G global variables
+- ❌ NEVER use relative paths for executables
+- ✅ ALWAYS use require() for module imports
+- ✅ ALWAYS use absolute paths (e.g., `/home/juhyung/.cargo/bin/neovide`)
+- ✅ ALWAYS separate concerns into individual files
 
 ### Module Pattern
 Create modules for complex functionality:

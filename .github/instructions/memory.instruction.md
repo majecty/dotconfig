@@ -31,6 +31,19 @@ applyTo: '**'
 - **All configs managed from ~/jhconfig directory** (nvim and others symlinked/referenced there)
 - **OpenCode configs and skills are in ~/jhconfig/.opencode/** (skills, SKILL.md files)
 
+# Learning from Recent Sessions
+
+## Code Organization Principles
+- NEVER use global variables (_G) - Always use require() modules
+- whichkey.lua ONLY for keymaps - Never define functions there
+- One concern per file - Functions in respective modules (packages/)
+- Absolute paths for executables - Relative paths cause bugs
+
+## Validation Process
+- Always run :checkhealth after LSP changes
+- Run stylua --check before commits
+- Test with nvim --headless -c 'checkhealth'
+
 # How to Manage This Memory File
 
 - **Location:** `.github/instructions/memory.instruction.md`
