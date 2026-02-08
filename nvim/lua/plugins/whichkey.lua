@@ -8,9 +8,6 @@ return {
       '<C-j>',
       '<C-k>',
       '<C-l>',
-      '-',
-      'gp',
-      '<leader>?',
     },
     opts = {},
     config = function(_, opts)
@@ -30,22 +27,28 @@ return {
           desc = 'Find whichkey bindings',
         },
         {
-          '-',
+          '<leader>-',
           function()
             oil.open_parent()
           end,
           desc = 'Open parent directory',
         },
         {
-          'gp',
+          '<leader>p',
           function()
             oil.show_path()
           end,
           desc = 'Show oil.nvim path',
         },
-        { '<leader>e', group = '+explore' },
         {
-          '<leader>ee',
+          '<leader>e',
+          function()
+            vim.cmd('e .')
+          end,
+          desc = 'Open current directory',
+        },
+        {
+          '<leader>E',
           function()
             require('nvim-tree.api').tree.toggle()
           end,
@@ -127,4 +130,3 @@ return {
     end,
   },
 }
-
