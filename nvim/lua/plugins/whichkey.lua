@@ -47,21 +47,33 @@ return {
           end,
           desc = 'Toggle file tree',
         },
-        { '<leader>s', group = '+session' },
-        {
-          '<leader>ss',
-          function()
-            _G.nvim_session.save()
-          end,
-          desc = 'Save session',
-        },
-        {
-          '<leader>sl',
-          function()
-            _G.nvim_session.load_picker()
-          end,
-          desc = 'Load session',
-        },
+         { '<leader>s', group = '+session' },
+         {
+           '<leader>ss',
+           function()
+             _G.nvim_session.save()
+           end,
+           desc = 'Save session',
+         },
+         {
+           '<leader>sl',
+           function()
+             _G.nvim_session.load_picker()
+           end,
+           desc = 'Load session',
+         },
+         {
+           '<leader>st',
+           function()
+             local project_info = _G.nvim_session.get_project_info()
+             local session_name = project_info.name
+             
+             -- Open terminal at bottom
+             vim.cmd('split | terminal tmux attach-session -t ' .. session_name)
+             vim.cmd('resize 15')
+           end,
+           desc = 'Tmux attach session',
+         },
          {
            '<leader>sr',
            function()
