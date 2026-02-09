@@ -105,6 +105,14 @@ return {
           end,
           desc = 'Go to definition',
         },
+        { '<leader>g', group = '+git' },
+        {
+          '<leader>gg',
+          function()
+            vim.cmd('Git')
+          end,
+          desc = 'Open fugitive',
+        },
         { '<leader>f', group = '+file' },
         {
           '<leader>ff',
