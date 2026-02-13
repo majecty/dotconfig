@@ -125,6 +125,11 @@ local function load_session_from_file(session_filename, display_name)
 
     vim.cmd('source ' .. session_path)
     vim.notify('Session loaded: ' .. display_name, vim.log.levels.INFO)
+
+    -- Reconnect tmux terminal buffers
+    vim.schedule(function()
+      reconnect_tmux_terminals()
+    end)
   else
     vim.notify('Session not found: ' .. display_name, vim.log.levels.WARN)
   end
@@ -250,15 +255,56 @@ end
 
 setup_auto_load()
 
+-- Helper function to reconnect tmux terminals after session load
+local function reconnect_tmux_terminals()
+  local buf_list = vim.api.nvim_list_bufs()
+
+  for _, buf in ipairs(buf_list) do
+    local bufname = vim.api.nvim_buf_get_name(buf)
+    -- Check if buffer is a terminal with tmux attach command
+    if bufname:match('term://.*tmux%s+attach%-session') then
+      -- Extract session name from buffer name
+      local session_name = bufname:match('tmux%s+attach%-session%s+%-t%s+([%w_-]+)')
+
+      if session_name then
+        -- Check if tmux session exists
+        local check_cmd = 'tmux has-session -t ' .. session_name .. ' 2>/dev/null'
+        local result = os.execute(check_cmd)
+
+        if result == 0 then
+          -- Session exists, replace terminal buffer with new terminal
+          local project_info = get_project_info()
+          vim.api.nvim_buf_call(buf, function()
+            -- Delete the dead terminal and create new one
+            local winid = vim.fn.bufwinid(buf)
+            if winid > 0 then
+              vim.api.nvim_win_call(winid, function()
+                vim.cmd('bdelete!')
+                vim.cmd('split | terminal tmux attach-session -t ' .. session_name)
+                vim.cmd('resize 15')
+              end)
+            end
+          end)
+        end
+      end
+    end
+  end
+end
+
 -- Function to attach tmux session
 local function tmux_attach()
   local project_info = get_project_info()
   local session_name = project_info.name
-  
+
   -- Create tmux session if it doesn't exist
-  local cmd = "tmux has-session -t " .. session_name .. " 2>/dev/null || tmux new-session -d -s " .. session_name .. " -c " .. project_info.path
+  local cmd = 'tmux has-session -t '
+    .. session_name
+    .. ' 2>/dev/null || tmux new-session -d -s '
+    .. session_name
+    .. ' -c '
+    .. project_info.path
   os.execute(cmd)
-  
+
   -- Open terminal at bottom
   vim.cmd('split | terminal tmux attach-session -t ' .. session_name)
   vim.cmd('resize 15')
