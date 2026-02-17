@@ -14,6 +14,40 @@ return {
         vim.bo[bufnr].omnifunc = 'v:lua.vim.lsp.omnifunc'
       end
 
+      -- Get mason binary path helper
+      local get_mason_bin = function(binary)
+        return vim.fn.stdpath('data') .. '/mason/bin/' .. binary
+      end
+
+      -- Configure Lua Language Server
+      vim.lsp.config('lua_ls', {
+        cmd = { get_mason_bin('lua-language-server') },
+        filetypes = { 'lua' },
+        on_attach = on_attach,
+        settings = {
+          Lua = {
+            diagnostics = {
+              globals = { 'vim', 'require' },
+            },
+            workspace = {
+              library = {
+                vim.fn.expand('$VIMRUNTIME/lua'),
+                vim.fn.expand('$VIMRUNTIME/lua/vim'),
+                vim.fn.expand('$VIMRUNTIME/lua/vim/lsp'),
+              },
+              maxPreload = 100000,
+              preloadFileSize = 10000,
+            },
+            telemetry = {
+              enable = false,
+            },
+          },
+        },
+      })
+
+      -- Enable lua language server
+      vim.lsp.enable('lua_ls')
+
       -- Configure TypeScript Language Server using vim.lsp.config
       vim.lsp.config('ts_ls', {
         cmd = {
