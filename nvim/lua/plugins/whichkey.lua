@@ -18,6 +18,7 @@ return {
       local neovide_restart_cmd = require('packages.session_manager.commands.neovide_restart_cmd')
       local oil = require('packages.oil_keymaps')
       local wk_bindings = require('packages.whichkey_bindings')
+      local copy_location = require('packages.copy_location')
       wk.setup(opts)
 
       -- Add keymaps using the new API
@@ -36,6 +37,14 @@ return {
             wk_bindings.find_bindings()
           end,
           desc = 'Find whichkey bindings',
+        },
+        {
+          '<leader>cl',
+          function()
+            copy_location.copy_location()
+          end,
+          desc = 'Copy visual block location',
+          mode = { 'v' },
         },
         {
           '<leader>o',
