@@ -163,6 +163,14 @@ return {
           end,
           desc = 'Create new tab',
         },
+        { '<leader>w', group = '+window' },
+        {
+          '<leader>w=',
+          function()
+            vim.cmd('wincmd =')
+          end,
+          desc = 'Equalize window sizes',
+        },
         { '<leader>c', group = '+copilot' },
         {
           '<leader>cs',
