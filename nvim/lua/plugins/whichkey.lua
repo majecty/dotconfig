@@ -19,6 +19,7 @@ return {
       local oil = require('packages.oil_keymaps')
       local wk_bindings = require('packages.whichkey_bindings')
       local copy_location = require('packages.copy_location')
+      local neovide_font = require('packages.neovide_font')
       wk.setup(opts)
 
       -- Add keymaps using the new API
@@ -257,6 +258,20 @@ return {
           '<C-x><C-o>',
           desc = 'Trigger LSP completion',
           mode = { 'i' },
+        },
+        {
+          '<C-+>',
+          function()
+            neovide_font.increase_font()
+          end,
+          desc = 'Increase font size',
+        },
+        {
+          '<C-->',
+          function()
+            neovide_font.decrease_font()
+          end,
+          desc = 'Decrease font size',
         },
       })
     end,
