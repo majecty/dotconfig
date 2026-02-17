@@ -96,6 +96,11 @@ function M.send_and_close()
   -- Switch to terminal buffer
   vim.api.nvim_set_current_buf(source_terminal_buf)
 
+  -- Close scratch window
+  if scratch_win and vim.api.nvim_win_is_valid(scratch_win) then
+    vim.api.nvim_win_close(scratch_win, true)
+  end
+
   -- Close scratch buffer
   vim.api.nvim_buf_delete(scratch_buf, { force = true })
   scratch_buf = nil
