@@ -4,6 +4,7 @@ Session.vim
 secret.sh
 .DS_Store
 .aider*
+.config/opencode/node_modules
 
 Cargo.lock
 target/
