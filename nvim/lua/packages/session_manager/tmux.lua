@@ -54,7 +54,10 @@ local function process_tmux_buffer(buf, bufname)
 
     vim.api.nvim_win_call(winid, function()
       log.debug('Deleting old terminal buffer')
-      vim.cmd('bdelete!')
+      local ok, err = pcall(vim.cmd, 'bdelete!')
+      if not ok then
+        log.warn('Failed to delete buffer: ' .. tostring(err))
+      end
       log.debug('Creating new tmux terminal')
       vim.cmd('split | terminal tmux attach-session -t ' .. session_name)
       vim.cmd('resize 15')
