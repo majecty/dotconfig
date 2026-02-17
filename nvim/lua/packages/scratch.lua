@@ -25,9 +25,12 @@ function M.create_scratch()
   vim.api.nvim_set_option_value('buftype', 'nofile', { buf = scratch_buf })
   vim.api.nvim_set_option_value('filetype', 'text', { buf = scratch_buf })
 
-  -- Open in current window
-  vim.api.nvim_set_current_buf(scratch_buf)
+  -- Create split window
+  vim.cmd('split')
   scratch_win = vim.api.nvim_get_current_win()
+
+  -- Open scratch buffer in the split window
+  vim.api.nvim_set_current_buf(scratch_buf)
 end
 
 function M.toggle_scratch()
