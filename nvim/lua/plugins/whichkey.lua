@@ -8,6 +8,7 @@ return {
       '<C-j>',
       '<C-k>',
       '<C-l>',
+      '<C-;>',
     },
     opts = {},
     config = function(_, opts)
@@ -20,6 +21,7 @@ return {
       local wk_bindings = require('packages.whichkey_bindings')
       local copy_location = require('packages.copy_location')
       local neovide_font = require('packages.neovide_font')
+      local scratch = require('packages.scratch')
       wk.setup(opts)
 
       -- Add keymaps using the new API
@@ -287,6 +289,13 @@ return {
             neovide_font.decrease_font()
           end,
           desc = 'Decrease font size',
+        },
+        {
+          '<C-;>',
+          function()
+            scratch.toggle_scratch()
+          end,
+          desc = 'Toggle scratch buffer / Send to terminal',
         },
       })
     end,
