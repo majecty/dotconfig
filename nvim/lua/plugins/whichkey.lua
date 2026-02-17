@@ -250,6 +250,13 @@ return {
           desc = 'Window/Tab playground',
         },
         {
+          '<leader>yl',
+          function()
+            vim.cmd('LuaPlayground')
+          end,
+          desc = 'Lua code playground',
+        },
+        {
           '<C-h>',
           function()
             vim.cmd('wincmd h')
