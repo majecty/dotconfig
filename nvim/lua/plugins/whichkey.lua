@@ -12,7 +12,10 @@ return {
     opts = {},
     config = function(_, opts)
       local wk = require('which-key')
-      local session = require('packages.session_manager')
+      local save_cmd = require('packages.session_manager.commands.save_cmd')
+      local load_picker_cmd = require('packages.session_manager.commands.load_picker_cmd')
+      local tmux_attach_cmd = require('packages.session_manager.commands.tmux_attach_cmd')
+      local neovide_restart_cmd = require('packages.session_manager.commands.neovide_restart_cmd')
       local oil = require('packages.oil_keymaps')
       local wk_bindings = require('packages.whichkey_bindings')
       wk.setup(opts)
@@ -81,28 +84,28 @@ return {
         {
           '<leader>ss',
           function()
-            session.save()
+            save_cmd.save_session_cmd()
           end,
           desc = 'Save session',
         },
         {
           '<leader>sl',
           function()
-            session.load_picker()
+            load_picker_cmd.load_session_picker_cmd()
           end,
           desc = 'Load session',
         },
         {
           '<leader>st',
           function()
-            session.tmux_attach()
+            tmux_attach_cmd.tmux_attach_cmd()
           end,
           desc = 'Tmux attach/create session',
         },
         {
           '<leader>sr',
           function()
-            session.neovide_restart()
+            neovide_restart_cmd.neovide_restart_cmd()
           end,
           desc = 'Reload with GUI',
         },
