@@ -105,6 +105,13 @@ return {
           end,
           desc = 'Go to definition',
         },
+        {
+          '<leader>lf',
+          function()
+            vim.lsp.buf.references()
+          end,
+          desc = 'Find references',
+        },
         { '<leader>g', group = '+git' },
         {
           '<leader>gg',
