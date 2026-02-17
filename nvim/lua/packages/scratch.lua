@@ -50,6 +50,9 @@ function M.create_scratch()
 
   -- Open scratch buffer in the split window
   vim.api.nvim_set_current_buf(scratch_buf)
+
+  -- Enter insert mode
+  vim.cmd('startinsert')
 end
 
 function M.toggle_scratch()
