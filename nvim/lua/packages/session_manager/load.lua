@@ -148,22 +148,6 @@ function M.load_session()
   end
 end
 
--- Auto-load session on startup if it exists
-function M.auto_load_session()
-  local project_info = utils.get_project_info()
-  local session_filename = utils.get_session_filename(project_info)
-  local session_path = utils.session_dir .. '/' .. session_filename .. '.vim'
-
-  if vim.fn.filereadable(session_path) ~= 1 then
-    return
-  end
-
-  local ok, err = pcall(vim.cmd, 'source ' .. session_path)
-  if not ok then
-    log.error('Failed to auto-load session: ' .. tostring(err))
-  end
-end
-
 -- Setup auto-load session on startup if it exists (silently)
 function M.setup_auto_load()
   local group = vim.api.nvim_create_augroup('NvimSessionAutoLoad', { clear = true })
