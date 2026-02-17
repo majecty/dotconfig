@@ -199,6 +199,13 @@ return {
           desc = 'Find help tags',
         },
         {
+          '<leader>fi',
+          function()
+            require('fzf-lua').builtin()
+          end,
+          desc = 'FZF-lua builtin',
+        },
+        {
           '<C-h>',
           function()
             vim.cmd('wincmd h')
