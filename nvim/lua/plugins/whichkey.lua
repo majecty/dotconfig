@@ -229,27 +229,6 @@ return {
         },
         { '<leader>y', group = '+learn' },
         {
-          '<leader>ys',
-          function()
-            vim.cmd('SplitPlayground')
-          end,
-          desc = 'Split playground',
-        },
-        {
-          '<leader>yb',
-          function()
-            vim.cmd('BufferPlayground')
-          end,
-          desc = 'Buffer playground',
-        },
-        {
-          '<leader>yw',
-          function()
-            vim.cmd('WindowPlayground')
-          end,
-          desc = 'Window/Tab playground',
-        },
-        {
           '<leader>yl',
           function()
             vim.cmd('LuaPlayground')
