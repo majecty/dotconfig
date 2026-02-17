@@ -81,6 +81,9 @@ function M.send_and_close()
   vim.api.nvim_chan_send(vim.bo[terminal_buf].channel, content .. '\n')
   vim.notify('Sent to terminal', vim.log.levels.INFO)
 
+  -- Switch to terminal buffer
+  vim.api.nvim_set_current_buf(terminal_buf)
+
   -- Close scratch buffer
   vim.api.nvim_buf_delete(scratch_buf, { force = true })
   scratch_buf = nil
