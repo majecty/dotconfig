@@ -4,7 +4,6 @@
 
 ---@class SessionManager
 ---@field save fun(): nil
----@field load fun(): nil
 ---@field load_picker fun(): nil
 ---@field auto_save_silent fun(): nil
 ---@field list fun(): string[]
@@ -29,7 +28,6 @@ log.info('Session Manager initialized with session directory: ' .. utils.session
 
 -- Module functions
 M.save = save.save_session
-M.load = load.load_session
 M.load_picker = load.load_session_with_picker
 M.auto_save_silent = save.auto_save_session_silent
 M.list = utils.list_sessions

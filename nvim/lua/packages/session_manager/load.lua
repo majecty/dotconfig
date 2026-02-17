@@ -128,26 +128,6 @@ function M.load_session_with_picker()
   end)
 end
 
--- Load session for current project
-function M.load_session()
-  local project_info = utils.get_project_info()
-  local session_filename = utils.get_session_filename(project_info)
-  local session_path = utils.session_dir .. '/' .. session_filename .. '.vim'
-
-  if vim.fn.filereadable(session_path) ~= 1 then
-    log.warn('No session found for: ' .. project_info.name)
-    return
-  end
-
-  local ok, err = pcall(function()
-    M.load_session_from_file(session_filename, project_info.name)
-  end)
-  if not ok then
-    log.error('Error loading session: ' .. tostring(err))
-    vim.notify('Error loading session: ' .. tostring(err), vim.log.levels.ERROR)
-  end
-end
-
 -- Setup auto-load session on startup if it exists (silently)
 function M.setup_auto_load()
   local group = vim.api.nvim_create_augroup('NvimSessionAutoLoad', { clear = true })
