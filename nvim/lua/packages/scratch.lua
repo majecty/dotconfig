@@ -104,11 +104,6 @@ function M.send_and_close()
   local lines = vim.api.nvim_buf_get_lines(scratch_buf, 0, -1, false)
   local content = table.concat(lines, '\n')
 
-  if content == '' then
-    vim.notify('Scratch buffer is empty', vim.log.levels.WARN)
-    return
-  end
-
   -- Send content to remembered terminal
   vim.api.nvim_chan_send(vim.bo[source_terminal_buf].channel, content .. '\n')
   vim.notify('Sent to terminal', vim.log.levels.INFO)

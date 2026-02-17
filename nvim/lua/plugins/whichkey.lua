@@ -22,6 +22,8 @@ return {
       local copy_location = require('packages.copy_location')
       local neovide_font = require('packages.neovide_font')
       local scratch = require('packages.scratch')
+      local playground = require('packages.playground')
+      playground.setup()
       wk.setup(opts)
 
       -- Add keymaps using the new API
@@ -224,6 +226,28 @@ return {
             require('fzf-lua').builtin()
           end,
           desc = 'FZF-lua builtin',
+        },
+        { '<leader>pg', group = '+playground' },
+        {
+          '<leader>pgs',
+          function()
+            vim.cmd('SplitPlayground')
+          end,
+          desc = 'Split playground',
+        },
+        {
+          '<leader>pgb',
+          function()
+            vim.cmd('BufferPlayground')
+          end,
+          desc = 'Buffer playground',
+        },
+        {
+          '<leader>pgw',
+          function()
+            vim.cmd('WindowPlayground')
+          end,
+          desc = 'Window/Tab playground',
         },
         {
           '<C-h>',
