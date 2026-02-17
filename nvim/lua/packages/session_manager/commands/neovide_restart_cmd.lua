@@ -1,10 +1,10 @@
 -- Neovide restart command
-local tmux = require('packages.session_manager.tmux')
+local terminal = require('packages.session_manager.terminal')
 
 local M = {}
 
 function M.neovide_restart_cmd()
-  tmux.neovide_restart()
+  terminal.neovide_restart()
 end
 
 return M

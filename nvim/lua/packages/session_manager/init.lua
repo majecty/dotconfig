@@ -7,6 +7,8 @@ local log = require('packages.session_manager.log')
 local utils = require('packages.session_manager.utils')
 local save = require('packages.session_manager.save')
 local load = require('packages.session_manager.load')
+local tmux = require('packages.session_manager.tmux')
+local terminal = require('packages.session_manager.terminal')
 
 log.info('Session Manager initialized with session directory: ' .. utils.session_dir)
 
