@@ -20,6 +20,14 @@ return {
       -- Add keymaps using the new API
       wk.add({
         {
+          '<leader>m',
+          function()
+            vim.cmd('tabnew')
+            vim.cmd('messages')
+          end,
+          desc = 'Open messages in new tab',
+        },
+        {
           '<leader>?',
           function()
             wk_bindings.find_bindings()
