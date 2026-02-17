@@ -112,6 +112,14 @@ return {
           end,
           desc = 'Find references',
         },
+        { '<leader>t', group = '+tab' },
+        {
+          '<leader>tn',
+          function()
+            vim.cmd('tabnew')
+          end,
+          desc = 'Create new tab',
+        },
         { '<leader>g', group = '+git' },
         {
           '<leader>gg',
