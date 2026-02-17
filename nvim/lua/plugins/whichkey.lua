@@ -185,6 +185,13 @@ return {
           desc = 'Find text in repo',
         },
         {
+          '<leader>fh',
+          function()
+            require('fzf-lua').help_tags()
+          end,
+          desc = 'Find help tags',
+        },
+        {
           '<C-h>',
           function()
             vim.cmd('wincmd h')
