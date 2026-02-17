@@ -3,6 +3,7 @@
 -- Session naming: project-name-md5hash.vim (MD5 hash of full project path)
 
 local M = {}
+local log = require('packages.session_manager.log')
 
 local session_dir = vim.fn.expand('~/.local/share/nvim/sessions')
 local project_dir_file = session_dir .. '/.project_paths'
@@ -257,59 +258,59 @@ setup_auto_load()
 
 -- Helper function to reconnect tmux terminals after session load
 local function reconnect_tmux_terminals()
-  vim.notify('[DEBUG] reconnect_tmux_terminals: Starting', vim.log.levels.DEBUG)
+  log.debug('reconnect_tmux_terminals: Starting')
   local buf_list = vim.api.nvim_list_bufs()
-  vim.notify('[DEBUG] reconnect_tmux_terminals: Found ' .. #buf_list .. ' buffers', vim.log.levels.DEBUG)
+  log.debug('Found ' .. #buf_list .. ' buffers')
 
   for _, buf in ipairs(buf_list) do
     local bufname = vim.api.nvim_buf_get_name(buf)
-    vim.notify('[DEBUG] Checking buffer: ' .. bufname, vim.log.levels.DEBUG)
-    
+    log.trace('Checking buffer: ' .. bufname)
+
     -- Check if buffer is a terminal with tmux attach command
     if bufname:match('term://.*tmux%s+attach%-session') then
-      vim.notify('[DEBUG] Found tmux terminal buffer: ' .. bufname, vim.log.levels.INFO)
-      
+      log.info('Found tmux terminal buffer: ' .. bufname)
+
       -- Extract session name from buffer name
       local session_name = bufname:match('tmux%s+attach%-session%s+%-t%s+([%w_-]+)')
-      vim.notify('[DEBUG] Extracted session name: ' .. (session_name or 'nil'), vim.log.levels.DEBUG)
+      log.debug('Extracted session name: ' .. (session_name or 'nil'))
 
       if session_name then
         -- Check if tmux session exists
         local check_cmd = 'tmux has-session -t ' .. session_name .. ' 2>/dev/null'
-        vim.notify('[DEBUG] Checking tmux session with: ' .. check_cmd, vim.log.levels.DEBUG)
+        log.debug('Checking tmux session with: ' .. check_cmd)
         local result = os.execute(check_cmd)
-        vim.notify('[DEBUG] tmux check result: ' .. tostring(result), vim.log.levels.DEBUG)
+        log.debug('tmux check result: ' .. tostring(result))
 
         if result == 0 then
-          vim.notify('[DEBUG] Session exists, reconnecting: ' .. session_name, vim.log.levels.INFO)
+          log.info('Session exists, reconnecting: ' .. session_name)
           -- Session exists, replace terminal buffer with new terminal
           local project_info = get_project_info()
           vim.api.nvim_buf_call(buf, function()
             -- Delete the dead terminal and create new one
             local winid = vim.fn.bufwinid(buf)
-            vim.notify('[DEBUG] Window ID: ' .. tostring(winid), vim.log.levels.DEBUG)
+            log.debug('Window ID: ' .. tostring(winid))
             if winid > 0 then
               vim.api.nvim_win_call(winid, function()
-                vim.notify('[DEBUG] Deleting old terminal buffer', vim.log.levels.DEBUG)
+                log.debug('Deleting old terminal buffer')
                 vim.cmd('bdelete!')
-                vim.notify('[DEBUG] Creating new tmux terminal', vim.log.levels.DEBUG)
+                log.debug('Creating new tmux terminal')
                 vim.cmd('split | terminal tmux attach-session -t ' .. session_name)
                 vim.cmd('resize 15')
-                vim.notify('[DEBUG] Terminal reconnected: ' .. session_name, vim.log.levels.INFO)
+                log.info('Terminal reconnected: ' .. session_name)
               end)
             else
-              vim.notify('[DEBUG] Window not found for buffer', vim.log.levels.WARN)
+              log.warn('Window not found for buffer')
             end
           end)
         else
-          vim.notify('[DEBUG] tmux session does not exist: ' .. session_name, vim.log.levels.WARN)
+          log.warn('tmux session does not exist: ' .. session_name)
         end
       else
-        vim.notify('[DEBUG] Could not extract session name from: ' .. bufname, vim.log.levels.WARN)
+        log.warn('Could not extract session name from: ' .. bufname)
       end
     end
   end
-  vim.notify('[DEBUG] reconnect_tmux_terminals: Completed', vim.log.levels.DEBUG)
+  log.debug('reconnect_tmux_terminals: Completed')
 end
 
 -- Function to attach tmux session
