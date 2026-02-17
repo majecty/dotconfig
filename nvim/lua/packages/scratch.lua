@@ -60,12 +60,32 @@ function M.toggle_scratch()
   -- If scratch is focused, send content to terminal and close
   if M.is_scratch_focused() then
     M.send_and_close()
-  else
-    -- Otherwise focus the scratch window
-    if scratch_win and vim.api.nvim_win_is_valid(scratch_win) then
-      vim.api.nvim_set_current_win(scratch_win)
-      vim.cmd('startinsert')
+    return
+  end
+
+  -- Check if scratch window is visible in current tab
+  local current_tabpage = vim.api.nvim_get_current_tabpage()
+  local current_tab_wins = vim.api.nvim_tabpage_list_wins(current_tabpage)
+  local scratch_visible = false
+
+  for _, win in ipairs(current_tab_wins) do
+    if vim.api.nvim_win_get_buf(win) == scratch_buf then
+      scratch_visible = true
+      scratch_win = win
+      break
     end
+  end
+
+  if scratch_visible then
+    -- Scratch is visible, just focus it
+    vim.api.nvim_set_current_win(scratch_win)
+    vim.cmd('startinsert')
+  else
+    -- Scratch is not visible, create a split
+    vim.cmd('split')
+    scratch_win = vim.api.nvim_get_current_win()
+    vim.api.nvim_set_current_buf(scratch_buf)
+    vim.cmd('startinsert')
   end
 end
 
