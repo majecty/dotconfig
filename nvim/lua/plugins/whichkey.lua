@@ -267,6 +267,13 @@ return {
           desc = 'Increase font size',
         },
         {
+          '<C-=>',
+          function()
+            neovide_font.increase_font()
+          end,
+          desc = 'Increase font size',
+        },
+        {
           '<C-->',
           function()
             neovide_font.decrease_font()
