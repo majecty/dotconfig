@@ -3,6 +3,7 @@ local M = {}
 
 local scratch_buf = nil
 local scratch_win = nil
+local source_terminal_buf = nil
 
 function M.get_scratch_buf()
   return scratch_buf
@@ -17,6 +18,24 @@ function M.is_scratch_focused()
 end
 
 function M.create_scratch()
+  -- Remember the current terminal buffer before creating scratch
+  local current_buf = vim.api.nvim_get_current_buf()
+  local current_bufname = vim.api.nvim_buf_get_name(current_buf)
+
+  -- If current buffer is terminal, remember it
+  if current_bufname:match('term://') then
+    source_terminal_buf = current_buf
+  else
+    -- Otherwise find first available terminal
+    for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+      local bufname = vim.api.nvim_buf_get_name(buf)
+      if bufname:match('term://') then
+        source_terminal_buf = buf
+        break
+      end
+    end
+  end
+
   -- Create new buffer
   scratch_buf = vim.api.nvim_create_buf(false, true)
   vim.api.nvim_buf_set_name(scratch_buf, 'scratch://')
@@ -56,6 +75,11 @@ function M.send_and_close()
     return
   end
 
+  if not source_terminal_buf or not vim.api.nvim_buf_is_valid(source_terminal_buf) then
+    vim.notify('Terminal buffer not found', vim.log.levels.WARN)
+    return
+  end
+
   -- Get content
   local lines = vim.api.nvim_buf_get_lines(scratch_buf, 0, -1, false)
   local content = table.concat(lines, '\n')
@@ -65,32 +89,18 @@ function M.send_and_close()
     return
   end
 
-  -- Find terminal buffer
-  local terminal_buf = nil
-  for _, buf in ipairs(vim.api.nvim_list_bufs()) do
-    local bufname = vim.api.nvim_buf_get_name(buf)
-    if bufname:match('term://') then
-      terminal_buf = buf
-      break
-    end
-  end
-
-  if not terminal_buf then
-    vim.notify('No terminal buffer found', vim.log.levels.WARN)
-    return
-  end
-
-  -- Send content to terminal
-  vim.api.nvim_chan_send(vim.bo[terminal_buf].channel, content .. '\n')
+  -- Send content to remembered terminal
+  vim.api.nvim_chan_send(vim.bo[source_terminal_buf].channel, content .. '\n')
   vim.notify('Sent to terminal', vim.log.levels.INFO)
 
   -- Switch to terminal buffer
-  vim.api.nvim_set_current_buf(terminal_buf)
+  vim.api.nvim_set_current_buf(source_terminal_buf)
 
   -- Close scratch buffer
   vim.api.nvim_buf_delete(scratch_buf, { force = true })
   scratch_buf = nil
   scratch_win = nil
+  source_terminal_buf = nil
 end
 
 return M
