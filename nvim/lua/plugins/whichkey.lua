@@ -256,6 +256,35 @@ return {
           end,
           desc = 'Lua code playground',
         },
+        { '<leader>yL', group = '+lua (focused)' },
+        {
+          '<leader>yLs',
+          function()
+            vim.cmd('SplitLuaPlayground')
+          end,
+          desc = 'Split Lua playground',
+        },
+        {
+          '<leader>yLb',
+          function()
+            vim.cmd('BufferLuaPlayground')
+          end,
+          desc = 'Buffer Lua playground',
+        },
+        {
+          '<leader>yLw',
+          function()
+            vim.cmd('WindowLuaPlayground')
+          end,
+          desc = 'Window Lua playground',
+        },
+        {
+          '<leader>yLt',
+          function()
+            vim.cmd('TabLuaPlayground')
+          end,
+          desc = 'Tab Lua playground',
+        },
         {
           '<C-h>',
           function()
