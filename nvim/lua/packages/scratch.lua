@@ -36,6 +36,11 @@ function M.create_scratch()
     end
   end
 
+  if not source_terminal_buf then
+    vim.notify('No terminal buffer found', vim.log.levels.WARN)
+    return
+  end
+
   -- Create new buffer
   scratch_buf = vim.api.nvim_create_buf(false, true)
   vim.api.nvim_buf_set_name(scratch_buf, 'scratch://')
