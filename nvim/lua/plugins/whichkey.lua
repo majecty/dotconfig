@@ -109,13 +109,19 @@ return {
           end,
           desc = 'Reload with GUI',
         },
-        { '<leader>l', group = '+lsp' },
         {
-          '<leader>la',
+          '<leader>ld',
           function()
-            vim.lsp.buf.code_action()
+            vim.lsp.buf.definition()
           end,
-          desc = 'Code actions',
+          desc = 'Go to definition',
+        },
+        {
+          '<leader>lD',
+          function()
+            require('fzf-lua').diagnostics_document()
+          end,
+          desc = 'Show diagnostics',
         },
         {
           '<leader>lr',
@@ -123,13 +129,6 @@ return {
             vim.lsp.buf.rename()
           end,
           desc = 'Rename symbol',
-        },
-        {
-          '<leader>ld',
-          function()
-            vim.lsp.buf.definition()
-          end,
-          desc = 'Go to definition',
         },
         {
           '<leader>lf',
