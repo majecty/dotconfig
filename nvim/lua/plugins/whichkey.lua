@@ -305,6 +305,14 @@ return {
           desc = 'Toggle scratch buffer / Send to terminal',
           mode = { 'i' },
         },
+        {
+          '<C-;>',
+          function()
+            scratch.toggle_scratch()
+          end,
+          desc = 'Toggle scratch buffer / Send to terminal',
+          mode = { 't' },
+        },
       })
     end,
   },
