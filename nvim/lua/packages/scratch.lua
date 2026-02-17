@@ -22,24 +22,13 @@ function M.create_scratch()
   local current_buf = vim.api.nvim_get_current_buf()
   local current_bufname = vim.api.nvim_buf_get_name(current_buf)
 
-  -- If current buffer is terminal, remember it
-  if current_bufname:match('term://') then
-    source_terminal_buf = current_buf
-  else
-    -- Otherwise find first available terminal
-    for _, buf in ipairs(vim.api.nvim_list_bufs()) do
-      local bufname = vim.api.nvim_buf_get_name(buf)
-      if bufname:match('term://') then
-        source_terminal_buf = buf
-        break
-      end
-    end
-  end
-
-  if not source_terminal_buf then
-    vim.notify('No terminal buffer found', vim.log.levels.WARN)
+  -- Only allow opening scratch from terminal buffer
+  if not current_bufname:match('term://') then
+    vim.notify('Scratch can only be opened from terminal buffer', vim.log.levels.WARN)
     return
   end
+
+  source_terminal_buf = current_buf
 
   -- Create new buffer
   scratch_buf = vim.api.nvim_create_buf(false, true)
