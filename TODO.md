@@ -8,3 +8,5 @@
 - [ ] autotodo: regular update of TODO.md for config changes
 - [ ] use homeserver llm
 - [ ] gcp skill to create git commit push skill
+- [ ] firstclasscitizen
+- [ ] font size up and down easily
