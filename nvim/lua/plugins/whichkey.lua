@@ -109,6 +109,14 @@ return {
           end,
           desc = 'Reload with GUI',
         },
+        { '<leader>l', group = '+lsp' },
+        {
+          '<leader>la',
+          function()
+            vim.lsp.buf.code_action()
+          end,
+          desc = 'Code actions',
+        },
         {
           '<leader>ld',
           function()
