@@ -61,8 +61,11 @@ function M.toggle_scratch()
   if M.is_scratch_focused() then
     M.send_and_close()
   else
-    -- Otherwise just focus the scratch buffer
-    vim.api.nvim_set_current_buf(scratch_buf)
+    -- Otherwise focus the scratch window
+    if scratch_win and vim.api.nvim_win_is_valid(scratch_win) then
+      vim.api.nvim_set_current_win(scratch_win)
+      vim.cmd('startinsert')
+    end
   end
 end
 
