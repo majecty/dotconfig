@@ -15,11 +15,22 @@ local function process_tmux_buffer_in_tab(buf, winid, session_name)
     return
   end
 
+  -- Verify window is still valid after buffer deletion
+  local win_valid = pcall(vim.api.nvim_win_is_valid, winid)
+  if not win_valid then
+    log.warn('Window is no longer valid after buffer deletion: ' .. tostring(winid))
+    return
+  end
+
   log.debug('Creating new tmux terminal in same window')
-  vim.api.nvim_win_call(winid, function()
+  local ok2, err2 = pcall(vim.api.nvim_win_call, winid, function()
     vim.cmd('terminal tmux attach-session -t ' .. session_name)
     log.info('Terminal reconnected in same window: ' .. session_name)
   end)
+
+  if not ok2 then
+    log.warn('Failed to create terminal in window: ' .. tostring(err2))
+  end
 end
 
 -- Process a single tmux terminal buffer (helper)
