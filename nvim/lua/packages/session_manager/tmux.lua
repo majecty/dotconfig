@@ -4,6 +4,21 @@ local utils = require('packages.session_manager.utils')
 
 local M = {}
 
+-- Determine split direction based on window size
+local function get_split_direction()
+  local width = vim.o.columns
+  local height = vim.o.lines
+  log.debug('Window dimensions: width=' .. width .. ', height=' .. height)
+
+  if width > height then
+    log.debug('Width > height, using vsplit')
+    return 'vsplit'
+  else
+    log.debug('Height >= width, using hsplit')
+    return 'split'
+  end
+end
+
 -- Process a single tmux terminal buffer in the same tab
 local function process_tmux_buffer_in_tab(buf, winid, session_name)
   log.debug('Processing tmux buffer in window ' .. tostring(winid))
@@ -32,9 +47,14 @@ local function process_tmux_buffer_in_tab(buf, winid, session_name)
     log.warn('Failed to create terminal in window: ' .. tostring(err2))
     log.debug('Fallback: Creating tmux terminal in new split')
     local ok3, err3 = pcall(function()
-      vim.cmd('split | terminal tmux attach-session -t ' .. session_name)
-      vim.cmd('resize 15')
-      log.info('Terminal reconnected in new split (fallback): ' .. session_name)
+      local split_dir = get_split_direction()
+      vim.cmd(split_dir .. ' | terminal tmux attach-session -t ' .. session_name)
+      if split_dir == 'vsplit' then
+        vim.cmd('vertical resize 40')
+      else
+        vim.cmd('resize 15')
+      end
+      log.info('Terminal reconnected in new ' .. split_dir .. ' (fallback): ' .. session_name)
     end)
     if not ok3 then
       log.error('Failed to create terminal in split (fallback): ' .. tostring(err3))
