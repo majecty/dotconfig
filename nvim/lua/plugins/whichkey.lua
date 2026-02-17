@@ -227,23 +227,23 @@ return {
           end,
           desc = 'FZF-lua builtin',
         },
-        { '<leader>pg', group = '+playground' },
+        { '<leader>y', group = '+learn' },
         {
-          '<leader>pgs',
+          '<leader>ys',
           function()
             vim.cmd('SplitPlayground')
           end,
           desc = 'Split playground',
         },
         {
-          '<leader>pgb',
+          '<leader>yb',
           function()
             vim.cmd('BufferPlayground')
           end,
           desc = 'Buffer playground',
         },
         {
-          '<leader>pgw',
+          '<leader>yw',
           function()
             vim.cmd('WindowPlayground')
           end,
