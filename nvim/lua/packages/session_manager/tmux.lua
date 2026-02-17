@@ -4,6 +4,24 @@ local utils = require('packages.session_manager.utils')
 
 local M = {}
 
+-- Process a single tmux terminal buffer in the same tab
+local function process_tmux_buffer_in_tab(buf, winid, session_name)
+  log.debug('Processing tmux buffer in window ' .. tostring(winid))
+
+  -- Safely delete the old buffer
+  local ok, err = pcall(vim.api.nvim_buf_delete, buf, { force = true })
+  if not ok then
+    log.warn('Failed to delete buffer: ' .. tostring(err))
+    return
+  end
+
+  log.debug('Creating new tmux terminal in same window')
+  vim.api.nvim_win_call(winid, function()
+    vim.cmd('terminal tmux attach-session -t ' .. session_name)
+    log.info('Terminal reconnected in same window: ' .. session_name)
+  end)
+end
+
 -- Process a single tmux terminal buffer (helper)
 local function process_tmux_buffer(buf, bufname)
   -- Check if buffer is a terminal with tmux attach command
@@ -42,41 +60,43 @@ local function process_tmux_buffer(buf, bufname)
   end
 
   log.info('Session exists, reconnecting: ' .. session_name)
-  -- Session exists, replace terminal buffer with new terminal
-  vim.api.nvim_buf_call(buf, function()
-    -- Delete the dead terminal and create new one
-    local winid = vim.fn.bufwinid(buf)
-    log.debug('Window ID: ' .. tostring(winid))
-    if winid <= 0 then
-      log.warn('Window not found for buffer')
-      return
-    end
 
-    vim.api.nvim_win_call(winid, function()
-      log.debug('Deleting old terminal buffer')
-      local ok, err = pcall(vim.cmd, 'bdelete!')
-      if not ok then
-        log.warn('Failed to delete buffer: ' .. tostring(err))
-      end
-      log.debug('Creating new tmux terminal')
-      vim.cmd('split | terminal tmux attach-session -t ' .. session_name)
-      vim.cmd('resize 15')
-      log.info('Terminal reconnected: ' .. session_name)
-    end)
-  end)
+  -- Get window for this buffer
+  local winid = vim.fn.bufwinid(buf)
+  log.debug('Window ID: ' .. tostring(winid))
+  if winid <= 0 then
+    log.warn('Window not found for buffer')
+    return
+  end
+
+  process_tmux_buffer_in_tab(buf, winid, session_name)
 end
 
 -- Reconnect tmux terminals after session load
 function M.reconnect_tmux_terminals()
   log.debug('reconnect_tmux_terminals: Starting')
-  local buf_list = vim.api.nvim_list_bufs()
-  log.debug('Found ' .. #buf_list .. ' buffers')
 
-  for _, buf in ipairs(buf_list) do
-    local bufname = vim.api.nvim_buf_get_name(buf)
-    log.trace('Checking buffer: ' .. bufname)
-    process_tmux_buffer(buf, bufname)
+  -- Iterate through all tabs
+  local tabs = vim.api.nvim_list_tabpages()
+  log.debug('Found ' .. #tabs .. ' tabs')
+
+  for _, tabpage in ipairs(tabs) do
+    log.debug('Processing tab: ' .. tostring(tabpage))
+
+    -- Get windows in this tab
+    local windows = vim.api.nvim_tabpage_list_wins(tabpage)
+    log.debug('Tab ' .. tostring(tabpage) .. ' has ' .. #windows .. ' windows')
+
+    for _, winid in ipairs(windows) do
+      -- Get buffer in this window
+      local buf = vim.api.nvim_win_get_buf(winid)
+      local bufname = vim.api.nvim_buf_get_name(buf)
+      log.trace('Checking buffer in tab ' .. tostring(tabpage) .. ' window ' .. tostring(winid) .. ': ' .. bufname)
+
+      process_tmux_buffer(buf, bufname)
+    end
   end
+
   log.debug('reconnect_tmux_terminals: Completed')
 end
 
