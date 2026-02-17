@@ -26,9 +26,17 @@ local function process_tmux_buffer(buf, bufname)
   local check_cmd = 'tmux has-session -t ' .. session_name .. ' 2>/dev/null'
   log.debug('Checking tmux session with: ' .. check_cmd)
   local result = os.execute(check_cmd)
-  log.debug('tmux check result: ' .. tostring(result))
+  log.debug('tmux check result: ' .. tostring(result) .. ' (type: ' .. type(result) .. ')')
 
-  if result ~= 0 then
+  -- Handle both Lua 5.1 (number) and Lua 5.2+ (boolean) return values
+  local session_exists = false
+  if type(result) == 'boolean' then
+    session_exists = result
+  else
+    session_exists = (result == 0)
+  end
+
+  if not session_exists then
     log.warn('tmux session does not exist: ' .. session_name)
     return
   end
