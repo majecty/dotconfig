@@ -23,6 +23,7 @@ return {
       local neovide_font = require('packages.neovide_font')
       local scratch = require('packages.scratch')
       local playground = require('packages.playground')
+      local buffer_mgmt = require('packages.buffer_management')
       playground.setup()
       wk.setup(opts)
 
@@ -226,6 +227,28 @@ return {
             require('fzf-lua').builtin()
           end,
           desc = 'FZF-lua builtin',
+        },
+        { '<leader>B', group = '+buffer management' },
+        {
+          '<leader>Bc',
+          function()
+            buffer_mgmt.close_hidden_buffers()
+          end,
+          desc = 'Close hidden buffers',
+        },
+        {
+          '<leader>BC',
+          function()
+            buffer_mgmt.close_hidden_buffers_force()
+          end,
+          desc = 'Force close hidden buffers',
+        },
+        {
+          '<leader>Bl',
+          function()
+            buffer_mgmt.list_hidden_buffers()
+          end,
+          desc = 'List hidden buffers',
         },
         { '<leader>y', group = '+learn' },
         {
