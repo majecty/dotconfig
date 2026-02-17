@@ -2,11 +2,29 @@
 -- Global session directory: ~/.local/share/nvim/sessions/
 -- Session naming: project-name-md5hash.vim (MD5 hash of full project path)
 
+---@class SessionManager
+---@field save fun(): nil
+---@field load fun(): nil
+---@field load_picker fun(): nil
+---@field auto_load fun(): nil
+---@field auto_save_silent fun(): nil
+---@field list fun(): string[]
+---@field dir string
+---@field get_project_info fun(): ProjectInfo
+---@field tmux_attach fun(): nil
+---@field neovide_restart fun(): nil
+
+---@class ProjectInfo
+---@field name string
+---@field path string
+
 local M = {}
 local log = require('packages.session_manager.log')
 
 local session_dir = vim.fn.expand('~/.local/share/nvim/sessions')
 local project_dir_file = session_dir .. '/.project_paths'
+
+log.info('Session Manager initialized with session directory: ' .. session_dir)
 
 -- Create sessions directory if it doesn't exist
 if vim.fn.isdirectory(session_dir) == 0 then
@@ -110,152 +128,6 @@ local function list_sessions()
   return sessions
 end
 
--- Helper function to load session from path
-local function load_session_from_file(session_filename, display_name)
-  local session_path = session_dir .. '/' .. session_filename .. '.vim'
-
-  if vim.fn.filereadable(session_path) == 1 then
-    -- Get project path from mapping
-    local project_path = get_project_path(session_filename)
-
-    -- Try to change to project directory
-    if project_path and vim.fn.isdirectory(project_path) == 1 then
-      vim.cmd('cd ' .. project_path)
-      vim.notify('Changed directory to: ' .. project_path, vim.log.levels.INFO)
-    end
-
-    vim.cmd('source ' .. session_path)
-    vim.notify('Session loaded: ' .. display_name, vim.log.levels.INFO)
-
-    -- Reconnect tmux terminal buffers
-    vim.schedule(function()
-      reconnect_tmux_terminals()
-    end)
-  else
-    vim.notify('Session not found: ' .. display_name, vim.log.levels.WARN)
-  end
-end
-
--- Main session management functions
-local function save_session()
-  local project_info = get_project_info()
-  local session_filename = get_session_filename(project_info)
-  local session_path = session_dir .. '/' .. session_filename .. '.vim'
-
-  -- Save the session
-  vim.cmd('mksession! ' .. session_path)
-
-  -- Store project path mapping
-  store_project_path(session_filename, project_info.path)
-
-  vim.notify('Session saved: ' .. project_info.name, vim.log.levels.INFO)
-end
-
-local function load_session_with_picker()
-  local sessions = list_sessions()
-
-  if #sessions == 0 then
-    vim.notify('No sessions found', vim.log.levels.WARN)
-    return
-  end
-
-  -- Use vim.ui.select which now defaults to fzf-lua
-  vim.ui.select(sessions, { prompt = 'Sessions> ' }, function(choice)
-    if choice then
-      load_session_from_file(choice, choice)
-    end
-  end)
-end
-
-local function load_session()
-  local project_info = get_project_info()
-  local session_filename = get_session_filename(project_info)
-  local session_path = session_dir .. '/' .. session_filename .. '.vim'
-
-  if vim.fn.filereadable(session_path) == 1 then
-    load_session_from_file(session_filename, project_info.name)
-  else
-    vim.notify('No session found for: ' .. project_info.name, vim.log.levels.WARN)
-  end
-end
-
--- Auto-save session silently (no notifications)
-local function auto_save_session_silent()
-  local project_info = get_project_info()
-  local session_filename = get_session_filename(project_info)
-  local session_path = session_dir .. '/' .. session_filename .. '.vim'
-
-  -- Save the session silently
-  vim.cmd('mksession! ' .. session_path)
-
-  -- Store project path mapping
-  store_project_path(session_filename, project_info.path)
-end
-
--- Auto-load session on startup if it exists
-local function auto_load_session()
-  local project_info = get_project_info()
-  local session_filename = get_session_filename(project_info)
-  local session_path = session_dir .. '/' .. session_filename .. '.vim'
-  if vim.fn.filereadable(session_path) == 1 then
-    vim.cmd('source ' .. session_path)
-  end
-end
-
--- Setup auto-save on VimLeavePre and FocusLost events
-local function setup_auto_save()
-  local group = vim.api.nvim_create_augroup('NvimSessionAutoSave', { clear = true })
-
-  -- Auto-save on VimLeavePre (when exiting nvim)
-  vim.api.nvim_create_autocmd('VimLeavePre', {
-    group = group,
-    callback = function()
-      auto_save_session_silent()
-    end,
-  })
-
-  -- Auto-save on FocusLost (when switching away from nvim)
-  vim.api.nvim_create_autocmd('FocusLost', {
-    group = group,
-    callback = function()
-      auto_save_session_silent()
-    end,
-  })
-end
-
--- Initialize auto-save on plugin load
-setup_auto_save()
-
--- Auto-load session on startup if it exists (silently)
-local function setup_auto_load()
-  local group = vim.api.nvim_create_augroup('NvimSessionAutoLoad', { clear = true })
-
-  -- Auto-load on VimEnter (when opening nvim)
-  vim.api.nvim_create_autocmd('VimEnter', {
-    group = group,
-    callback = function()
-      -- Only auto-load if in a git directory
-      local project_info = get_project_info()
-      -- Check if we actually found a .git directory
-      if vim.fn.isdirectory(project_info.path .. '/.git') == 1 then
-        local session_filename = get_session_filename(project_info)
-        local session_path = session_dir .. '/' .. session_filename .. '.vim'
-        if vim.fn.filereadable(session_path) == 1 then
-          vim.notify('Loading session: ' .. session_filename, vim.log.levels.INFO)
-          vim.cmd('source ' .. session_path)
-        else
-          vim.notify('No session found at: ' .. session_path, vim.log.levels.WARN)
-        end
-      else
-        vim.notify('Not in git directory: ' .. project_info.path, vim.log.levels.WARN)
-      end
-    end,
-    once = true, -- Only run once on startup
-  })
-end
-
-setup_auto_load()
-
 -- Helper function to reconnect tmux terminals after session load
 local function reconnect_tmux_terminals()
   log.debug('reconnect_tmux_terminals: Starting')
@@ -313,6 +185,178 @@ local function reconnect_tmux_terminals()
   log.debug('reconnect_tmux_terminals: Completed')
 end
 
+-- Helper function to load session from path
+local function load_session_from_file(session_filename, display_name)
+  local session_path = session_dir .. '/' .. session_filename .. '.vim'
+  log.info('Loading session from: ' .. session_path)
+
+  if vim.fn.filereadable(session_path) == 1 then
+    -- Get project path from mapping
+    local project_path = get_project_path(session_filename)
+
+    -- Try to change to project directory
+    if project_path and vim.fn.isdirectory(project_path) == 1 then
+      vim.cmd('cd ' .. project_path)
+      log.info('Changed directory to: ' .. project_path)
+    end
+
+    log.info('before source session: ' .. session_path)
+    local ok, err = pcall(vim.cmd, 'source ' .. session_path)
+    if ok then
+      log.info('Session loaded: ' .. display_name)
+      -- Reconnect tmux terminal buffers
+      vim.schedule(function()
+        reconnect_tmux_terminals()
+      end)
+    else
+      log.error('Failed to load session: ' .. display_name .. ' - ' .. tostring(err))
+      vim.notify('Failed to load session: ' .. tostring(err), vim.log.levels.ERROR)
+    end
+  else
+    log.warn('Session not found: ' .. display_name)
+  end
+end
+
+-- Main session management functions
+local function save_session()
+  local project_info = get_project_info()
+  local session_filename = get_session_filename(project_info)
+  local session_path = session_dir .. '/' .. session_filename .. '.vim'
+
+  -- Save the session
+  vim.cmd('mksession! ' .. session_path)
+
+  -- Store project path mapping
+  store_project_path(session_filename, project_info.path)
+
+  log.info('Session saved: ' .. project_info.name)
+end
+
+local function load_session_with_picker()
+  local sessions = list_sessions()
+
+  if #sessions == 0 then
+    log.warn('No sessions found')
+    return
+  end
+
+  -- Use vim.ui.select which now defaults to fzf-lua
+  vim.ui.select(sessions, { prompt = 'Sessions> ' }, function(choice)
+    if choice then
+      local ok, err = pcall(function()
+        load_session_from_file(choice, choice)
+      end)
+      if not ok then
+        log.error('Error loading session: ' .. tostring(err))
+        vim.notify('Error loading session: ' .. tostring(err), vim.log.levels.ERROR)
+      end
+    end
+  end)
+end
+
+local function load_session()
+  local project_info = get_project_info()
+  local session_filename = get_session_filename(project_info)
+  local session_path = session_dir .. '/' .. session_filename .. '.vim'
+
+  if vim.fn.filereadable(session_path) == 1 then
+    local ok, err = pcall(function()
+      load_session_from_file(session_filename, project_info.name)
+    end)
+    if not ok then
+      log.error('Error loading session: ' .. tostring(err))
+      vim.notify('Error loading session: ' .. tostring(err), vim.log.levels.ERROR)
+    end
+  else
+    log.warn('No session found for: ' .. project_info.name)
+  end
+end
+
+-- Auto-save session silently (no notifications)
+local function auto_save_session_silent()
+  local project_info = get_project_info()
+  local session_filename = get_session_filename(project_info)
+  local session_path = session_dir .. '/' .. session_filename .. '.vim'
+
+  -- Save the session silently
+  vim.cmd('mksession! ' .. session_path)
+
+  -- Store project path mapping
+  store_project_path(session_filename, project_info.path)
+end
+
+-- Auto-load session on startup if it exists
+local function auto_load_session()
+  local project_info = get_project_info()
+  local session_filename = get_session_filename(project_info)
+  local session_path = session_dir .. '/' .. session_filename .. '.vim'
+  if vim.fn.filereadable(session_path) == 1 then
+    local ok, err = pcall(vim.cmd, 'source ' .. session_path)
+    if not ok then
+      log.error('Failed to auto-load session: ' .. tostring(err))
+    end
+  end
+end
+
+-- Setup auto-save on VimLeavePre and FocusLost events
+local function setup_auto_save()
+  local group = vim.api.nvim_create_augroup('NvimSessionAutoSave', { clear = true })
+
+  -- Auto-save on VimLeavePre (when exiting nvim)
+  vim.api.nvim_create_autocmd('VimLeavePre', {
+    group = group,
+    callback = function()
+      auto_save_session_silent()
+    end,
+  })
+
+  -- Auto-save on FocusLost (when switching away from nvim)
+  vim.api.nvim_create_autocmd('FocusLost', {
+    group = group,
+    callback = function()
+      auto_save_session_silent()
+    end,
+  })
+end
+
+-- Initialize auto-save on plugin load
+setup_auto_save()
+
+-- Auto-load session on startup if it exists (silently)
+local function setup_auto_load()
+  local group = vim.api.nvim_create_augroup('NvimSessionAutoLoad', { clear = true })
+
+  -- Auto-load on VimEnter (when opening nvim)
+  vim.api.nvim_create_autocmd('VimEnter', {
+    group = group,
+    callback = function()
+      -- Only auto-load if in a git directory
+      local project_info = get_project_info()
+      -- Check if we actually found a .git directory
+      if vim.fn.isdirectory(project_info.path .. '/.git') == 1 then
+        local session_filename = get_session_filename(project_info)
+        local session_path = session_dir .. '/' .. session_filename .. '.vim'
+        if vim.fn.filereadable(session_path) == 1 then
+          log.info('Loading session: ' .. session_filename)
+          local ok, err = pcall(vim.cmd, 'source ' .. session_path)
+          if not ok then
+            log.error('Failed to load session on startup: ' .. tostring(err))
+          else
+            log.info('Session loaded successfully on startup: ' .. session_filename)
+          end
+        else
+          log.warn('No session found at: ' .. session_path)
+        end
+      else
+        log.warn('Not in git directory: ' .. project_info.path)
+      end
+    end,
+    once = true, -- Only run once on startup
+  })
+end
+
+setup_auto_load()
+
 -- Function to attach tmux session
 local function tmux_attach()
   local project_info = get_project_info()
@@ -338,7 +382,7 @@ local function neovide_restart()
   save_session()
   vim.cmd('sleep 100m')
   local cmd = "cd '" .. cwd:gsub("'", "'\\''") .. "' && /home/juhyung/.cargo/bin/neovide > /dev/null 2>&1 &"
-  vim.notify('Starting Neovide: ' .. cmd, vim.log.levels.INFO)
+  log.info('Starting Neovide: ' .. cmd)
   os.execute(cmd)
   vim.cmd('qa!')
 end

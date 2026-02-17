@@ -143,6 +143,14 @@ return {
           end,
           desc = 'Create new tab',
         },
+        { '<leader>c', group = '+copilot' },
+        {
+          '<leader>cs',
+          function()
+            vim.cmd('Copilot status')
+          end,
+          desc = 'Copilot status',
+        },
         { '<leader>g', group = '+git' },
         {
           '<leader>gg',
