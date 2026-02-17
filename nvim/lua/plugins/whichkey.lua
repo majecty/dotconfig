@@ -27,6 +27,13 @@ return {
           desc = 'Find whichkey bindings',
         },
         {
+          '<leader>o',
+          function()
+            vim.cmd('e ~/jhconfig/TODO.md')
+          end,
+          desc = 'Open TODO',
+        },
+        {
           '-',
           function()
             oil.open_parent()
