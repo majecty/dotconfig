@@ -30,6 +30,15 @@ local function process_tmux_buffer_in_tab(buf, winid, session_name)
 
   if not ok2 then
     log.warn('Failed to create terminal in window: ' .. tostring(err2))
+    log.debug('Fallback: Creating tmux terminal in new split')
+    local ok3, err3 = pcall(function()
+      vim.cmd('split | terminal tmux attach-session -t ' .. session_name)
+      vim.cmd('resize 15')
+      log.info('Terminal reconnected in new split (fallback): ' .. session_name)
+    end)
+    if not ok3 then
+      log.error('Failed to create terminal in split (fallback): ' .. tostring(err3))
+    end
   end
 end
 
