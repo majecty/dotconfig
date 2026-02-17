@@ -49,11 +49,6 @@ local function process_tmux_buffer_in_tab(buf, winid, session_name)
     local ok3, err3 = pcall(function()
       local split_dir = get_split_direction()
       vim.cmd(split_dir .. ' | terminal tmux attach-session -t ' .. session_name)
-      if split_dir == 'vsplit' then
-        vim.cmd('vertical resize 40')
-      else
-        vim.cmd('resize 15')
-      end
       log.info('Terminal reconnected in new ' .. split_dir .. ' (fallback): ' .. session_name)
     end)
     if not ok3 then
