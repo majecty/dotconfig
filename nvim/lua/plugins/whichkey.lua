@@ -42,6 +42,14 @@ return {
           desc = 'Open TODO',
         },
         {
+          '<leader>L',
+          function()
+            local log_dir = vim.fn.stdpath('log')
+            vim.cmd('e ' .. log_dir .. '/session_manager.log')
+          end,
+          desc = 'Open session_manager log',
+        },
+        {
           '-',
           function()
             oil.open_parent()
