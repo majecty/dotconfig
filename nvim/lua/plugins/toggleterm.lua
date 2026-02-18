@@ -72,25 +72,20 @@ return {
       vim.keymap.set('i', '<C-~>', add_new_terminal, { noremap = true, silent = true, desc = 'Add new terminal' })
       vim.keymap.set('t', '<C-~>', add_new_terminal, { noremap = true, silent = true, desc = 'Add new terminal' })
 
-      vim.keymap.set('n', '<M-Up>', function()
-        cycle_terminal('up')
-      end, { noremap = true, silent = true, desc = 'Cycle to previous terminal' })
-      vim.keymap.set('i', '<M-Up>', function()
-        cycle_terminal('up')
-      end, { noremap = true, silent = true, desc = 'Cycle to previous terminal' })
-      vim.keymap.set('t', '<M-Up>', function()
-        cycle_terminal('up')
-      end, { noremap = true, silent = true, desc = 'Cycle to previous terminal' })
-
-      vim.keymap.set('n', '<M-Down>', function()
-        cycle_terminal('down')
-      end, { noremap = true, silent = true, desc = 'Cycle to next terminal' })
-      vim.keymap.set('i', '<M-Down>', function()
-        cycle_terminal('down')
-      end, { noremap = true, silent = true, desc = 'Cycle to next terminal' })
-      vim.keymap.set('t', '<M-Down>', function()
-        cycle_terminal('down')
-      end, { noremap = true, silent = true, desc = 'Cycle to next terminal' })
+      -- Setup terminal buffer keymaps in autocommand
+      local augroup = vim.api.nvim_create_augroup('ToggleTermKeymaps', { clear = true })
+      vim.api.nvim_create_autocmd('TermOpen', {
+        group = augroup,
+        pattern = 'term://*#toggleterm#*',
+        callback = function(opts)
+          vim.keymap.set('t', '<M-Up>', function()
+            cycle_terminal('up')
+          end, { buffer = opts.buf, noremap = true, silent = true, desc = 'Cycle to previous terminal' })
+          vim.keymap.set('t', '<M-Down>', function()
+            cycle_terminal('down')
+          end, { buffer = opts.buf, noremap = true, silent = true, desc = 'Cycle to next terminal' })
+        end,
+      })
     end,
   },
 }
