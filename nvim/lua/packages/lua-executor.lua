@@ -1,0 +1,237 @@
+-- Minimal Lua executor for markdown code blocks
+-- Execute entire lua code block with Enter key
+-- Maintains persistent state across blocks
+-- Displays output in separate window
+
+local M = {}
+
+-- Shared state across all executions
+local execution_context = {}
+
+-- Output window state
+local output_win = nil
+local output_buf = nil
+
+-- Create or focus output window
+local function ensure_output_window()
+  -- Check if output window still exists
+  if output_win and vim.api.nvim_win_is_valid(output_win) then
+    return output_win
+  end
+
+  -- Check if output buffer still exists
+  if output_buf and vim.api.nvim_buf_is_valid(output_buf) then
+    output_buf = nil
+  end
+
+  -- Create new output buffer
+  output_buf = vim.api.nvim_create_buf(false, false)
+  vim.api.nvim_buf_set_option(output_buf, "filetype", "lua-output")
+  vim.api.nvim_buf_set_option(output_buf, "buftype", "nofile")
+  vim.api.nvim_buf_set_option(output_buf, "bufhidden", "hide")
+
+  -- Get current window and create split
+  local current_win = vim.api.nvim_get_current_win()
+  vim.cmd("botright 20split")
+  output_win = vim.api.nvim_get_current_win()
+  vim.api.nvim_win_set_buf(output_win, output_buf)
+
+  -- Return to original window
+  vim.api.nvim_set_current_win(current_win)
+
+  return output_win
+end
+
+-- Find lua code block at cursor position
+-- Returns: code_string, start_line, end_line
+local function find_code_block()
+  local current_line = vim.api.nvim_win_get_cursor(0)[1]
+  local buf = vim.api.nvim_get_current_buf()
+  local lines = vim.api.nvim_buf_get_lines(buf, 0, -1, false)
+
+  -- Search backwards for opening ```lua
+  local start_line = nil
+  for i = current_line, 1, -1 do
+    if lines[i]:match("^```lua") then
+      start_line = i
+      break
+    end
+  end
+
+  if not start_line then
+    vim.notify("No ```lua block found above cursor", vim.log.levels.ERROR)
+    return nil
+  end
+
+  -- Search forwards for closing ```
+  local end_line = nil
+  for i = current_line, #lines do
+    if i > start_line and lines[i]:match("^```$") then
+      end_line = i
+      break
+    end
+  end
+
+  if not end_line then
+    vim.notify("No closing ``` found", vim.log.levels.ERROR)
+    return nil
+  end
+
+  -- Extract code (skip opening ```lua line, skip closing ``` line)
+  local code_lines = {}
+  for i = start_line + 1, end_line - 1 do
+    table.insert(code_lines, lines[i])
+  end
+
+  local code = table.concat(code_lines, "\n")
+  return code, start_line, end_line
+end
+
+-- Execute lua code and capture output
+-- Returns: success, output_string, error_message
+local function execute_code(code)
+  local output_lines = {}
+  local success = true
+  local error_msg = nil
+
+  -- Redirect print to capture output
+  local original_print = print
+  local function custom_print(...)
+    local args = { ... }
+    for i, v in ipairs(args) do
+      if i > 1 then table.insert(output_lines, "\t") end
+      table.insert(output_lines, tostring(v))
+    end
+    table.insert(output_lines, "\n")
+  end
+
+  -- Create function with execution context
+  local func, load_err = loadstring(code)
+
+  if not func then
+    return false, "", "Syntax Error: " .. load_err
+  end
+
+  -- Set environment to execution context
+  setfenv(func, execution_context)
+
+  -- Execute with output capture
+  _G.print = custom_print
+  local ok, result = pcall(func)
+  _G.print = original_print
+
+  if not ok then
+    return false, "", "Runtime Error: " .. tostring(result)
+  end
+
+  return true, table.concat(output_lines, ""), nil
+end
+
+-- Display output in output window
+local function display_output(code, success, output, error_msg)
+  local output_win = ensure_output_window()
+  if not output_win then return end
+
+  local buf = vim.api.nvim_win_get_buf(output_win)
+  local lines = {}
+
+  -- Header
+  table.insert(lines, "╔" .. string.rep("═", 78) .. "╗")
+  table.insert(lines, "║ Lua Execution Output" .. string.rep(" ", 58) .. "║")
+  table.insert(lines, "╠" .. string.rep("═", 78) .. "╣")
+
+  -- Code snippet (first 3 lines)
+  table.insert(lines, "║ Code:" .. string.rep(" ", 73) .. "║")
+  local code_lines = vim.split(code, "\n")
+  for i = 1, math.min(3, #code_lines) do
+    local line = code_lines[i]
+    if #line > 74 then
+      line = line:sub(1, 71) .. "..."
+    end
+    table.insert(lines, "║   " .. line .. string.rep(" ", 74 - #line) .. "║")
+  end
+  if #code_lines > 3 then
+    table.insert(lines, "║   ..." .. string.rep(" ", 70) .. "║")
+  end
+
+  table.insert(lines, "╠" .. string.rep("═", 78) .. "╣")
+
+  -- Result
+  if success then
+    table.insert(lines, "║ ✓ Success" .. string.rep(" ", 68) .. "║")
+    table.insert(lines, "╠" .. string.rep("═", 78) .. "╣")
+    if #output > 0 then
+      for output_line in output:gmatch("[^\n]+") do
+        if #output_line > 74 then
+          output_line = output_line:sub(1, 71) .. "..."
+        end
+        table.insert(lines, "║ " .. output_line .. string.rep(" ", 76 - #output_line) .. "║")
+      end
+    else
+      table.insert(lines, "║ (no output)" .. string.rep(" ", 65) .. "║")
+    end
+  else
+    table.insert(lines, "║ ✗ Error" .. string.rep(" ", 69) .. "║")
+    table.insert(lines, "╠" .. string.rep("═", 78) .. "╣")
+    for err_line in error_msg:gmatch("[^\n]+") do
+      if #err_line > 74 then
+        err_line = err_line:sub(1, 71) .. "..."
+      end
+      table.insert(lines, "║ " .. err_line .. string.rep(" ", 76 - #err_line) .. "║")
+    end
+  end
+
+  table.insert(lines, "╚" .. string.rep("═", 78) .. "╝")
+
+  -- Update buffer
+  vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
+  vim.api.nvim_buf_set_option(buf, "modifiable", false)
+end
+
+-- Main execution function
+function M.execute_block()
+  local code, start_line, end_line = find_code_block()
+  if not code then return end
+
+  vim.notify("Executing code block...", vim.log.levels.INFO)
+
+  local success, output, error_msg = execute_code(code)
+  display_output(code, success, output, error_msg)
+
+  if success then
+    vim.notify("✓ Code executed successfully", vim.log.levels.INFO)
+  else
+    vim.notify("✗ " .. error_msg, vim.log.levels.ERROR)
+  end
+end
+
+-- Setup function to be called from config
+function M.setup()
+  -- Create command
+  vim.api.nvim_create_user_command("LuaExecute", function()
+    M.execute_block()
+  end, { desc = "Execute current lua code block" })
+
+  -- Setup keymap for markdown files
+  vim.api.nvim_create_autocmd("FileType", {
+    pattern = "markdown",
+    callback = function()
+      vim.keymap.set("n", "<CR>", function()
+        M.execute_block()
+      end, { buffer = true, noremap = true, silent = true, desc = "Execute lua block" })
+    end,
+  })
+end
+
+-- Get execution context (for debugging/inspection)
+function M.get_context()
+  return execution_context
+end
+
+-- Clear context
+function M.clear_context()
+  execution_context = {}
+  vim.notify("Execution context cleared", vim.log.levels.INFO)
+end
+
+return M
