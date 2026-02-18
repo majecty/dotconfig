@@ -1,5 +1,5 @@
 -- Session manager logger using plenary
----@type any
+---@type PlenaryLogger
 local log = require('plenary.log').new({
   plugin = 'session_manager',
   level = 'debug',
