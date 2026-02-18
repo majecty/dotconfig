@@ -12,6 +12,22 @@ return {
         direction = 'horizontal',
         shade_terminals = false,
       })
+
+      -- Create additional terminal with C-@
+      local Terminal = require('toggleterm.terminal').Terminal
+      local additional_term = Terminal:new({ direction = 'horizontal', size = 20 })
+
+      vim.keymap.set('n', '<C-@>', function()
+        additional_term:toggle()
+      end, { noremap = true, silent = true })
+
+      vim.keymap.set('i', '<C-@>', function()
+        additional_term:toggle()
+      end, { noremap = true, silent = true })
+
+      vim.keymap.set('t', '<C-@>', function()
+        additional_term:toggle()
+      end, { noremap = true, silent = true })
     end,
   },
 }
