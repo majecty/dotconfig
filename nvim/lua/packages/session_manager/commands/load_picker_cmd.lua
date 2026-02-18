@@ -1,5 +1,5 @@
 -- Load session with picker command
----@type any
+---@type SessionManagerLoad
 local load = require('packages.session_manager.load')
 
 local M = {}

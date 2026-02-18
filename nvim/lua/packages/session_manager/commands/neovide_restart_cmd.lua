@@ -1,5 +1,5 @@
 -- Neovide restart command
----@type any
+---@type SessionManagerTerminal
 local terminal = require('packages.session_manager.terminal')
 
 local M = {}

@@ -1,5 +1,5 @@
 -- Save session command
----@type any
+---@type SessionManagerSave
 local save = require('packages.session_manager.save')
 
 local M = {}

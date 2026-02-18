@@ -1,5 +1,5 @@
 -- Tmux attach command
----@type any
+---@type SessionManagerTmux
 local tmux = require('packages.session_manager.tmux')
 
 local M = {}

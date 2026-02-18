@@ -2,18 +2,18 @@
 -- Global session directory: ~/.local/share/nvim/sessions/
 -- Session naming: project-name-md5hash.vim (MD5 hash of full project path)
 
----@type any
+---@type PlenaryLogger
 local log = require('packages.session_manager.log')
 
----@type any
+---@type SessionManagerUtils
 local utils = require('packages.session_manager.utils')
----@type any
+---@type SessionManagerSave
 local save = require('packages.session_manager.save')
----@type any
+---@type SessionManagerLoad
 local load = require('packages.session_manager.load')
----@type any
+---@type SessionManagerTmux
 local tmux = require('packages.session_manager.tmux')
----@type any
+---@type SessionManagerTerminal
 local terminal = require('packages.session_manager.terminal')
 
 log.info('Session Manager initialized with session directory: ' .. utils.session_dir)
