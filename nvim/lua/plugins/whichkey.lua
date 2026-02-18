@@ -271,6 +271,13 @@ return {
           end,
           desc = 'FZF-lua builtin',
         },
+        {
+          '<leader>fH',
+          function()
+            require('fzf-lua').history()
+          end,
+          desc = 'Find history',
+        },
         { '<leader>B', group = '+buffer management' },
         {
           '<leader>Bc',
