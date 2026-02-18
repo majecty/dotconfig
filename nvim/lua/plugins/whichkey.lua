@@ -192,6 +192,49 @@ return {
           end,
           desc = 'Open fugitive',
         },
+        { '<leader>q', group = '+quickfix' },
+        {
+          '<leader>qo',
+          function()
+            vim.cmd('copen')
+          end,
+          desc = 'Open quickfix',
+        },
+        {
+          '<leader>qc',
+          function()
+            vim.cmd('cclose')
+          end,
+          desc = 'Close quickfix',
+        },
+        {
+          '<leader>qn',
+          function()
+            vim.cmd('cnext')
+          end,
+          desc = 'Next quickfix item',
+        },
+        {
+          '<leader>qp',
+          function()
+            vim.cmd('cprev')
+          end,
+          desc = 'Previous quickfix item',
+        },
+        {
+          '<leader>qf',
+          function()
+            vim.cmd('cfirst')
+          end,
+          desc = 'First quickfix item',
+        },
+        {
+          '<leader>ql',
+          function()
+            vim.cmd('clast')
+          end,
+          desc = 'Last quickfix item',
+        },
         { '<leader>f', group = '+file' },
         {
           '<leader>ff',
