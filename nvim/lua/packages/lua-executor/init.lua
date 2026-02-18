@@ -10,8 +10,16 @@
 ---@field clear_context fun(): nil Clear the execution context
 local M = {}
 
-local log =
-  require('plenary.log').new({ plugin = 'lua-executor', level = 'info', use_quickfix = true, use_file = true })
+local log = {}
+local function make_log(level)
+  return function(msg, ...)
+    vim.notify(string.format(msg, ...), level)
+  end
+end
+log.info = make_log(vim.log.levels.INFO)
+log.warn = make_log(vim.log.levels.WARN)
+log.error = make_log(vim.log.levels.ERROR)
+log.debug = make_log(vim.log.levels.DEBUG)
 
 ---@class ExecutionWindow
 ---@field win integer|nil Window handle

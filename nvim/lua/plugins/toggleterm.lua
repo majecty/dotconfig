@@ -6,8 +6,15 @@ return {
     config = function()
       local toggleterm = require('toggleterm')
       local terms = require('toggleterm.terminal')
-      local log = require('plenary.log').new({ plugin = 'toggleterm', level = 'info', use_quickfix = true })
 
+      local log = {}
+      local function make_log(level)
+        return function(msg, ...)
+          vim.notify(string.format(msg, ...), level)
+        end
+      end
+      log.info = make_log(vim.log.levels.INFO)
+      log.warn = make_log(vim.log.levels.WARN)
 
       local function add_new_terminal()
         log.info('add_new_terminal: Creating new terminal')
