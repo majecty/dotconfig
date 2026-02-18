@@ -156,7 +156,7 @@ return {
         {
           '<leader>lf',
           function()
-            vim.lsp.buf.references()
+            require('fzf-lua').lsp_references()
           end,
           desc = 'Find references',
         },
