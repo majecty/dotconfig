@@ -61,7 +61,10 @@ return {
         end
 
         if next_id then
-          toggleterm.toggle(next_id)
+          local term = terms.get(next_id, true)
+          if term then
+            term:focus()
+          end
         end
       end
 
