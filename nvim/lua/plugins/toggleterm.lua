@@ -4,20 +4,13 @@ return {
     version = '*',
     event = 'VeryLazy',
     config = function()
-      require('toggleterm').setup({
-        size = 20,
-        insert_mappings = true,
-        terminal_mappings = true,
-        open_mapping = [[<C-`>]],
-        direction = 'horizontal',
-        shade_terminals = false,
-      })
-
       -- Create new terminal with auto-incrementing id using C-~
       local toggleterm = require('toggleterm')
       local terms = require('toggleterm.terminal')
+      local log = require('plenary.log').new({ plugin = 'toggleterm', level = 'info' })
 
       local function add_new_terminal()
+        log.info('add_new_terminal: Creating new terminal')
         local all_terms = terms.get_all(true)
         local next_id = 1
         for _, term in pairs(all_terms) do
@@ -25,16 +18,20 @@ return {
             next_id = term.id + 1
           end
         end
+        log.info(string.format('add_new_terminal: Next ID = %d', next_id))
         toggleterm.toggle(next_id)
       end
 
       local function cycle_terminal(direction)
+        log.info(string.format('cycle_terminal: direction = %s', direction))
         local all_terms = terms.get_all(true)
         if #all_terms == 0 then
+          log.warn('cycle_terminal: No terminals available')
           return
         end
 
         local current_id = terms.get_focused_id()
+        log.info(string.format('cycle_terminal: current_id = %s', current_id or 'nil'))
         local sorted_ids = {}
         for _, term in pairs(all_terms) do
           table.insert(sorted_ids, term.id)
@@ -60,32 +57,41 @@ return {
           end
         end
 
+        log.info(string.format('cycle_terminal: next_id = %d', next_id or -1))
         if next_id then
           local term = terms.get(next_id, true)
           if term then
+            log.info(string.format('cycle_terminal: Focusing terminal %d', next_id))
             term:focus()
+          else
+            log.warn(string.format('cycle_terminal: Terminal %d not found', next_id))
           end
         end
       end
 
+      require('toggleterm').setup({
+        size = 20,
+        insert_mappings = true,
+        terminal_mappings = true,
+        open_mapping = [[<C-`>]],
+        direction = 'horizontal',
+        shade_terminals = false,
+        on_open = function(term)
+          log.info(string.format('on_open: Terminal %d opened', term.id))
+
+          vim.keymap.set({ 'i', 't' }, '<M-Up>', function()
+            cycle_terminal('up')
+          end, { buffer = term.bufnr, noremap = true, silent = true, desc = 'Cycle to previous terminal' })
+          vim.keymap.set({ 'i', 't' }, '<M-Down>', function()
+            cycle_terminal('down')
+          end, { buffer = term.bufnr, noremap = true, silent = true, desc = 'Cycle to next terminal' })
+        end,
+      })
+
       vim.keymap.set('n', '<C-~>', add_new_terminal, { noremap = true, silent = true, desc = 'Add new terminal' })
       vim.keymap.set('i', '<C-~>', add_new_terminal, { noremap = true, silent = true, desc = 'Add new terminal' })
       vim.keymap.set('t', '<C-~>', add_new_terminal, { noremap = true, silent = true, desc = 'Add new terminal' })
-
-      -- Setup terminal buffer keymaps in autocommand
-      local augroup = vim.api.nvim_create_augroup('ToggleTermKeymaps', { clear = true })
-      vim.api.nvim_create_autocmd('TermOpen', {
-        group = augroup,
-        pattern = 'term://*#toggleterm#*',
-        callback = function(opts)
-          vim.keymap.set('t', '<M-Up>', function()
-            cycle_terminal('up')
-          end, { buffer = opts.buf, noremap = true, silent = true, desc = 'Cycle to previous terminal' })
-          vim.keymap.set('t', '<M-Down>', function()
-            cycle_terminal('down')
-          end, { buffer = opts.buf, noremap = true, silent = true, desc = 'Cycle to next terminal' })
-        end,
-      })
+      log.info('toggleterm: Setup complete')
     end,
   },
 }
