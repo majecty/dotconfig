@@ -7,7 +7,7 @@ return {
       -- Create new terminal with auto-incrementing id using C-~
       local toggleterm = require('toggleterm')
       local terms = require('toggleterm.terminal')
-      local log = require('plenary.log').new({ plugin = 'toggleterm', level = 'info' })
+      local log = require('plenary.log').new({ plugin = 'toggleterm', level = 'info', use_quickfix = true })
 
       local function add_new_terminal()
         log.info('add_new_terminal: Creating new terminal')
@@ -59,10 +59,10 @@ return {
 
         log.info(string.format('cycle_terminal: next_id = %d', next_id or -1))
         if next_id then
-          local term = terms.get(next_id, true)
-          if term then
-            log.info(string.format('cycle_terminal: Focusing terminal %d', next_id))
-            term:focus()
+          local next_term = terms.get(next_id, true)
+          if next_term then
+            log.info(string.format('cycle_terminal: Replacing buffer with terminal %d', next_id))
+            vim.cmd(string.format('buffer %d', next_term.bufnr))
           else
             log.warn(string.format('cycle_terminal: Terminal %d not found', next_id))
           end
@@ -77,7 +77,7 @@ return {
         direction = 'horizontal',
         shade_terminals = false,
         on_open = function(term)
-          log.info(string.format('on_open: Terminal %d opened', term.id))
+          log.info(string.format('on_open: Terminal %d opened buffer(%d)', term.id, term.bufnr))
 
           vim.keymap.set({ 'i', 't' }, '<M-Up>', function()
             cycle_terminal('up')
