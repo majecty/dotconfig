@@ -59,13 +59,15 @@ return {
 
         log.info(string.format('cycle_terminal: next_id = %d', next_id or -1))
         if next_id then
-          local next_term = terms.get(next_id, true)
-          if next_term then
-            log.info(string.format('cycle_terminal: Replacing buffer with terminal %d', next_id))
-            vim.cmd(string.format('buffer %d', next_term.bufnr))
-          else
-            log.warn(string.format('cycle_terminal: Terminal %d not found', next_id))
+          if current_id then
+            local current_term = terms.get(current_id, true)
+            if current_term then
+              log.info(string.format('cycle_terminal: Closing terminal %d', current_id))
+              current_term:close()
+            end
           end
+          log.info(string.format('cycle_terminal: Opening terminal %d', next_id))
+          toggleterm.toggle(next_id)
         end
       end
 
