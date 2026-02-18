@@ -4,10 +4,10 @@ return {
     version = '*',
     event = 'VeryLazy',
     config = function()
-      -- Create new terminal with auto-incrementing id using C-~
       local toggleterm = require('toggleterm')
       local terms = require('toggleterm.terminal')
       local log = require('plenary.log').new({ plugin = 'toggleterm', level = 'info', use_quickfix = true })
+
 
       local function add_new_terminal()
         log.info('add_new_terminal: Creating new terminal')
@@ -38,6 +38,7 @@ return {
         end
         table.sort(sorted_ids)
 
+        ---@type integer|nil
         local next_id
         if not current_id then
           next_id = sorted_ids[1]
