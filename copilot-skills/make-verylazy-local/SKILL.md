@@ -10,7 +10,9 @@ description: 네오빔 설정에서 로컬(내부) 패키지를 `VeryLazy` 이�
 ## Process
 
 ### 1. 준비
-- 로컬 패키지 코드를 `nvim/lua/packages/<package-dir>/...` 또는 `nvim/lua/packages/<module>.lua`에 둡니다.
+- 로컬 패키지는 **디렉터리 형태**로 생성하고 `init.lua` 파일을 포함해야 합니다.
+- 구조: `nvim/lua/packages/<package-dir>/init.lua`
+- 예시: `nvim/lua/packages/lua-executor/init.lua`
 
 ### 2. 플러그인 스펙에 등록
 - 플러그인 스펙 파일(`nvim/lua/plugins/*.lua`)에서 `dir`, `name`, `event = 'VeryLazy'`를 사용해 로컬 경로를 지정합니다.
@@ -22,6 +24,13 @@ description: 네오빔 설정에서 로컬(내부) 패키지를 `VeryLazy` 이�
 - 네오빔을 재시작하고 VeryLazy 이벤트 이후에 모듈이 로드되는지 확인합니다.
 
 ## Example
+
+**디렉토리 구조:**
+```
+nvim/lua/packages/
+└── lua-executor/
+    └── init.lua    # 패키지 진입점
+```
 
 플러그인 스펙 예시(`nvim/lua/plugins/lua-executor.lua`):
 
@@ -47,9 +56,11 @@ return {
 **DO:**
 - `dir`에 절대경로(또는 홈 확장 '~')를 사용해 명확하게 지정하세요.
 - `name`은 플러그인 관리자나 로그에 표시될 고유 식별자를 사용하세요.
+- 패키지는 **디렉터리 + `init.lua`** 구조로 만드세요 (예: `packages/foo/init.lua`).
 - `config`에서 `require('packages.<module>')` 경로가 실제 파일 위치와 일치하는지 확인하세요.
 
 **DON'T:**
+- 단일 파일(`packages/<module>.lua`) 형태를 사용하지 마세요 — 디렉터리 + `init.lua` 구조를 선호합니다.
 - 로컬 디렉터리를 플러그인 형태로 만들지 않고 단순한 파일 구조와 매니저의 기대 구조가 불일치하는 상태로 등록하지 마세요.
 
 ## 검증 방법
@@ -62,8 +73,8 @@ return {
 ## 테스트/디버깅 팁
 
 - `:messages`로 시작 로그와 알림을 확인하세요.
-- `dir` 경로와 파일 권한 확인: `ls -la ~/jhconfig/nvim/lua/packages/lua-executor`.
-- `require` 경로가 파일 구조와 일치하는지 점검하세요 (`lua/packages/<module>.lua` -> `require('packages.<module>')`).
+- `dir` 경로와 디렉토리 구조 확인: `ls -la ~/jhconfig/nvim/lua/packages/lua-executor/` (init.lua 존재 확인).
+- `require` 경로가 파일 구조와 일치하는지 점검하세요 (`lua/packages/<dir>/init.lua` -> `require('packages.<dir>')`).
 
 ## 커밋/변경 규칙
 

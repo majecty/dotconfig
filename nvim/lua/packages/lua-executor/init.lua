@@ -3,16 +3,29 @@
 -- Maintains persistent state across blocks
 -- Displays output in separate window
 
+---@class LuaExecutor
+---@field execute_block fun(): nil Execute the lua code block at cursor position
+---@field setup fun(): nil Setup commands and keymaps
+---@field get_context fun(): table Get the current execution context
+---@field clear_context fun(): nil Clear the execution context
 local M = {}
 
+---@class ExecutionWindow
+---@field win integer|nil Window handle
+---@field buf integer|nil Buffer handle
+
+---@type table<string, any> Shared state across all executions
 -- Shared state across all executions
 local execution_context = {}
 
 -- Output window state
+---@type integer|nil Output window handle
 local output_win = nil
+---@type integer|nil Output buffer handle
 local output_buf = nil
 
--- Create or focus output window
+---Create or focus output window
+---@return integer|nil output_win The output window handle
 local function ensure_output_window()
   -- Check if output window still exists
   if output_win and vim.api.nvim_win_is_valid(output_win) then
@@ -42,8 +55,10 @@ local function ensure_output_window()
   return output_win
 end
 
--- Find lua code block at cursor position
--- Returns: code_string, start_line, end_line
+---Find lua code block at cursor position
+---@return string|nil code The extracted code string
+---@return integer|nil start_line The start line of the code block
+---@return integer|nil end_line The end line of the code block
 local function find_code_block()
   local current_line = vim.api.nvim_win_get_cursor(0)[1]
   local buf = vim.api.nvim_get_current_buf()
@@ -87,12 +102,13 @@ local function find_code_block()
   return code, start_line, end_line
 end
 
--- Execute lua code and capture output
--- Returns: success, output_string, error_message
+---Execute lua code and capture output
+---@param code string The lua code to execute
+---@return boolean success Whether execution was successful
+---@return string output The captured output
+---@return string|nil error_msg Error message if execution failed
 local function execute_code(code)
   local output_lines = {}
-  local success = true
-  local error_msg = nil
 
   -- Redirect print to capture output
   local original_print = print
@@ -127,12 +143,16 @@ local function execute_code(code)
   return true, table.concat(output_lines, ""), nil
 end
 
--- Display output in output window
+---Display output in output window
+---@param code string The executed code
+---@param success boolean Whether execution was successful
+---@param output string The output string
+---@param error_msg string|nil Error message if execution failed
 local function display_output(code, success, output, error_msg)
-  local output_win = ensure_output_window()
-  if not output_win then return end
+  local output_win_ = ensure_output_window()
+  if not output_win_ then return end
 
-  local buf = vim.api.nvim_win_get_buf(output_win)
+  local buf = vim.api.nvim_win_get_buf(output_win_)
   local lines = {}
 
   -- Header
@@ -173,11 +193,13 @@ local function display_output(code, success, output, error_msg)
   else
     table.insert(lines, "║ ✗ Error" .. string.rep(" ", 69) .. "║")
     table.insert(lines, "╠" .. string.rep("═", 78) .. "╣")
-    for err_line in error_msg:gmatch("[^\n]+") do
-      if #err_line > 74 then
-        err_line = err_line:sub(1, 71) .. "..."
+    if error_msg then
+      for err_line in error_msg:gmatch("[^\n]+") do
+        if #err_line > 74 then
+          err_line = err_line:sub(1, 71) .. "..."
+        end
+        table.insert(lines, "║ " .. err_line .. string.rep(" ", 76 - #err_line) .. "║")
       end
-      table.insert(lines, "║ " .. err_line .. string.rep(" ", 76 - #err_line) .. "║")
     end
   end
 
@@ -188,9 +210,10 @@ local function display_output(code, success, output, error_msg)
   vim.api.nvim_buf_set_option(buf, "modifiable", false)
 end
 
--- Main execution function
+---Main execution function
+---Finds and executes the lua code block at cursor position
 function M.execute_block()
-  local code, start_line, end_line = find_code_block()
+  local code = find_code_block()
   if not code then return end
 
   vim.notify("Executing code block...", vim.log.levels.INFO)
@@ -205,7 +228,8 @@ function M.execute_block()
   end
 end
 
--- Setup function to be called from config
+---Setup function to be called from config
+---Creates user command and markdown file type keymap
 function M.setup()
   -- Create command
   vim.api.nvim_create_user_command("LuaExecute", function()
@@ -223,12 +247,13 @@ function M.setup()
   })
 end
 
--- Get execution context (for debugging/inspection)
+---Get execution context for debugging/inspection
+---@return table execution_context The current execution context table
 function M.get_context()
   return execution_context
 end
 
--- Clear context
+---Clear the execution context
 function M.clear_context()
   execution_context = {}
   vim.notify("Execution context cleared", vim.log.levels.INFO)
