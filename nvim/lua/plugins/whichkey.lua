@@ -24,6 +24,7 @@ return {
       local scratch = require('packages.scratch')
       local playground = require('packages.playground')
       local buffer_mgmt = require('packages.buffer_management')
+      local notify_buffer = require('packages.notify_buffer')
       playground.setup()
       wk.setup(opts)
 
@@ -279,12 +280,27 @@ return {
           desc = 'Find history',
         },
         { '<leader>B', group = '+buffer management' },
+        { '<leader>B', group = '+buffer management' },
         {
-          '<leader>Bc',
+          '<leader>bn',
           function()
-            buffer_mgmt.close_hidden_buffers()
+            notify_buffer.toggle()
           end,
-          desc = 'Close hidden buffers',
+          desc = 'Toggle notify buffer',
+        },
+        {
+          '<leader>bc',
+          function()
+            notify_buffer.clear()
+          end,
+          desc = 'Clear notify buffer',
+        },
+        {
+          '<leader>bt',
+          function()
+            vim.cmd('NotifyTest')
+          end,
+          desc = 'Test notify',
         },
         {
           '<leader>BC',
