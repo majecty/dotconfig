@@ -21,8 +21,8 @@ local function get_split_direction()
 end
 
 --- Process a single tmux terminal buffer in the same tab
----@param buf integer Buffer handle
----@param winid integer Window ID
+---@param buf BufferHandle Buffer handle
+---@param winid WindowHandle Window ID
 ---@param session_name string Tmux session name
 local function process_tmux_buffer_in_tab(buf, winid, session_name)
   log.debug('Processing tmux buffer in window ' .. tostring(winid))
@@ -62,7 +62,7 @@ local function process_tmux_buffer_in_tab(buf, winid, session_name)
 end
 
 --- Process a single tmux terminal buffer (helper)
----@param buf integer Buffer handle
+---@param buf BufferHandle Buffer handle
 ---@param bufname string Buffer name
 local function process_tmux_buffer(buf, bufname)
   -- Check if buffer is a terminal with tmux attach command
