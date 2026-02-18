@@ -4,7 +4,7 @@ local save = require('packages.session_manager.save')
 
 local M = {}
 
--- Restart with neovide
+--- Restart with neovide
 function M.neovide_restart()
   local cwd = vim.fn.getcwd()
   save.save_session()

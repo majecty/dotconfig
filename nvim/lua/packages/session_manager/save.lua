@@ -4,7 +4,7 @@ local utils = require('packages.session_manager.utils')
 
 local M = {}
 
--- Save session for current project
+--- Save session for current project
 function M.save_session()
   local project_info = utils.get_project_info()
   local session_filename = utils.get_session_filename(project_info)
@@ -19,7 +19,7 @@ function M.save_session()
   log.info('Session saved: ' .. project_info.name)
 end
 
--- Auto-save session silently (no notifications)
+--- Auto-save session silently (no notifications)
 function M.auto_save_session_silent()
   local project_info = utils.get_project_info()
   local session_filename = utils.get_session_filename(project_info)
@@ -32,7 +32,7 @@ function M.auto_save_session_silent()
   utils.store_project_path(session_filename, project_info.path)
 end
 
--- Setup auto-save on VimLeavePre and FocusLost events
+--- Setup auto-save on VimLeavePre and FocusLost events
 function M.setup_auto_save()
   local group = vim.api.nvim_create_augroup('NvimSessionAutoSave', { clear = true })
 

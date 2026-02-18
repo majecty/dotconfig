@@ -5,7 +5,9 @@ local tmux = require('packages.session_manager.tmux')
 
 local M = {}
 
--- Load session from file path
+--- Load session from file path
+---@param session_filename string Session file name without extension
+---@param display_name string Display name for the session
 function M.load_session_from_file(session_filename, display_name)
   local session_path = utils.session_dir .. '/' .. session_filename .. '.vim'
   log.info('Loading session from: ' .. session_path)
@@ -39,7 +41,7 @@ function M.load_session_from_file(session_filename, display_name)
   end)
 end
 
--- Load session with picker
+--- Load session with picker
 function M.load_session_with_picker()
   local sessions = utils.list_sessions()
 
@@ -64,7 +66,7 @@ function M.load_session_with_picker()
   end)
 end
 
--- Setup auto-load session on startup if it exists (silently)
+--- Setup auto-load session on startup if it exists (silently)
 function M.setup_auto_load()
   local group = vim.api.nvim_create_augroup('NvimSessionAutoLoad', { clear = true })
 

@@ -4,7 +4,8 @@ local utils = require('packages.session_manager.utils')
 
 local M = {}
 
--- Determine split direction based on window size
+--- Determine split direction based on window size
+---@return string split_direction 'vsplit' or 'split'
 local function get_split_direction()
   local width = vim.o.columns
   local height = vim.o.lines
@@ -19,7 +20,10 @@ local function get_split_direction()
   end
 end
 
--- Process a single tmux terminal buffer in the same tab
+--- Process a single tmux terminal buffer in the same tab
+---@param buf integer Buffer handle
+---@param winid integer Window ID
+---@param session_name string Tmux session name
 local function process_tmux_buffer_in_tab(buf, winid, session_name)
   log.debug('Processing tmux buffer in window ' .. tostring(winid))
 
@@ -57,7 +61,9 @@ local function process_tmux_buffer_in_tab(buf, winid, session_name)
   end
 end
 
--- Process a single tmux terminal buffer (helper)
+--- Process a single tmux terminal buffer (helper)
+---@param buf integer Buffer handle
+---@param bufname string Buffer name
 local function process_tmux_buffer(buf, bufname)
   -- Check if buffer is a terminal with tmux attach command
   if not bufname:match('term://.*tmux%s+attach%-session') then
@@ -107,7 +113,7 @@ local function process_tmux_buffer(buf, bufname)
   process_tmux_buffer_in_tab(buf, winid, session_name)
 end
 
--- Reconnect tmux terminals after session load
+--- Reconnect tmux terminals after session load
 function M.reconnect_tmux_terminals()
   log.debug('reconnect_tmux_terminals: Starting')
 
@@ -135,7 +141,7 @@ function M.reconnect_tmux_terminals()
   log.debug('reconnect_tmux_terminals: Completed')
 end
 
--- Attach to tmux session
+--- Attach to tmux session
 function M.tmux_attach()
   local project_info = utils.get_project_info()
   local session_name = project_info.name
