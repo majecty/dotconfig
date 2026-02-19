@@ -6,7 +6,7 @@ local jnvui = require("jnvui")
 print("Test: Testing invalid buffer error handling...")
 
 local TextComponent = jnvui.createComponent("Test", function(props)
-  return jnvui.element("text", {content = "Test"})
+  return jnvui.c.text({content = "Test"})
 end)
 
 local result = jnvui.mount(TextComponent, 99999)

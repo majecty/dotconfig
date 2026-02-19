@@ -7,16 +7,16 @@ local jnvui = require("jnvui")
 local Counter = jnvui.createComponent("Counter", function(props)
   local count, setCount = jnvui.useState(props.initialCount or 0)
 
-  return jnvui.element("box", {
+  return jnvui.c.box({
     width = 20,
     height = 5,
     border = "single",
   },
-    jnvui.element("text", {
+    jnvui.c.text({
       content = "Count: " .. count,
       highlight = "Title",
     }),
-    jnvui.element("text", {
+    jnvui.c.text({
       content = "Press + to increment",
       highlight = "Comment",
     })
@@ -25,10 +25,22 @@ end)
 
 -- Create a button component
 local Button = jnvui.createComponent("Button", function(props)
-  return jnvui.element("text", {
+  return jnvui.c.text({
     content = "[" .. props.label .. "]",
     highlight = props.highlight or "Keyword",
   })
+end)
+
+-- Create a form component
+local Form = jnvui.createComponent("Form", function(props)
+  return jnvui.c.column({},
+    jnvui.c.text({content = props.title or "Form", highlight = "Title"}),
+    jnvui.c.input({placeholder = "Enter name..."}),
+    jnvui.c.row({},
+      jnvui.c.button({label = "Submit"}),
+      jnvui.c.button({label = "Cancel"})
+    )
+  )
 end)
 
 -- Example: Mount counter in current buffer
@@ -51,5 +63,6 @@ end
 return {
   Counter = Counter,
   Button = Button,
+  Form = Form,
   demo = _G.jnvui_demo,
 }

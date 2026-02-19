@@ -6,7 +6,7 @@ local jnvui = require("jnvui")
 print("Test: Testing mount to current buffer...")
 
 local TextComponent = jnvui.createComponent("MountTest", function(props)
-  return jnvui.element("text", {
+  return jnvui.c.text({
     content = props.message or "Mounted!",
     highlight = "Title",
   })
