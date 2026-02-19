@@ -339,6 +339,13 @@ return {
           end,
           desc = 'Reload jnvui',
         },
+        {
+          '<leader>jx',
+          function()
+            vim.cmd('luafile %')
+          end,
+          desc = 'Execute current Lua file',
+        },
         { '<leader>yL', group = '+lua (focused)' },
         {
           '<leader>yLs',
