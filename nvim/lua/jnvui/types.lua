@@ -50,8 +50,10 @@
 ---@field text string the text to display
 ---@field hl_group string|nil highlight group name
 
+---@alias JnvuiElementType "text" | "box" | "button" | "input" | "row" | "column"
+
 ---@class JnvuiElement
----@field type string element type identifier
+---@field type JnvuiElementType element type identifier
 ---@field props JnvuiProps element properties
 ---@field children JnvuiElement[] child elements
 ---@field key string|nil unique key for list rendering
