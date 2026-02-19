@@ -23,14 +23,25 @@ end
 ---@param row number 0-based row
 ---@param col number 0-based column
 ---@param chunks JnvuiVirtualTextChunk[] text chunks with highlights
----@return number extmark id
+---@return number|nil extmark id or nil on error
 function M.render_text(buf, ns, row, col, chunks)
+  local line_count = vim.api.nvim_buf_line_count(buf)
+  if row >= line_count then
+    vim.notify("jnvui: Row " .. row .. " is out of range (buffer has " .. line_count .. " lines)", vim.log.levels.WARN)
+    return nil
+  end
+
   local opts = {
     virt_text = chunks,
     virt_text_pos = "overlay",
   }
 
-  local mark_id = vim.api.nvim_buf_set_extmark(buf, ns, row, col, opts)
+  local success, mark_id = pcall(vim.api.nvim_buf_set_extmark, buf, ns, row, col, opts)
+
+  if not success then
+    vim.notify("jnvui: Failed to set extmark: " .. tostring(mark_id), vim.log.levels.ERROR)
+    return nil
+  end
 
   if not active_marks[buf] then
     active_marks[buf] = {}
