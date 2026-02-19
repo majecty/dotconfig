@@ -58,7 +58,22 @@ function M.append(message, level)
   end
 end
 
+local function find_notify_buffer()
+  for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+    if vim.api.nvim_buf_is_valid(buf) then
+      local name = vim.api.nvim_buf_get_name(buf)
+      if name == 'notify://' then
+        return buf
+      end
+    end
+  end
+  return nil
+end
+
 function M.open()
+  -- Try to find existing notify buffer first
+  notify_buf = find_notify_buffer()
+  
   if not notify_buf or not vim.api.nvim_buf_is_valid(notify_buf) then
     notify_buf = vim.api.nvim_create_buf(false, true)
     vim.api.nvim_buf_set_name(notify_buf, 'notify://')
