@@ -161,6 +161,13 @@ return {
           end,
           desc = 'Find references',
         },
+        {
+          '<leader>ls',
+          function()
+            require('fzf-lua').lsp_document_symbols()
+          end,
+          desc = 'Document symbols',
+        },
         { '<leader>t', group = '+tab' },
         {
           '<leader>tn',
