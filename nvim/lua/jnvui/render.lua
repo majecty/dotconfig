@@ -48,24 +48,39 @@ end
 ---@param buf number buffer number
 ---@param ns number namespace id
 ---@param position JnvuiPosition starting position
+---@return boolean success
 function M.render(element, buf, ns, position)
-  M.clear_namespace(buf, ns)
-
-  if element.type == "text" then
-    local text = element.props.content or ""
-    local hl = element.props.highlight or nil
-    M.render_text(buf, ns, position.row, position.col, {{text, hl}})
-    return
+  if not element then
+    vim.notify("jnvui: Cannot render nil element", vim.log.levels.ERROR)
+    return false
   end
 
-  if element.type == "box" then
-    M.render_box(element, buf, ns, position)
-    return
+  local success, err = pcall(function()
+    M.clear_namespace(buf, ns)
+
+    if element.type == "text" then
+      local text = element.props.content or ""
+      local hl = element.props.highlight or nil
+      M.render_text(buf, ns, position.row, position.col, {{text, hl}})
+      return
+    end
+
+    if element.type == "box" then
+      M.render_box(element, buf, ns, position)
+      return
+    end
+
+    for _, child in ipairs(element.children or {}) do
+      M.render(child, buf, ns, position)
+    end
+  end)
+
+  if not success then
+    vim.notify("jnvui: Render error: " .. tostring(err), vim.log.levels.ERROR)
+    return false
   end
 
-  for _, child in ipairs(element.children or {}) do
-    M.render(child, buf, ns, position)
-  end
+  return true
 end
 
 ---Render a box element with border

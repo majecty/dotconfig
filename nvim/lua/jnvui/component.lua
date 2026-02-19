@@ -63,8 +63,18 @@ end
 ---Render a component to element tree
 ---@param component JnvuiComponent
 ---@param props JnvuiProps
----@return JnvuiElement
+---@return JnvuiElement|nil element or nil on error
 function M.render_component(component, props)
+  if not component then
+    vim.notify("jnvui: Cannot render nil component", vim.log.levels.ERROR)
+    return nil
+  end
+
+  if not component.render then
+    vim.notify("jnvui: Component " .. tostring(component.name) .. " has no render function", vim.log.levels.ERROR)
+    return nil
+  end
+
   local ctx = M.create_context(component)
   state.set_context(ctx)
 
@@ -73,7 +83,8 @@ function M.render_component(component, props)
   state.set_context(nil)
 
   if not success then
-    error("Component " .. component.name .. " render failed: " .. tostring(result))
+    vim.notify("jnvui: Component " .. component.name .. " render failed: " .. tostring(result), vim.log.levels.ERROR)
+    return nil
   end
 
   return result

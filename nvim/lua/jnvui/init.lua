@@ -40,17 +40,39 @@ end
 ---@param buf number buffer number
 ---@param props table|nil component props
 ---@param position table|nil {row, col} position
+---@return table|nil instance or nil on error
 function M.mount(component, buf, props, position)
   props = props or {}
   position = position or {row = 0, col = 0}
 
+  if not component then
+    vim.notify("jnvui: Cannot mount nil component", vim.log.levels.ERROR)
+    return nil
+  end
+
+  if not buf or not vim.api.nvim_buf_is_valid(buf) then
+    vim.notify("jnvui: Invalid buffer number", vim.log.levels.ERROR)
+    return nil
+  end
+
   local ctx = M.component.create_context(component)
   M.state.set_context(ctx)
 
-  local element = component.render(props)
-  M.render.render(element, buf, ctx.namespace, position)
+  local success, element = pcall(component.render, props)
 
   M.state.set_context(nil)
+
+  if not success then
+    vim.notify("jnvui: Component render error: " .. tostring(element), vim.log.levels.ERROR)
+    return nil
+  end
+
+  local render_success, render_err = pcall(M.render.render, element, buf, ctx.namespace, position)
+
+  if not render_success then
+    vim.notify("jnvui: Render error: " .. tostring(render_err), vim.log.levels.ERROR)
+    return nil
+  end
 
   return {
     component = component,

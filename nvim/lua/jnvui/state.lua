@@ -33,10 +33,11 @@ end
 
 ---useState hook implementation
 ---@param initialValue any initial state value
----@return any, fun(newValue: any) current value and setter
+---@return any|nil, fun(newValue: any)|nil current value and setter, or nil on error
 function M.useState(initialValue)
   if not current_context then
-    error("useState must be called within a component render")
+    vim.notify("jnvui: useState must be called within a component render", vim.log.levels.ERROR)
+    return nil, nil
   end
 
   local ctx = current_context
@@ -57,7 +58,10 @@ function M.useState(initialValue)
     if hook.value ~= newValue then
       hook.value = newValue
       if ctx.currentComponent and ctx.currentComponent.onUpdate then
-        ctx.currentComponent.onUpdate()
+        local success, err = pcall(ctx.currentComponent.onUpdate)
+        if not success then
+          vim.notify("jnvui: State update error: " .. tostring(err), vim.log.levels.ERROR)
+        end
       end
     end
   end
