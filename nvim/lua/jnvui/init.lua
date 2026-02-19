@@ -94,4 +94,15 @@ function M.unmount(instance)
   M.events.clear_mappings()
 end
 
+---Reload all jnvui modules
+function M.reload()
+  for k, _ in pairs(package.loaded) do
+    if k:match("^jnvui") then
+      package.loaded[k] = nil
+    end
+  end
+  vim.notify("jnvui reloaded!", vim.log.levels.INFO)
+  return require("jnvui")
+end
+
 return M

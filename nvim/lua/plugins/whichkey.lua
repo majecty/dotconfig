@@ -331,6 +331,14 @@ return {
           end,
           desc = 'Lua code playground',
         },
+        { '<leader>j', group = '+jnvui' },
+        {
+          '<leader>jr',
+          function()
+            require('jnvui').reload()
+          end,
+          desc = 'Reload jnvui',
+        },
         { '<leader>yL', group = '+lua (focused)' },
         {
           '<leader>yLs',
