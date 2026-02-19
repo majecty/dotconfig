@@ -18,6 +18,34 @@
 ---@class JnvuiProps
 ---@field [string] any dynamic key-value props
 
+---@class JnvuiTextProps
+---@field content string text content to display
+---@field highlight string|nil highlight group name
+
+---@class JnvuiBoxProps
+---@field width number|nil box width in characters
+---@field height number|nil box height in lines
+---@field border string|nil border style ("single", "double", "rounded")
+
+---@class JnvuiButtonProps
+---@field label string button label text
+---@field onClick function|nil click event handler
+---@field highlight string|nil highlight group name
+
+---@class JnvuiInputProps
+---@field placeholder string|nil placeholder text
+---@field value string|nil current input value
+---@field onChange function|nil change event handler
+---@field highlight string|nil highlight group name
+
+---@class JnvuiRowProps
+---@field spacing number|nil spacing between children
+---@field highlight string|nil highlight group name
+
+---@class JnvuiColumnProps
+---@field spacing number|nil spacing between children
+---@field highlight string|nil highlight group name
+
 ---@class JnvuiVirtualTextChunk
 ---@field text string the text to display
 ---@field hl_group string|nil highlight group name
