@@ -53,7 +53,7 @@ function M.append(message, level)
   if notify_buf and vim.api.nvim_buf_is_valid(notify_buf) then
     local line_idx = #notify_history - 1
     local level_name = get_level_name(level)
-    local new_line = string.format('[%s] [%s] %s', entry.time, level_name, message)
+    local new_line = string.format('[%s] [%s] %s', entry.time, level_name, message:gsub('\n', ' '))
     vim.api.nvim_buf_set_lines(notify_buf, line_idx, line_idx + 1, false, { new_line })
   end
 end
@@ -101,7 +101,7 @@ end
 
 local function wrapped_notify(message, level, opts)
   M.append(message, level)
-  original_notify(message, level, opts)
+  -- original_notify(message, level, opts)
 end
 
 function M.setup()
