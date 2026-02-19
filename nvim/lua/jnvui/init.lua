@@ -11,6 +11,7 @@ M.events = require("jnvui.events")
 M.dom = require("jnvui.dom")
 M.utils = require("jnvui.utils")
 M.c = require("jnvui.c")
+M.debug = require("jnvui.debug")
 
 ---Create a component (alias)
 ---@param name string component name
