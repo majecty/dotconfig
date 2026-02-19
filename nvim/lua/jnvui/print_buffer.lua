@@ -32,7 +32,7 @@ end
 
 ---Open buffer in a window
 ---@param buf number buffer number
-local function open_buffer_in_window(buf)
+function M.open_buffer_in_window(buf)
   -- Check if buffer is already displayed
   local existing_win = find_window_for_buffer(buf)
   if existing_win then
@@ -40,7 +40,7 @@ local function open_buffer_in_window(buf)
     vim.api.nvim_set_current_win(existing_win)
   else
     -- Open in new split
-    vim.api.nvim_command('vsplit')
+    vim.cmd('vsplit')
     local win = vim.api.nvim_get_current_win()
     vim.api.nvim_win_set_buf(win, buf)
     
@@ -48,6 +48,19 @@ local function open_buffer_in_window(buf)
     vim.api.nvim_win_set_option(win, 'wrap', false)
     vim.api.nvim_win_set_option(win, 'number', false)
     vim.api.nvim_win_set_option(win, 'relativenumber', false)
+  end
+end
+
+---Open output buffer for current file
+function M.open_output_buffer()
+  local filepath = vim.fn.expand('%:p')
+  local buf_name = "Output: " .. vim.fn.fnamemodify(filepath, ':t')
+  local buf = find_buffer_by_name(buf_name)
+  
+  if buf then
+    M.open_buffer_in_window(buf)
+  else
+    vim.notify("No output buffer found for current file", vim.log.levels.WARN)
   end
 end
 
@@ -99,12 +112,11 @@ function M.capture(fn, title)
     vim.api.nvim_buf_set_lines(buf, 0, -1, false, {"(no output)"})
   end
   
-  -- Always open/show buffer
-  open_buffer_in_window(buf)
-  
   if not success then
     vim.notify("Error: " .. tostring(err), vim.log.levels.ERROR)
   end
+  
+  return buf
 end
 
 ---Execute Lua file and capture output to buffer
@@ -112,9 +124,12 @@ end
 function M.luafile_buffer(filepath)
   filepath = filepath or vim.fn.expand('%:p')
   
-  M.capture(function()
+  local buf = M.capture(function()
     dofile(filepath)
   end, "Output: " .. vim.fn.fnamemodify(filepath, ':t'))
+  
+  -- Open the buffer
+  M.open_buffer_in_window(buf)
 end
 
 return M
