@@ -346,6 +346,13 @@ return {
           end,
           desc = 'Execute current Lua file',
         },
+        {
+          '<leader>jp',
+          function()
+            require('jnvui').print_buffer.luafile_buffer()
+          end,
+          desc = 'Execute Lua file and show output in buffer',
+        },
         { '<leader>yL', group = '+lua (focused)' },
         {
           '<leader>yLs',
