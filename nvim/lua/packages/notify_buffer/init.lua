@@ -1,11 +1,22 @@
--- Notify buffer that captures vim.notify output
+---@class NotifyEntry
+---@field time string
+---@field level number
+---@field message string
+
+---@class NotifyBuffer
 local M = {}
 
+---@type BufferHandle|nil
 local notify_buf = nil
+---@type function
 local original_notify = vim.notify
+---@type NotifyEntry[]
 local notify_history = {}
+---@type WindowHandle|nil
 local float_win = nil
+---@type BufferHandle|nil
 local float_buf = nil
+---@type uv_timer_t|nil
 local close_timer = nil
 
 local LEVELS = {
@@ -62,15 +73,25 @@ local function show_float(message, level)
     vim.api.nvim_set_option_value('filetype', 'notify', { buf = float_buf })
   end
 
-  local level_name = get_level_name(level)
-  local time = format_time()
-  local line = string.format('[%s] [%s] %s', time, level_name, message:gsub('\n', ' '))
-  vim.api.nvim_buf_set_lines(float_buf, 0, -1, false, { line })
+  local max_messages = 10
+  local start_idx = math.max(1, #notify_history - max_messages + 1)
+  local lines = {}
+  for i = start_idx, #notify_history do
+    local entry = notify_history[i]
+    local level_name = get_level_name(entry.level)
+    table.insert(lines, string.format('[%s] [%s] %s', entry.time, level_name, entry.message:gsub('\n', ' ')))
+  end
 
-  local width = math.min(#line + 2, 80)
-  local height = 1
+  vim.api.nvim_buf_set_lines(float_buf, 0, -1, false, lines)
+
+  local max_width = 80
+  local width = max_width
+  for _, line in ipairs(lines) do
+    width = math.max(width, math.min(#line + 2, max_width))
+  end
+  local height = math.min(#lines, 10)
+
   local total_width = vim.o.columns
-  local total_height = vim.o.lines
   local row = 1
   local col = math.max(total_width - width - 2, 0)
 
@@ -93,7 +114,7 @@ local function show_float(message, level)
 
   vim.api.nvim_set_option_value('winhl', 'Normal:' .. hl_group .. ',FloatBorder:' .. hl_group, { win = float_win })
 
-  close_timer = assert(vim.uv.new_timer(), "Failed to create timer")
+  close_timer = assert(vim.uv.new_timer(), 'Failed to create timer')
   close_timer:start(3000, 0, vim.schedule_wrap(close_float))
 end
 
