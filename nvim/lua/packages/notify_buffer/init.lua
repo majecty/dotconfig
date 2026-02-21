@@ -4,6 +4,9 @@ local M = {}
 local notify_buf = nil
 local original_notify = vim.notify
 local notify_history = {}
+local float_win = nil
+local float_buf = nil
+local close_timer = nil
 
 local LEVELS = {
   [vim.log.levels.TRACE] = 'TRACE',
@@ -39,6 +42,61 @@ function M.render()
   vim.api.nvim_buf_set_lines(notify_buf, 0, -1, false, lines)
 end
 
+local function close_float()
+  if close_timer then
+    close_timer:close()
+    close_timer = nil
+  end
+  if float_win and vim.api.nvim_win_is_valid(float_win) then
+    vim.api.nvim_win_close(float_win, true)
+    float_win = nil
+  end
+end
+
+local function show_float(message, level)
+  close_float()
+
+  if not float_buf or not vim.api.nvim_buf_is_valid(float_buf) then
+    float_buf = vim.api.nvim_create_buf(false, true)
+    vim.api.nvim_set_option_value('bufhidden', 'wipe', { buf = float_buf })
+    vim.api.nvim_set_option_value('filetype', 'notify', { buf = float_buf })
+  end
+
+  local level_name = get_level_name(level)
+  local time = format_time()
+  local line = string.format('[%s] [%s] %s', time, level_name, message:gsub('\n', ' '))
+  vim.api.nvim_buf_set_lines(float_buf, 0, -1, false, { line })
+
+  local width = math.min(#line + 2, 80)
+  local height = 1
+  local total_width = vim.o.columns
+  local total_height = vim.o.lines
+  local row = 1
+  local col = math.max(total_width - width - 2, 0)
+
+  local hl_group = 'Normal'
+  if level == vim.log.levels.ERROR then
+    hl_group = 'ErrorMsg'
+  elseif level == vim.log.levels.WARN then
+    hl_group = 'WarningMsg'
+  end
+
+  float_win = vim.api.nvim_open_win(float_buf, false, {
+    relative = 'editor',
+    row = row,
+    col = col,
+    width = width,
+    height = height,
+    style = 'minimal',
+    border = 'rounded',
+  })
+
+  vim.api.nvim_set_option_value('winhl', 'Normal:' .. hl_group .. ',FloatBorder:' .. hl_group, { win = float_win })
+
+  close_timer = vim.loop.new_timer()
+  close_timer:start(3000, 0, vim.schedule_wrap(close_float))
+end
+
 ---@param message string
 ---@param level number
 ---@param opts table
@@ -59,8 +117,16 @@ function M.append(message, level, opts)
 
   local line_idx = #notify_history - 1
   local level_name = get_level_name(level)
-  local new_line = string.format('[%s] [%s] %s (%s)', entry.time, level_name, message:gsub('\n', ' '), vim.inspect(opts):gsub('\n', ' '))
+  local new_line = string.format(
+    '[%s] [%s] %s (%s)',
+    entry.time,
+    level_name,
+    message:gsub('\n', ' '),
+    vim.inspect(opts):gsub('\n', ' ')
+  )
   vim.api.nvim_buf_set_lines(notify_buf, line_idx, line_idx + 1, false, { new_line })
+
+  show_float(message, level)
 end
 
 local function find_notify_buffer()
@@ -74,7 +140,6 @@ local function find_notify_buffer()
   end
   return nil
 end
-
 
 --- @return BufferHandle
 function M.find_or_create_buffer()
