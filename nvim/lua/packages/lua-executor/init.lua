@@ -221,6 +221,12 @@ local function display_output(code, success, output, error_msg)
   vim.api.nvim_buf_set_option(buf, 'modifiable', true)
   vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
   vim.api.nvim_buf_set_option(buf, 'modifiable', false)
+
+  vim.keymap.set('n', 'q', function()
+    vim.api.nvim_win_close(output_win_, true)
+  end, { buffer = buf, noremap = true, silent = true, desc = 'Close output window' })
+
+  vim.api.nvim_set_current_win(output_win_)
 end
 
 local function is_multiline_start(line)
