@@ -174,7 +174,14 @@ return {
           function()
             require('fzf-lua').diagnostics_document()
           end,
-          desc = 'Show diagnostics',
+          desc = 'Document diagnostics',
+        },
+        {
+          '<leader>lW',
+          function()
+            require('fzf-lua').diagnostics_workspace()
+          end,
+          desc = 'Workspace diagnostics',
         },
         {
           '<leader>lr',
