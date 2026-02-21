@@ -77,7 +77,10 @@ local bufnr = vim.api.nvim_get_current_buf()
 -- 모든 extmark 조회 후 하나씩 삭제
 local marks = vim.api.nvim_buf_get_extmarks(bufnr, -1, 0, -1, {})
 for _, mark in ipairs(marks) do
-  vim.api.nvim_buf_del_extmark(bufnr, mark[4].ns_id or 0, mark[1])
+  local ns_id = 1;
+  local extmark_id = mark[1];
+  vim.notify("삭제 중: " .. vim.inspect(mark))
+  vim.api.nvim_buf_del_extmark(bufnr, ns_id, extmark_id)
 end
 
 print("버퍼 #" .. bufnr .. "의 " .. #marks .. "개 extmarks 삭제됨")

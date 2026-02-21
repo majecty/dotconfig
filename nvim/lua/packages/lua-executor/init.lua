@@ -1,14 +1,17 @@
 -- Minimal Lua executor for markdown code blocks
 -- Execute entire lua code block with Enter key
 -- Maintains persistent state across blocks
--- Displays output in separate window
+-- Displays output in separate window or virtual text per line
 
 ---@class LuaExecutor
 ---@field execute_block fun(): nil Execute the lua code block at cursor position
----@field setup fun(): nil Setup commands and keymaps
+---@field execute_line fun(): nil Execute the current line and show result as virtual text
+---@field setup fun(opts?: table): nil Setup commands and keymaps
 ---@field get_context fun(): table Get the current execution context
 ---@field clear_context fun(): nil Clear the execution context
 local M = {}
+
+local ns_id = vim.api.nvim_create_namespace('lua-executor')
 
 local log = {}
 local function make_log(level)
@@ -221,6 +224,90 @@ local function display_output(code, success, output, error_msg)
   vim.api.nvim_buf_set_option(buf, 'modifiable', false)
 end
 
+local function is_multiline_start(line)
+  local trimmed = line:match('^%s*(.*)')
+  local keywords = { 'if', 'for', 'while', 'function', 'local', 'do' }
+  for _, kw in ipairs(keywords) do
+    if trimmed:match('^' .. kw .. '%s*$') or trimmed:match('^' .. kw .. '%s*%(.*%)%s*then') then
+      return true
+    end
+  end
+  return false
+end
+
+local function execute_line(code_buf, line_num)
+  local lines = vim.api.nvim_buf_get_lines(code_buf, 0, -1, false)
+  local line = lines[line_num]
+  
+  if is_multiline_start(line) then
+    return
+  end
+  
+  local fn, err = load(line)
+  if not fn then
+    local virt_lines = {}
+    if err:match('expected') or err:match('near') or err:match('unfinished') then
+      return
+    end
+    table.insert(virt_lines, { ' ✗ ' .. err, 'LuaExecutorError' })
+    vim.api.nvim_buf_set_extmark(code_buf, ns_id, line_num - 1, line_num - 1, {
+      virt_text = virt_lines,
+      virt_text_pos = 'eol',
+      hl_mode = 'combine',
+    })
+    return
+  end
+  
+  local output_lines = {}
+  local function capture_print(...)
+    for _, v in ipairs({ ... }) do
+      table.insert(output_lines, tostring(v))
+    end
+  end
+  
+  local env = setmetatable({
+    print = capture_print,
+    inspect = vim.inspect,
+    api = vim.api,
+    cmd = vim.cmd,
+    fn = vim.fn,
+  }, { __index = _G })
+  
+  local ok, result = pcall(fn)
+  if not ok then
+    local virt_lines = { { ' ✗ ' .. tostring(result), 'LuaExecutorError' } }
+    vim.api.nvim_buf_set_extmark(code_buf, ns_id, line_num - 1, line_num - 1, {
+      virt_text = virt_lines,
+      virt_text_pos = 'eol',
+      hl_mode = 'combine',
+    })
+    return
+  end
+  
+  local virt_lines = {}
+  if result ~= nil then
+    table.insert(virt_lines, { ' ✓ ' .. vim.inspect(result):sub(1, 50), 'LuaExecutorSuccess' })
+  end
+  for _, v in ipairs(output_lines) do
+    table.insert(virt_lines, { ' → ' .. v, 'LuaExecutorOutput' })
+  end
+  if #virt_lines == 0 then
+    table.insert(virt_lines, { ' ✓ nil', 'LuaExecutorSuccess' })
+  end
+  
+  vim.api.nvim_buf_set_extmark(code_buf, ns_id, line_num - 1, line_num - 1, {
+    virt_text = virt_lines,
+    virt_text_pos = 'eol',
+    hl_mode = 'combine',
+  })
+end
+
+function M.execute_line()
+  local buf = vim.api.nvim_get_current_buf()
+  local line_num = vim.api.nvim_win_get_cursor(0)[1]
+  execute_line(buf, line_num)
+end
+
 ---Main execution function
 ---Finds and executes the lua code block at cursor position
 function M.execute_block()
@@ -243,21 +330,34 @@ end
 
 ---Setup function to be called from config
 ---Creates user command and markdown file type keymap
-function M.setup()
+function M.setup(opts)
+  opts = opts or {}
+  local display_mode = opts.display_mode or 'virtual_text'
+  
   log.info('lua-executor setup called')
   vim.api.nvim_create_user_command('LuaExecute', function()
     M.execute_block()
   end, { desc = 'Execute current lua code block' })
-
-  -- Setup keymap for markdown files
+  
+  vim.api.nvim_create_user_command('LuaExecuteLine', function()
+    M.execute_line()
+  end, { desc = 'Execute current line as virtual text' })
+  
   vim.api.nvim_create_autocmd('FileType', {
     pattern = 'markdown',
     callback = function()
       vim.keymap.set('n', '<CR>', function()
         M.execute_block()
       end, { buffer = true, noremap = true, silent = true, desc = 'Execute lua block' })
+      vim.keymap.set('n', 'gl', function()
+        M.execute_line()
+      end, { buffer = true, noremap = true, silent = true, desc = 'Execute current line' })
     end,
   })
+  
+  vim.api.nvim_set_hl(0, 'LuaExecutorSuccess', { fg = '#a6e3a1' })
+  vim.api.nvim_set_hl(0, 'LuaExecutorError', { fg = '#f38ba8' })
+  vim.api.nvim_set_hl(0, 'LuaExecutorOutput', { fg = '#89b4fa', italic = true })
 end
 
 ---Get execution context for debugging/inspection
