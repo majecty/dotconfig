@@ -125,6 +125,13 @@ return {
           end,
           desc = 'Reload with GUI',
         },
+        {
+          '<leader>sd',
+          function()
+            vim.cmd('e ~/.local/share/nvim/sessions')
+          end,
+          desc = 'Open session dir',
+        },
         { '<leader>l', group = '+lsp' },
         {
           '<leader>la',
@@ -288,7 +295,7 @@ return {
           desc = 'Find help tags',
         },
         {
-          '<leader>fi',
+          '<leader>f?',
           function()
             require('fzf-lua').builtin()
           end,
@@ -301,7 +308,6 @@ return {
           end,
           desc = 'Find history',
         },
-        { '<leader>B', group = '+buffer management' },
         { '<leader>B', group = '+buffer management' },
         {
           '<leader>bn',

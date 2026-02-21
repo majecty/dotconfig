@@ -15,7 +15,14 @@ function M.open_parent()
 end
 
 function M.setup()
-  -- Functions are now available for whichkey to call
+  vim.api.nvim_create_autocmd('FileType', {
+    pattern = 'oil',
+    callback = function()
+      vim.keymap.set('n', '<C-s>', function()
+        require('oil').save()
+      end, { buffer = true, desc = 'Save oil buffer' })
+    end,
+  })
 end
 
 return M

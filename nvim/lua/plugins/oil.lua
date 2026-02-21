@@ -3,7 +3,15 @@ return {
     'stevearc/oil.nvim',
     ---@module 'oil'
     ---@type oil.SetupOpts
-    opts = {},
+    opts = {
+      keymaps = {
+        ['<C-s>'] = false,
+        ['S'] = { 'actions.select', opts = { vertical = true } },
+        ['V'] = { 'actions.select', opts = { horizontal = true } },
+        ['g?'] = false,
+        ['?'] = { 'actions.show_help', mode = 'n' },
+      },
+    },
     -- Optional dependencies
     dependencies = { { 'nvim-mini/mini.icons', opts = {} } },
     lazy = false,
