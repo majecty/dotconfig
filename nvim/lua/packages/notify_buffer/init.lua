@@ -16,7 +16,7 @@ local notify_history = {}
 local float_win = nil
 ---@type BufferHandle|nil
 local float_buf = nil
----@type uv_timer_t|nil
+---@type uv.uv_timer_t|nil
 local close_timer = nil
 
 local LEVELS = {
