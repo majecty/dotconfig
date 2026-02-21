@@ -38,6 +38,7 @@ applyTo: '**'
 - whichkey.lua ONLY for keymaps - Never define functions there
 - One concern per file - Functions in respective modules (packages/)
 - Absolute paths for executables - Relative paths cause bugs
+- ALWAYS add LuaCATS comments for type annotations
 
 ## Validation Process
 - Always run :checkhealth after LSP changes

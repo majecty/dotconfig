@@ -1,5 +1,8 @@
+---@class TreesitterTools
 local M = {}
 
+---Restarts treesitter for the current buffer
+---@return nil
 M.restart = function()
   local buf = vim.api.nvim_get_current_buf()
   vim.treesitter.stop(buf)
@@ -7,6 +10,8 @@ M.restart = function()
   vim.notify('Treesitter restarted', vim.log.levels.INFO)
 end
 
+---Reinstalls the treesitter parser for the current filetype
+---@return nil
 M.install = function()
   local ft = vim.bo.filetype
   if ft and ft ~= '' then
