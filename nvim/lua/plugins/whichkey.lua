@@ -384,6 +384,20 @@ return {
           desc = 'Split Lua playground',
         },
         {
+          '<leader>yLl',
+          function()
+            vim.cmd('LuaExecuteLine')
+          end,
+          desc = 'Execute line',
+        },
+        {
+          '<leader>yLv',
+          function()
+            vim.cmd('LuaShowVariables')
+          end,
+          desc = 'Show variables',
+        },
+        {
           '<leader>yLb',
           function()
             vim.cmd('BufferLuaPlayground')

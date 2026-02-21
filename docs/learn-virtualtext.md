@@ -25,6 +25,12 @@ Virtual Text는 Neovim의 extmarks API로 관리합니다.
 ### 2.1 extmarks 기본 정보
 
 ```lua
+local c = {}
+table.insert(c, 'hi');
+print(vim.inspect(c));
+```
+
+```lua
 -- 현재 버퍼에서 extmarks 조회
 local bufnr = vim.api.nvim_get_current_buf()
 local marks = vim.api.nvim_buf_get_extmarks(bufnr, -1, 0, -1, { details = true })
@@ -168,7 +174,7 @@ local start_line = cursor[1] - 1
 
 print("사용 가능한 하이라이트 그룹:")
 for i, hl in ipairs(hl_groups) do
-  vim.api.nvim_buf_set_extmark(bufnr, 0, start_line + i - 1, 0, {
+  vim.api.nvim_buf_set_extmark(bufnr, 1, start_line + i - 1, 0, {
     virt_text = {{ "[" .. hl .. "]", hl }},
     virt_text_pos = "eol",
   })
@@ -204,7 +210,7 @@ local cursor = vim.api.nvim_win_get_cursor(0)
 local line = cursor[1] - 1
 local col = cursor[2]
 
-vim.api.nvim_buf_set_extmark(bufnr, 0, line, col, {
+vim.api.nvim_buf_set_extmark(bufnr, 1, line, col, {
   virt_text = {
     { "┌─ ", "Comment" },
     { "라인 1", "String" },
@@ -229,7 +235,7 @@ local start_line = cursor[1] - 1
 
 local ids = {}
 for i = 1, 5 do
-  local id = vim.api.nvim_buf_set_extmark(bufnr, 0, start_line + i - 1, 0, {
+  local id = vim.api.nvim_buf_set_extmark(bufnr, 1, start_line + i - 1, 0, {
     virt_text = {{ "라인 " .. i .. " 표시", "Function" }},
     virt_text_pos = "eol",
   })

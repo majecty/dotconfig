@@ -349,7 +349,6 @@ end
 ---Creates user command and markdown file type keymap
 function M.setup(opts)
   opts = opts or {}
-  local display_mode = opts.display_mode or 'virtual_text'
 
   log.info('lua-executor setup called')
   vim.api.nvim_create_user_command('LuaExecute', function()
@@ -360,15 +359,16 @@ function M.setup(opts)
     M.execute_line()
   end, { desc = 'Execute current line as virtual text' })
 
+  vim.api.nvim_create_user_command('LuaShowVariables', function()
+    M.show_variables()
+  end, { desc = 'Show all variables in floating window' })
+
   vim.api.nvim_create_autocmd('FileType', {
     pattern = 'markdown',
     callback = function()
       vim.keymap.set('n', '<CR>', function()
         M.execute_block()
       end, { buffer = true, noremap = true, silent = true, desc = 'Execute lua block' })
-      vim.keymap.set('n', 'gl', function()
-        M.execute_line()
-      end, { buffer = true, noremap = true, silent = true, desc = 'Execute current line' })
     end,
   })
 
@@ -391,6 +391,88 @@ function M.clear_context(buf)
   buf = buf or vim.api.nvim_get_current_buf()
   buffer_contexts[buf] = {}
   log.info('Execution context cleared for buffer %d', buf)
+end
+
+---Show all variables in a floating window
+---@param buf integer|nil Buffer number (defaults to current buffer)
+function M.show_variables(buf)
+  buf = buf or vim.api.nvim_get_current_buf()
+  local ctx = buffer_contexts[buf]
+
+  if not ctx or vim.tbl_isempty(ctx) then
+    log.info('No variables defined in this buffer')
+    return
+  end
+
+  local builtins = { print = true, inspect = true, api = true, cmd = true, fn = true }
+  local user_vars = {}
+  for k, v in pairs(ctx) do
+    if not builtins[k] then
+      user_vars[k] = v
+    end
+  end
+
+  if vim.tbl_isempty(user_vars) then
+    log.info('No user variables defined in this buffer')
+    return
+  end
+
+  local lines = { 'Variables:', '' }
+  local sorted_keys = vim.tbl_keys(user_vars)
+  table.sort(sorted_keys)
+
+  local max_len = 0
+  for _, k in ipairs(sorted_keys) do
+    if #k > max_len then
+      max_len = #k
+    end
+  end
+
+  for _, k in ipairs(sorted_keys) do
+    local v = user_vars[k]
+    local val_str = vim.inspect(v):gsub('\n', ' ')
+    if #val_str > 60 then
+      val_str = val_str:sub(1, 57) .. '...'
+    end
+    table.insert(lines, string.format('  %s%s = %s', k, string.rep(' ', max_len - #k), val_str))
+  end
+
+  local float_buf = vim.api.nvim_create_buf(false, true)
+  vim.api.nvim_buf_set_lines(float_buf, 0, -1, false, lines)
+  vim.api.nvim_buf_set_option(float_buf, 'filetype', 'lua-variables')
+  vim.api.nvim_buf_set_option(float_buf, 'modifiable', false)
+
+  local width = 0
+  for _, l in ipairs(lines) do
+    if #l > width then
+      width = #l
+    end
+  end
+  width = math.min(width + 2, 80)
+
+  local height = #lines
+  local row = math.floor((vim.o.lines - height) / 2)
+  local col = math.floor((vim.o.columns - width) / 2)
+
+  local float_win = vim.api.nvim_open_win(float_buf, true, {
+    relative = 'editor',
+    row = row,
+    col = col,
+    width = width,
+    height = height,
+    style = 'minimal',
+    border = 'rounded',
+    title = ' Buffer Variables ',
+    title_pos = 'center',
+  })
+
+  vim.keymap.set('n', 'q', function()
+    vim.api.nvim_win_close(float_win, true)
+  end, { buffer = float_buf, noremap = true, silent = true })
+
+  vim.keymap.set('n', '<Esc>', function()
+    vim.api.nvim_win_close(float_win, true)
+  end, { buffer = float_buf, noremap = true, silent = true })
 end
 
 return M
