@@ -239,7 +239,7 @@ local function transform_local_to_env(code)
   local lines = {}
   for line in code:gmatch('[^\n]+') do
     ---@cast line string
-    local changed = line:gsub('^%s*local%s+(%w+)%s*=', '%1 =');
+    local changed = line:gsub('^%s*local%s+(%w+)%s*=', '%1 =')
     -- vim.notify('Transformed line: ' .. changed, vim.log.levels.DEBUG)
     table.insert(lines, changed)
   end
@@ -247,6 +247,8 @@ local function transform_local_to_env(code)
 end
 
 local function execute_line(code_buf, line_num)
+  vim.api.nvim_buf_clear_namespace(code_buf, ns_id, line_num - 1, line_num)
+
   local lines = vim.api.nvim_buf_get_lines(code_buf, 0, -1, false)
   local line = lines[line_num]
 
