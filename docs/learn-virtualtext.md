@@ -18,11 +18,11 @@ Virtual Text는 버퍼의 텍스트 오른쪽(또는 아래)에 표시되는 가
 
 ---
 
-## 2. extmarks基礎
+## 2. extmarks 기초
 
 Virtual Text는 Neovim의 extmarks API로 관리합니다.
 
-### 2.1 extmarks基本信息
+### 2.1 extmarks 기본 정보
 
 ```lua
 -- 현재 버퍼에서 extmarks 조회
@@ -67,7 +67,7 @@ print("extmark id=1 삭제됨")
 
 ## 3. Virtual Text 생성
 
-### 3.1最简单的 Virtual Text (줄 끝)
+### 3.1 가장 간단한 Virtual Text (줄 끝)
 
 ```lua
 local bufnr = vim.api.nvim_get_current_buf()
@@ -244,7 +244,7 @@ local bufnr = vim.api.nvim_get_current_buf()
 
 local errors = {
   { line = 0, message = "E001: 문법 오류" },
-  { line = 2, message = "W001: 경고: 未사용 변수" },
+  { line = 2, message = "W001: 경고: 미사용 변수" },
 }
 
 for _, err in ipairs(errors) do
@@ -290,7 +290,7 @@ vim.api.nvim_buf_set_extmark(bufnr, {
 print("구분선 데코레이션 추가")
 ```
 
-### 6.4 라인 번호旁边的 정보
+### 6.4 라인 번호 옆의 정보
 
 ```lua
 local bufnr = vim.api.nvim_get_current_buf()
@@ -379,7 +379,7 @@ vim.api.nvim_buf_set_extmark(bufnr, {
   ephemeral = false,
 })
 
-print("고정 위치 virtual text (스크롤不影响)")
+print("고정 위치 virtual text (스크롤 영향 없음)")
 ```
 
 ### 8.2 NS( Namespace) 사용
