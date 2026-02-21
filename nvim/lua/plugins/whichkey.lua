@@ -163,6 +163,13 @@ return {
           desc = 'Go to definition',
         },
         {
+          'R',
+          function()
+            require('fzf-lua').lsp_references()
+          end,
+          desc = 'Find references',
+        },
+        {
           '<leader>lD',
           function()
             require('fzf-lua').diagnostics_document()
