@@ -20,3 +20,4 @@ local parent = jnvui.c.box({width = 10},
 
 print("\n✓ Parent element with children")
 print("  - Children count:", #parent.children)
+jnvui.debug.print_tree(parent)

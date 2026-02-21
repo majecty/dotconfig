@@ -15,5 +15,7 @@ end)
 print("✓ Component created")
 print("  - Name:", TextComponent.name)
 print("  - Has render:", type(TextComponent.render) == "function")
+print(vim.inspect(TextComponent))
+print(vim.inspect(TextComponent.render({message = "Test message"})))
 
 return TextComponent
