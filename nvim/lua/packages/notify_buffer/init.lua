@@ -73,14 +73,24 @@ local function show_float(message, level)
     vim.api.nvim_set_option_value('filetype', 'notify', { buf = float_buf })
   end
 
-  local max_messages = 10
-  local start_idx = math.max(1, #notify_history - max_messages + 1)
-  local lines = {}
-  for i = start_idx, #notify_history do
-    local entry = notify_history[i]
-    local level_name = get_level_name(entry.level)
-    table.insert(lines, string.format('[%s] [%s] %s', entry.time, level_name, entry.message:gsub('\n', ' ')))
+  assert(float_buf, 'Failed to create float buffer')
+  assert(vim.api.nvim_buf_is_valid(float_buf), 'Invalid float buffer')
+
+  local closed = float_win == nil
+  if closed then
+    vim.api.nvim_buf_set_lines(float_buf, 0, -1, false, {})
   end
+
+  assert(float_buf, 'Failed to create float buffer2')
+  assert(vim.api.nvim_buf_is_valid(float_buf), 'Invalid float buffer2')
+
+  -- get last 9 messages from float_buf
+  local lines = vim.api.nvim_buf_get_lines(float_buf, 0, -1, false)
+  if #lines > 9 then
+    lines = { unpack(lines, #lines - 8) }
+  end
+
+  table.insert(lines, string.format('[%s] [%s] %s', format_time(), get_level_name(level), message:gsub('\n', ' ')))
 
   vim.api.nvim_buf_set_lines(float_buf, 0, -1, false, lines)
 

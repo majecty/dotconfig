@@ -69,6 +69,9 @@ return {
         end
 
         M.buf = vim.api.nvim_create_buf(false, true)
+        assert(M.buf, 'Failed to create buffer')
+        assert(vim.api.nvim_buf_is_valid(M.buf), 'Invalid buffer')
+        vim.notify('lines: ' .. #lines, vim.log.levels.INFO, { title = 'FzfRegisterPicker', lines = lines })
         vim.api.nvim_buf_set_lines(M.buf, 0, -1, false, lines)
         vim.api.nvim_set_option_value('bufhidden', 'wipe', { buf = M.buf })
 
