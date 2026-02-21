@@ -489,7 +489,7 @@ return {
           '<leader>xe',
           function()
             if vim.bo.filetype == 'markdown' then
-              require('plugins.edit-code-block').edit_code_block()
+              require('packages.edit-code-block').edit_code_block()
             else
               vim.notify('Not a markdown file', vim.log.levels.WARN)
             end
@@ -500,7 +500,7 @@ return {
           '<leader>xm',
           function()
             if vim.bo.filetype == 'markdown' then
-              require('plugins.edit-code-block').extract_all_code_blocks()
+              require('packages.edit-code-block').extract_all_code_blocks()
             else
               vim.notify('Not a markdown file', vim.log.levels.WARN)
             end

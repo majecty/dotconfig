@@ -42,8 +42,14 @@ end
 local bufnr = vim.api.nvim_get_current_buf()
 
 -- 간단한 extmark 생성
-local extmark_id = vim.api.nvim_buf_set_extmark(bufnr, {
-  id = 1,
+local ns_id = 1 -- 네임스페이스 ID (0은 기본 네임스페이스)
+local cursor = vim.api.nvim_win_get_cursor(0)
+
+line = cursor[1] - 1 -- 현재 줄 (0부터 시작)
+col = cursor[2] -- 현재 열
+
+local extmark_id = vim.api.nvim_buf_set_extmark(bufnr, ns_id,
+    line, col, {
   virt_text = {{ "← 여기에 마크", "Comment" }},
   virt_text_pos = "eol",
 })
