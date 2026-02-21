@@ -435,6 +435,61 @@ print("Hover 가능한 virtual text 추가")
 
 ---
 
+## 9. lazydev로 타입 확인
+
+lazydev는 Neovim Lua API의 타입 체킹을 제공하는 LSP 클라이언트입니다.
+
+### 9.1 lazydev 설치
+
+```lua
+-- lazydev 설정 예시
+require("lazy").setup({
+  {
+    "folke/lazydev.nvim",
+    ft = "lua",
+    opts = {
+      library = {
+        "vim",
+        "nvim-lua/plenary.nvim",
+      },
+    },
+  },
+})
+
+print("lazydev가 설치되면 vim 라이브러리에 대한 LSP 지원이 활성화됩니다")
+```
+
+### 9.2 vim 라이브러리 타입 확인
+
+lazydev가 활성화되면 Neovim API 함수에 마우스를 올리거나 Hover하면 타입 정보를 확인할 수 있습니다.
+
+```lua
+-- hover로 타입 확인 가능:
+-- vim.api.nvim_buf_set_extmark() - 함수 위에 마우스를 올려서 시그니처 확인
+-- vim.api.nvim_get_current_buf() - 반환 타입 확인
+
+local bufnr = vim.api.nvim_get_current_buf()
+-- bufnr: number 타입 반환
+
+local marks = vim.api.nvim_buf_get_extmarks(bufnr, 0, -1, {})
+-- marks: table 타입 반환
+
+print("lazydev가 설치되어 있으면 위 함수들의 반환 타입을 hover로 확인할 수 있습니다")
+```
+
+### 9.3 타입 정의 파일 위치
+
+```lua
+-- lazydev가 사용하는 타입 정의 파일 경로 확인
+local lazydev_lib = vim.fn.stdpath("data") .. "/lazy/lazydev.nvim/lua"
+print("lazydev 타입 정의: " .. lazydev_lib)
+
+-- vim 라이브러리의 타입 정의는 lazydev가 자동으로 로드
+print("vim API 타입은 자동 완료 및 hover 지원")
+```
+
+---
+
 ## 다음 단계
 
 더 배울 수 있는 주제들:

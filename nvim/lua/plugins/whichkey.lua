@@ -477,6 +477,28 @@ return {
           desc = 'Toggle scratch buffer / Send to terminal',
           mode = { 't' },
         },
+        {
+          '<leader>xe',
+          function()
+            if vim.bo.filetype == 'markdown' then
+              require('plugins.edit-code-block').edit_code_block()
+            else
+              vim.notify('Not a markdown file', vim.log.levels.WARN)
+            end
+          end,
+          desc = 'Edit code block in markdown',
+        },
+        {
+          '<leader>xm',
+          function()
+            if vim.bo.filetype == 'markdown' then
+              require('plugins.edit-code-block').extract_all_code_blocks()
+            else
+              vim.notify('Not a markdown file', vim.log.levels.WARN)
+            end
+          end,
+          desc = 'Extract all code blocks to lua file',
+        },
       })
     end,
   },
