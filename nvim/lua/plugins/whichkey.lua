@@ -25,6 +25,7 @@ return {
       local playground = require('packages.playground')
       local buffer_mgmt = require('packages.buffer_management')
       local notify_buffer = require('packages.notify_buffer')
+      local treesitter_tools = require('packages.treesitter_tools')
       playground.setup()
       wk.setup(opts)
 
@@ -230,6 +231,21 @@ return {
           desc = 'Open fugitive',
         },
         { '<leader>q', group = '+quickfix' },
+        { '<leader>T', group = '+treesitter' },
+        {
+          '<leader>Tr',
+          function()
+            treesitter_tools.restart()
+          end,
+          desc = 'Restart treesitter',
+        },
+        {
+          '<leader>Ti',
+          function()
+            treesitter_tools.install()
+          end,
+          desc = 'Reinstall current parser',
+        },
         {
           '<leader>qo',
           function()
