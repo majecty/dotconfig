@@ -51,8 +51,8 @@ return {
           function()
             copy_location.copy_location()
           end,
-          desc = 'Copy visual block location',
-          mode = { 'v' },
+          desc = 'Copy location',
+          mode = { 'n', 'v' },
         },
         {
           '<leader>o',
