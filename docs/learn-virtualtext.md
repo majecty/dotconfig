@@ -69,6 +69,17 @@ vim.api.nvim_buf_del_extmark(bufnr, 1, 1)
 print("extmark id=1 삭제됨")
 ```
 
+### 2.4 모든 extmark 삭제
+
+```lua
+local bufnr = vim.api.nvim_get_current_buf()
+
+-- 모든 extmark 삭제 (네임스페이스 -1은 모든 네임스페이스)
+vim.api.nvim_buf_clear_extmarks(bufnr, -1, 0, -1)
+
+print("버퍼 #" .. bufnr .. "의 모든 extmarks 삭제됨")
+```
+
 ---
 
 ## 3. Virtual Text 생성
