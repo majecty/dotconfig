@@ -93,7 +93,7 @@ local function show_float(message, level)
 
   vim.api.nvim_set_option_value('winhl', 'Normal:' .. hl_group .. ',FloatBorder:' .. hl_group, { win = float_win })
 
-  close_timer = vim.loop.new_timer()
+  close_timer = assert(vim.uv.new_timer(), "Failed to create timer")
   close_timer:start(3000, 0, vim.schedule_wrap(close_float))
 end
 
