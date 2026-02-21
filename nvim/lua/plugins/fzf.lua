@@ -26,7 +26,7 @@ return {
         winopts = {
           on_create = function()
             vim.keymap.set('t', '<C-r>', function()
-              return '<C-\\><C-N>"pi'
+              return '<C-\\><C-N>pi'
             end, { expr = true, buffer = true })
           end,
         },
