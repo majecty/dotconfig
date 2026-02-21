@@ -39,7 +39,10 @@ function M.render()
   vim.api.nvim_buf_set_lines(notify_buf, 0, -1, false, lines)
 end
 
-function M.append(message, level)
+---@param message string
+---@param level number
+---@param opts table
+function M.append(message, level, opts)
   level = level or vim.log.levels.INFO
 
   local entry = {
@@ -50,12 +53,14 @@ function M.append(message, level)
 
   table.insert(notify_history, entry)
 
-  if notify_buf and vim.api.nvim_buf_is_valid(notify_buf) then
-    local line_idx = #notify_history - 1
-    local level_name = get_level_name(level)
-    local new_line = string.format('[%s] [%s] %s', entry.time, level_name, message:gsub('\n', ' '))
-    vim.api.nvim_buf_set_lines(notify_buf, line_idx, line_idx + 1, false, { new_line })
+  if notify_buf == nil then
+    notify_buf = M.find_or_create_buffer()
   end
+
+  local line_idx = #notify_history - 1
+  local level_name = get_level_name(level)
+  local new_line = string.format('[%s] [%s] %s (%s)', entry.time, level_name, message:gsub('\n', ' '), vim.inspect(opts):gsub('\n', ' '))
+  vim.api.nvim_buf_set_lines(notify_buf, line_idx, line_idx + 1, false, { new_line })
 end
 
 local function find_notify_buffer()
@@ -70,10 +75,12 @@ local function find_notify_buffer()
   return nil
 end
 
-function M.open()
+
+--- @return BufferHandle
+function M.find_or_create_buffer()
   -- Try to find existing notify buffer first
   notify_buf = find_notify_buffer()
-  
+
   if not notify_buf or not vim.api.nvim_buf_is_valid(notify_buf) then
     notify_buf = vim.api.nvim_create_buf(false, true)
     vim.api.nvim_buf_set_name(notify_buf, 'notify://')
@@ -83,6 +90,13 @@ function M.open()
 
     M.render()
   end
+
+  return notify_buf
+end
+
+function M.open()
+  -- Try to find existing notify buffer first
+  notify_buf = M.find_or_create_buffer()
 
   vim.cmd('split')
   vim.api.nvim_set_current_buf(notify_buf)
@@ -114,8 +128,11 @@ function M.clear()
   end
 end
 
+---@param message string
+---@param level number
+---@param opts table
 local function wrapped_notify(message, level, opts)
-  M.append(message, level)
+  M.append(message, level, opts)
   -- original_notify(message, level, opts)
 end
 

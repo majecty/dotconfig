@@ -118,22 +118,22 @@ function M.mirror()
   end
 
   local layout = vim.fn.winlayout()
-  print('Layout: ' .. vim.inspect(layout))
+  vim.notify('Layout: ' .. vim.inspect(layout), vim.log.levels.INFO, { title = 'Mirror' })
 
   local parent_branch = find_parent_branch(layout, current_win, nil)
-  print('Parent: ' .. vim.inspect(parent_branch))
+  vim.notify('Parent: ' .. vim.inspect(parent_branch), vim.log.levels.INFO, { title = 'Mirror' })
 
   if not parent_branch or parent_branch[1] == 'leaf' then
-    print('No parent branch found')
+    vim.notify('No parent branch found', vim.log.levels.WARN, { title = 'Mirror' })
     return
   end
 
   local sibling_wins = get_leaf_windows(parent_branch)
   local num_siblings = #sibling_wins
-  print('Siblings: ' .. num_siblings .. ' - ' .. vim.inspect(sibling_wins))
+  vim.notify('Siblings: ' .. num_siblings .. ' - ' .. vim.inspect(sibling_wins), vim.log.levels.INFO, { title = 'Mirror' })
 
   if num_siblings <= 1 then
-    print('Only one sibling')
+    vim.notify('Only one sibling', vim.log.levels.WARN, { title = 'Mirror' })
     return
   end
 
