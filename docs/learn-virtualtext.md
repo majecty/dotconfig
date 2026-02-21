@@ -74,10 +74,13 @@ print("extmark id=1 삭제됨")
 ```lua
 local bufnr = vim.api.nvim_get_current_buf()
 
--- 모든 extmark 삭제 (네임스페이스 -1은 모든 네임스페이스)
-vim.api.nvim_buf_clear_extmarks(bufnr, -1, 0, -1)
+-- 모든 extmark 조회 후 하나씩 삭제
+local marks = vim.api.nvim_buf_get_extmarks(bufnr, -1, 0, -1, {})
+for _, mark in ipairs(marks) do
+  vim.api.nvim_buf_del_extmark(bufnr, mark[4].ns_id or 0, mark[1])
+end
 
-print("버퍼 #" .. bufnr .. "의 모든 extmarks 삭제됨")
+print("버퍼 #" .. bufnr .. "의 " .. #marks .. "개 extmarks 삭제됨")
 ```
 
 ---
