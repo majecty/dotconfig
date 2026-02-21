@@ -155,9 +155,21 @@ function M.append(message, level, opts)
     message:gsub('\n', ' '),
     vim.inspect(opts):gsub('\n', ' ')
   )
-  vim.api.nvim_buf_set_lines(notify_buf, line_idx, line_idx + 1, false, { new_line })
 
-  show_float(message, level)
+  -- nvim_buf_set_lines 를 호출할 수 없는 상황들이 있음
+  local success = pcall(vim.api.nvim_buf_set_lines, notify_buf, line_idx, line_idx + 1, false, { new_line })
+  if not success then
+    vim.schedule(function()
+      pcall(vim.api.nvim_buf_set_lines, notify_buf, line_idx, line_idx + 1, false, { new_line })
+    end)
+  end
+
+  local success2 = pcall(show_float, message, level)
+  if not success2 then
+    vim.schedule(function()
+      pcall(show_float, message, level)
+    end)
+  end
 end
 
 local function find_notify_buffer()
