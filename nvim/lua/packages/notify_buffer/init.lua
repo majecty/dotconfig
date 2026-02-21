@@ -65,11 +65,14 @@ local function close_float()
 end
 
 local function show_float(message, level)
-  close_float()
+  local lines = {}
+  if float_buf and vim.api.nvim_buf_is_valid(float_buf) then
+     lines = vim.api.nvim_buf_get_lines(float_buf, 0, -1, false)
+  end
 
   if not float_buf or not vim.api.nvim_buf_is_valid(float_buf) then
     float_buf = vim.api.nvim_create_buf(false, true)
-    vim.api.nvim_set_option_value('bufhidden', 'wipe', { buf = float_buf })
+    vim.api.nvim_set_option_value('bufhidden', 'hide', { buf = float_buf })
     vim.api.nvim_set_option_value('filetype', 'notify', { buf = float_buf })
   end
 
@@ -78,14 +81,15 @@ local function show_float(message, level)
 
   local closed = float_win == nil
   if closed then
-    vim.api.nvim_buf_set_lines(float_buf, 0, -1, false, {})
+    lines = {}
   end
+
+  close_float()
 
   assert(float_buf, 'Failed to create float buffer2')
   assert(vim.api.nvim_buf_is_valid(float_buf), 'Invalid float buffer2')
 
   -- get last 9 messages from float_buf
-  local lines = vim.api.nvim_buf_get_lines(float_buf, 0, -1, false)
   if #lines > 9 then
     lines = { unpack(lines, #lines - 8) }
   end
