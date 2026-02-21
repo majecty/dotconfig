@@ -206,6 +206,13 @@ return {
           end,
           desc = 'Equalize window sizes',
         },
+        {
+          '<leader>wo',
+          function()
+            require('packages.window_tree').organize()
+          end,
+          desc = 'Organize windows as binary tree',
+        },
         { '<leader>c', group = '+copilot' },
         {
           '<leader>cs',
