@@ -9,9 +9,7 @@ return {
       -- Set fzf-lua as default UI for vim.ui.select
       fzf.setup({
         ui_select = {
-          -- Use fzf-lua for all vim.ui.select calls
           enabled = true,
-          -- Optional: customize the fzf window
           winopts = {
             height = 0.4,
             width = 0.7,
@@ -19,6 +17,13 @@ return {
               hidden = 'hidden',
             },
           },
+        },
+        winopts = {
+          on_create = function()
+            vim.keymap.set('t', '<C-r>', function()
+              return '<C-\\><C-N>"' .. vim.fn.nr2char(vim.fn.getchar()) .. 'pi'
+            end, { expr = true, buffer = true })
+          end,
         },
       })
     end,
