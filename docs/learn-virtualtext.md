@@ -99,9 +99,7 @@ print("줄 끝에 virtual text 추가: 'Hello Virtual Text!'")
 ```lua
 local bufnr = vim.api.nvim_get_current_buf()
 
-vim.api.nvim_buf_set_extmark(bufnr, {
-  line = 1,
-  col = 0,
+vim.api.nvim_buf_set_extmark(bufnr, 0, 1, 0, {
   virt_text = {{ "→ 오른쪽", "Function" }},
   virt_text_pos = "right_align",
 })
@@ -115,9 +113,7 @@ print("줄 오른쪽에 virtual text 추가")
 local bufnr = vim.api.nvim_get_current_buf()
 
 -- 현재 줄의 특정 위치에 inline virtual text
-vim.api.nvim_buf_set_extmark(bufnr, {
-  line = 2,
-  col = 10,
+vim.api.nvim_buf_set_extmark(bufnr, 0, 2, 10, {
   virt_text = {{ " [inline]", "Operator" }},
   virt_text_pos = "inline",
 })
@@ -146,9 +142,7 @@ local hl_groups = {
 
 print("사용 가능한 하이라이트 그룹:")
 for i, hl in ipairs(hl_groups) do
-  vim.api.nvim_buf_set_extmark(bufnr, {
-    line = 3 + i,
-    col = 0,
+  vim.api.nvim_buf_set_extmark(bufnr, 0, 3 + i, 0, {
     virt_text = {{ "[" .. hl .. "]", hl }},
     virt_text_pos = "eol",
   })
@@ -165,9 +159,7 @@ vim.api.nvim_set_hl(0, "MyVirtualText", { fg = "#ffd700", bg = "#333333", bold =
 
 local bufnr = vim.api.nvim_get_current_buf()
 
-vim.api.nvim_buf_set_extmark(bufnr, {
-  line = 10,
-  col = 0,
+vim.api.nvim_buf_set_extmark(bufnr, 0, 10, 0, {
   virt_text = {{ "커스텀 스타일!", "MyVirtualText" }},
   virt_text_pos = "eol",
 })
@@ -180,9 +172,7 @@ print("커스텀 하이라이트 그룹 'MyVirtualText'로 virtual text 추가")
 ```lua
 local bufnr = vim.api.nvim_get_current_buf()
 
-vim.api.nvim_buf_set_extmark(bufnr, {
-  line = 11,
-  col = 0,
+vim.api.nvim_buf_set_extmark(bufnr, 0, 11, 0, {
   virt_text = {
     { "┌─ ", "Comment" },
     { "라인 1", "String" },
@@ -205,9 +195,7 @@ local bufnr = vim.api.nvim_get_current_buf()
 
 local ids = {}
 for i = 1, 5 do
-  local id = vim.api.nvim_buf_set_extmark(bufnr, {
-    line = 12 + i,
-    col = 0,
+  local id = vim.api.nvim_buf_set_extmark(bufnr, 0, 12 + i, 0, {
     virt_text = {{ "라인 " .. i .. " 표시", "Function" }},
     virt_text_pos = "eol",
   })
@@ -260,9 +248,7 @@ local errors = {
 }
 
 for _, err in ipairs(errors) do
-  vim.api.nvim_buf_set_extmark(bufnr, {
-    line = err.line,
-    col = 0,
+  vim.api.nvim_buf_set_extmark(bufnr, 0, err.line, 0, {
     virt_text = {{ "⛔ " .. err.message, "Error" }},
     virt_text_pos = "eol",
     hl_mode = "combine",
@@ -277,9 +263,7 @@ print(#errors .. "개의 에러/경고 표시")
 ```lua
 local bufnr = vim.api.nvim_get_current_buf()
 
-vim.api.nvim_buf_set_extmark(bufnr, {
-  line = 5,
-  col = 0,
+vim.api.nvim_buf_set_extmark(bufnr, 0, 5, 0, {
   virt_text = {{ "📝 TODO: 구현 필요", "WarningMsg" }},
   virt_text_pos = "eol",
 })
@@ -292,9 +276,7 @@ print("TODO 마커 추가")
 ```lua
 local bufnr = vim.api.nvim_get_current_buf()
 
-vim.api.nvim_buf_set_extmark(bufnr, {
-  line = 6,
-  col = 0,
+vim.api.nvim_buf_set_extmark(bufnr, 0, 6, 0, {
   virt_text = {{ "━━━━━━━━━━━━━━━━", "Comment" }},
   virt_text_pos = "eol",
 })
@@ -307,9 +289,7 @@ print("구분선 데코레이션 추가")
 ```lua
 local bufnr = vim.api.nvim_get_current_buf()
 
-vim.api.nvim_buf_set_extmark(bufnr, {
-  line = 7,
-  col = 0,
+vim.api.nvim_buf_set_extmark(bufnr, 0, 7, 0, {
   sign_text = "●",
   virt_text = {{ "변경됨", "WarningMsg" }},
   virt_text_win_col = 80,
@@ -332,9 +312,7 @@ local function update_virtual_text(bufnr)
   local lines = vim.api.nvim_buf_get_lines(bufnr, 0, -1, false)
   for i, line in ipairs(lines) do
     if line:match("TODO") then
-      vim.api.nvim_buf_set_extmark(bufnr, {
-        line = i - 1,
-        col = 0,
+vim.api.nvim_buf_set_extmark(bufnr, 0, i - 1, 0, {
         virt_text = {{ "☰ TODO", "WarningMsg" }},
         virt_text_pos = "eol",
       })
@@ -360,9 +338,7 @@ local function show_cursor_info()
   local line = cursor[1] - 1
   local col = cursor[2]
   
-  vim.api.nvim_buf_set_extmark(bufnr, {
-    line = line,
-    col = col,
+vim.api.nvim_buf_set_extmark(bufnr, 0, line, col, {
     virt_text = {{ string.format("Ln %d, Col %d", cursor[1], col + 1), "Comment" }},
     virt_text_pos = "eol",
   })
@@ -382,9 +358,7 @@ print("커서 위치 정보 표시")
 ```lua
 local bufnr = vim.api.nvim_get_current_buf()
 
-vim.api.nvim_buf_set_extmark(bufnr, {
-  line = 0,
-  col = 0,
+vim.api.nvim_buf_set_extmark(bufnr, 0, 0, 0, {
   virt_text = {{ "스크롤 시 표시 유지", "Function" }},
   virt_text_pos = "eol",
   virt_text_win_col = 60,
@@ -416,9 +390,7 @@ print("Namespace '" .. ns_id .. "'에 virtual text 추가")
 ```lua
 local bufnr = vim.api.nvim_get_current_buf()
 
-vim.api.nvim_buf_set_extmark(bufnr, {
-  line = 8,
-  col = 0,
+vim.api.nvim_buf_set_extmark(bufnr, 0, 8, 0, {
   virt_text = {{ "Hover 테스트", "String" }},
   virt_text_pos = "eol",
   hover = {
