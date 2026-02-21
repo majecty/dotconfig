@@ -78,9 +78,15 @@ print("extmark id=1 삭제됨")
 ```lua
 local bufnr = vim.api.nvim_get_current_buf()
 
-vim.api.nvim_buf_set_extmark(bufnr, {
-  line = 0,
-  col = 0,
+local ns_id = 1 -- 네임스페이스 ID (0은 기본 네임스페이스)
+local cursor = vim.api.nvim_win_get_cursor(0)
+
+line = cursor[1] - 1 -- 현재 줄 (0부터 시작)
+col = cursor[2] -- 현재 열
+
+vim.api.nvim_buf_set_extmark(bufnr,
+  ns_id,
+  line, col, {
   virt_text = {{ "Hello Virtual Text!", "String" }},
   virt_text_pos = "eol",
 })

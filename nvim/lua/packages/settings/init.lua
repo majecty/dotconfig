@@ -38,6 +38,17 @@ function M.setup()
   vim.keymap.set('n', '<C-s>', ':w<CR>', { silent = true })
   vim.keymap.set('i', '<C-s>', '<Esc>:w<CR>a', { silent = true })
   vim.keymap.set('v', '<C-s>', '<Esc>:w<CR>gv', { silent = true })
+
+  -- Ensure tab settings are not overridden by other plugins
+  vim.api.nvim_create_autocmd('BufEnter', {
+    pattern = '*',
+    callback = function()
+      vim.opt.tabstop = 2
+      vim.opt.softtabstop = 2
+      vim.opt.shiftwidth = 2
+      vim.opt.expandtab = true
+    end,
+  })
 end
 
 return M
