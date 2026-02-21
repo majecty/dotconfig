@@ -28,9 +28,8 @@ log.debug = make_log(vim.log.levels.DEBUG)
 ---@field win integer|nil Window handle
 ---@field buf integer|nil Buffer handle
 
----@type table<string, any> Shared state across all executions
--- Shared state across all executions
-local execution_context = {}
+---@type table<integer, table<string, any>> Per-buffer execution context
+local buffer_contexts = {}
 
 -- Output window state
 ---@type integer|nil Output window handle
@@ -117,7 +116,7 @@ local function find_code_block()
   return code, start_line, end_line
 end
 
----Execute lua code and capture output
+---Execute lua code and capture output (fresh environment each time)
 ---@param code string The lua code to execute
 ---@return boolean success Whether execution was successful
 ---@return string output The captured output
@@ -142,9 +141,9 @@ local function execute_code(code)
     return false, '', 'Syntax Error: ' .. load_err
   end
 
-  execution_context.print = custom_print
-  setmetatable(execution_context, { __index = _G })
-  setfenv(func, execution_context)
+  local env = { print = custom_print }
+  setmetatable(env, { __index = _G })
+  setfenv(func, env)
 
   local ok, result = pcall(func)
 
@@ -235,15 +234,28 @@ local function is_multiline_start(line)
   return false
 end
 
+local function transform_local_to_env(code)
+  ---@type string[]
+  local lines = {}
+  for line in code:gmatch('[^\n]+') do
+    ---@cast line string
+    local changed = line:gsub('^%s*local%s+(%w+)%s*=', '%1 =');
+    -- vim.notify('Transformed line: ' .. changed, vim.log.levels.DEBUG)
+    table.insert(lines, changed)
+  end
+  return table.concat(lines, '\n')
+end
+
 local function execute_line(code_buf, line_num)
   local lines = vim.api.nvim_buf_get_lines(code_buf, 0, -1, false)
   local line = lines[line_num]
-  
+
   if is_multiline_start(line) then
     return
   end
-  
-  local fn, err = load(line)
+
+  local transformed = transform_local_to_env(line)
+  local fn, err = load(transformed)
   if not fn then
     local virt_lines = {}
     if err:match('expected') or err:match('near') or err:match('unfinished') then
@@ -257,33 +269,36 @@ local function execute_line(code_buf, line_num)
     })
     return
   end
-  
+
   local output_lines = {}
   local function capture_print(...)
     for _, v in ipairs({ ... }) do
       table.insert(output_lines, tostring(v))
     end
   end
-  
-  local env = setmetatable({
-    print = capture_print,
-    inspect = vim.inspect,
-    api = vim.api,
-    cmd = vim.cmd,
-    fn = vim.fn,
-  }, { __index = _G })
-  
+
+  buffer_contexts[code_buf] = buffer_contexts[code_buf] or {}
+  local ctx = buffer_contexts[code_buf]
+
+  ctx.print = capture_print
+  ctx.inspect = vim.inspect
+  ctx.api = vim.api
+  ctx.cmd = vim.cmd
+  ctx.fn = vim.fn
+  local env = setmetatable(ctx, { __index = _G })
+  setfenv(fn, env)
+
   local ok, result = pcall(fn)
   if not ok then
     local virt_lines = { { ' ✗ ' .. tostring(result), 'LuaExecutorError' } }
-    vim.api.nvim_buf_set_extmark(code_buf, ns_id, line_num - 1, line_num - 1, {
+    vim.api.nvim_buf_set_extmark(code_buf, ns_id, line_num - 1, 0, {
       virt_text = virt_lines,
       virt_text_pos = 'eol',
       hl_mode = 'combine',
     })
     return
   end
-  
+
   local virt_lines = {}
   if result ~= nil then
     table.insert(virt_lines, { ' ✓ ' .. vim.inspect(result):sub(1, 50), 'LuaExecutorSuccess' })
@@ -294,8 +309,8 @@ local function execute_line(code_buf, line_num)
   if #virt_lines == 0 then
     table.insert(virt_lines, { ' ✓ nil', 'LuaExecutorSuccess' })
   end
-  
-  vim.api.nvim_buf_set_extmark(code_buf, ns_id, line_num - 1, line_num - 1, {
+
+  vim.api.nvim_buf_set_extmark(code_buf, ns_id, line_num - 1, 0, {
     virt_text = virt_lines,
     virt_text_pos = 'eol',
     hl_mode = 'combine',
@@ -333,16 +348,16 @@ end
 function M.setup(opts)
   opts = opts or {}
   local display_mode = opts.display_mode or 'virtual_text'
-  
+
   log.info('lua-executor setup called')
   vim.api.nvim_create_user_command('LuaExecute', function()
     M.execute_block()
   end, { desc = 'Execute current lua code block' })
-  
+
   vim.api.nvim_create_user_command('LuaExecuteLine', function()
     M.execute_line()
   end, { desc = 'Execute current line as virtual text' })
-  
+
   vim.api.nvim_create_autocmd('FileType', {
     pattern = 'markdown',
     callback = function()
@@ -354,22 +369,26 @@ function M.setup(opts)
       end, { buffer = true, noremap = true, silent = true, desc = 'Execute current line' })
     end,
   })
-  
+
   vim.api.nvim_set_hl(0, 'LuaExecutorSuccess', { fg = '#a6e3a1' })
   vim.api.nvim_set_hl(0, 'LuaExecutorError', { fg = '#f38ba8' })
   vim.api.nvim_set_hl(0, 'LuaExecutorOutput', { fg = '#89b4fa', italic = true })
 end
 
 ---Get execution context for debugging/inspection
----@return table execution_context The current execution context table
-function M.get_context()
-  return execution_context
+---@param buf integer|nil Buffer number (defaults to current buffer)
+---@return table|nil execution_context The execution context for the buffer
+function M.get_context(buf)
+  buf = buf or vim.api.nvim_get_current_buf()
+  return buffer_contexts[buf]
 end
 
----Clear the execution context
-function M.clear_context()
-  execution_context = {}
-  log.info('Execution context cleared')
+---Clear the execution context for a buffer
+---@param buf integer|nil Buffer number (defaults to current buffer)
+function M.clear_context(buf)
+  buf = buf or vim.api.nvim_get_current_buf()
+  buffer_contexts[buf] = {}
+  log.info('Execution context cleared for buffer %d', buf)
 end
 
 return M

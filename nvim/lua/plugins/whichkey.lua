@@ -134,6 +134,13 @@ return {
           desc = 'Code actions',
         },
         {
+          '<C-.>',
+          function()
+            vim.lsp.buf.code_action()
+          end,
+          desc = 'Code actions',
+        },
+        {
           '<leader>ld',
           function()
             vim.lsp.buf.definition()
@@ -175,6 +182,14 @@ return {
             vim.cmd('tabnew')
           end,
           desc = 'Create new tab',
+        },
+        {
+          '<leader>tt',
+          function()
+            vim.cmd('tabnew')
+            vim.cmd('terminal')
+          end,
+          desc = 'Open terminal in new tab',
         },
         { '<leader>w', group = '+window' },
         {
