@@ -158,7 +158,7 @@ return {
         {
           'D',
           function()
-            vim.lsp.buf.definition()
+            require('fzf-lua').lsp_definitions()
           end,
           desc = 'Go to definition',
         },
