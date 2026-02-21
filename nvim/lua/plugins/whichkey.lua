@@ -448,11 +448,19 @@ return {
           desc = 'Increase font size',
         },
         {
-          '<C-->',
+          '<C-/>',
           function()
             neovide_font.decrease_font()
           end,
           desc = 'Decrease font size',
+        },
+        {
+          '<C-/>',
+          function()
+            vim.cmd('normal gcc')
+          end,
+          desc = 'Toggle comment',
+          mode = { 'n', 'v' },
         },
         {
           '<C-;>',
