@@ -156,6 +156,13 @@ return {
           desc = 'Go to definition',
         },
         {
+          'D',
+          function()
+            vim.lsp.buf.definition()
+          end,
+          desc = 'Go to definition',
+        },
+        {
           '<leader>lD',
           function()
             require('fzf-lua').diagnostics_document()
