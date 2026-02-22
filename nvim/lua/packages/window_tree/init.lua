@@ -1,25 +1,47 @@
 local M = {}
 local hydra = require('packages.hydra')
 
-function M.swap_windows(dir)
-  local cur_win = vim.api.nvim_get_current_win()
-  vim.cmd('wincmd ' .. dir)
-  local target_win = vim.api.nvim_get_current_win()
+local j = require('jhutil')
 
-  if cur_win == target_win then
+function M.swap_windows(dir)
+  local cur_window = j.w.current()
+  vim.cmd('wincmd ' .. dir)
+  local target_window = j.w.current()
+
+  if cur_window == target_window then
     return
   end
 
-  local cur_buf = vim.api.nvim_win_get_buf(cur_win)
-  local target_buf = vim.api.nvim_win_get_buf(target_win)
-  local cur_cursor = vim.api.nvim_win_get_cursor(cur_win)
-  local target_cursor = vim.api.nvim_win_get_cursor(target_win)
+  local cur_buffer = cur_window:get_buffer()
+  local target_buffer = target_window:get_buffer()
+  local cur_cursor = cur_window:get_cursor()
+  local target_cursor = target_window:get_cursor()
 
-  vim.api.nvim_win_set_buf(cur_win, target_buf)
-  vim.api.nvim_win_set_buf(target_win, cur_buf)
-  vim.api.nvim_win_set_cursor(cur_win, target_cursor)
-  vim.api.nvim_win_set_cursor(target_win, cur_cursor)
-  vim.api.nvim_set_current_win(target_win)
+  cur_window:set_buffer(target_buffer)
+  target_window:set_buffer(cur_buffer)
+  cur_window:set_cursor(target_cursor)
+  target_window:set_cursor(cur_cursor)
+  target_window:focus()
+
+  -- local cur_win = vim.api.nvim_get_current_win()
+  -- vim.cmd('wincmd ' .. dir)
+  -- local target_win = vim.api.nvim_get_current_win()
+  --
+  --
+  -- if cur_win == target_win then
+  --   return
+  -- end
+  --
+  -- local cur_buf = vim.api.nvim_win_get_buf(cur_win)
+  -- local target_buf = vim.api.nvim_win_get_buf(target_win)
+  -- local cur_cursor = vim.api.nvim_win_get_cursor(cur_win)
+  -- local target_cursor = vim.api.nvim_win_get_cursor(target_win)
+  --
+  -- vim.api.nvim_win_set_buf(cur_win, target_buf)
+  -- vim.api.nvim_win_set_buf(target_win, cur_buf)
+  -- vim.api.nvim_win_set_cursor(cur_win, target_cursor)
+  -- vim.api.nvim_win_set_cursor(target_win, cur_cursor)
+  -- vim.api.nvim_set_current_win(target_win)
 end
 
 function M.organize()
