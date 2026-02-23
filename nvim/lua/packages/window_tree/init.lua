@@ -90,17 +90,30 @@ function M.organize()
 end
 
 function M.mirror()
-  local current_win = vim.api.nvim_get_current_win()
+  local current_win = j.w.current()
+  -- local current_win = vim.api.nvim_get_current_win()
 
+  ---@param layout j.tab.layout.ret
+  ---@param target_win Window
+  ---@param parent j.tab.layout.ret|nil
   local function find_parent_branch(layout, target_win, parent)
     if layout[1] == 'leaf' then
-      if layout[2] == target_win then
+      local win_id = layout[2]
+      ---@cast win_id integer
+      if win_id == target_win.id then
         return parent
       end
       return nil
     end
 
-    for _, child in ipairs(layout[2]) do
+    if #layout[2] == 0 then
+      return nil
+    end
+
+    local children = layout[2]
+    ---@cast children (vim.fn.winlayout.branch|vim.fn.winlayout.leaf)[]
+
+    for _, child in ipairs(children) do
       local result = find_parent_branch(child, target_win, layout)
       if result then
         return result
@@ -109,22 +122,7 @@ function M.mirror()
     return nil
   end
 
-  local function get_leaf_windows(layout)
-    local leaves = {}
-    if layout[1] == 'leaf' then
-      table.insert(leaves, layout[2])
-    else
-      for _, child in ipairs(layout[2]) do
-        local child_leaves = get_leaf_windows(child)
-        for _, leaf in ipairs(child_leaves) do
-          table.insert(leaves, leaf)
-        end
-      end
-    end
-    return leaves
-  end
-
-  local layout = vim.fn.winlayout()
+  local layout = j.t.current():layout()
   vim.notify('Layout: ' .. vim.inspect(layout), vim.log.levels.INFO, { title = 'Mirror' })
 
   local parent_branch = find_parent_branch(layout, current_win, nil)
@@ -135,51 +133,64 @@ function M.mirror()
     return
   end
 
-  local sibling_wins = get_leaf_windows(parent_branch)
-  local num_siblings = #sibling_wins
-  vim.notify('Siblings: ' .. num_siblings .. ' - ' .. vim.inspect(sibling_wins), vim.log.levels.INFO, { title = 'Mirror' })
+  parent_branch[1] = parent_branch[1] == 'col' and 'row' or 'col'
 
-  if num_siblings <= 1 then
-    vim.notify('Only one sibling', vim.log.levels.WARN, { title = 'Mirror' })
-    return
-  end
+  vim.notify('Modified Layout: ' .. vim.inspect(layout), vim.log.levels.INFO, { title = 'Mirror' })
 
-  local buffers = {}
-  for _, win in ipairs(sibling_wins) do
-    local buf = vim.api.nvim_win_get_buf(win)
-    local cursor = vim.api.nvim_win_get_cursor(win)
-    table.insert(buffers, { win = win, buf = buf, cursor = cursor })
-  end
+  ---reset windows to follow layout
+  ---@param layout_ j.tab.layout.ret
+  local function fill_buffers(layout_)
+    if layout_[1] == 'leaf' then
+      local win_id = layout_[2]
+      local window = j.w.from_id(win_id)
+      layout_["window"] = window
+      layout_["buffer"] = window:get_buffer()
+      return
+    end
 
-  local is_row = parent_branch[1] == 'row'
-  local first_win = sibling_wins[1]
+    local children = layout_[2]
+    ---@cast children (vim.fn.winlayout.branch|vim.fn.winlayout.leaf)[]
 
-  for i = #sibling_wins, 2, -1 do
-    if sibling_wins[i] ~= first_win then
-      pcall(vim.api.nvim_win_close, sibling_wins[i], true)
+    for _, child in ipairs(children) do
+      fill_buffers(child)
     end
   end
 
-  vim.api.nvim_set_current_win(first_win)
+  fill_buffers(layout)
 
-  local new_wins = {}
-  table.insert(new_wins, first_win)
-
-  for i = 2, num_siblings do
-    if is_row then
-      vim.cmd('split')
-    else
-      vim.cmd('vsplit')
-    end
-    table.insert(new_wins, vim.api.nvim_get_current_win())
+  local windows = j.t.current():get_windows()
+  for i = #windows, 2, -1 do
+    local window = windows[i]
+    pcall(window.close, window, { force = true })
   end
 
-  for i, win in ipairs(new_wins) do
-    if buffers[i] then
-      vim.api.nvim_win_set_buf(win, buffers[i].buf)
-      pcall(vim.api.nvim_win_set_cursor, win, buffers[i].cursor)
+
+  local function apply_buffers(layout_)
+    if layout_[1] == 'leaf' then
+      -- local win = layout_["window"]
+      local buf = layout_["buffer"]
+      j.w.current():set_buffer(buf)
+      return
+    end
+
+    local rowcol = layout_[1]
+    local children = layout_[2]
+    ---@cast children (vim.fn.winlayout.branch|vim.fn.winlayout.leaf)[]
+
+    for i, child in ipairs(children) do
+      if i > 1 then
+        if rowcol == 'col' then
+          vim.cmd('split')
+        else
+          vim.cmd('vsplit')
+        end
+      end
+
+      apply_buffers(child)
     end
   end
+
+  apply_buffers(layout)
 
   vim.cmd('wincmd =')
 end

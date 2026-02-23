@@ -1,3 +1,4 @@
+-- TODO: makd type to j.Tab, j.Window, j.Buffer, j.Cursor
 ---@class Tab
 ---@field id number
 local Tab = {}
@@ -42,6 +43,16 @@ function Tab:get_windows()
   return windows
 end
 
+--- @alias j.tab.layout.ret
+--- | vim.fn.winlayout.leaf
+--- | vim.fn.winlayout.branch
+--- | vim.fn.winlayout.empty
+
+---@return j.tab.layout.ret
+function Tab:layout()
+  return vim.fn.winlayout(self.id)
+end
+
 
 function Buffer.new(id)
   return setmetatable({
@@ -81,6 +92,7 @@ function Window.__eq(self, other)
 end
 
 function Window:get_buffer()
+  assert(self.id, "Window ID is not set")
   local buf_id = vim.api.nvim_win_get_buf(self.id)
   return Buffer.new(buf_id)
 end
@@ -126,7 +138,11 @@ return  {
   w = {
     current = function ()
       return current_window()
-    end
+    end,
+    from_id = function (id)
+      assert(type(id) == "number", "Window ID is required in j.w.from_id " .. id)
+      return Window.new(id)
+    end,
   },
 }
 
