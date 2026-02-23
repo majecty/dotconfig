@@ -468,6 +468,35 @@ return {
           end,
           desc = 'Tab Lua playground',
         },
+        { '<leader>S', group = '+scratch split' },
+        {
+          '<leader>Sh',
+          function()
+            scratch.open_left()
+          end,
+          desc = 'Scratch left',
+        },
+        {
+          '<leader>Sl',
+          function()
+            scratch.open_right()
+          end,
+          desc = 'Scratch right',
+        },
+        {
+          '<leader>Sk',
+          function()
+            scratch.open_above()
+          end,
+          desc = 'Scratch above',
+        },
+        {
+          '<leader>Sj',
+          function()
+            scratch.open_below()
+          end,
+          desc = 'Scratch below',
+        },
         {
           '<C-h>',
           function()

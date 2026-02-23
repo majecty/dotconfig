@@ -5,6 +5,68 @@ local scratch_buf = nil
 local scratch_win = nil
 local source_terminal_buf = nil
 
+---@param split_cmd string
+local function open_scratch_in_split(split_cmd)
+  local buf = vim.api.nvim_create_buf(false, true)
+  vim.api.nvim_buf_set_name(buf, 'scratch://' .. os.time())
+  vim.api.nvim_set_option_value('buftype', 'nofile', { buf = buf })
+  vim.api.nvim_set_option_value('filetype', 'text', { buf = buf })
+  vim.api.nvim_set_option_value('bufhidden', 'wipe', { buf = buf })
+  vim.cmd(split_cmd)
+  vim.api.nvim_set_current_buf(buf)
+  vim.cmd('startinsert')
+end
+
+function M.open_left()
+  vim.cmd('wincmd h')
+  if vim.fn.winnr('$') == 1 then
+    vim.cmd('vsplit')
+  else
+    vim.cmd('vsplit')
+    vim.cmd('wincmd l')
+  end
+  local buf = vim.api.nvim_create_buf(false, true)
+  vim.api.nvim_buf_set_name(buf, 'scratch://' .. os.time())
+  vim.api.nvim_set_option_value('buftype', 'nofile', { buf = buf })
+  vim.api.nvim_set_option_value('filetype', 'text', { buf = buf })
+  vim.api.nvim_set_option_value('bufhidden', 'wipe', { buf = buf })
+  vim.api.nvim_set_current_buf(buf)
+  vim.cmd('startinsert')
+end
+
+function M.open_right()
+  vim.cmd('vsplit')
+  local buf = vim.api.nvim_create_buf(false, true)
+  vim.api.nvim_buf_set_name(buf, 'scratch://' .. os.time())
+  vim.api.nvim_set_option_value('buftype', 'nofile', { buf = buf })
+  vim.api.nvim_set_option_value('filetype', 'text', { buf = buf })
+  vim.api.nvim_set_option_value('bufhidden', 'wipe', { buf = buf })
+  vim.api.nvim_set_current_buf(buf)
+  vim.cmd('startinsert')
+end
+
+function M.open_above()
+  vim.cmd('split')
+  local buf = vim.api.nvim_create_buf(false, true)
+  vim.api.nvim_buf_set_name(buf, 'scratch://' .. os.time())
+  vim.api.nvim_set_option_value('buftype', 'nofile', { buf = buf })
+  vim.api.nvim_set_option_value('filetype', 'text', { buf = buf })
+  vim.api.nvim_set_option_value('bufhidden', 'wipe', { buf = buf })
+  vim.api.nvim_set_current_buf(buf)
+  vim.cmd('startinsert')
+end
+
+function M.open_below()
+  vim.cmd('belowright split')
+  local buf = vim.api.nvim_create_buf(false, true)
+  vim.api.nvim_buf_set_name(buf, 'scratch://' .. os.time())
+  vim.api.nvim_set_option_value('buftype', 'nofile', { buf = buf })
+  vim.api.nvim_set_option_value('filetype', 'text', { buf = buf })
+  vim.api.nvim_set_option_value('bufhidden', 'wipe', { buf = buf })
+  vim.api.nvim_set_current_buf(buf)
+  vim.cmd('startinsert')
+end
+
 function M.get_scratch_buf()
   return scratch_buf
 end
