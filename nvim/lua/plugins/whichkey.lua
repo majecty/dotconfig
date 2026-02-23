@@ -352,6 +352,20 @@ return {
           end,
           desc = 'Find history',
         },
+        {
+          '<leader>fp',
+          function()
+            local filepath = vim.fn.expand('%:p')
+            local cwd = vim.fn.getcwd()
+            local relpath = vim.fn.fnamemodify(filepath, ':~:.')
+            if filepath == '' then
+              vim.notify('No file', vim.log.levels.WARN)
+              return
+            end
+            vim.notify(relpath, vim.log.levels.INFO)
+          end,
+          desc = 'Show file path from cwd',
+        },
         { '<leader>B', group = '+buffer management' },
         {
           '<leader>bn',
@@ -527,6 +541,10 @@ return {
           end,
           desc = 'Move right',
         },
+        { '<Up>', '<C-w>k', desc = 'Move to window above' },
+        { '<Down>', '<C-w>j', desc = 'Move to window below' },
+        { '<Left>', '<C-w>h', desc = 'Move to window left' },
+        { '<Right>', '<C-w>l', desc = 'Move to window right' },
         {
           '<C-j>',
           'copilot#Accept("\\<CR>")',
