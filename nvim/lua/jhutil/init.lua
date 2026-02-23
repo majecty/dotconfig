@@ -32,6 +32,31 @@ function Tab:get_window_ids()
   return vim.api.nvim_tabpage_list_wins(self.id)
 end
 
+---@return Window[] List of Window objects in the tab
+function Tab:get_windows()
+  local window_ids = self:get_window_ids()
+  local windows = {}
+  for _, win_id in ipairs(window_ids) do
+    table.insert(windows, Window.new(win_id))
+  end
+  return windows
+end
+
+
+function Buffer.new(id)
+  return setmetatable({
+    id = id
+  }, Buffer)
+end
+
+function Buffer:get_cursor()
+  local cursor_pos = vim.api.nvim_buf_get_mark(self.id, '.')
+  return setmetatable({
+    line = cursor_pos[1],
+    col = cursor_pos[2]
+  }, Cursor)
+end
+
 
 ---@return Window
 local function current_window()
@@ -41,12 +66,11 @@ local function current_window()
   }, Window)
 end
 
-function Buffer.new(id)
+function Window.new(id)
   return setmetatable({
     id = id
-  }, Buffer)
+  }, Window)
 end
-
 
 ---@return boolean
 function Window.__eq(self, other)
@@ -61,6 +85,7 @@ function Window:get_buffer()
   return Buffer.new(buf_id)
 end
 
+---@param buffer Buffer
 function Window:set_buffer(buffer)
   vim.api.nvim_win_set_buf(self.id, buffer.id)
 end
@@ -79,6 +104,13 @@ end
 
 function Window:focus()
   vim.api.nvim_set_current_win(self.id)
+end
+
+---@param args {force: boolean}?
+function Window:close(args)
+  args = args or {}
+  local force = args.force or false
+  vim.api.nvim_win_close(self.id, force)
 end
 
 

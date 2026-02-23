@@ -22,45 +22,29 @@ function M.swap_windows(dir)
   cur_window:set_cursor(target_cursor)
   target_window:set_cursor(cur_cursor)
   target_window:focus()
-
-  -- local cur_win = vim.api.nvim_get_current_win()
-  -- vim.cmd('wincmd ' .. dir)
-  -- local target_win = vim.api.nvim_get_current_win()
-  --
-  --
-  -- if cur_win == target_win then
-  --   return
-  -- end
-  --
-  -- local cur_buf = vim.api.nvim_win_get_buf(cur_win)
-  -- local target_buf = vim.api.nvim_win_get_buf(target_win)
-  -- local cur_cursor = vim.api.nvim_win_get_cursor(cur_win)
-  -- local target_cursor = vim.api.nvim_win_get_cursor(target_win)
-  --
-  -- vim.api.nvim_win_set_buf(cur_win, target_buf)
-  -- vim.api.nvim_win_set_buf(target_win, cur_buf)
-  -- vim.api.nvim_win_set_cursor(cur_win, target_cursor)
-  -- vim.api.nvim_win_set_cursor(target_win, cur_cursor)
-  -- vim.api.nvim_set_current_win(target_win)
 end
 
 function M.organize()
-  local wins = vim.api.nvim_tabpage_list_wins(0)
-  local num_wins = #wins
+  local windows = j.t.current():get_windows()
+  local num_windows = #windows
 
-  if num_wins <= 1 then
+  if num_windows <= 1 then
     return
   end
 
+  ---@type table<integer, { buffer: Buffer, cursor: Cursor }>
   local buffers = {}
-  for _, win in ipairs(wins) do
-    local buf = vim.api.nvim_win_get_buf(win)
-    local cursor = vim.api.nvim_win_get_cursor(win)
-    table.insert(buffers, { buf = buf, cursor = cursor })
+  for _, win in ipairs(windows) do
+    local buffer = win:get_buffer()
+    local cursor = win:get_cursor()
+    table.insert(buffers, {
+      buffer = buffer,
+      cursor = cursor,
+    })
   end
 
-  for i = #wins, 2, -1 do
-    pcall(vim.api.nvim_win_close, wins[i], true)
+  for i = #windows, 2, -1 do
+    pcall(windows[i].close, windows[i], { force = true })
   end
 
   local function create_tree(n, depth)
@@ -68,11 +52,10 @@ function M.organize()
       return
     end
 
-    local half = math.floor(n / 2)
-    local left_count = half
-    local right_count = n - half
+    local left_count = 1
+    local right_count = n - left_count
 
-    local cur_win = vim.api.nvim_get_current_win()
+    local cur_win = j.w.current()
 
     if depth % 2 == 0 then
       vim.cmd('vsplit')
@@ -80,28 +63,30 @@ function M.organize()
       vim.cmd('split')
     end
 
-    local new_win = vim.api.nvim_get_current_win()
+    local new_win = j.w.current()
 
-    vim.api.nvim_set_current_win(cur_win)
+    cur_win:focus()
     create_tree(left_count, depth + 1)
 
-    vim.api.nvim_set_current_win(new_win)
+    new_win:focus()
     create_tree(right_count, depth + 1)
   end
 
-  local main_win = vim.api.nvim_get_current_win()
-  create_tree(num_wins, 0)
+  create_tree(num_windows, 0)
 
   vim.defer_fn(function()
-    local new_wins = vim.api.nvim_tabpage_list_wins(0)
-    for i, win in ipairs(new_wins) do
+    local new_windows = j.t.current():get_windows()
+    for i, win in ipairs(new_windows) do
       if buffers[i] then
-        vim.api.nvim_win_set_buf(win, buffers[i].buf)
-        pcall(vim.api.nvim_win_set_cursor, win, buffers[i].cursor)
+        local buffer = buffers[i].buffer
+        local cursor = buffers[i].cursor
+        win:set_buffer(buffer)
+        pcall(win.set_cursor, win, cursor)
       end
     end
     vim.cmd('wincmd =')
   end, 10)
+
 end
 
 function M.mirror()
