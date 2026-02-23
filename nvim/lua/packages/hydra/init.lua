@@ -5,8 +5,17 @@ local hint_buf = nil
 local hint_win = nil
 local saved_keymaps = {}
 local exit_keys = { '<Esc>', 'q' }
+local cleanup_augroup = nil
+
+local function clear_autocmds()
+  if cleanup_augroup then
+    pcall(vim.api.nvim_del_augroup_by_id, cleanup_augroup)
+    cleanup_augroup = nil
+  end
+end
 
 local function close_hint()
+  clear_autocmds()
   if hint_win and vim.api.nvim_win_is_valid(hint_win) then
     vim.api.nvim_win_close(hint_win, true)
     hint_win = nil
@@ -15,6 +24,29 @@ local function close_hint()
     vim.api.nvim_buf_delete(hint_buf, { force = true })
     hint_buf = nil
   end
+end
+
+local function restore_keymaps()
+  for lhs, data in pairs(saved_keymaps) do
+    if data then
+      if data.rhs then
+        vim.keymap.set('n', lhs, data.rhs, data.opts or { silent = true })
+      else
+        pcall(vim.keymap.del, 'n', lhs)
+      end
+    end
+  end
+  saved_keymaps = {}
+end
+
+local function exit_hydra()
+  if not hydra_active then
+    return
+  end
+  hydra_active = false
+  close_hint()
+  restore_keymaps()
+  vim.notify('Hydra exited', vim.log.levels.INFO)
 end
 
 local function show_hint(hint_lines)
@@ -46,29 +78,30 @@ local function show_hint(hint_lines)
     zindex = 200,
   })
   vim.api.nvim_win_set_option(hint_win, 'winhl', 'Normal:FloatTitle')
-end
 
-local function restore_keymaps()
-  for lhs, data in pairs(saved_keymaps) do
-    if data then
-      if data.rhs then
-        vim.keymap.set('n', lhs, data.rhs, data.opts or { silent = true })
-      else
-        pcall(vim.keymap.del, 'n', lhs)
+  cleanup_augroup = vim.api.nvim_create_augroup('HydraCleanup', { clear = true })
+  vim.api.nvim_create_autocmd('WinClosed', {
+    group = cleanup_augroup,
+    pattern = tostring(hint_win),
+    callback = function()
+      hint_win = nil
+      if hydra_active then
+        exit_hydra()
       end
-    end
-  end
-  saved_keymaps = {}
-end
-
-local function exit_hydra()
-  if not hydra_active then
-    return
-  end
-  hydra_active = false
-  close_hint()
-  restore_keymaps()
-  vim.notify('Hydra exited', vim.log.levels.INFO)
+    end,
+    once = true,
+  })
+  vim.api.nvim_create_autocmd('BufWinLeave', {
+    group = cleanup_augroup,
+    buffer = hint_buf,
+    callback = function()
+      hint_buf = nil
+      if hydra_active then
+        exit_hydra()
+      end
+    end,
+    once = true,
+  })
 end
 
 local function enter_hydra(opts)
@@ -106,7 +139,6 @@ function M.create(opts)
   end
 end
 
-function M.setup()
-end
+function M.setup() end
 
 return M
