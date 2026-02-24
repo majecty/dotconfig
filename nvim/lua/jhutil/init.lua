@@ -1,1 +1,4 @@
-return require('jhutil.raw')
+return {
+  raw = require('jhutil.raw'),
+  context = require('jhutil.context'),
+}
