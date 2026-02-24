@@ -1,6 +1,5 @@
 ---@class Context
----@field effects jh.Effect[]
-local Context = {}
+---@field effects jh.Effect[] | number[]
 Context.__index = Context
 
 function Context.new()
