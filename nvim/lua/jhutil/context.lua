@@ -25,21 +25,22 @@ function Context:apply()
   self.effects = {}
 end
 
----@class Effect
+---@class jh.Effect
 ---@field type string
+
 ---@alias jh.WinSetBufEffect { type: "win_set_buf", win_id: number, buf_id: number }
 ---@alias jh.WinSetCursorEffect { type: "win_set_cursor", win_id: number, line: number, col: number }
 ---@alias jh.WinFocusEffect { type: "win_focus", win_id: number }
 ---@alias jh.WinCloseEffect { type: "win_close", win_id: number, force: boolean }
 
 function Context:execute(effect)
-  if effect.type == 'win_set_buf' then
+  if effect.type == "win_set_buf" then
     vim.api.nvim_win_set_buf(effect.win_id, effect.buf_id)
-  elseif effect.type == 'win_set_cursor' then
+  elseif effect.type == "win_set_cursor" then
     vim.api.nvim_win_set_cursor(effect.win_id, { effect.line, effect.col })
-  elseif effect.type == 'win_focus' then
+  elseif effect.type == "win_focus" then
     vim.api.nvim_set_current_win(effect.win_id)
-  elseif effect.type == 'win_close' then
+  elseif effect.type == "win_close" then
     vim.api.nvim_win_close(effect.win_id, effect.force)
   end
 end
@@ -108,7 +109,7 @@ end
 
 function ContextWindow:set_buffer(buffer)
   self.context:add_effect({
-    type = 'win_set_buf',
+    type = "win_set_buf",
     win_id = self.id,
     buf_id = buffer.id,
   })
@@ -124,7 +125,7 @@ end
 
 function ContextWindow:set_cursor(cursor)
   self.context:add_effect({
-    type = 'win_set_cursor',
+    type = "win_set_cursor",
     win_id = self.id,
     line = cursor.line,
     col = cursor.col,
@@ -133,7 +134,7 @@ end
 
 function ContextWindow:focus()
   self.context:add_effect({
-    type = 'win_focus',
+    type = "win_focus",
     win_id = self.id,
   })
 end
@@ -142,7 +143,7 @@ function ContextWindow:close(args)
   args = args or {}
   local force = args.force or false
   self.context:add_effect({
-    type = 'win_close',
+    type = "win_close",
     win_id = self.id,
     force = force,
   })
@@ -162,7 +163,7 @@ function ContextBuffer.new(id, context)
 end
 
 function ContextBuffer:get_cursor()
-  local cursor_pos = vim.api.nvim_buf_get_mark(self.id, '.')
+  local cursor_pos = vim.api.nvim_buf_get_mark(self.id, ".")
   return setmetatable({
     line = cursor_pos[1],
     col = cursor_pos[2],
@@ -200,7 +201,7 @@ return {
           return current_window(ctx)
         end,
         from_id = function(id)
-          assert(type(id) == 'number', 'Window ID is required in j.w.from_id ' .. id)
+          assert(type(id) == "number", "Window ID is required in j.w.from_id " .. id)
           return ContextWindow.new(id, ctx)
         end,
       },
