@@ -1,5 +1,5 @@
 ---@class Context
----@field effects table
+---@field effects jh.Effect[]
 local Context = {}
 Context.__index = Context
 
@@ -13,7 +13,7 @@ function Context:add_effect(effect)
   table.insert(self.effects, effect)
 end
 
----@return table
+---@return jh.Effect[]
 function Context:get_effects()
   return self.effects
 end
@@ -27,10 +27,10 @@ end
 
 ---@class Effect
 ---@field type string
----@alias WinSetBufEffect { type: "win_set_buf", win_id: number, buf_id: number }
----@alias WinSetCursorEffect { type: "win_set_cursor", win_id: number, line: number, col: number }
----@alias WinFocusEffect { type: "win_focus", win_id: number }
----@alias WinCloseEffect { type: "win_close", win_id: number, force: boolean }
+---@alias jh.WinSetBufEffect { type: "win_set_buf", win_id: number, buf_id: number }
+---@alias jh.WinSetCursorEffect { type: "win_set_cursor", win_id: number, line: number, col: number }
+---@alias jh.WinFocusEffect { type: "win_focus", win_id: number }
+---@alias jh.WinCloseEffect { type: "win_close", win_id: number, force: boolean }
 
 function Context:execute(effect)
   if effect.type == 'win_set_buf' then
