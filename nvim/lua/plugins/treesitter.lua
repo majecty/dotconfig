@@ -6,7 +6,7 @@ return {
     config = function()
       local configs = require('nvim-treesitter.configs')
       configs.setup({
-        ensure_installed = { 'go', 'gomod', 'gowork', 'gosum', 'lua', 'vim', 'vimdoc', 'query' },
+        ensure_installed = { 'go', 'gomod', 'gowork', 'gosum', 'lua', 'vim', 'vimdoc', 'query', 'typescript', 'tsx', 'javascript', 'jsx' },
         highlight = { enable = true },
         indent = { enable = true },
         select = {
