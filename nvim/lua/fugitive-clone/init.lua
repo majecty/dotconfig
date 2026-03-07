@@ -9,6 +9,10 @@ end
 
 function M.jgit(args)
   vim.notify("Running JGit with args: " .. args)
+
+  if args == "status" then
+    require("fugitive-clone.status").show_status()
+  end
 end
 
 ---@diagnostic disable-next-line: unused-local

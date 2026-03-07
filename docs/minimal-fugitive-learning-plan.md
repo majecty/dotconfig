@@ -15,15 +15,16 @@
 
 ```
 nvim/lua/plugins/fugitive-clone.lua    -- lazy.nvim 설정, JGit 명령어 등록
-nvim/lua/packages/fugitive-clone/
-├── init.lua                           -- 메인 모듈, core 함수 re-export
-└── core.lua                           -- git 명령어 실행 로직
+nvim/lua/fugitive-clone/             -- lua/ 바로 아래 위치 (require 'fugitive-clone')
+├── init.lua                         -- 메인 모듈, 명령어 핸들러
+└── status.lua                       -- git status 기능 구현 중
 ```
 
 ## 커밋 히스토리
 
 - `611d07c` - Add minimal-fugitive learning plan and scaffold
 - `bb63163` - Update fugitive-clone with user command improvements
+- `04e7fe2` - Restructure fugitive-clone: move to lua/fugitive-clone, update docs
 
 ---
 
