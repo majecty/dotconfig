@@ -12,6 +12,16 @@ return {
       local on_attach = function(client, bufnr)
         -- Set omnifunc when LSP attaches
         vim.bo[bufnr].omnifunc = 'v:lua.vim.lsp.omnifunc'
+
+        -- Enable inlay hints if supported
+        if client.supports_method('textDocument/inlayHint') then
+          vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+        end
+
+        -- Keymap to toggle inlay hints
+        vim.keymap.set('n', '<leader>ih', function()
+          vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = bufnr }), { bufnr = bufnr })
+        end, { noremap = true, silent = true, buffer = bufnr, desc = 'Toggle inlay hints' })
       end
 
       -- Get mason binary path helper

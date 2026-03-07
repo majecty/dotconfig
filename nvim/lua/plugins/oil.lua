@@ -6,8 +6,8 @@ return {
     opts = {
       keymaps = {
         ['<C-s>'] = false,
-        ['S'] = { 'actions.select', opts = { vertical = true } },
-        ['V'] = { 'actions.select', opts = { horizontal = true } },
+        ['<A-s>'] = { 'actions.select', opts = { vertical = true } },
+        ['<A-v>'] = { 'actions.select', opts = { horizontal = true } },
         ['g?'] = false,
         ['?'] = { 'actions.show_help', mode = 'n' },
       },
