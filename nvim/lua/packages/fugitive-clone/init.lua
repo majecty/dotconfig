@@ -7,4 +7,32 @@ function M.setup(_opts)
   vim.notify("Setting up fugitive clone")
 end
 
+function M.jgit(args)
+  vim.notify("Running JGit with args: " .. args)
+end
+
+---@diagnostic disable-next-line: unused-local
+function M.jgit_complete(arg_lead, cmd_line, cursor_pos)
+  local git_commands = {
+    "add",
+    "commit",
+    "push",
+    "pull",
+    "status",
+    "log",
+    "diff",
+    "checkout",
+    "branch",
+    "merge",
+    "rebase",
+    "stash",
+    "tag",
+    "remote",
+    "fetch",
+  }
+  return vim.tbl_filter(function(cmd)
+    return vim.startswith(cmd, arg_lead)
+  end, git_commands)
+end
+
 return M

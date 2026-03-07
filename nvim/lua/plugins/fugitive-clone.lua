@@ -19,5 +19,15 @@ return {
         require("packages.fugitive-clone").setup(opts)
       end,
       { noremap = true, silent = true, desc = "run futigive clone plugin" });
+
+    vim.api.nvim_create_user_command('JGit', function(opts)
+      require("packages.fugitive-clone").jgit(opts.args)
+    end, {
+        nargs = "*",
+        complete = function(arglead, cmdline, cursorpos)
+          return require("packages.fugitive-clone").jgit_complete(arglead, cmdline, cursorpos)
+        end,
+        desc = "JGit prefix command"
+    })
   end
 }
