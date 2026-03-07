@@ -11,10 +11,19 @@
 
 ---
 
-## 파일들
+## 파일 구조
 
-- nvim/lua/plugins/fugitive-clone.lua
-- nvim/lua/packages/fugitive-clone/
+```
+nvim/lua/plugins/fugitive-clone.lua    -- lazy.nvim 설정, JGit 명령어 등록
+nvim/lua/packages/fugitive-clone/
+├── init.lua                           -- 메인 모듈, core 함수 re-export
+└── core.lua                           -- git 명령어 실행 로직
+```
+
+## 커밋 히스토리
+
+- `611d07c` - Add minimal-fugitive learning plan and scaffold
+- `bb63163` - Update fugitive-clone with user command improvements
 
 ---
 
@@ -175,9 +184,10 @@ vim.api.nvim_create_autocmd('FileType', {
 ## 학습 체크리스트
 
 ### Phase 1
-- [ ] 플러그인 기본 구조 설정
-- [ ] `:MGit` 명령어가 git 명령어를 실행함
-- [ ] 결과를 버퍼에 출력함
+- [x] 플러그인 기본 구조 설정 (lazy.nvim + nvim_create_user_command)
+- [x] `:JGit` 명령어가 git 명령어를 실행함
+- [x] `nargs`, `complete` 파라미터 학습 및 적용
+- [ ] 결과를 버퍼에 출력함 (진행 중)
 
 ### Phase 2
 - [ ] `:MGit status` 명령어 작동
@@ -200,12 +210,14 @@ vim.api.nvim_create_autocmd('FileType', {
 
 ## 다음 단계
 
-이 계획을 바탕으로 Phase 1부터 차근차근 시작해보세요! 
-각 Phase를 시작할 때마다 구체적인 구현 방법을 함께 논의할 수 있습니다.
+**현재 진행 상황:** Phase 1 기본 구조 완료, git 결과 버퍼 출력 구현 필요
 
 **지금 당장 할 일:**
-1. `nvim-minimal-fugitive` 디렉토리 생성
-2. `lua/minimal_fugitive/init.lua` 기본 구조 작성
-3. `:MGit status` 명령어 등록
+1. `core.lua`에 `run_git_command()` 함수 구현
+2. git 결과를 새 버퍼에 표시하는 `show_in_buffer()` 구현
+3. `:JGit status` 테스트 후 커밋
 
-시작하시겠습니까? 🚀
+**학습한 내용 정리:**
+- `nvim_create_user_command`의 `nargs` (`*`, `+`, `?`, `1` 차이)
+- `complete` 함수 시그니처 (`arglead`, `cmdline`, `cursorpos`)
+- Lua 함수 vs `v:lua.Function` 차이
