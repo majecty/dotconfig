@@ -18,7 +18,8 @@ nvim/lua/plugins/fugitive-clone.lua    -- lazy.nvim 설정, JGit 명령어 등�
 nvim/lua/fugitive-clone/             -- lua/ 바로 아래 위치 (require 'fugitive-clone')
 ├── init.lua                         -- 메인 모듈, 명령어 핸들러
 ├── status.lua                       -- git status 기능 구현 중
-└── async.lua                        -- Minimal async wrapper (코루틴 학습용)
+├── async.lua                        -- Basic coroutine wrapper (첫 버전)
+└── async2.lua                       -- Improved: wrap 기반 exec 구현 (exec가 wrap 재사용)
 ```
 
 ## 커밋 히스토리
@@ -27,6 +28,7 @@ nvim/lua/fugitive-clone/             -- lua/ 바로 아래 위치 (require 'fugi
 - `bb63163` - Update fugitive-clone with user command improvements
 - `04e7fe2` - Restructure fugitive-clone: move to lua/fugitive-clone, update docs
 - `08ca026` - Update docs and fugitive-clone status module
+- `63c5792` - Add async.lua with basic coroutine wrapper
 
 ---
 
