@@ -1,8 +1,8 @@
 local M = {}
 
----@param fn fun():nil
 function M.exec(fn)
-  coroutine.resume(coroutine.create(fn))
+  local co = coroutine.create(fn)
+  coroutine.resume(co)
 end
 
 ---@param fn fun(..., callback: fun(...):nil):nil

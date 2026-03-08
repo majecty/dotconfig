@@ -5,11 +5,20 @@ function M.show_status()
 
   local async = require("fugitive-clone.async")
   async.exec(function()
-    vim.notify("Fetching Git status...")
-    async.sleep(2000) -- Simulate a delay for fetching Git status
-    vim.notify("Git status fetched successfully!")
-    async.sleep(1000) -- Simulate a delay for processing Git status
-    vim.notify("Displaying Git status...")
+    vim.notify("1")
+    async.sleep(100) -- Simulate a delay for fetching Git status
+    vim.notify("2")
+    async.sleep(100) -- Simulate a delay for processing Git status
+    vim.notify("3")
+
+    local five = async.exec(function()
+      async.sleep(100)
+      vim.notify("4")
+      return 5
+    end)
+    vim.notify("" .. five)
+    vim.notify("6")
+    return nil
   end)
 
   -- local buf_id = vim.api.nvim_create_buf(false, true)
