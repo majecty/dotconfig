@@ -130,6 +130,137 @@ nvim-minimal-fugitive/
 
 ---
 
+## 코루틴 기반 Async 래퍼 학습
+
+### 목표
+- 콜백 지옥 회피
+- 동기 코드처럼 보이는 비동기 처리 구현
+- Lua 코루틴 (coroutine) 이해 및 실전 적용
+
+### 핵심 개념
+
+#### 1. Lua 코루틴 기초
+
+```lua
+-- 코루틴 생성
+local co = coroutine.create(function()
+  print("Start")
+  local value = coroutine.yield("pause")  -- 실행 중단, 값 반환
+  print("Resume with:", value)              -- 외부에서 resume될 때
+  return "done"
+end)
+
+-- 코루틴 실행
+local ok1, result1 = coroutine.resume(co)       -- "Start", "pause"
+local ok2, result2 = coroutine.resume(co, 42)   -- "Resume with: 42", "done"
+local status = coroutine.status(co)             -- "dead"
+```
+
+#### 2. jobstart와 코루틴 연결 패턴
+
+```lua
+-- 핵심 아이디어:
+-- 1. coroutine.yield()로 jobstart에 필요한 정보 전달
+-- 2. jobstart 콜백에서 coroutine.resume()으로 결과 반환
+-- 3. 실행 흐름이 동기처럼 보임
+
+function run_async(cmd, args)
+  -- jobstart 시작 정보를 yield로 전달
+  local job_info = coroutine.yield({
+    cmd = cmd,
+    args = args,
+  })
+  
+  -- jobstart 완료 후 resume되면서 결과 받음
+  return job_info.result
+end
+```
+
+#### 3. 래퍼 함수 구조
+
+```lua
+local M = {}
+
+-- 사용자가 호출할 async 함수
+function M.exec(async_fn)
+  local co = coroutine.create(async_fn)
+  
+  local function step(value)
+    local ok, result = coroutine.resume(co, value)
+    
+    if not ok then
+      -- 에러 처리
+      return
+    end
+    
+    if coroutine.status(co) == "dead" then
+      -- 완료
+      return
+    end
+    
+    -- result는 jobstart 정보 테이블
+    -- jobstart 실행 후 결과로 다시 resume
+  end
+  
+  step(nil)  -- 코루틴 시작
+end
+
+-- 사용자가 코루틴 안에서 호출
+function M.run(cmd, args)
+  return coroutine.yield({
+    cmd = cmd,
+    args = args,
+  })
+end
+
+return M
+```
+
+### 구현 단계
+
+1. **코루틴 기본 테스트**
+   - `coroutine.create()` + `resume()` + `yield()` 이해
+   - 상태 확인 (`coroutine.status()`)
+
+2. **jobstart 연결**
+   - yield로 job 정보 전달
+   - on_exit 콜백에서 resume
+   - vim.schedule()으로 UI 업데이트
+
+3. **래퍼 완성**
+   - 에러 처리 추가
+   - stdout/stderr 수집
+   - 반환값 정리
+
+### 디버깅 팁
+
+```lua
+-- 코루틴 상태 확인
+print("Status:", coroutine.status(co))  -- "suspended", "running", "dead"
+
+-- 에러 잡기
+local ok, result = pcall(coroutine.resume, co)
+if not ok then
+  print("Error:", result)
+end
+
+-- 실행 흐름 추적
+local function step(value, depth)
+  print(string.rep("  ", depth) .. "step with:", vim.inspect(value))
+  -- ...
+end
+```
+
+### 학습 체크리스트
+
+- [ ] 코루틴 생성 → resume → yield → resume 흐름 이해
+- [ ] coroutine.status()로 상태 변화 확인
+- [ ] jobstart 콜백과 coroutine.resume 연결
+- [ ] async.lua 파일 직접 작성
+- [ ] `:JGit status`가 async로 동작
+
+---
+
 ## 참고 자료
 
 ### 공식 문서
@@ -213,14 +344,28 @@ vim.api.nvim_create_autocmd('FileType', {
 
 ## 다음 단계
 
-**현재 진행 상황:** Phase 1 기본 구조 완료, git 결과 버퍼 출력 구현 필요
+**현재 진행 상황:** 
+- Phase 1 기본 구조 완료
+- async 래퍼 코루틴 학습 진행 중
 
 **지금 당장 할 일:**
-1. `core.lua`에 `run_git_command()` 함수 구현
-2. git 결과를 새 버퍼에 표시하는 `show_in_buffer()` 구현
-3. `:JGit status` 테스트 후 커밋
+
+### Async 래퍼 구현 (진행 중)
+1. `async.lua` 파일 생성 - 단계별로 직접 작성
+   - Step 1: 코루틴 기본 동작 테스트
+   - Step 2: jobstart와 연결
+   - Step 3: 래퍼 함수 완성
+2. `:JGit status`가 async로 동작하도록 연결
+3. 테스트 후 커밋
+
+### Git Status 버퍼 (Phase 2 준비)
+1. `status.lua`에 버퍼 생성 함수 구현
+2. git status 결과 파싱 및 표시
+3. 키맵 추가 (q, Enter)
 
 **학습한 내용 정리:**
 - `nvim_create_user_command`의 `nargs` (`*`, `+`, `?`, `1` 차이)
 - `complete` 함수 시그니처 (`arglead`, `cmdline`, `cursorpos`)
 - Lua 함수 vs `v:lua.Function` 차이
+- `jobstart`는 비동기, `system`은 동기
+- Lua 코루틴 기본: `create()`, `resume()`, `yield()`, `status()`

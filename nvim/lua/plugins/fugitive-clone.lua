@@ -7,8 +7,11 @@ return {
       "n",
       "<leader>gcr",
       function()
-        -- remove code cache
-        package.loaded["fugitive-clone"] = nil
+        for key, _ in pairs(package.loaded) do
+          if vim.startswith(key, "fugitive-clone") then
+            package.loaded[key] = nil
+          end
+        end
         require("fugitive-clone.init").setup(opts)
       end,
       { noremap = true, silent = true, desc = "reload futigive clone plugin" });

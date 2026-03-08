@@ -7,8 +7,6 @@ function M.setup(_opts)
   vim.notify("Setting up fugitive clone")
 end
 
-local M = {}
-
 function M.jgit(args)
   if args == "status" then
     require("fugitive-clone.status").show_status()
