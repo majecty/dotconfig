@@ -29,6 +29,7 @@ nvim/lua/fugitive-clone/             -- lua/ 바로 아래 위치 (require 'fugi
 - `04e7fe2` - Restructure fugitive-clone: move to lua/fugitive-clone, update docs
 - `08ca026` - Update docs and fugitive-clone status module
 - `63c5792` - Add async.lua with basic coroutine wrapper
+- `cd6b6de` - Add async2.lua with wrap-based exec implementation, update docs
 
 ---
 
@@ -129,6 +130,139 @@ nvim-minimal-fugitive/
 - Telescope.nvim 통합 (선택적)
 - 키맵 자동 설정 (autocmd 활용)
 - 설정 옵션 지원 (icons, default keymaps)
+
+---
+
+### async2.lua 구현 세부사항
+
+#### 핵심 구조 (final)
+
+```lua
+local M = {}
+
+-- exec: 코루틴 실행 및 완료 대기
+function M.exec(fn)
+  local outer_co, is_main = coroutine.running()
+
+  local co = coroutine.create(function()
+    local ret = fn()
+
+    if outer_co ~= nil then
+      coroutine.resume(outer_co, ret)  -- 호출자에게 결과 전달
+    end
+
+    return ret
+  end)
+
+  local success, result_or_err = coroutine.resume(co)
+  if not success then
+    vim.notify("Error in async.exec: " .. tostring(result_or_err), vim.log.levels.ERROR)
+  end
+
+  -- 최상위 코루틴(메인)이면 즉시 반환, 아니면 yield로 완료 대기
+  if outer_co == nil or is_main == true then
+    return nil
+  end
+
+  return coroutine.yield()
+end
+
+-- wrap: 콜백 기반 API를 동기처럼 만듦
+function M.wrap(fn)
+  return function(...)
+    local co = coroutine.running()
+    assert(co, "wrap can only be called inside a coroutine")
+
+    local args = { ... }
+    fn(unpack(args), function(...)
+      local once_co = co
+      co = nil  -- 한 번만 resume되게
+
+      if once_co == nil then
+        vim.notify("Callback called multiple times", vim.log.levels.WARN)
+        return
+      end
+
+      if coroutine.status(once_co) == "dead" then
+        vim.notify("Coroutine already finished", vim.log.levels.WARN)
+        return
+      end
+      coroutine.resume(once_co, ...)
+    end)
+
+    return coroutine.yield()
+  end
+end
+
+-- sleep: wrap 패턴으로 구현
+function M.sleep(ms)
+  local wrapped = M.wrap(function(duration, callback)
+    local uv = vim.uv
+    local timer = uv.new_timer()
+    uv.timer_start(timer, duration, 0, function()
+      timer:stop()
+      timer:close()
+      callback()
+    end)
+  end)
+
+  return wrapped(ms)
+end
+```
+
+#### 사용 예시
+
+```lua
+-- 최상위에서 비동기 실행
+async.exec(function()
+  print("1. 시작")
+  async.sleep(1000)  -- 1초 대기 (동기처럼!)
+  print("2. 1초 후")
+end)
+print("3. exec 즉시 반환")
+
+-- 출력: 1 → 3 → (1초 후) → 2
+```
+
+```lua
+-- 코루틴 안에서 또 다른 async 함수 동기 호출
+async.exec(function()
+  local result = async.exec(function()
+    async.sleep(500)
+    return "내부 결과"
+  end)
+  print("받음:", result)  -- "내부 결과"
+end)
+```
+
+```lua
+-- jobstart 래핑
+local run_git = async.wrap(function(args, callback)
+  vim.fn.jobstart(args, {
+    on_exit = function(_, code) callback({code = code}) end
+  })
+end)
+
+async.exec(function()
+  local result = run_git({'git', 'status'})
+  print("Exit code:", result.code)
+end)
+```
+
+#### 핵심 포인트
+
+| 함수 | 역할 | 안전장치 |
+|------|------|----------|
+| `exec` | 코루틴 생성 및 실행, 완료 대기 | 에러 처리, 메인 코루틴 체크 |
+| `wrap` | 콜백 API → 동기처럼 변환 | once_co로 중복 resume 방지, dead 체크 |
+| `sleep` | 타이머 기반 대기 | wrap 재사용 |
+
+#### 중요 개념
+
+- `coroutine.running()` - 현재 실행 중인 코루틴 가져오기
+- `is_main` - 최상위 메인 코루틴 여부 (exec에서 체크)
+- 콜백 안에서 `vim.schedule()` - UI 업데이트 시 필요
+- 중복 호출 방지: `co = nil`로 플래그 설정
 
 ---
 
@@ -253,13 +387,13 @@ local function step(value, depth)
 end
 ```
 
-### 학습 체크리스트
-
-- [ ] 코루틴 생성 → resume → yield → resume 흐름 이해
-- [ ] coroutine.status()로 상태 변화 확인
-- [ ] jobstart 콜백과 coroutine.resume 연결
-- [ ] async.lua 파일 직접 작성
-- [ ] `:JGit status`가 async로 동작
+### Async 래퍼 학습
+- [x] 코루틴 기본: `create()`, `resume()`, `yield()`, `status()`, `running()`
+- [x] 콜백 지옥 회피를 위한 `wrap()` 구현
+- [x] 중첩 async 함수 지원을 위한 `exec()` 구현
+- [x] `sleep()`으로 비동기 대기 구현
+- [x] `async2.lua` 완성 (wrap + exec + sleep)
+- [ ] `:JGit status`가 async2로 동작하도록 연결
 
 ---
 
@@ -348,16 +482,16 @@ vim.api.nvim_create_autocmd('FileType', {
 
 **현재 진행 상황:** 
 - Phase 1 기본 구조 완료
-- async 래퍼 코루틴 학습 진행 중
+- async2 래퍼 완성 (wrap + exec + sleep)
 
 **지금 당장 할 일:**
 
-### Async 래퍼 구현 (진행 중)
-1. `async.lua` 파일 생성 - 단계별로 직접 작성
-   - Step 1: 코루틴 기본 동작 테스트
-   - Step 2: jobstart와 연결
-   - Step 3: 래퍼 함수 완성
-2. `:JGit status`가 async로 동작하도록 연결
+### Async 래퍼 테스트 및 통합 ✅
+1. `async2.lua` 구현 완료:
+   - `wrap()`: 콜백 기반 API → 동기처럼 사용
+   - `exec()`: 최상위/중첩 코루틴 모두 지원
+   - `sleep()`: uv 타이머 기반 대기
+2. `:JGit status`가 async2로 동작하도록 연결
 3. 테스트 후 커밋
 
 ### Git Status 버퍼 (Phase 2 준비)
@@ -370,4 +504,6 @@ vim.api.nvim_create_autocmd('FileType', {
 - `complete` 함수 시그니처 (`arglead`, `cmdline`, `cursorpos`)
 - Lua 함수 vs `v:lua.Function` 차이
 - `jobstart`는 비동기, `system`은 동기
-- Lua 코루틴 기본: `create()`, `resume()`, `yield()`, `status()`
+- Lua 코루틴: `create()`, `resume()`, `yield()`, `status()`, `running()`
+- async2 패턴: `wrap()`으로 콜백 중복 방지, `exec()`로 중첩 async 지원
+- vim.uv 타이머 기반 `sleep()` 구현
