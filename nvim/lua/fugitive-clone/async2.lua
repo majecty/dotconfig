@@ -1,110 +1,104 @@
 local M = {}
 
----Wrap a callback-based function to look synchronous
----@param fn function The callback-based function (last arg is callback)
----@return function A wrapped function that yields/resumes automatically
+function M.exec(fn)
+  local outer_co, is_main = coroutine.running()
+
+  local co = coroutine.create(function()
+    local ret = fn();
+
+    if outer_co ~= nil then
+      coroutine.resume(outer_co, ret)
+    end
+
+    return ret;
+  end)
+
+  local success, result_or_err = coroutine.resume(co)
+  if not success then
+    vim.notify("Error in async.exec: " .. tostring(result_or_err), vim.log.levels.ERROR)
+  end
+
+  if outer_co == nil or is_main == true then
+    return nil
+  end
+
+  local ret = coroutine.yield()
+  return ret;
+end
+
 function M.wrap(fn)
   return function(...)
+    ---@type thread | nil
     local co = coroutine.running()
-    assert(co, "async.wrap must be called inside a coroutine")
-    
-    local args = {...}
-    local resolved = false
-    
-    fn(unpack(args), function(...)
-      if resolved then
-        vim.notify("Warning: callback called multiple times", vim.log.levels.WARN)
+    assert(co, "wrap can only be called inside a coroutine")
+
+    local args = { ... }
+    fn(unpack(args), function(err, ...)
+      local once_co = co
+      co = nil
+
+      if once_co == nil then
+        vim.notify("Callback called multiple times", vim.log.levels.WARN)
         return
       end
-      resolved = true
-      
-      if coroutine.status(co) == "suspended" then
-        coroutine.resume(co, ...)
+
+      if coroutine.status(once_co) == "dead" then
+        vim.notify("Coroutine already finished", vim.log.levels.WARN)
+        return
       end
+      coroutine.resume(once_co, err, ...)
     end)
-    
+
     return coroutine.yield()
   end
 end
 
----Execute an async function
----Can be called from top-level (async) or inside a coroutine (sync-like)
----@param fn function The async function to execute
----@param on_complete? function Optional callback for top-level calls
-function M.exec(fn, on_complete)
-  local caller_co = coroutine.running()
-  
-  if not caller_co then
-    -- Top-level: execute and optionally use callback
-    local co = coroutine.create(fn)
-    
-    local function step(...)
-      local ok, result = coroutine.resume(co, ...)
-      if coroutine.status(co) == "dead" then
-        if on_complete then
-          on_complete(result)
-        end
-        return
-      end
-      -- Handle async operations...
-    end
-    
-    step()
-    return
-  end
-  
-  -- Inside coroutine: use wrap pattern to wait for completion
-  local resolved = false
-  local final_result = nil
-  
-  -- Create an executor that accepts a callback
-  local function executor(resolve)
-    local inner_co = coroutine.create(fn)
-    
-    local function step(...)
-      local ok, result = coroutine.resume(inner_co, ...)
-      
-      if coroutine.status(inner_co) == "dead" then
-        if not resolved then
-          resolved = true
-          final_result = result
-          resolve(result)
-        end
-        return
-      end
-      
-      -- Handle wrapped async operations
-      if type(result) == "table" and result._async then
-        result.run(function(job_result)
-          vim.schedule(function()
-            step(job_result)
-          end)
-        end)
-      end
-    end
-    
-    step()
-  end
-  
-  -- Use wrap to convert executor to sync-like call
-  local wrapped = M.wrap(executor)
-  return wrapped()
-end
-
----Create a sleep/delay function
----@param ms number Milliseconds to sleep
----@return function A wrapped sleep function
+---@param ms number
 function M.sleep(ms)
-  return M.wrap(function(duration, callback)
-    local timer = vim.loop.new_timer()
-    vim.loop.timer_start(timer, duration, 0, function()
+  local wrapped = M.wrap(function(duration, callback)
+    local uv = vim.uv
+    local timer = uv.new_timer()
+    assert(timer, "Failed to create timer")
+    uv.timer_start(timer, duration, 0, function()
       timer:stop()
       timer:close()
-      vim.schedule(function()
-        callback()
-      end)
+      callback()
     end)
-  end)(ms)
+  end)
+
+  return wrapped(ms)
 end
+
+---@param cmd string
+---@param args string[]
+function M.job(cmd, args)
+  local wrapped = M.wrap(function(command, arguments, callback)
+    ---@cast command string
+    ---@cast arguments string[]
+
+    local stdouts = {}
+     vim.fn.jobstart({ command, unpack(arguments) }, {
+      on_stdout = function(_, data, _)
+        if data then
+          for _, line in ipairs(data) do
+            if line ~= "" then
+              table.insert(stdouts, line)
+            end
+          end
+        end
+      end,
+      on_exit = function(_, exit_code, _)
+        if exit_code ~= 0 then
+          vim.notify(string.format("Command '%s' failed with exit code %d", command, exit_code), vim.log.levels.ERROR)
+        end
+        callback(stdouts)
+      end,
+    })
+    callback()
+  end)
+
+  return wrapped(cmd, args)
+end
+
 
 return M
