@@ -204,6 +204,34 @@ return {
           end,
           desc = 'Document symbols',
         },
+        {
+          '<leader>lI',
+          function()
+            print(vim.inspect(vim.lsp.get_clients({ bufnr = 0 })))
+          end,
+          desc = 'Inspect active LSP clients',
+        },
+        {
+          '<leader>lc',
+          function()
+            vim.cmd('checkhealth lsp')
+          end,
+          desc = 'Check LSP health',
+        },
+        {
+          '<leader>lA',
+          function()
+            print(vim.inspect(vim.lsp.config.get('rust_analyzer')))
+          end,
+          desc = 'Inspect rust_analyzer config',
+        },
+        {
+          '<leader>lR',
+          function()
+            print(vim.inspect(vim.lsp.config.get('rust_analyzer_rustc')))
+          end,
+          desc = 'Inspect rust_analyzer_rustc config',
+        },
         { '<leader>t', group = '+tab' },
         {
           '<leader>tn',
