@@ -71,18 +71,37 @@ function M.reconnect_non_tmux_terminals()
   log.debug('Found ' .. #tabs .. ' tabs')
 
   for _, tabpage in ipairs(tabs) do
+    if not vim.api.nvim_tabpage_is_valid(tabpage) then
+      log.debug('Tab ' .. tostring(tabpage) .. ' is no longer valid, skipping')
+      goto continue_tab
+    end
+
     local windows = vim.api.nvim_tabpage_list_wins(tabpage)
     log.debug('Tab ' .. tostring(tabpage) .. ' has ' .. #windows .. ' windows')
 
     for _, winid in ipairs(windows) do
-      local buf = vim.api.nvim_win_get_buf(winid)
+      if not vim.api.nvim_win_is_valid(winid) then
+        log.debug('Window ' .. tostring(winid) .. ' is no longer valid, skipping')
+        goto continue_win
+      end
+
+      local ok, buf = pcall(vim.api.nvim_win_get_buf, winid)
+      if not ok then
+        log.debug('Failed to get buffer for window ' .. tostring(winid) .. ', skipping')
+        goto continue_win
+      end
+
       local bufname = vim.api.nvim_buf_get_name(buf)
       log.trace('Checking buffer in tab ' .. tostring(tabpage) .. ' window ' .. tostring(winid) .. ': ' .. bufname)
 
       if bufname:match('^term://') and not bufname:match('tmux%s+attach%-session') then
         reconnect_terminal_buffer(buf, winid)
       end
+
+      ::continue_win::
     end
+
+    ::continue_tab::
   end
 
   log.debug('reconnect_non_tmux_terminals: Completed')

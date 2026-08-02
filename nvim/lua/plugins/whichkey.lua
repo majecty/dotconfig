@@ -229,14 +229,18 @@ return {
         {
           '<leader>lA',
           function()
-            print(vim.inspect(vim.lsp.config.get('rust_analyzer')))
+            local config = vim.lsp.config
+              and (vim.lsp.config.get and vim.lsp.config.get('rust_analyzer') or vim.lsp.config['rust_analyzer'])
+            print(vim.inspect(config or 'No config available for rust_analyzer'))
           end,
           desc = 'Inspect rust_analyzer config',
         },
         {
           '<leader>lR',
           function()
-            print(vim.inspect(vim.lsp.config.get('rust_analyzer_rustc')))
+            local config = vim.lsp.config
+              and (vim.lsp.config.get and vim.lsp.config.get('rust_analyzer_rustc') or vim.lsp.config['rust_analyzer_rustc'])
+            print(vim.inspect(config or 'No config available for rust_analyzer_rustc'))
           end,
           desc = 'Inspect rust_analyzer_rustc config',
         },
@@ -256,7 +260,9 @@ return {
                 mode = 'rust-lang/rust compiler development mode'
               end
               vim.notify(client.name .. ' (' .. mode .. ') - root: ' .. (client.root_dir or 'unknown'))
-              print(vim.inspect(vim.lsp.config.get(client.name)))
+              local config = vim.lsp.config
+                and (vim.lsp.config.get and vim.lsp.config.get(client.name) or vim.lsp.config[client.name])
+              print(vim.inspect(config or 'No config available for ' .. client.name))
             end
           end,
           desc = 'Inspect LSP status summary',
