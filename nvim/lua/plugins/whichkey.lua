@@ -633,6 +633,42 @@ return {
           end,
           desc = 'Extract all code blocks to lua file',
         },
+        { '<leader>d', group = '+docs/wiki' },
+        {
+          '<leader>dd',
+          function()
+            require('packages.wiki').open_today()
+          end,
+          desc = "Open today's daily note",
+        },
+        {
+          '<leader>df',
+          function()
+            require('packages.wiki').find_doc()
+          end,
+          desc = 'Find doc file',
+        },
+        {
+          '<leader>dg',
+          function()
+            require('packages.wiki').grep_docs()
+          end,
+          desc = 'Grep all docs',
+        },
+        {
+          '<leader>dl',
+          function()
+            require('packages.wiki.follow_link').follow()
+          end,
+          desc = 'Follow wiki link',
+        },
+        {
+          '<leader>di',
+          function()
+            require('packages.wiki').open_index()
+          end,
+          desc = 'Open wiki index',
+        },
       })
     end,
   },
