@@ -102,6 +102,116 @@ return {
 
       -- Enable tailwind language server
       vim.lsp.enable('tailwindcss')
+
+      -- Configure Rust Analyzer for general Rust projects
+      vim.lsp.config('rust_analyzer', {
+        cmd = { get_mason_bin('rust-analyzer') },
+        filetypes = { 'rust' },
+        root_dir = function(bufnr, callback)
+          local root = vim.fs.root(bufnr, { 'Cargo.toml' })
+          -- Exclude rust-lang/rust repository which has x.py
+          if root and vim.uv.fs_stat(root .. '/x.py') == nil then
+            callback(root)
+          end
+        end,
+        on_attach = on_attach,
+        settings = {
+          ['rust-analyzer'] = {
+            check = {
+              command = 'clippy',
+            },
+          },
+        },
+      })
+
+      -- Enable general rust analyzer
+      vim.lsp.enable('rust_analyzer')
+
+      -- Configure Rust Analyzer for rust-lang/rust compiler development
+      vim.lsp.config('rust_analyzer_rustc', {
+        cmd = { get_mason_bin('rust-analyzer') },
+        filetypes = { 'rust' },
+        root_dir = function(bufnr, callback)
+          local root = vim.fs.root(bufnr, { 'x.py' })
+          if root then
+            callback(root)
+          end
+        end,
+        on_attach = on_attach,
+        settings = {
+          ['rust-analyzer'] = {
+            linkedProjects = {
+              'Cargo.toml',
+              'compiler/rustc_codegen_cranelift/Cargo.toml',
+              'compiler/rustc_codegen_gcc/Cargo.toml',
+              'library/Cargo.toml',
+              'src/bootstrap/Cargo.toml',
+              'src/tools/rust-analyzer/Cargo.toml',
+            },
+            check = {
+              invocationStrategy = 'once',
+              overrideCommand = {
+                'python3',
+                'x.py',
+                'check',
+                '--json-output',
+                '--build-dir',
+                'build-rust-analyzer',
+              },
+            },
+            rustfmt = {
+              overrideCommand = {
+                '${workspaceFolder}/build/host/rustfmt/bin/rustfmt',
+                '--edition=2024',
+              },
+            },
+            procMacro = {
+              server = '${workspaceFolder}/build/host/stage0/libexec/rust-analyzer-proc-macro-srv',
+              enable = true,
+            },
+            rustc = {
+              source = './Cargo.toml',
+            },
+            cargo = {
+              sysrootSrc = './library',
+              extraEnv = {
+                RUSTC_BOOTSTRAP = '1',
+              },
+              buildScripts = {
+                enable = true,
+                invocationStrategy = 'once',
+                overrideCommand = {
+                  'python3',
+                  'x.py',
+                  'check',
+                  '--json-output',
+                  '--compile-time-deps',
+                  '--build-dir',
+                  'build-rust-analyzer',
+                },
+              },
+            },
+            server = {
+              extraEnv = {
+                RUSTC = '${workspaceFolder}/build/host/stage0/bin/rustc',
+                CARGO = '${workspaceFolder}/build/host/stage0/bin/cargo',
+              },
+            },
+          },
+        },
+      })
+
+      -- Enable rust-lang/rust specific rust analyzer
+      vim.lsp.enable('rust_analyzer_rustc')
+
+      -- Map rust-related file extensions to rust filetype
+      vim.filetype.add({
+        extension = {
+          fixed = 'rust',
+          pp = 'rust',
+          mir = 'rust',
+        },
+      })
     end,
   },
 }
