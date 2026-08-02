@@ -31,8 +31,16 @@ return {
 
       -- Add keymaps using the new API
       wk.add({
+        { '<leader>m', group = '+messages' },
         {
-          '<leader>m',
+          '<leader>mo',
+          function()
+            require('packages.messages-viewer').open()
+          end,
+          desc = 'Open messages viewer',
+        },
+        {
+          '<leader>mt',
           function()
             vim.cmd('tabnew')
             vim.cmd('messages')
