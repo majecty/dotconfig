@@ -2,6 +2,7 @@
 local log = require('packages.session_manager.log')
 local utils = require('packages.session_manager.utils')
 local tmux = require('packages.session_manager.tmux')
+local terminal = require('packages.session_manager.terminal')
 
 local M = {}
 
@@ -35,9 +36,10 @@ function M.load_session_from_file(session_filename, display_name)
   end
 
   log.info('Session loaded: ' .. display_name)
-  -- Reconnect tmux terminal buffers
+  -- Reconnect terminal buffers
   vim.schedule(function()
     tmux.reconnect_tmux_terminals()
+    terminal.reconnect_non_tmux_terminals()
   end)
 end
 
@@ -101,9 +103,10 @@ function M.setup_auto_load()
 
       log.info('Session loaded successfully on startup: ' .. session_filename)
 
-      -- Reconnect tmux terminal buffers
+      -- Reconnect terminal buffers
       vim.schedule(function()
         tmux.reconnect_tmux_terminals()
+        terminal.reconnect_non_tmux_terminals()
       end)
     end,
     once = true, -- Only run once on startup
