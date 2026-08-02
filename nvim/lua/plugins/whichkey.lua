@@ -248,6 +248,7 @@ return {
                 mode = 'rust-lang/rust compiler development mode'
               end
               vim.notify(client.name .. ' (' .. mode .. ') - root: ' .. (client.root_dir or 'unknown'))
+              print(vim.inspect(vim.lsp.config.get(client.name)))
             end
           end,
           desc = 'Inspect LSP status summary',
