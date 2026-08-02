@@ -232,6 +232,26 @@ return {
           end,
           desc = 'Inspect rust_analyzer_rustc config',
         },
+        {
+          '<leader>li',
+          function()
+            local clients = vim.lsp.get_clients({ bufnr = 0 })
+            if #clients == 0 then
+              vim.notify('No LSP attached', vim.log.levels.WARN)
+              return
+            end
+            for _, client in ipairs(clients) do
+              local mode = 'unknown'
+              if client.name == 'rust_analyzer' then
+                mode = 'General Rust project mode'
+              elseif client.name == 'rust_analyzer_rustc' then
+                mode = 'rust-lang/rust compiler development mode'
+              end
+              vim.notify(client.name .. ' (' .. mode .. ') - root: ' .. (client.root_dir or 'unknown'))
+            end
+          end,
+          desc = 'Inspect LSP status summary',
+        },
         { '<leader>t', group = '+tab' },
         {
           '<leader>tn',

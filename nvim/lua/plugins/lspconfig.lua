@@ -212,6 +212,21 @@ return {
           mir = 'rust',
         },
       })
+
+      -- Notify which rust-analyzer configuration is active on attach
+      vim.api.nvim_create_autocmd('LspAttach', {
+        callback = function(args)
+          local client = vim.lsp.get_client_by_id(args.data.client_id)
+          if not client then
+            return
+          end
+          if client.name == 'rust_analyzer' then
+            vim.notify('General Rust project mode: rust_analyzer attached')
+          elseif client.name == 'rust_analyzer_rustc' then
+            vim.notify('rust-lang/rust compiler development mode: rust_analyzer_rustc attached')
+          end
+        end,
+      })
     end,
   },
 }
