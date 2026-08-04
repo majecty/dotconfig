@@ -72,6 +72,15 @@ return {
           { name = 'buffer' },
         },
       })
+
+      cmp.register_source('wiki', require('packages.wiki.cmp').new())
+      cmp.setup.filetype('markdown', {
+        sources = cmp.config.sources({
+          { name = 'wiki' },
+        }, {
+          { name = 'buffer' },
+        }),
+      })
     end,
   },
   {
